@@ -25,6 +25,7 @@ header {
     color: white;
     padding: 30px;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
@@ -35,6 +36,18 @@ header h1 {
 header p {
     font-size: 1.1em;
     opacity: 0.9;
+}
+
+.mode-indicator {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
 }
 
 .auth-section {

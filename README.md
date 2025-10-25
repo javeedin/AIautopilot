@@ -1,6 +1,8 @@
 # Email Fetcher - Gmail & Outlook Integration
 
-A modern, lightweight web application for fetching and viewing emails from Gmail and Outlook/Office 365 accounts. Built with pure HTML, CSS, and JavaScript - no frameworks required.
+A modern, lightweight application for fetching and viewing emails from Gmail and Outlook/Office 365 accounts. Built with pure HTML, CSS, and JavaScript - no frameworks required.
+
+**Supports both Web Browsers and Desktop Applications** (WinForms WebView, Electron, etc.)
 
 ## Features
 
@@ -27,11 +29,23 @@ A modern, lightweight web application for fetching and viewing emails from Gmail
 
 ## Quick Start
 
-### Prerequisites
+### Choose Your Platform
+
+**For Web Browser:** See instructions below
+**For WinForms Desktop App:** See [WINFORMS-SETUP.md](WINFORMS-SETUP.md)
+
+### Prerequisites (Web Browser Mode)
 
 1. A web server to host the application (Python's built-in server, Node.js http-server, or any web server)
 2. Google Cloud Console account (for Gmail integration)
 3. Microsoft Azure account (for Outlook integration)
+
+### Prerequisites (Desktop Mode)
+
+1. Visual Studio with .NET and WebView2
+2. Google Cloud Console account with "Desktop app" credentials
+3. Microsoft Azure account with "Mobile and desktop applications" credentials
+4. See [WINFORMS-SETUP.md](WINFORMS-SETUP.md) for complete setup
 
 ### Installation
 
@@ -62,7 +76,18 @@ A modern, lightweight web application for fetching and viewing emails from Gmail
 
 ## Configuration
 
-### Google Gmail API Setup
+### Application Mode
+
+In `config.js`, set your application mode:
+
+```javascript
+window.CONFIG = {
+    APP_MODE: 'desktop',  // Use 'desktop' for WinForms/Electron, 'web' for browsers
+    // ... other settings
+};
+```
+
+### Google Gmail API Setup (Web Browser)
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
@@ -82,7 +107,26 @@ A modern, lightweight web application for fetching and viewing emails from Gmail
 5. Copy the Client ID
 6. Open `config.js` and replace `YOUR_GOOGLE_CLIENT_ID_HERE` with your Client ID
 
-### Microsoft Outlook/Office 365 Setup
+### Google Gmail API Setup (Desktop/WinForms)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Gmail API
+4. Create OAuth 2.0 credentials:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth client ID"
+   - **Choose "Desktop app"** (not Web application)
+   - Name it (e.g., "Email Fetcher Desktop")
+5. Copy the Client ID
+6. Open `config.js` and set:
+   ```javascript
+   APP_MODE: 'desktop',
+   GOOGLE_CLIENT_ID: 'your-client-id.apps.googleusercontent.com'
+   ```
+
+See [WINFORMS-SETUP.md](WINFORMS-SETUP.md) for complete desktop integration guide.
+
+### Microsoft Outlook/Office 365 Setup (Web Browser)
 
 1. Go to [Azure Portal](https://portal.azure.com/)
 2. Navigate to "Azure Active Directory" > "App registrations"
@@ -103,12 +147,46 @@ A modern, lightweight web application for fetching and viewing emails from Gmail
    - Click "Grant admin consent" if you have admin rights
 7. Open `config.js` and replace `YOUR_OUTLOOK_CLIENT_ID_HERE` with your Application ID
 
-### Example config.js
+### Microsoft Outlook/Office 365 Setup (Desktop/WinForms)
+
+1. Go to [Azure Portal](https://portal.azure.com/)
+2. Navigate to "Azure Active Directory" > "App registrations"
+3. Click "New registration"
+4. Configure:
+   - Name: Email Fetcher Desktop
+   - Account types: "Accounts in any organizational directory and personal Microsoft accounts"
+   - Redirect URI: Select **"Mobile and desktop applications"** platform
+   - Add URI: `http://localhost`
+5. Copy the "Application (client) ID"
+6. Configure API permissions:
+   - Add `Mail.Read` and `User.Read`
+7. Enable "Allow public client flows" in Authentication settings
+8. Open `config.js` and set:
+   ```javascript
+   APP_MODE: 'desktop',
+   OUTLOOK_CLIENT_ID: 'your-application-id'
+   ```
+
+See [WINFORMS-SETUP.md](WINFORMS-SETUP.md) for complete desktop integration guide.
+
+### Example config.js (Web Mode)
 
 ```javascript
 window.CONFIG = {
+    APP_MODE: 'web',
     GOOGLE_CLIENT_ID: '123456789-abcdefghijk.apps.googleusercontent.com',
     OUTLOOK_CLIENT_ID: 'abcd1234-5678-90ef-ghij-klmnopqrstuv'
+};
+```
+
+### Example config.js (Desktop Mode)
+
+```javascript
+window.CONFIG = {
+    APP_MODE: 'desktop',
+    GOOGLE_CLIENT_ID: '123456789-abcdefghijk.apps.googleusercontent.com',
+    OUTLOOK_CLIENT_ID: 'abcd1234-5678-90ef-ghij-klmnopqrstuv',
+    DESKTOP_REDIRECT_URI: 'http://127.0.0.1:8080/oauth-callback.html'
 };
 ```
 
@@ -200,6 +278,13 @@ This is the most common issue. See the detailed [TROUBLESHOOTING.md](TROUBLESHOO
 - Gmail API
 - Microsoft Graph API
 
+## Platform Support
+
+- **Web Browsers**: Chrome, Firefox, Safari, Edge (all modern versions)
+- **Desktop**: WinForms with WebView2 (see [WINFORMS-SETUP.md](WINFORMS-SETUP.md))
+- **Desktop**: Electron (similar setup to WinForms)
+- **Desktop**: Any platform with embedded browser/WebView support
+
 ## Future Enhancements
 
 - Email composition and sending
@@ -209,6 +294,8 @@ This is the most common issue. See the detailed [TROUBLESHOOTING.md](TROUBLESHOO
 - Dark mode toggle
 - Email notifications
 - Offline support with service workers
+- Token refresh mechanism
+- Desktop app installer
 
 ## License
 

@@ -1,16 +1,20 @@
 // Email Fetcher Application
 // Supports Gmail (Google) and Outlook (Microsoft) integration
+// Works in both web browsers and desktop WebView (WinForms, Electron, etc.)
 
 class EmailFetcher {
     constructor() {
         this.accounts = [];
         this.currentAccount = null;
-        this.googleAuth = null;
         this.msalInstance = null;
+        this.isDesktopMode = false;
         this.init();
     }
 
     init() {
+        // Determine if running in desktop mode
+        this.isDesktopMode = window.CONFIG?.APP_MODE === 'desktop';
+
         // Validate configuration and environment
         this.validateSetup();
 
@@ -20,6 +24,9 @@ class EmailFetcher {
         // Set up event listeners
         this.setupEventListeners();
 
+        // Check for OAuth callback
+        this.checkOAuthCallback();
+
         // Check for existing sessions
         this.checkExistingSessions();
     }
@@ -27,8 +34,8 @@ class EmailFetcher {
     validateSetup() {
         const issues = [];
 
-        // Check if running from file:// protocol
-        if (window.location.protocol === 'file:') {
+        // Check if running from file:// protocol (only warn in web mode)
+        if (!this.isDesktopMode && window.location.protocol === 'file:') {
             issues.push('⚠️ You are running from file:// protocol. Please use a web server (e.g., python -m http.server 8080)');
         }
 
@@ -45,6 +52,12 @@ class EmailFetcher {
             if (!window.CONFIG.OUTLOOK_CLIENT_ID || window.CONFIG.OUTLOOK_CLIENT_ID.includes('YOUR_OUTLOOK_CLIENT_ID')) {
                 issues.push('⚠️ Outlook Client ID not configured in config.js');
             }
+
+            // Show mode indicator
+            const modeIndicator = document.createElement('div');
+            modeIndicator.className = 'mode-indicator';
+            modeIndicator.textContent = `Mode: ${this.isDesktopMode ? 'Desktop/WebView' : 'Web Browser'}`;
+            document.querySelector('header').appendChild(modeIndicator);
         }
 
         if (issues.length > 0) {
@@ -62,11 +75,13 @@ class EmailFetcher {
     }
 
     initMSAL() {
+        if (!window.CONFIG || !window.CONFIG.OUTLOOK_CLIENT_ID) return;
+
         const msalConfig = {
             auth: {
                 clientId: window.CONFIG.OUTLOOK_CLIENT_ID,
                 authority: 'https://login.microsoftonline.com/common',
-                redirectUri: window.location.origin
+                redirectUri: this.isDesktopMode ? 'http://localhost' : window.location.origin
             },
             cache: {
                 cacheLocation: 'localStorage',
@@ -75,7 +90,11 @@ class EmailFetcher {
         };
 
         if (window.msal) {
-            this.msalInstance = new msal.PublicClientApplication(msalConfig);
+            try {
+                this.msalInstance = new msal.PublicClientApplication(msalConfig);
+            } catch (error) {
+                console.error('MSAL initialization error:', error);
+            }
         }
     }
 
@@ -104,6 +123,63 @@ class EmailFetcher {
         document.getElementById('accountSelector').addEventListener('change', (e) => {
             this.switchAccount(e.target.value);
         });
+
+        // Listen for messages from popup windows (desktop mode)
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'oauth_token') {
+                this.handleOAuthMessage(event.data);
+            }
+        });
+    }
+
+    // Check if this page is an OAuth callback
+    checkOAuthCallback() {
+        const hash = window.location.hash;
+        const search = window.location.search;
+
+        if (hash && hash.includes('access_token')) {
+            // Handle implicit flow callback
+            this.handleImplicitFlowCallback(hash);
+        } else if (search && search.includes('code=')) {
+            // Handle authorization code flow callback
+            this.handleAuthCodeCallback(search);
+        }
+    }
+
+    handleImplicitFlowCallback(hash) {
+        const params = new URLSearchParams(hash.substring(1));
+        const accessToken = params.get('access_token');
+        const state = params.get('state');
+
+        if (accessToken && state) {
+            const stateData = JSON.parse(decodeURIComponent(state));
+
+            if (stateData.provider === 'google') {
+                localStorage.setItem('google_temp_token', accessToken);
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'oauth_token',
+                        provider: 'google',
+                        token: accessToken
+                    }, '*');
+                    window.close();
+                } else {
+                    // Running in same window (WebView mode)
+                    this.handleGoogleAuth(accessToken);
+                }
+            }
+        }
+    }
+
+    handleAuthCodeCallback(search) {
+        // Handle authorization code (would need backend to exchange for token)
+        console.log('Authorization code flow callback - requires backend implementation');
+    }
+
+    handleOAuthMessage(data) {
+        if (data.provider === 'google' && data.token) {
+            this.handleGoogleAuth(data.token);
+        }
     }
 
     // Google Authentication
@@ -115,6 +191,59 @@ class EmailFetcher {
             return;
         }
 
+        if (this.isDesktopMode) {
+            // Desktop mode: Use OAuth 2.0 implicit flow with manual URL
+            this.authenticateGoogleDesktop();
+        } else {
+            // Web mode: Use Google's JavaScript library
+            this.authenticateGoogleWeb();
+        }
+    }
+
+    authenticateGoogleDesktop() {
+        // Generate random state for CSRF protection
+        const state = JSON.stringify({
+            provider: 'google',
+            timestamp: Date.now()
+        });
+
+        // Build OAuth URL for implicit flow (desktop apps)
+        const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
+        authUrl.searchParams.set('client_id', window.CONFIG.GOOGLE_CLIENT_ID);
+        authUrl.searchParams.set('redirect_uri', 'urn:ietf:wg:oauth:2.0:oob'); // Out-of-band for desktop
+        authUrl.searchParams.set('response_type', 'token');
+        authUrl.searchParams.set('scope', 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile');
+        authUrl.searchParams.set('state', encodeURIComponent(state));
+
+        // Open in popup or same window
+        const authWindow = window.open(authUrl.toString(), 'GoogleAuth', 'width=600,height=700');
+
+        if (!authWindow) {
+            // If popup blocked, navigate in same window
+            this.showStatus('Opening Google authentication...', 'success');
+            setTimeout(() => {
+                window.location.href = authUrl.toString();
+            }, 1000);
+        } else {
+            // Poll for token in localStorage (set by callback page)
+            const pollInterval = setInterval(() => {
+                const token = localStorage.getItem('google_temp_token');
+                if (token) {
+                    localStorage.removeItem('google_temp_token');
+                    clearInterval(pollInterval);
+                    this.handleGoogleAuth(token);
+                    if (authWindow && !authWindow.closed) {
+                        authWindow.close();
+                    }
+                }
+                if (authWindow.closed) {
+                    clearInterval(pollInterval);
+                }
+            }, 500);
+        }
+    }
+
+    authenticateGoogleWeb() {
         // Check if running from proper protocol
         if (window.location.protocol === 'file:') {
             this.showStatus('Please run from a web server (not file://). Use: python -m http.server 8080', 'error');
@@ -123,7 +252,8 @@ class EmailFetcher {
 
         // Check if Google API is loaded
         if (typeof google === 'undefined' || !google.accounts) {
-            this.showStatus('Google API not loaded. Please check your internet connection and reload.', 'error');
+            // Fallback to manual flow if library not loaded
+            this.authenticateGoogleDesktop();
             return;
         }
 
@@ -149,7 +279,8 @@ class EmailFetcher {
             client.requestAccessToken();
         } catch (error) {
             console.error('Error initializing Google auth:', error);
-            this.showStatus(`Failed to initialize Google authentication: ${error.message}`, 'error');
+            // Fallback to manual flow
+            this.authenticateGoogleDesktop();
         }
     }
 
@@ -161,6 +292,11 @@ class EmailFetcher {
                     'Authorization': `Bearer ${accessToken}`
                 }
             });
+
+            if (!userInfoResponse.ok) {
+                throw new Error('Failed to get user info');
+            }
+
             const userInfo = await userInfoResponse.json();
 
             const account = {
@@ -175,12 +311,18 @@ class EmailFetcher {
             this.showStatus(`Successfully connected to Gmail: ${userInfo.email}`, 'success');
         } catch (error) {
             console.error('Google auth error:', error);
-            this.showStatus('Failed to connect to Gmail', 'error');
+            this.showStatus('Failed to connect to Gmail: ' + error.message, 'error');
         }
     }
 
     // Outlook Authentication
     async authenticateOutlook() {
+        if (!window.CONFIG || !window.CONFIG.OUTLOOK_CLIENT_ID ||
+            window.CONFIG.OUTLOOK_CLIENT_ID.includes('YOUR_OUTLOOK_CLIENT_ID')) {
+            this.showStatus('Please configure your Outlook Client ID in config.js first!', 'error');
+            return;
+        }
+
         if (!this.msalInstance) {
             this.showStatus('Outlook authentication not configured. Please check config.js', 'error');
             return;
@@ -191,7 +333,15 @@ class EmailFetcher {
         };
 
         try {
-            const loginResponse = await this.msalInstance.loginPopup(loginRequest);
+            let loginResponse;
+            if (this.isDesktopMode) {
+                // Use redirect flow for desktop
+                loginResponse = await this.msalInstance.loginPopup(loginRequest);
+            } else {
+                // Use popup for web
+                loginResponse = await this.msalInstance.loginPopup(loginRequest);
+            }
+
             const account = {
                 type: 'outlook',
                 email: loginResponse.account.username,
@@ -205,7 +355,7 @@ class EmailFetcher {
             this.showStatus(`Successfully connected to Outlook: ${loginResponse.account.username}`, 'success');
         } catch (error) {
             console.error('Outlook auth error:', error);
-            this.showStatus('Failed to connect to Outlook', 'error');
+            this.showStatus('Failed to connect to Outlook: ' + error.message, 'error');
         }
     }
 
@@ -454,7 +604,6 @@ class EmailFetcher {
         // This is for demonstration purposes only
         const accountsToSave = this.accounts.map(acc => ({
             ...acc,
-            // Tokens expire, so this is just for the session
             sessionOnly: true
         }));
         localStorage.setItem('emailFetcherAccounts', JSON.stringify(accountsToSave));
@@ -464,7 +613,6 @@ class EmailFetcher {
         // Check if there are any stored accounts
         const stored = localStorage.getItem('emailFetcherAccounts');
         if (stored) {
-            // Note: Tokens will likely be expired, user will need to re-authenticate
             console.log('Found stored session data, but tokens may be expired. Please re-authenticate.');
         }
     }
