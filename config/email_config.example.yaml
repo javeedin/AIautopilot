@@ -1,0 +1,51 @@
+# AIautopilot Email Fetcher Configuration Example
+# Copy this file and customize for your environment
+
+# Default provider to use (gmail, outlook, imap)
+provider: imap
+
+# Gmail/Google Workspace Configuration
+gmail:
+  # Path to OAuth credentials JSON file from Google Cloud Console
+  credentials_file: credentials.json
+  # Path to store/load authentication token
+  token_file: token.json
+  # Optional: Email address for delegated access
+  user_email: your-email@gmail.com
+
+# Microsoft 365/Outlook Configuration
+outlook:
+  # Azure AD application client ID
+  client_id: your-client-id
+  # Client secret (for confidential client/daemon apps)
+  client_secret: your-client-secret
+  # Azure AD tenant ID
+  tenant_id: your-tenant-id
+  # Authentication type: 'delegated' (user) or 'application' (daemon)
+  auth_type: delegated
+  # Optional: Username for delegated access
+  username: your-email@outlook.com
+
+# Generic IMAP Configuration
+imap:
+  # IMAP server hostname
+  host: imap.example.com
+  # IMAP server port (993 for SSL, 143 for non-SSL)
+  port: 993
+  # Email username/address
+  username: your-email@example.com
+  # Email password or app-specific password
+  password: your-password
+  # Use SSL/TLS connection
+  use_ssl: true
+  # Folder name encoding (default: utf-7)
+  folder_encoding: utf-7
+
+# Default fetch options
+fetch_options:
+  # Default folder to fetch from
+  default_folder: INBOX
+  # Default limit on number of emails to fetch
+  default_limit: 50
+  # Only fetch unread emails by default
+  unread_only: false

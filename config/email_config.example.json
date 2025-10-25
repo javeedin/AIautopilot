@@ -1,0 +1,28 @@
+{
+  "provider": "imap",
+  "gmail": {
+    "credentials_file": "credentials.json",
+    "token_file": "token.json",
+    "user_email": "your-email@gmail.com"
+  },
+  "outlook": {
+    "client_id": "your-client-id",
+    "client_secret": "your-client-secret",
+    "tenant_id": "your-tenant-id",
+    "auth_type": "delegated",
+    "username": "your-email@outlook.com"
+  },
+  "imap": {
+    "host": "imap.example.com",
+    "port": 993,
+    "username": "your-email@example.com",
+    "password": "your-password",
+    "use_ssl": true,
+    "folder_encoding": "utf-7"
+  },
+  "fetch_options": {
+    "default_folder": "INBOX",
+    "default_limit": 50,
+    "unread_only": false
+  }
+}
