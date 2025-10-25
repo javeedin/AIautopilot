@@ -6612,13 +6612,18 @@ async function selectProjectFolder() {
         // Store folder name and permission in localStorage
         localStorage.setItem('git-project-folder-name', handle.name);
         
-        // Update UI
+        // Update UI with enhanced display
         document.getElementById('selected-folder-display').innerHTML = `
-            <i class="fas fa-folder" style="color: var(--success);"></i> 
-            <strong>${handle.name}</strong>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-folder" style="color: var(--success);"></i> 
+                <strong style="color: var(--success);">${handle.name}</strong>
+                <span style="font-size: 0.75rem; color: var(--text-tertiary); margin-left: 0.5rem;">(Connected)</span>
+            </div>
         `;
         
-        showMessage(`✅ Folder "${handle.name}" selected successfully!`, 'success', 'git-operation-result');
+        showMessage(`✅ Folder "${handle.name}" selected successfully! Click "Load Files" to scan the folder.`, 'success', 'git-operation-result');
+        
+        console.log(`✅ Folder selected: ${handle.name}`);
         
         // Automatically load files
         await loadFilesFromFolder();
@@ -6655,7 +6660,7 @@ function clearProjectFolder() {
 // Load files from folder button handler
 async function loadFilesFromFolder() {
     if (!projectFolderHandle) {
-        showMessage('Please select a project folder first', 'warning', 'git-operation-result');
+        showMessage('⚠️ Please select a project folder first using the "Select Folder" button', 'warning', 'git-operation-result');
         return;
     }
     
@@ -6663,14 +6668,22 @@ async function loadFilesFromFolder() {
     try {
         const permission = await projectFolderHandle.requestPermission({ mode: 'read' });
         if (permission !== 'granted') {
-            showMessage('Permission denied to read folder', 'error', 'git-operation-result');
+            showMessage('❌ Permission denied to read folder. Please select the folder again.', 'error', 'git-operation-result');
             return;
         }
     } catch (error) {
         console.error('Permission error:', error);
     }
     
+    showMessage('<i class="fas fa-spinner fa-spin"></i> Scanning folder for files...', 'info', 'git-operation-result');
+    
     await loadGitFiles();
+    
+    // Count loaded files
+    const fileCount = document.querySelectorAll('.git-file-checkbox').length;
+    if (fileCount > 0) {
+        showMessage(`✅ Loaded ${fileCount} file(s) from folder. Select files and enter a commit message to push.`, 'success', 'git-operation-result');
+    }
 }
 
 // Select all files
@@ -6747,29 +6760,50 @@ async function commitAndPushChanges() {
     console.log('='.repeat(50));
     
     try {
+        // Step 1: Check if Git module is loaded
+        console.log('✓ Step 1: Checking Git module...');
         if (!window.GitOps) {
-            throw new Error('Git module not loaded');
+            throw new Error('Git module not loaded. Please refresh the page.');
         }
+        console.log('✓ Git module loaded');
         
+        // Step 2: Validate Git configuration
+        console.log('✓ Step 2: Validating Git configuration...');
+        const validation = window.GitOps.validateConfig(window.GitOps.config);
+        if (!validation.valid) {
+            throw new Error(`Git configuration incomplete: ${validation.message}. Please configure Git settings in the Settings tab first.`);
+        }
+        console.log('✓ Git configuration valid');
+        console.log(`   Repo: ${window.GitOps.config.owner}/${window.GitOps.config.repo}`);
+        console.log(`   Branch: ${window.GitOps.config.branch}`);
+        
+        // Step 3: Check folder selection
+        console.log('✓ Step 3: Checking project folder...');
         if (!projectFolderHandle) {
             throw new Error('Please select a project folder first (use "Select Folder" button)');
         }
+        console.log('✓ Project folder selected');
         
+        // Step 4: Validate commit message
+        console.log('✓ Step 4: Checking commit message...');
         const commitMessage = document.getElementById('git-commit-message').value.trim();
         if (!commitMessage) {
             throw new Error('Please enter a commit message');
         }
+        console.log(`✓ Commit message: "${commitMessage}"`);
         
-        // Get selected files
+        // Step 5: Get selected files
+        console.log('✓ Step 5: Checking selected files...');
         const selectedCheckboxes = Array.from(document.querySelectorAll('.git-file-checkbox:checked'));
         if (selectedCheckboxes.length === 0) {
             throw new Error('Please select at least one file to commit');
         }
+        console.log(`✓ ${selectedCheckboxes.length} file(s) selected`);
         
+        // Step 6: Read file contents
         showMessage(`<i class="fas fa-spinner fa-spin"></i> Reading ${selectedCheckboxes.length} file(s)...`, 'info', 'git-operation-result');
-        console.log(`📖 Reading ${selectedCheckboxes.length} file(s)...`);
+        console.log('✓ Step 6: Reading file contents...');
         
-        // Read actual file contents
         const files = [];
         const allFiles = await getAllFilesFromFolder(projectFolderHandle);
         
@@ -6784,22 +6818,29 @@ async function commitAndPushChanges() {
                         path: filePath,
                         content: content
                     });
-                    console.log(`  ✅ Read: ${filePath}`);
+                    console.log(`  ✅ Read: ${filePath} (${formatFileSize(fileData.size)})`);
                 } catch (error) {
                     console.error(`  ❌ Failed to read: ${filePath}`, error);
+                    throw new Error(`Failed to read file ${filePath}: ${error.message}`);
                 }
+            } else {
+                console.warn(`  ⚠️  File not found: ${filePath}`);
             }
         }
         
         if (files.length === 0) {
-            throw new Error('Could not read any files');
+            throw new Error('Could not read any selected files. Please reload the file list and try again.');
         }
         
         console.log(`✅ Successfully read ${files.length} file(s)`);
-        showMessage(`<i class="fas fa-spinner fa-spin"></i> Pushing ${files.length} file(s) to GitHub...`, 'info', 'git-operation-result');
-        console.log('📡 Pushing to GitHub...');
         
-        // Push using GitOps
+        // Step 7: Push to GitHub
+        showMessage(`<i class="fas fa-spinner fa-spin"></i> Pushing ${files.length} file(s) to GitHub...`, 'info', 'git-operation-result');
+        console.log('✓ Step 7: Pushing to GitHub...');
+        console.log(`   Repository: ${window.GitOps.config.owner}/${window.GitOps.config.repo}`);
+        console.log(`   Branch: ${window.GitOps.config.branch}`);
+        console.log(`   Files: ${files.length}`);
+        
         const result = await window.GitOps.pushFiles(files, commitMessage);
         
         if (result.success) {
@@ -6856,7 +6897,16 @@ async function commitAndPushChanges() {
         console.error('='.repeat(50));
         console.error(error);
         
-        showMessage(`❌ Push failed: ${error.message}`, 'error', 'git-operation-result');
+        // Show detailed error message
+        const errorMsg = `
+            <div>
+                <strong>❌ Push Failed</strong><br>
+                <div style="margin-top: 0.5rem; font-size: 0.9rem;">${error.message}</div>
+                ${error.stack ? `<details style="margin-top: 0.5rem; font-size: 0.8rem;"><summary>Technical Details</summary><pre style="background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 4px; overflow-x: auto; margin-top: 0.5rem;">${error.stack}</pre></details>` : ''}
+            </div>
+        `;
+        
+        showMessage(errorMsg, 'error', 'git-operation-result');
     }
 }
 

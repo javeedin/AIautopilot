@@ -1121,20 +1121,23 @@
 
                 <!-- Folder Selection -->
                 <div class="form-group">
-                    <label>Project Folder</label>
+                    <label>Project Folder <span style="font-size: 0.85rem; color: var(--text-tertiary);">(Default folder for commits)</span></label>
                     <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
                         <button class="btn btn-secondary" onclick="selectProjectFolder()" style="flex: 0 0 auto;">
                             <i class="fas fa-folder-open"></i> Select Folder
                         </button>
-                        <div id="selected-folder-display" style="flex: 1; padding: 0.5rem 1rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.9rem; color: var(--text-secondary);">
+                        <div id="selected-folder-display" style="flex: 1; padding: 0.75rem 1rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.9rem; color: var(--text-secondary); border: 1px solid var(--border-color);">
                             <i class="fas fa-info-circle"></i> No folder selected
                         </div>
+                        <button class="btn btn-sm btn-secondary" onclick="selectProjectFolder()" title="Change folder" style="flex: 0 0 auto;">
+                            <i class="fas fa-sync-alt"></i> Change
+                        </button>
                         <button class="btn btn-sm btn-secondary" onclick="clearProjectFolder()" title="Clear folder" style="flex: 0 0 auto;">
-                            <i class="fas fa-times"></i>
+                            <i class="fas fa-times"></i> Clear
                         </button>
                     </div>
                     <small class="text-muted">
-                        <i class="fas fa-lightbulb"></i> Select your project folder. The selection will be remembered for future sessions.
+                        <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Select your project folder once and it will be remembered for future sessions. You can change or clear it anytime.
                     </small>
                 </div>
 
