@@ -158,12 +158,25 @@ AIautopilot/
 
 ## Troubleshooting
 
+### Getting "400 Error" from Gmail?
+
+This is the most common issue. See the detailed [TROUBLESHOOTING.md](TROUBLESHOOTING.md) guide for step-by-step fixes.
+
+**Quick checklist:**
+1. Gmail API is enabled in Google Cloud Console
+2. OAuth consent screen is configured
+3. Authorized JavaScript origins = `http://localhost:8080` (exact match)
+4. Client ID is copied correctly to config.js
+5. Running from web server (not file://)
+
 ### Gmail Connection Issues
 
 - Ensure Gmail API is enabled in Google Cloud Console
-- Verify authorized JavaScript origins match your domain exactly
+- Verify authorized JavaScript origins match your domain exactly (no trailing slash)
 - Check that the OAuth consent screen is configured
 - Make sure you're using the correct Client ID
+- **Must run from web server** - `python -m http.server 8080`
+- Check browser console (F12) for detailed error messages
 
 ### Outlook Connection Issues
 

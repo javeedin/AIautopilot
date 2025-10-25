@@ -11,6 +11,9 @@ class EmailFetcher {
     }
 
     init() {
+        // Validate configuration and environment
+        this.validateSetup();
+
         // Initialize Microsoft Authentication Library
         this.initMSAL();
 
@@ -19,6 +22,43 @@ class EmailFetcher {
 
         // Check for existing sessions
         this.checkExistingSessions();
+    }
+
+    validateSetup() {
+        const issues = [];
+
+        // Check if running from file:// protocol
+        if (window.location.protocol === 'file:') {
+            issues.push('⚠️ You are running from file:// protocol. Please use a web server (e.g., python -m http.server 8080)');
+        }
+
+        // Check if config is loaded
+        if (!window.CONFIG) {
+            issues.push('⚠️ Config file not loaded. Make sure config.js is loaded before app.js');
+        } else {
+            // Check Google Client ID
+            if (!window.CONFIG.GOOGLE_CLIENT_ID || window.CONFIG.GOOGLE_CLIENT_ID.includes('YOUR_GOOGLE_CLIENT_ID')) {
+                issues.push('⚠️ Google Client ID not configured in config.js');
+            }
+
+            // Check Outlook Client ID
+            if (!window.CONFIG.OUTLOOK_CLIENT_ID || window.CONFIG.OUTLOOK_CLIENT_ID.includes('YOUR_OUTLOOK_CLIENT_ID')) {
+                issues.push('⚠️ Outlook Client ID not configured in config.js');
+            }
+        }
+
+        if (issues.length > 0) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'setup-warning';
+            warningDiv.innerHTML = `
+                <h3>⚙️ Setup Required</h3>
+                <ul>
+                    ${issues.map(issue => `<li>${issue}</li>`).join('')}
+                </ul>
+                <p>See README.md for setup instructions.</p>
+            `;
+            document.querySelector('.auth-section').prepend(warningDiv);
+        }
     }
 
     initMSAL() {
@@ -68,16 +108,49 @@ class EmailFetcher {
 
     // Google Authentication
     authenticateGoogle() {
-        const client = google.accounts.oauth2.initTokenClient({
-            client_id: window.CONFIG.GOOGLE_CLIENT_ID,
-            scope: 'https://www.googleapis.com/auth/gmail.readonly',
-            callback: (response) => {
-                if (response.access_token) {
-                    this.handleGoogleAuth(response.access_token);
+        // Validate configuration
+        if (!window.CONFIG || !window.CONFIG.GOOGLE_CLIENT_ID ||
+            window.CONFIG.GOOGLE_CLIENT_ID.includes('YOUR_GOOGLE_CLIENT_ID')) {
+            this.showStatus('Please configure your Google Client ID in config.js first!', 'error');
+            return;
+        }
+
+        // Check if running from proper protocol
+        if (window.location.protocol === 'file:') {
+            this.showStatus('Please run from a web server (not file://). Use: python -m http.server 8080', 'error');
+            return;
+        }
+
+        // Check if Google API is loaded
+        if (typeof google === 'undefined' || !google.accounts) {
+            this.showStatus('Google API not loaded. Please check your internet connection and reload.', 'error');
+            return;
+        }
+
+        try {
+            const client = google.accounts.oauth2.initTokenClient({
+                client_id: window.CONFIG.GOOGLE_CLIENT_ID,
+                scope: 'https://www.googleapis.com/auth/gmail.readonly',
+                callback: (response) => {
+                    if (response.error) {
+                        console.error('Google OAuth error:', response);
+                        this.showStatus(`Google authentication failed: ${response.error}`, 'error');
+                        return;
+                    }
+                    if (response.access_token) {
+                        this.handleGoogleAuth(response.access_token);
+                    }
+                },
+                error_callback: (error) => {
+                    console.error('Google OAuth error callback:', error);
+                    this.showStatus(`Google authentication error: ${error.type || 'Unknown error'}`, 'error');
                 }
-            }
-        });
-        client.requestAccessToken();
+            });
+            client.requestAccessToken();
+        } catch (error) {
+            console.error('Error initializing Google auth:', error);
+            this.showStatus(`Failed to initialize Google authentication: ${error.message}`, 'error');
+        }
     }
 
     async handleGoogleAuth(accessToken) {
