@@ -1008,6 +1008,22 @@
                 <h4><i class="fas fa-cog"></i> Git Configuration</h4>
                 <p class="text-muted text-small mb-2">Configure your Git repository and authentication</p>
 
+                <!-- Important Notice -->
+                <div style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1)); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #ffc107;">
+                    <div style="display: flex; align-items: start; gap: 0.75rem;">
+                        <i class="fas fa-exclamation-triangle" style="color: #ffc107; font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                        <div style="flex: 1;">
+                            <strong style="color: #f57c00;">Important:</strong>
+                            <ul style="margin: 0.5rem 0 0 1rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>Always click "Test Connection" before saving</li>
+                                <li>Your token needs <strong>full "repo" scope</strong> to push files</li>
+                                <li>Double-check repository owner and name (case-sensitive)</li>
+                                <li>Verify the branch name exists in your repository</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>GitHub Username <span style="color: var(--danger);">*</span></label>
                     <input type="text" id="git-username" placeholder="your-username" class="form-control">
@@ -1020,7 +1036,7 @@
                         <i class="fas fa-info-circle"></i> 
                         Create a token at 
                         <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Developer Settings → Personal Access Tokens</a>
-                        with 'repo' scope
+                        with <strong>full "repo" scope</strong>
                     </small>
                 </div>
 
@@ -1033,11 +1049,13 @@
                 <div class="form-group">
                     <label>Repository Name <span style="color: var(--danger);">*</span></label>
                     <input type="text" id="git-repo" placeholder="repository-name" class="form-control">
+                    <small class="text-muted">Find this in your GitHub URL: github.com/owner/<strong>repo-name</strong></small>
                 </div>
 
                 <div class="form-group">
                     <label>Branch</label>
                     <input type="text" id="git-branch" placeholder="main" value="main" class="form-control">
+                    <small class="text-muted">Common: "main" or "master" - must exist in your repository</small>
                 </div>
 
                 <div class="form-group">
@@ -1083,6 +1101,23 @@
             <div class="tab-content" id="tab-git-operations">
                 <h4><i class="fas fa-terminal"></i> Git Operations</h4>
                 <p class="text-muted text-small mb-2">Commit and push changes to your repository</p>
+
+                <!-- Quick Help -->
+                <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1)); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+                    <div style="display: flex; align-items: start; gap: 0.75rem;">
+                        <i class="fas fa-info-circle" style="color: var(--primary); font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                        <div style="flex: 1;">
+                            <strong style="color: var(--primary);">Quick Guide:</strong>
+                            <ol style="margin: 0.5rem 0 0 1rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>Click "Select Folder" to choose your project directory</li>
+                                <li>Click "Load Files" to scan for files</li>
+                                <li>Select files you want to commit</li>
+                                <li>Enter a commit message</li>
+                                <li>Click "Commit & Push" to upload to GitHub</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Folder Selection -->
                 <div class="form-group">

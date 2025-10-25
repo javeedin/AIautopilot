@@ -6742,34 +6742,33 @@ function setCommitMessage(prefix) {
 
 // Commit and Push Changes
 async function commitAndPushChanges() {
-    if (!window.GitOps) {
-        showMessage('Git module not loaded', 'error', 'git-operation-result');
-        return;
-    }
-    
-    if (!projectFolderHandle) {
-        showMessage('Please select a project folder first', 'error', 'git-operation-result');
-        return;
-    }
-    
-    const commitMessage = document.getElementById('git-commit-message').value.trim();
-    
-    if (!commitMessage) {
-        showMessage('Please enter a commit message', 'error', 'git-operation-result');
-        return;
-    }
-    
-    // Get selected files
-    const selectedCheckboxes = Array.from(document.querySelectorAll('.git-file-checkbox:checked'));
-    
-    if (selectedCheckboxes.length === 0) {
-        showMessage('Please select at least one file to commit', 'error', 'git-operation-result');
-        return;
-    }
-    
-    showMessage(`<i class="fas fa-spinner fa-spin"></i> Reading ${selectedCheckboxes.length} file(s) and preparing commit...`, 'info', 'git-operation-result');
+    console.log('='.repeat(50));
+    console.log('🚀 STARTING PUSH PROCESS');
+    console.log('='.repeat(50));
     
     try {
+        if (!window.GitOps) {
+            throw new Error('Git module not loaded');
+        }
+        
+        if (!projectFolderHandle) {
+            throw new Error('Please select a project folder first (use "Select Folder" button)');
+        }
+        
+        const commitMessage = document.getElementById('git-commit-message').value.trim();
+        if (!commitMessage) {
+            throw new Error('Please enter a commit message');
+        }
+        
+        // Get selected files
+        const selectedCheckboxes = Array.from(document.querySelectorAll('.git-file-checkbox:checked'));
+        if (selectedCheckboxes.length === 0) {
+            throw new Error('Please select at least one file to commit');
+        }
+        
+        showMessage(`<i class="fas fa-spinner fa-spin"></i> Reading ${selectedCheckboxes.length} file(s)...`, 'info', 'git-operation-result');
+        console.log(`📖 Reading ${selectedCheckboxes.length} file(s)...`);
+        
         // Read actual file contents
         const files = [];
         const allFiles = await getAllFilesFromFolder(projectFolderHandle);
@@ -6779,37 +6778,85 @@ async function commitAndPushChanges() {
             const fileData = allFiles.find(f => f.path === filePath);
             
             if (fileData) {
-                const content = await fileData.file.text();
-                files.push({
-                    path: filePath,
-                    content: content
-                });
+                try {
+                    const content = await fileData.file.text();
+                    files.push({
+                        path: filePath,
+                        content: content
+                    });
+                    console.log(`  ✅ Read: ${filePath}`);
+                } catch (error) {
+                    console.error(`  ❌ Failed to read: ${filePath}`, error);
+                }
             }
         }
         
         if (files.length === 0) {
-            showMessage('No valid files found to commit', 'error', 'git-operation-result');
-            return;
+            throw new Error('Could not read any files');
         }
         
+        console.log(`✅ Successfully read ${files.length} file(s)`);
         showMessage(`<i class="fas fa-spinner fa-spin"></i> Pushing ${files.length} file(s) to GitHub...`, 'info', 'git-operation-result');
+        console.log('📡 Pushing to GitHub...');
         
+        // Push using GitOps
         const result = await window.GitOps.pushFiles(files, commitMessage);
         
         if (result.success) {
-            showMessage(`✅ Successfully pushed ${files.length} file(s)!<br><small>Commit: ${result.data.sha.substring(0, 7)}<br>Message: "${commitMessage}"</small>`, 'success', 'git-operation-result');
+            // Safe SHA handling
+            let commitSha = 'unknown';
+            try {
+                if (result.data && result.data.sha) {
+                    commitSha = result.data.sha.substring(0, 7);
+                }
+            } catch (e) {
+                console.warn('Could not extract SHA:', e);
+            }
+            
+            const repoUrl = `https://github.com/${window.GitOps.config.owner}/${window.GitOps.config.repo}/tree/${window.GitOps.config.branch}`;
+            
+            const successMsg = `
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎉</div>
+                    <strong style="font-size: 1.2rem; color: var(--success);">SUCCESS!</strong>
+                    <div style="margin-top: 1rem;">
+                        <div>✅ Pushed ${files.length} file(s) to GitHub</div>
+                        <div style="margin: 0.5rem 0;">
+                            <small>Commit: <code>${commitSha}</code></small><br>
+                            <small>Message: "${commitMessage}"</small>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <a href="${repoUrl}" target="_blank" style="color: var(--primary); text-decoration: underline;">
+                                🔗 View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showMessage(successMsg, 'success', 'git-operation-result');
             document.getElementById('git-commit-message').value = '';
+            
+            console.log('='.repeat(50));
+            console.log(`🎉 SUCCESS! Pushed ${files.length} file(s)!`);
+            console.log(`   Commit: ${commitSha}`);
+            console.log(`   URL: ${repoUrl}`);
+            console.log('='.repeat(50));
             
             // Show success notification
             if (window.showNotification) {
                 showNotification('Git Push Successful', `Pushed ${files.length} file(s) to ${window.GitOps.config.owner}/${window.GitOps.config.repo}`, 'success');
             }
         } else {
-            showMessage(`❌ Push failed: ${result.message}`, 'error', 'git-operation-result');
+            throw new Error(result.message || 'Push failed for unknown reason');
         }
     } catch (error) {
-        console.error('Error during commit and push:', error);
-        showMessage(`❌ Error: ${error.message}`, 'error', 'git-operation-result');
+        console.error('='.repeat(50));
+        console.error('❌ PUSH FAILED:', error.message);
+        console.error('='.repeat(50));
+        console.error(error);
+        
+        showMessage(`❌ Push failed: ${error.message}`, 'error', 'git-operation-result');
     }
 }
 

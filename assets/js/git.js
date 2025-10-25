@@ -339,39 +339,61 @@ window.GitOps = {
     // Push multiple files
     pushFiles: async function(files, commitMessage) {
         try {
+            console.log('📡 Starting GitHub push...');
+            console.log(`   Files: ${files.length}`);
+            console.log(`   Message: "${commitMessage}"`);
+            console.log(`   Repo: ${this.config.owner}/${this.config.repo}`);
+            console.log(`   Branch: ${this.config.branch}`);
+            
             // Get the latest commit SHA
+            console.log('  📡 Getting latest commit SHA...');
             const refResponse = await this.apiRequest(
                 `/repos/${this.config.owner}/${this.config.repo}/git/ref/heads/${this.config.branch}`
             );
             const latestCommitSha = refResponse.object.sha;
+            console.log(`  ✅ Latest commit: ${latestCommitSha.substring(0, 7)}`);
             
             // Get the tree SHA of the latest commit
+            console.log('  📡 Getting tree SHA...');
             const commitResponse = await this.apiRequest(
                 `/repos/${this.config.owner}/${this.config.repo}/git/commits/${latestCommitSha}`
             );
             const baseTreeSha = commitResponse.tree.sha;
+            console.log(`  ✅ Base tree: ${baseTreeSha.substring(0, 7)}`);
             
             // Create blobs for each file
+            console.log('  📡 Creating blobs...');
             const tree = [];
             for (const file of files) {
-                const blobResponse = await this.apiRequest(
-                    `/repos/${this.config.owner}/${this.config.repo}/git/blobs`,
-                    'POST',
-                    {
-                        content: btoa(unescape(encodeURIComponent(file.content))),
-                        encoding: 'base64'
-                    }
-                );
-                
-                tree.push({
-                    path: file.path,
-                    mode: '100644',
-                    type: 'blob',
-                    sha: blobResponse.sha
-                });
+                try {
+                    const blobResponse = await this.apiRequest(
+                        `/repos/${this.config.owner}/${this.config.repo}/git/blobs`,
+                        'POST',
+                        {
+                            content: btoa(unescape(encodeURIComponent(file.content))),
+                            encoding: 'base64'
+                        }
+                    );
+                    
+                    tree.push({
+                        path: file.path,
+                        mode: '100644',
+                        type: 'blob',
+                        sha: blobResponse.sha
+                    });
+                    console.log(`  ✅ Blob created: ${file.path}`);
+                } catch (error) {
+                    console.error(`  ❌ Blob failed: ${file.path}`, error);
+                    throw new Error(`Failed to create blob for ${file.path}: ${error.message}`);
+                }
+            }
+            
+            if (tree.length === 0) {
+                throw new Error('No blobs were created');
             }
             
             // Create new tree
+            console.log('  📡 Creating tree...');
             const treeResponse = await this.apiRequest(
                 `/repos/${this.config.owner}/${this.config.repo}/git/trees`,
                 'POST',
@@ -380,8 +402,10 @@ window.GitOps = {
                     tree: tree
                 }
             );
+            console.log(`  ✅ Tree created: ${treeResponse.sha.substring(0, 7)}`);
             
             // Create new commit
+            console.log('  📡 Creating commit...');
             const newCommitResponse = await this.apiRequest(
                 `/repos/${this.config.owner}/${this.config.repo}/git/commits`,
                 'POST',
@@ -391,8 +415,10 @@ window.GitOps = {
                     parents: [latestCommitSha]
                 }
             );
+            console.log(`  ✅ Commit created: ${newCommitResponse.sha.substring(0, 7)}`);
             
             // Update reference
+            console.log('  📡 Updating branch reference...');
             await this.apiRequest(
                 `/repos/${this.config.owner}/${this.config.repo}/git/refs/heads/${this.config.branch}`,
                 'PATCH',
@@ -400,6 +426,7 @@ window.GitOps = {
                     sha: newCommitResponse.sha
                 }
             );
+            console.log('  ✅ Branch updated successfully!');
             
             return {
                 success: true,
@@ -407,9 +434,11 @@ window.GitOps = {
                 data: newCommitResponse
             };
         } catch (error) {
+            console.error('❌ Push error:', error);
             return {
                 success: false,
-                message: error.message
+                message: error.message,
+                error: error
             };
         }
     },
