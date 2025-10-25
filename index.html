@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMS Auto Pilot v4</title>
+    
+    <!-- External Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- DevExpress DataGrid -->
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.2.3/css/dx.light.css">
+    
+    <!-- Our CSS Modules -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/grid.css">
+</head>
+<body data-theme="light">
+</head>
+<body data-theme="light">
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="header-title">
+                        <h1>WMS Auto Pilot v4</h1>
+                        <p>AI-Powered Warehouse Intelligence</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                        <div class="theme-toggle-slider">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                    </div>
+
+                    <div class="status-indicator status-loading" id="dataStatus" style="display: none;">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <span>Loading...</span>
+                    </div>
+
+                    <button class="btn btn-secondary" id="conversationHistoryBtn" title="Conversation History">
+                        <i class="fas fa-history"></i>
+                    </button>
+                    
+                    <button class="btn" id="learningAnalyticsBtn" title="View Learning Analytics" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); position: relative;">
+                        <i class="fas fa-brain"></i>
+                        <span id="learningBadge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 10px; padding: 0.15rem 0.4rem; font-size: 0.65rem; font-weight: 700; min-width: 18px; text-align: center;">0</span>
+                    </button>
+
+                    <button class="btn" id="viewDataBtn" title="View Loaded Data" style="display: none; background: linear-gradient(135deg, var(--secondary), #059669);">
+                        <i class="fas fa-table"></i>
+                        View Data
+                        <span id="viewDataBtnCount" style="margin-left: 0.5rem; background: rgba(255,255,255,0.3); padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.75rem; font-weight: 700;"></span>
+                    <button class="btn btn-secondary" onclick="openInsightsConfig()" title="Configure Custom Insights" id="configureInsightsBtn" style="display: none;">
+                        <i class="fas fa-cog"></i> Configure Insights
+                    </button>
+                    </button>
+
+                    <button class="btn btn-secondary" id="dataSourcesBtn" title="Data Sources">
+                        <i class="fas fa-database"></i>
+                    </button>
+
+                    <button class="btn btn-secondary" id="setupBtn" title="Setup & Configuration">
+                        <i class="fas fa-cog"></i>
+                    </button>
+
+                    <button class="btn btn-secondary" id="configApiBtn" title="Configure AI">
+                        <i class="fas fa-key"></i>
+                    </button>
+
+                    <button class="btn btn-secondary" id="gitBtn" title="Git Operations" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                        <i class="fab fa-github"></i>
+                    </button>
+
+                    <button class="btn btn-secondary btn-icon" id="clearBtn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="content-area">
+            <div class="chat-container">
+                <div class="messages-container" id="messagesContainer">
+                    <div class="messages" id="messages">
+                        <div class="message assistant">
+                            <div class="avatar bot">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <strong>Welcome! 🚀</strong><br><br>
+                                Click <strong>🗂️ Data Sources</strong> to select and load data →
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <div class="input-container">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                class="input-field" 
+                                id="userInput" 
+                                placeholder="Type a question..."
+                            />
+                            <button class="btn" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insights Toggle Button -->
+            <button class="insights-toggle-btn" id="insightsToggleBtn" title="Show Insights">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+            
+            <!-- Insights Panel -->
+            <div class="insights-panel" id="insightsPanel">
+                <div class="insights-panel-header">
+                    <div class="insights-panel-title">
+                        <span><i class="fas fa-lightbulb"></i> Data Insights</span>
+                        <button class="btn-icon" onclick="toggleInsightsPanel()" title="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="insights-panel-subtitle">Auto-generated summaries & quick prompts</div>
+                </div>
+                
+                <div class="insights-panel-content" id="insightsPanelContent">
+                    <div style="text-align: center; padding: 3rem 2rem; color: var(--text-tertiary);">
+                        <i class="fas fa-database" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <p>Load data to see insights and quick prompts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup & Configuration Modal -->
+    <div class="modal" id="setupModal">
+        <div class="modal-content xl">
+            <div class="modal-header">
+                <h3>⚙️ Setup & Configuration</h3>
+                <button class="modal-close" id="closeSetupModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="sessions">Sessions</button>
+                    <button class="tab" data-tab="messages">Messages</button>
+                    <button class="tab" data-tab="search">Search</button>
+                    <button class="tab" data-tab="datasources">Data Sources</button>
+                </div>
+
+                <!-- Sessions Tab -->
+                <div class="tab-content active" id="tab-sessions">
+                    <h4>Conversation Sessions API</h4>
+                    <p class="text-muted text-small mb-2">Configure endpoints for managing conversation sessions</p>
+
+                    <div class="form-group">
+                        <label>GET Sessions Endpoint</label>
+                        <input type="text" id="endpoint-sessions-get" 
+                               placeholder="https://your-api.com/conversations/sessions">
+                    </div>
+
+                    <div class="form-group">
+                        <label>POST Create Session Endpoint</label>
+                        <input type="text" id="endpoint-sessions-post" 
+                               placeholder="https://your-api.com/conversations/sessions">
+                    </div>
+
+                    <div class="form-group">
+                        <label>PUT Update Session Endpoint</label>
+                        <input type="text" id="endpoint-sessions-put" 
+                               placeholder="https://your-api.com/conversations/sessions/:id">
+                        <small class="text-muted">Use :id as placeholder for session ID</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>DELETE Session Endpoint</label>
+                        <input type="text" id="endpoint-sessions-delete" 
+                               placeholder="https://your-api.com/conversations/sessions/:id">
+                    </div>
+
+                    <div class="flex gap-2 mt-3">
+                        <button class="btn btn-success" onclick="testEndpoint('sessions', 'get')">
+                            <i class="fas fa-vial"></i> Test GET
+                        </button>
+                        <button class="btn btn-success" onclick="testEndpoint('sessions', 'post')">
+                            <i class="fas fa-vial"></i> Test POST
+                        </button>
+                        <button class="btn" onclick="saveEndpointConfig('sessions')">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
+                    <div class="test-result" id="test-result-sessions"></div>
+                </div>
+
+                <!-- Messages Tab -->
+                <div class="tab-content" id="tab-messages">
+                    <h4>Conversation Messages API</h4>
+                    <p class="text-muted text-small mb-2">Configure endpoints for managing messages</p>
+
+                    <div class="form-group">
+                        <label>GET Messages Endpoint</label>
+                        <input type="text" id="endpoint-messages-get" 
+                               placeholder="https://your-api.com/conversations/sessions/:id/messages">
+                        <small class="text-muted">Use :id as placeholder for session ID</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>POST Add Message Endpoint</label>
+                        <input type="text" id="endpoint-messages-post" 
+                               placeholder="https://your-api.com/conversations/messages">
+                    </div>
+
+                    <div class="flex gap-2 mt-3">
+                        <button class="btn btn-success" onclick="testEndpoint('messages', 'get')">
+                            <i class="fas fa-vial"></i> Test GET
+                        </button>
+                        <button class="btn btn-success" onclick="testEndpoint('messages', 'post')">
+                            <i class="fas fa-vial"></i> Test POST
+                        </button>
+                        <button class="btn" onclick="saveEndpointConfig('messages')">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
+                    <div class="test-result" id="test-result-messages"></div>
+                </div>
+
+                <!-- Search Tab -->
+                <div class="tab-content" id="tab-search">
+                    <h4>Conversation Search API</h4>
+                    <p class="text-muted text-small mb-2">Configure endpoint for searching conversations</p>
+
+                    <div class="form-group">
+                        <label>GET Search Endpoint</label>
+                        <input type="text" id="endpoint-search-get" 
+                               placeholder="https://your-api.com/conversations/search">
+                        <small class="text-muted">Query parameter 'q' will be appended automatically</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Test Search Term</label>
+                        <input type="text" id="test-search-term" 
+                               placeholder="Enter a search term to test"
+                               value="picker">
+                    </div>
+
+                    <div class="flex gap-2 mt-3">
+                        <button class="btn btn-success" onclick="testEndpoint('search', 'get')">
+                            <i class="fas fa-vial"></i> Test Search
+                        </button>
+                        <button class="btn" onclick="saveEndpointConfig('search')">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
+                    <div class="test-result" id="test-result-search"></div>
+                </div>
+
+                <!-- Data Sources Tab -->
+                <div class="tab-content" id="tab-datasources">
+                    <h4>Data Sources API</h4>
+                    <p class="text-muted text-small mb-2">Configure endpoint for data sources</p>
+
+                    <div class="form-group">
+                        <label>GET Data Sources Endpoint</label>
+                        <input type="text" id="endpoint-datasources-get" 
+                               placeholder="https://your-api.com/datasources"
+                               value="https://g09254cbbf8e7af-graysprod.adb.eu-frankfurt-1.oraclecloudapps.com/ords/WKSP_GRAYSAPP/WAREHOUSEMANAGEMENT/AUTOPILOTDATA">
+                    </div>
+
+                    <div class="flex gap-2 mt-3">
+                        <button class="btn btn-success" onclick="testEndpoint('datasources', 'get')">
+                            <i class="fas fa-vial"></i> Test GET
+                        </button>
+                        <button class="btn" onclick="saveEndpointConfig('datasources')">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
+                    <div class="test-result" id="test-result-datasources"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conversation History Modal -->
+    <div class="modal" id="conversationHistoryModal">
+        <div class="modal-content xl">
+            <div class="modal-header">
+                <h3>📚 Conversation History</h3>
+                <button class="modal-close" id="closeConversationHistoryModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Search Box -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="historySearch" placeholder="Search conversations...">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex-between mb-3">
+                    <div class="flex gap-2">
+                        <select id="dataSourceFilter" class="btn btn-secondary">
+                            <option value="">All Data Sources</option>
+                        </select>
+                        <select id="dateRangeFilter" class="btn btn-secondary">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="toggleFavoriteFilter()">
+                        <i class="fas fa-star"></i> Favorites Only
+                    </button>
+                </div>
+
+                <!-- Loading State -->
+                <div id="historyLoading" style="display: none;" class="flex-center mt-3 mb-3">
+                    <div class="spinner"></div>
+                    <span style="margin-left: 0.5rem;">Loading conversations...</span>
+                </div>
+
+                <!-- Tree View Container -->
+                <div id="conversationTree" class="tree-view">
+                    <!-- Tree will be populated here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="historyEmpty" style="display: none; text-align: center; padding: 3rem;">
+                    <i class="fas fa-inbox" style="font-size: 3rem; color: var(--text-tertiary); margin-bottom: 1rem;"></i>
+                    <p class="text-muted">No conversations found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Conversation Modal -->
+    <div class="modal" id="viewConversationModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <div>
+                    <h3 id="viewConvTitle">Conversation</h3>
+                    <p class="text-muted text-small" id="viewConvMeta"></p>
+                </div>
+                <button class="modal-close" id="closeViewConversationModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="conversationMessages">
+                    <!-- Messages will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Sources Modal -->
+    <div class="modal" id="dataSourcesModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>🗂️ Select Data Sources</h3>
+                <button class="modal-close" id="closeDataSourcesModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Select data sources to load and analyze with AI</p>
+                
+                <div id="dataSourcesLoadingMsg" style="text-align: center; padding: 2rem; display: none;">
+                    <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                    <p>Loading data sources...</p>
+                </div>
+
+                <div id="dataSourcesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <!-- Data sources will be populated here -->
+                </div>
+
+                <div id="dataSourcesErrorMsg" style="display: none; padding: 1rem; background: rgba(239, 68, 68, 0.2); border-radius: 8px; color: var(--danger);">
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-secondary); border-top: 1px solid var(--border-color); border-radius: 0 0 12px 12px; margin: 1rem -2rem -2rem;">
+                <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                    <strong id="selectedSourcesCount">0</strong> source(s) selected
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn" id="loadDataBtn" disabled>
+                        <i class="fas fa-download"></i>
+                        <span>Load Selected Data</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Source Parameters Modal -->
+    <div class="modal" id="dataSourceParamsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📝 Data Source Parameters</h3>
+                <button class="modal-close" id="closeDataSourceParamsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-2">Configure parameters for: <strong id="paramSourceName"></strong></p>
+                
+                <div id="parametersList">
+                    <!-- Parameters will be dynamically added here -->
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--primary);">
+                    <strong>💡 Default Parameters:</strong>
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                        • <strong>P_INSTANCE_NAME:</strong> PROD<br>
+                        • <strong>P_DATE_FROM:</strong> <span id="defaultDateFrom"></span><br>
+                        • <strong>P_DATE_TO:</strong> <span id="defaultDateTo"></span>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="saveParamsDefault" checked>
+                        <span>Remember these parameters as default</span>
+                    </label>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+                <button class="btn btn-secondary" id="resetParamsBtn">
+                    <i class="fas fa-undo"></i>
+                    <span>Reset to Default</span>
+                </button>
+                <button class="btn" id="loadWithParamsBtn" style="flex: 1;">
+                    <i class="fas fa-download"></i>
+                    <span>Load Data</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claude API Key Modal -->
+    <div class="modal" id="apiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🤖 AI Configuration</h3>
+                <button class="modal-close" id="closeApiModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Configure Claude API to enable natural language queries.</p>
+                <p>Get your API key from <a href="https://console.anthropic.com/" target="_blank" style="color: var(--primary);">console.anthropic.com</a></p>
+                
+                <div class="form-group">
+                    <label>Claude API Key</label>
+                    <input type="password" id="apiKeyInputModal" placeholder="sk-ant-api03-xxxxx..." style="font-family: monospace;">
+                </div>
+
+                <div id="apiStatusMsg" class="test-result"></div>
+            </div>
+            <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+                <button class="btn" id="saveApiKeyBtn" style="flex: 1;">
+                    <i class="fas fa-save"></i>
+                    <span>Save & Test</span>
+                </button>
+                <button class="btn btn-danger" id="removeApiKeyBtn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Viewer Modal -->
+    <div class="data-viewer-modal" id="dataViewerModal">
+        <div class="data-viewer-container">
+            <div class="data-viewer-header">
+                <div class="data-viewer-title">
+                    <i class="fas fa-table"></i>
+                    Data Viewer
+                </div>
+                <div class="data-viewer-actions">
+                    <button class="btn btn-secondary" onclick="exportAllData()">
+                        <i class="fas fa-download"></i> Export All
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeDataViewer()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            
+            <div class="data-viewer-tabs" id="dataViewerTabs">
+                <!-- Tabs will be dynamically generated -->
+            </div>
+            
+            <div class="data-viewer-content" id="dataViewerContent">
+                <!-- Tab contents will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Analytics Modal -->
+    <div class="modal" id="learningAnalyticsModal">
+        <div class="modal-content" style="max-width: 1400px; width: 95%; height: 90vh;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                <h3 style="color: white; margin: 0;">
+                    <i class="fas fa-brain"></i> Learning Analytics
+                </h3>
+                <button class="btn-icon" onclick="closeLearningAnalytics()" style="color: white;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body" style="padding: 0; height: calc(90vh - 120px); overflow-y: auto;">
+                <!-- Stats Overview -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; padding: 1.5rem; background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                    <!-- Total Queries -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color); border-left: 4px solid #6366f1;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="color: var(--text-tertiary); font-size: 0.85rem; margin-bottom: 0.25rem;">Total Queries</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);" id="statTotalQueries">0</div>
+                            </div>
+                            <div style="background: rgba(99, 102, 241, 0.1); padding: 0.75rem; border-radius: 10px;">
+                                <i class="fas fa-comments" style="font-size: 1.5rem; color: #6366f1;"></i>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-tertiary); font-size: 0.75rem;">
+                            <i class="fas fa-chart-line"></i> All time
+                        </div>
+                    </div>
+                    
+                    <!-- Success Rate -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color); border-left: 4px solid #10b981;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="color: var(--text-tertiary); font-size: 0.85rem; margin-bottom: 0.25rem;">Success Rate</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);" id="statSuccessRate">0%</div>
+                            </div>
+                            <div style="background: rgba(16, 185, 129, 0.1); padding: 0.75rem; border-radius: 10px;">
+                                <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #10b981;"></i>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-tertiary); font-size: 0.75rem;">
+                            <span id="statSuccessfulQueries">0</span> successful
+                        </div>
+                    </div>
+                    
+                    <!-- Patterns Learned -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color); border-left: 4px solid #f59e0b;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="color: var(--text-tertiary); font-size: 0.85rem; margin-bottom: 0.25rem;">Patterns Learned</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);" id="statPatternsLearned">0</div>
+                            </div>
+                            <div style="background: rgba(245, 158, 11, 0.1); padding: 0.75rem; border-radius: 10px;">
+                                <i class="fas fa-brain" style="font-size: 1.5rem; color: #f59e0b;"></i>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-tertiary); font-size: 0.75rem;">
+                            <i class="fas fa-graduation-cap"></i> AI learning
+                        </div>
+                    </div>
+                    
+                    <!-- Avg Response Time -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color); border-left: 4px solid #8b5cf6;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="color: var(--text-tertiary); font-size: 0.85rem; margin-bottom: 0.25rem;">Avg Response Time</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);" id="statAvgResponseTime">0ms</div>
+                            </div>
+                            <div style="background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 10px;">
+                                <i class="fas fa-bolt" style="font-size: 1.5rem; color: #8b5cf6;"></i>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-tertiary); font-size: 0.75rem;">
+                            <i class="fas fa-clock"></i> Performance
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Sections -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 1.5rem;">
+                    <!-- Query Types Breakdown -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color);">
+                        <h4 style="margin: 0 0 1rem 0; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-chart-pie" style="color: #6366f1;"></i>
+                            Query Types Breakdown
+                        </h4>
+                        <div id="queryTypesContent" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Queries -->
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color);">
+                        <h4 style="margin: 0 0 1rem 0; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-fire" style="color: #ef4444;"></i>
+                            Popular Queries
+                        </h4>
+                        <div id="popularQueriesContent" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color);">
+                        <h4 style="margin: 0 0 1rem 0; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-history" style="color: #10b981;"></i>
+                            Recent Activity
+                        </h4>
+                        <div id="recentActivityContent" style="max-height: 400px; overflow-y: auto;">
+                            <!-- Will be populated -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" onclick="refreshLearningAnalytics()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportLearningData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="btn btn-danger" onclick="clearLearningData()">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                </div>
+                <button class="btn btn-secondary" onclick="closeLearningAnalytics()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!-- INSIGHTS CONFIGURATION MODAL -->
+<div class="modal" id="insightsConfigModal">
+    <div class="modal-content" style="max-width: 1400px; width: 95%; height: 90vh;">
+        <div class="modal-header" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+            <h3 style="color: white; margin: 0;">
+                <i class="fas fa-cog"></i> Configure Insights
+            </h3>
+            <button class="btn-icon" onclick="closeInsightsConfig()" style="color: white;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="modal-body" style="padding: 0; display: flex; height: calc(90vh - 120px);">
+            <!-- Left Panel: Data Source & Columns -->
+            <div style="width: 400px; border-right: 2px solid var(--border-color); display: flex; flex-direction: column; background: var(--bg-secondary);">
+                <!-- Data Source Selector -->
+                <div style="padding: 1.5rem; border-bottom: 2px solid var(--border-color);">
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                        <i class="fas fa-database"></i> Select Data Source
+                    </label>
+                    <select id="insightConfigSourceSelect" onchange="loadSourceForInsightConfig()" class="form-control">
+                        <option value="">-- Choose Data Source --</option>
+                    </select>
+                    <div style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-tertiary);">
+                        <i class="fas fa-info-circle"></i> Configure custom insights for each data source
+                    </div>
+                </div>
+                
+                <!-- Columns List -->
+                <div style="flex: 1; overflow-y: auto; padding: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary);">
+                            <i class="fas fa-columns"></i> Available Columns
+                        </h4>
+                        <span id="columnCountBadge" style="background: var(--primary); color: white; padding: 0.25rem 0.5rem; border-radius: 10px; font-size: 0.75rem; font-weight: 700;">0</span>
+                    </div>
+                    
+                    <div id="columnsListContainer">
+                        <div style="text-align: center; padding: 3rem 1rem; color: var(--text-tertiary);">
+                            <i class="fas fa-arrow-up" style="font-size: 2rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                            <p>Select a data source to see columns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Panel: Insights Configuration -->
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <!-- Configured Insights List -->
+                <div style="flex: 1; overflow-y: auto; padding: 1.5rem; background: var(--bg-primary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">
+                            <i class="fas fa-lightbulb"></i> Configured Insights
+                        </h4>
+                        <button class="btn btn-success btn-sm" onclick="showInsightCreator()" id="addInsightBtn" disabled>
+                            <i class="fas fa-plus"></i> Add Insight
+                        </button>
+                    </div>
+                    
+                    <div id="configuredInsightsList">
+                        <div style="text-align: center; padding: 3rem 2rem; color: var(--text-tertiary);">
+                            <i class="fas fa-magic" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                            <p style="margin-bottom: 1rem;">No insights configured yet</p>
+                            <button class="btn btn-primary" onclick="showInsightCreator()" disabled id="addInsightBtn2">
+                                <i class="fas fa-plus"></i> Create Your First Insight
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Suggestions Panel -->
+                <div id="aiSuggestionsPanel" style="border-top: 2px solid var(--border-color); padding: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(16, 185, 129, 0.05)); max-height: 200px; overflow-y: auto; display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h5 style="margin: 0; color: var(--primary); font-size: 0.95rem;">
+                            <i class="fas fa-magic"></i> AI-Suggested Insights
+                        </h5>
+                        <span style="font-size: 0.75rem; color: var(--text-tertiary);">Click to add</span>
+                    </div>
+                    <div id="aiSuggestionsList" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <!-- AI suggestions will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.85rem; color: var(--text-tertiary);">
+                <i class="fas fa-save"></i> Changes are saved automatically
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary" onclick="closeInsightsConfig()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button class="btn btn-success" onclick="testInsights()">
+                    <i class="fas fa-play"></i> Test Insights
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- INSIGHT CREATOR MODAL -->
+<div class="modal" id="insightCreatorModal">
+    <div class="modal-content" style="max-width: 1400px; width: 95%;">
+        <div class="modal-header">
+            <h3><i class="fas fa-plus-circle"></i> Create New Insight</h3>
+            <button class="btn-icon" onclick="closeInsightCreator()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <form id="insightCreatorForm">
+                <!-- Insight Name -->
+                <div class="form-group">
+                    <label>Insight Name <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="insightName" class="form-control" placeholder="e.g., Top 10 Customers by Revenue" required>
+                    <small class="text-muted">Give your insight a descriptive name</small>
+                </div>
+                
+                <!-- Insight Type -->
+                <div class="form-group">
+                    <label>Insight Type <span style="color: var(--danger);">*</span></label>
+                    <select id="insightType" class="form-control" onchange="updateInsightTypeOptions()" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="table">📊 Table Report (NEW!)</option>
+                        <option value="top">Top N Values</option>
+                        <option value="bottom">Bottom N Values</option>
+                        <option value="summary">Statistical Summary</option>
+                        <option value="count">Count by Category</option>
+                        <option value="sum">Sum by Category</option>
+                        <option value="avg">Average by Category</option>
+                        <option value="max">Maximum Value</option>
+                        <option value="min">Minimum Value</option>
+                        <option value="distribution">Value Distribution</option>
+                        <option value="comparison">Compare Metrics</option>
+                        <option value="trend">Trend Analysis</option>
+                        <option value="outliers">Outlier Detection</option>
+                    </select>
+                </div>
+                
+                <!-- Primary Column -->
+                <div class="form-group" id="primaryColumnGroup">
+                    <label>Primary Column <span style="color: var(--danger);">*</span></label>
+                    <select id="insightPrimaryColumn" class="form-control" onchange="updateColumnSampleData('primary')" required>
+                        <option value="">-- Select Column --</option>
+                    </select>
+                    <div id="primaryColumnSample" style="margin-top: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px; font-size: 0.8rem; display: none;">
+                        <strong>Sample values:</strong> <span id="primarySampleValues"></span>
+                    </div>
+                </div>
+                
+                <!-- Secondary Column (for aggregations) -->
+                <div class="form-group" id="secondaryColumnGroup" style="display: none;">
+                    <label>Value Column (to aggregate) <span style="color: var(--danger);">*</span></label>
+                    <select id="insightSecondaryColumn" class="form-control" onchange="updateColumnSampleData('secondary')">
+                        <option value="">-- Select Column --</option>
+                    </select>
+                    <div id="secondaryColumnSample" style="margin-top: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px; font-size: 0.8rem; display: none;">
+                        <strong>Sample values:</strong> <span id="secondarySampleValues"></span>
+                    </div>
+                    <small class="text-muted">Column to calculate sum/average/etc.</small>
+                </div>
+                
+                <!-- Limit (for top/bottom) -->
+                <div class="form-group" id="limitGroup" style="display: none;">
+                    <label>Number of Results <span style="color: var(--danger);">*</span></label>
+                    <input type="number" id="insightLimit" class="form-control" value="10" min="1" max="100">
+                    <small class="text-muted">How many items to show</small>
+                </div>
+                
+                <!-- Sort Order -->
+                <div class="form-group" id="sortOrderGroup" style="display: none;">
+                    <label>Sort Order</label>
+                    <select id="insightSortOrder" class="form-control">
+                        <option value="desc">Descending (Highest First)</option>
+                        <option value="asc">Ascending (Lowest First)</option>
+                    </select>
+                </div>
+                
+                <!-- Format -->
+                <div class="form-group">
+                    <label>Display Format</label>
+                    <select id="insightFormat" class="form-control">
+                        <option value="table">Table</option>
+                        <option value="list">List</option>
+                        <option value="cards">Cards</option>
+                        <option value="chart">Chart (Visual)</option>
+                    </select>
+                </div>
+                
+                <!-- Show Percentage -->
+                <div class="form-group" id="percentageGroup" style="display: none;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="insightShowPercentage" style="width: auto;">
+                        <span>Show Percentage</span>
+                    </label>
+                </div>
+                
+                <!-- TABLE REPORT CONFIGURATION (NEW!) -->
+                <div id="tableConfigSection" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(16, 185, 129, 0.05)); border-radius: 12px; border: 2px solid var(--primary);">
+                    <h4 style="margin: 0 0 1rem 0; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-table"></i> Table Report Configuration
+                    </h4>
+                    
+                    <!-- Header Configuration -->
+                    <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h5 style="margin: 0 0 0.75rem 0; color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-heading"></i> Report Header
+                        </h5>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label style="font-size: 0.85rem;">Report Title</label>
+                            <input type="text" id="tableReportTitle" class="form-control" placeholder="e.g., Monthly Sales Report">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="font-size: 0.85rem;">Subtitle / Description</label>
+                            <input type="text" id="tableReportSubtitle" class="form-control" placeholder="e.g., Generated on {{date}}">
+                        </div>
+                    </div>
+                    
+                    <!-- Columns Configuration -->
+                    <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <h5 style="margin: 0; color: var(--text-primary); font-size: 0.95rem;">
+                                <i class="fas fa-columns"></i> Table Columns
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="addTableColumn()" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+                                <i class="fas fa-plus"></i> Add Column
+                            </button>
+                        </div>
+                        <div id="tableColumnsContainer" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 300px; overflow-y: auto;">
+                            <!-- Columns will be added dynamically -->
+                            <div style="text-align: center; padding: 2rem 1rem; color: var(--text-tertiary); font-size: 0.85rem;">
+                                <i class="fas fa-info-circle"></i> Click "Add Column" to start building your table
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Totals Configuration -->
+                    <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h5 style="margin: 0 0 0.75rem 0; color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-calculator"></i> Totals & Summaries
+                        </h5>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="tableShowTotals" style="width: auto;" onchange="toggleTableTotalsConfig()">
+                                <span style="font-size: 0.85rem;">Show totals row at bottom</span>
+                            </label>
+                        </div>
+                        <div id="tableTotalsConfig" style="display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
+                            <div id="tableTotalsContainer">
+                                <!-- Total configurations will be added based on columns -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer Configuration -->
+                    <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h5 style="margin: 0 0 0.75rem 0; color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-shoe-prints"></i> Report Footer
+                        </h5>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label style="font-size: 0.85rem;">Footer Text</label>
+                            <input type="text" id="tableFooterText" class="form-control" placeholder="e.g., End of Report">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="tableShowTimestamp" style="width: auto;">
+                                <span style="font-size: 0.85rem;">Show generation timestamp</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Refresh Options -->
+                    <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px;">
+                        <h5 style="margin: 0 0 0.75rem 0; color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-sync-alt"></i> Data Refresh
+                        </h5>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="tableShowRefreshButton" style="width: auto;" checked>
+                                <span style="font-size: 0.85rem;">Show refresh button on insight</span>
+                            </label>
+                            <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary);">
+                                <i class="fas fa-info-circle"></i> Refresh button will reload data from the REST API
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Icon -->
+                <div class="form-group">
+                    <label>Icon</label>
+                    <select id="insightIcon" class="form-control">
+                        <option value="fa-chart-bar">📊 Chart Bar</option>
+                        <option value="fa-trophy">🏆 Trophy</option>
+                        <option value="fa-star">⭐ Star</option>
+                        <option value="fa-list-ol">📋 List</option>
+                        <option value="fa-calculator">🔢 Calculator</option>
+                        <option value="fa-chart-line">📈 Chart Line</option>
+                        <option value="fa-exclamation-triangle">⚠️ Warning</option>
+                        <option value="fa-balance-scale">⚖️ Balance</option>
+                        <option value="fa-fire">🔥 Fire</option>
+                        <option value="fa-bolt">⚡ Bolt</option>
+                    </select>
+                </div>
+                
+                <!-- Description -->
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="insightDescription" class="form-control" rows="2" placeholder="Brief description of what this insight shows"></textarea>
+                </div>
+                
+                <!-- Preview -->
+                <div id="insightPreview" style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: 8px; border: 2px solid var(--border-color); display: none;">
+                    <h5 style="margin: 0 0 1rem 0; color: var(--primary);">
+                        <i class="fas fa-eye"></i> Preview
+                    </h5>
+                    <div id="insightPreviewContent"></div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeInsightCreator()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="btn btn-primary" onclick="previewInsight()">
+                <i class="fas fa-eye"></i> Preview
+            </button>
+            <button class="btn btn-success" onclick="saveInsight()">
+                <i class="fas fa-save"></i> Save Insight
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Git Operations Modal -->
+<div class="modal" id="gitModal">
+    <div class="modal-content xl">
+        <div class="modal-header" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+            <h3 style="color: white; margin: 0;">
+                <i class="fab fa-github"></i> Git Operations
+            </h3>
+            <button class="modal-close" style="color: white;" onclick="closeGitModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="git-settings">Settings</button>
+                <button class="tab" data-tab="git-status">Status</button>
+                <button class="tab" data-tab="git-operations">Operations</button>
+                <button class="tab" data-tab="git-history">History</button>
+                <button class="tab" data-tab="git-debug">Debug</button>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content active" id="tab-git-settings">
+                <h4><i class="fas fa-cog"></i> Git Configuration</h4>
+                <p class="text-muted text-small mb-2">Configure your Git repository and authentication</p>
+
+                <div class="form-group">
+                    <label>GitHub Username <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="git-username" placeholder="your-username" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Personal Access Token <span style="color: var(--danger);">*</span></label>
+                    <input type="password" id="git-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="form-control">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        Create a token at 
+                        <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Developer Settings → Personal Access Tokens</a>
+                        with 'repo' scope
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label>Repository Owner <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="git-owner" placeholder="owner-name" class="form-control">
+                    <small class="text-muted">The GitHub username or organization that owns the repository</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Repository Name <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="git-repo" placeholder="repository-name" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input type="text" id="git-branch" placeholder="main" value="main" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="git-save-credentials" checked>
+                        Remember credentials (stored locally)
+                    </label>
+                </div>
+
+                <div class="flex gap-2 mt-3">
+                    <button class="btn btn-success" onclick="testGitConnection()">
+                        <i class="fas fa-vial"></i> Test Connection
+                    </button>
+                    <button class="btn" onclick="saveGitConfig()">
+                        <i class="fas fa-save"></i> Save Configuration
+                    </button>
+                    <button class="btn btn-danger" onclick="clearGitConfig()">
+                        <i class="fas fa-trash"></i> Clear Credentials
+                    </button>
+                </div>
+
+                <div class="test-result" id="git-test-result"></div>
+            </div>
+
+            <!-- Status Tab -->
+            <div class="tab-content" id="tab-git-status">
+                <h4><i class="fas fa-code-branch"></i> Repository Status</h4>
+                <p class="text-muted text-small mb-2">View current status of your repository</p>
+
+                <button class="btn btn-secondary mb-3" onclick="refreshGitStatus()">
+                    <i class="fas fa-sync-alt"></i> Refresh Status
+                </button>
+
+                <div id="git-status-container" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; min-height: 200px;">
+                    <div style="text-align: center; color: var(--text-tertiary); padding: 3rem 0;">
+                        <i class="fab fa-github" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <p>Configure Git settings first, then click "Refresh Status"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations Tab -->
+            <div class="tab-content" id="tab-git-operations">
+                <h4><i class="fas fa-terminal"></i> Git Operations</h4>
+                <p class="text-muted text-small mb-2">Commit and push changes to your repository</p>
+
+                <!-- Folder Selection -->
+                <div class="form-group">
+                    <label>Project Folder</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+                        <button class="btn btn-secondary" onclick="selectProjectFolder()" style="flex: 0 0 auto;">
+                            <i class="fas fa-folder-open"></i> Select Folder
+                        </button>
+                        <div id="selected-folder-display" style="flex: 1; padding: 0.5rem 1rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.9rem; color: var(--text-secondary);">
+                            <i class="fas fa-info-circle"></i> No folder selected
+                        </div>
+                        <button class="btn btn-sm btn-secondary" onclick="clearProjectFolder()" title="Clear folder" style="flex: 0 0 auto;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <small class="text-muted">
+                        <i class="fas fa-lightbulb"></i> Select your project folder. The selection will be remembered for future sessions.
+                    </small>
+                </div>
+
+                <!-- File Selection -->
+                <div class="form-group">
+                    <label>Files to Commit</label>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <button class="btn btn-sm btn-secondary" onclick="loadFilesFromFolder()">
+                            <i class="fas fa-sync-alt"></i> Load Files
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="selectAllFiles()">
+                            <i class="fas fa-check-square"></i> Select All
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="deselectAllFiles()">
+                            <i class="fas fa-square"></i> Deselect All
+                        </button>
+                    </div>
+                    <div id="git-files-list" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; max-height: 300px; overflow-y: auto; margin-bottom: 1rem;">
+                        <div style="text-align: center; color: var(--text-tertiary); padding: 2rem 0;">
+                            <i class="fas fa-folder" style="font-size: 2rem; opacity: 0.3; margin-bottom: 0.5rem;"></i>
+                            <p>Select a project folder and click "Load Files"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commit Message -->
+                <div class="form-group">
+                    <label>Commit Message <span style="color: var(--danger);">*</span></label>
+                    <textarea id="git-commit-message" rows="3" class="form-control" placeholder="Describe your changes..."></textarea>
+                </div>
+
+                <!-- Quick Commit Templates -->
+                <div class="form-group">
+                    <label>Quick Templates</label>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('feat: ')">
+                            <i class="fas fa-plus"></i> Feature
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('fix: ')">
+                            <i class="fas fa-wrench"></i> Fix
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('docs: ')">
+                            <i class="fas fa-book"></i> Docs
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('style: ')">
+                            <i class="fas fa-palette"></i> Style
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('refactor: ')">
+                            <i class="fas fa-code"></i> Refactor
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="setCommitMessage('Update: ')">
+                            <i class="fas fa-sync"></i> Update
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mt-3">
+                    <button class="btn btn-primary" onclick="commitAndPushChanges()">
+                        <i class="fas fa-upload"></i> Commit & Push
+                    </button>
+                    <button class="btn btn-secondary" onclick="pullLatestChanges()">
+                        <i class="fas fa-download"></i> Pull Latest
+                    </button>
+                </div>
+
+                <div class="test-result" id="git-operation-result"></div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-content" id="tab-git-history">
+                <h4><i class="fas fa-history"></i> Commit History</h4>
+                <p class="text-muted text-small mb-2">View recent commits</p>
+
+                <button class="btn btn-secondary mb-3" onclick="loadGitHistory()">
+                    <i class="fas fa-sync-alt"></i> Load History
+                </button>
+
+                <div id="git-history-container" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; min-height: 200px; max-height: 500px; overflow-y: auto;">
+                    <div style="text-align: center; color: var(--text-tertiary); padding: 3rem 0;">
+                        <i class="fas fa-clock" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <p>Click "Load History" to view recent commits</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Debug Tab -->
+            <div class="tab-content" id="tab-git-debug">
+                <h4><i class="fas fa-bug"></i> API Debug Console</h4>
+                <p class="text-muted text-small mb-2">View API requests and responses for testing in Postman</p>
+
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button class="btn btn-secondary" onclick="refreshDebugLogs()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearDebugLogs()">
+                        <i class="fas fa-trash"></i> Clear Logs
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportDebugLogs()">
+                        <i class="fas fa-download"></i> Export JSON
+                    </button>
+                </div>
+
+                <div id="git-debug-container" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; min-height: 300px; max-height: 500px; overflow-y: auto;">
+                    <div style="text-align: center; color: var(--text-tertiary); padding: 3rem 0;">
+                        <i class="fas fa-terminal" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <p>API calls will appear here. Try testing your connection first.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Insights Config Styles */
+.column-item {
+    padding: 0.75rem;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.column-item:hover {
+    border-color: var(--primary);
+    background: var(--hover-bg);
+    transform: translateX(4px);
+}
+
+.column-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.column-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.column-type {
+    background: var(--primary);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.column-type.numeric {
+    background: var(--success);
+}
+
+.column-type.text {
+    background: var(--info);
+}
+
+.column-type.date {
+    background: var(--warning);
+}
+
+.column-stats {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.column-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.insight-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+}
+
+.insight-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.insight-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 0.75rem;
+}
+
+.insight-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.insight-card-type {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.insight-card-body {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.insight-card-config {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.insight-card-config-item {
+    background: var(--bg-secondary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+.insight-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.ai-suggestion-chip {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+    border: 2px solid var(--primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ai-suggestion-chip:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.ai-suggestion-chip i {
+    font-size: 0.9rem;
+}
+
+.table-column-item {
+    transition: all 0.3s ease;
+}
+
+.table-column-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    border-color: var(--primary);
+}
+
+.modal#columnEditorModal {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+</style>
+
+
+    <!-- External Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/23.2.3/js/dx.all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- Our JavaScript Modules (order matters!) -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/database.js"></script>
+    <script src="assets/js/procedures.js"></script>
+    <script src="assets/js/grid.js"></script>
+    <script src="assets/js/reports.js"></script>
+    <script src="assets/js/validators.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/git.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

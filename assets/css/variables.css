@@ -1,0 +1,60 @@
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Theme Variables */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+        }
+
+        /* Light Theme */
+        :root, [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-gradient-start: #ffffff;
+            --bg-gradient-end: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-dark: #cbd5e1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-heavy: rgba(0, 0, 0, 0.2);
+            --card-bg: #ffffff;
+            --input-bg: #f8fafc;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --modal-bg: rgba(255, 255, 255, 0.98);
+            --hover-bg: #f1f5f9;
+            --active-bg: #e2e8f0;
+            --message-bot-bg: #f8fafc;
+            --message-user-bg: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-gradient-start: #1e293b;
+            --bg-gradient-end: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --border-color: #334155;
+            --border-dark: #475569;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-heavy: rgba(0, 0, 0, 0.5);
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --input-bg: #0f172a;
+            --header-bg: rgba(30, 41, 59, 0.95);
+            --modal-bg: rgba(30, 41, 59, 0.98);
+            --hover-bg: rgba(51, 65, 85, 0.5);
+            --active-bg: rgba(51, 65, 85, 0.7);
+            --message-bot-bg: rgba(30, 41, 59, 0.95);
+            --message-user-bg: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }

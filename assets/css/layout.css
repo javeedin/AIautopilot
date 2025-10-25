@@ -1,0 +1,201 @@
+        .data-viewer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .data-viewer-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .data-viewer-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            overflow-x: auto;
+        }
+        
+        .data-tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .data-tab:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+        }
+        
+        .data-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .data-tab-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .data-tab.active .data-tab-badge {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .data-viewer-content {
+            flex: 1;
+            overflow: hidden;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .data-tab-content {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .data-tab-content.active {
+            display: flex;
+        }
+        
+        .data-grid-container {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .data-source-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+        
+        .data-source-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .use-for-ai-btn {
+            background: linear-gradient(135deg, var(--secondary), #059669);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .use-for-ai-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .use-for-ai-btn.active {
+            background: var(--primary);
+        }
+        
+        .data-stats {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .data-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .data-stat i {
+            color: var(--primary);
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .tree-view {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tree-node {
+            margin: 0.25rem 0;
+        }
+
+        .tree-node-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tree-node-header:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+        }
+
+        .tree-node-icon {
+            margin-right: 0.75rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .tree-node.collapsed .tree-node-icon {
+            transform: rotate(-90deg);
+        }
+
+        .tree-node-children {
+            padding-left: 2rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .tree-node.expanded .tree-node-children {
+            display: block;
+        }
+
+        .conversation-item {
