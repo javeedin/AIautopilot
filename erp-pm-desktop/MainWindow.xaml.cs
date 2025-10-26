@@ -158,8 +158,44 @@ namespace ERPProjectManager
                 UpdateStatus($"Starting HTTP server on port {HTTP_PORT}...");
 
                 httpListener = new HttpListener();
+
+                // Add prefix with explicit localhost binding
                 httpListener.Prefixes.Add($"http://localhost:{HTTP_PORT}/");
-                httpListener.Start();
+
+                try
+                {
+                    httpListener.Start();
+                    UpdateStatus($"HTTP server running on http://localhost:{HTTP_PORT}");
+                }
+                catch (HttpListenerException ex)
+                {
+                    // Try alternative ports if default is in use
+                    if (ex.ErrorCode == 183 || ex.ErrorCode == 32) // Port in use
+                    {
+                        MessageBox.Show(
+                            $"Port {HTTP_PORT} is already in use.\n\n" +
+                            "Trying alternative port...",
+                            "Port Conflict",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+
+                        // Try port 8766
+                        httpListener.Prefixes.Clear();
+                        httpListener.Prefixes.Add($"http://localhost:8766/");
+                        httpListener.Start();
+                        UpdateStatus($"HTTP server running on http://localhost:8766");
+
+                        // Update the constant (this is a workaround)
+                        typeof(MainWindow).GetField("HTTP_PORT",
+                            System.Reflection.BindingFlags.NonPublic |
+                            System.Reflection.BindingFlags.Instance)
+                            ?.SetValue(this, 8766);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
 
                 serverThread = new Thread(HandleRequests)
                 {
@@ -167,14 +203,22 @@ namespace ERPProjectManager
                     Name = "HTTP Server Thread"
                 };
                 serverThread.Start();
-
-                UpdateStatus($"HTTP server running on http://localhost:{HTTP_PORT}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to start HTTP server: {ex.Message}\n\n" +
-                    $"Port {HTTP_PORT} may be in use. Try closing other applications.",
-                    "Server Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Failed to start HTTP server: {ex.Message}\n\n" +
+                    $"Error Code: {(ex is HttpListenerException hle ? hle.ErrorCode.ToString() : "N/A")}\n\n" +
+                    "Possible solutions:\n" +
+                    "1. Run application as Administrator\n" +
+                    "2. Close other applications using port 8765\n" +
+                    "3. Check Windows Firewall settings\n\n" +
+                    "The app may not work correctly without the HTTP server.",
+                    "Server Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                UpdateStatus("HTTP server failed to start");
             }
         }
 
