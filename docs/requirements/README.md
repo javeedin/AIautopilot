@@ -1,7 +1,11 @@
-# GL Module Requirements Documentation
+# ERP Requirements Documentation
 
 ## Overview
-This directory contains comprehensive requirements documentation for the General Ledger (GL) module of the ERP system, designed to match Oracle Fusion ERP capabilities.
+This directory contains comprehensive requirements documentation for the ERP system modules, designed to match Oracle Fusion ERP capabilities.
+
+### Available Modules:
+1. **General Ledger (GL)** - Financial accounting and reporting
+2. **User and Role Management** - Security, authentication, and access control
 
 ## Document Structure
 
@@ -69,9 +73,86 @@ This directory contains comprehensive requirements documentation for the General
 7. Generate progress reports using pivot tables
 8. AI systems can use this for automated testing and monitoring
 
+---
+
+## User and Role Management Module
+
+### 3. UserRole_Requirements_Document.md
+**Format:** Markdown (can be converted to Word)
+**Purpose:** Comprehensive security and access control specification
+
+**Contents:**
+- Executive Summary
+- Module Overview
+- User Management (Account Creation, Profiles, Status Management, User Groups)
+- Role Management (Role Definition, Hierarchy, Assignment, Predefined Roles)
+- Data Security (Business Unit Access, Legal Entity, Ledger, Segment Value Security)
+- Function Security (Function Privileges, Menu Access, Report Access)
+- Business Unit Access (Multi-BU Access, Context Switching, BU-Based Navigation)
+- Permission Sets (Definition, Assignment, Object-Level Permissions)
+- Menu and Navigation (Role-Based Menus, Personalization, Contextual Navigation)
+- Authentication & Password Management (SSO, MFA, Password Policies)
+- Delegation and Proxy Access
+- Audit and Compliance (Activity Audit, Security Reports, SOD, Access Certification)
+- User Preferences
+- Session Management
+- Integration with Modules (GL, AP, AR)
+- Advanced Features (SOD, Emergency Access, Intelligent Access, JIT Access)
+- Self-Service Portal
+- Technical Requirements
+- Compliance and Standards
+
+**How to Use:**
+1. Review for comprehensive understanding of security requirements
+2. Use as basis for access control design
+3. Reference during development for security feature clarification
+4. Critical foundation for all other modules
+5. Convert to Word format if needed
+
+### 4. UserRole_Feature_Tracking.csv
+**Format:** CSV (opens in Excel, Google Sheets, or any spreadsheet application)
+**Purpose:** Detailed feature tracking for User and Role Management
+
+**Same Columns as GL Tracking:**
+- Feature ID, Module, Main Feature, Sub Feature, Description
+- Priority, Complexity, Status, Dependencies
+- Estimated Effort, Assigned To, Development Status, Testing Status
+- AI Test Ready, Notes, Acceptance Criteria
+
+**Total Features:** 135+ features across 18 functional areas
+
+**Feature ID Ranges:**
+- UR-001 to UR-008: User Management
+- UR-010 to UR-014: User Groups
+- UR-020 to UR-037: Role Management
+- UR-040 to UR-054: Data Security
+- UR-060 to UR-065: Function Security
+- UR-070 to UR-076: Menu & Navigation
+- UR-080 to UR-085: Permission Sets
+- UR-090 to UR-095: Authentication
+- UR-100 to UR-106: Password Management
+- UR-110 to UR-114: Multi-Factor Authentication
+- UR-120 to UR-125: Delegation
+- UR-130 to UR-134: Proxy Access
+- UR-140 to UR-156: Audit & Compliance
+- UR-160 to UR-165: SOD Compliance
+- UR-170 to UR-174: Access Certification
+- UR-180 to UR-184: User Preferences
+- UR-190 to UR-195: Session Management
+- UR-200 to UR-204: Report Access
+- UR-210 to UR-214: Emergency Access
+- UR-220 to UR-225: Self-Service
+- UR-230 to UR-234: Advanced Features
+- UR-240 to UR-244: External Integration
+- UR-250 to UR-253: Module Integration
+- UR-260 to UR-274: Technical & Compliance
+
+---
+
 ## Feature Organization
 
-### Total Features: 180+ features across 15 functional areas
+### General Ledger Module
+**Total Features:** 180+ features across 15 functional areas
 
 **Feature ID Ranges:**
 - GL-001 to GL-008: Organization Structure
@@ -91,26 +172,64 @@ This directory contains comprehensive requirements documentation for the General
 - GL-700 to GL-723: Technical Requirements
 - GL-800 to GL-813: Compliance
 
+### User and Role Management Module
+**Total Features:** 135+ features across 18 functional areas
+
+**Feature ID Ranges:**
+- UR-001 to UR-008: User Management
+- UR-010 to UR-014: User Groups
+- UR-020 to UR-037: Role Management & Assignment
+- UR-040 to UR-054: Data Security
+- UR-060 to UR-085: Function & Permission Security
+- UR-090 to UR-114: Authentication & MFA
+- UR-120 to UR-134: Delegation & Proxy
+- UR-140 to UR-174: Audit, Compliance & Certification
+- UR-180 to UR-195: Preferences & Sessions
+- UR-200 to UR-214: Report & Emergency Access
+- UR-220 to UR-234: Self-Service & Advanced
+- UR-240 to UR-274: Integration & Compliance
+
+### Combined Total
+**315+ features** across both modules
+
 ## Development Approach
 
-### Phase 1: Foundation (Critical Priority)
-Start with foundational features that other features depend on:
-1. Organization Structure (GL-001 to GL-008)
+### Phase 1: Security Foundation (Critical Priority)
+**Start with User and Role Management - Foundation for all modules:**
+1. User Management (UR-001 to UR-008)
+2. Basic Authentication (UR-090 to UR-095)
+3. Password Management (UR-100 to UR-106)
+4. Role Management (UR-020 to UR-028)
+5. Role Assignment (UR-030 to UR-037)
+6. Business Unit Security (UR-040 to UR-046)
+7. Function Security (UR-060 to UR-065)
+8. Menu & Navigation (UR-070 to UR-076)
+9. Session Management (UR-190 to UR-195)
+10. Basic Audit Trail (UR-140 to UR-145)
+
+**Why start here?**
+- All other modules require user authentication and authorization
+- Business unit access must be in place before GL operations
+- Role-based access controls are needed for all functional areas
+
+### Phase 2: GL Foundation (Critical Priority)
+**Build foundational GL features that other features depend on:**
+1. Organization Structure (GL-001 to GL-008) - *Requires UR-040 to UR-046*
 2. Chart of Accounts basics (GL-010 to GL-045)
 3. Calendar Management (GL-060 to GL-076)
 4. Currency Setup (GL-080 to GL-084)
-5. Basic Journal Entry (GL-110 to GL-133)
+5. Basic Journal Entry (GL-110 to GL-133) - *Requires UR-060 for posting privileges*
 
-### Phase 2: Core Functionality (High Priority)
-Build core GL capabilities:
+### Phase 3: Core GL Functionality (High Priority)
+**Build core GL capabilities:**
 1. Complete Journal Management (GL-134 to GL-204)
-2. Journal Posting and Validation
+2. Journal Posting and Validation - *Requires UR-060 for approval authority*
 3. Period Management
-4. Basic Reporting (GL-400 to GL-414)
-5. Security Setup (GL-500 to GL-545)
+4. Basic Reporting (GL-400 to GL-414) - *Requires UR-200 for report access*
+5. Advanced Security (UR-050 to UR-054, UR-080 to UR-085)
 
-### Phase 3: Advanced Features (Medium Priority)
-Add advanced capabilities:
+### Phase 4: Advanced GL Features (Medium Priority)
+**Add advanced GL capabilities:**
 1. Consolidation (GL-240 to GL-263)
 2. Allocations (GL-270 to GL-294)
 3. Revaluation (GL-300 to GL-308)
@@ -118,12 +237,23 @@ Add advanced capabilities:
 5. Budget Management (GL-350 to GL-394)
 6. Advanced Reporting (GL-420 to GL-455)
 
-### Phase 4: Integration & Compliance (All Priorities)
-Complete the system:
+### Phase 5: Advanced Security & Compliance
+**Complete security and compliance features:**
+1. Multi-Factor Authentication (UR-110 to UR-114)
+2. Delegation & Proxy (UR-120 to UR-134)
+3. SOD Compliance (UR-160 to UR-165)
+4. Access Certification (UR-170 to UR-174)
+5. Emergency Access (UR-210 to UR-214)
+6. Self-Service Portal (UR-220 to UR-225)
+7. Advanced Audit & Compliance (UR-150 to UR-156)
+
+### Phase 6: Integration & Optimization
+**Complete the system:**
 1. Subledger Integration (GL-600 to GL-604)
-2. External Integration (GL-610 to GL-623)
-3. Compliance Features (GL-800 to GL-813)
-4. Performance Optimization (GL-700 to GL-723)
+2. External Integration (GL-610 to GL-623, UR-240 to UR-244)
+3. Compliance Features (GL-800 to GL-813, UR-270 to UR-274)
+4. Performance Optimization (GL-700 to GL-723, UR-260 to UR-264)
+5. Advanced Features (UR-230 to UR-234)
 
 ## Using the Feature Tracker for AI-Driven Development
 
