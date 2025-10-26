@@ -148,6 +148,8 @@ namespace ERPProjectManager
 
                 // Load the website first
                 string indexPath = Path.Combine(projectManagementPath, "index.html");
+                UpdateStatus($"Looking for index.html at: {indexPath}");
+
                 if (!File.Exists(indexPath))
                 {
                     MessageBox.Show($"index.html not found at: {indexPath}",
@@ -155,11 +157,26 @@ namespace ERPProjectManager
                     return;
                 }
 
-                webView.CoreWebView2.Navigate(new Uri(indexPath).AbsoluteUri);
+                UpdateStatus($"Found index.html, navigating...");
+
+                if (webView?.CoreWebView2 == null)
+                {
+                    MessageBox.Show("WebView2 CoreWebView2 is NULL! Cannot navigate.",
+                        "WebView2 Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string fileUri = new Uri(indexPath).AbsoluteUri;
+                UpdateStatus($"Navigating to: {fileUri}");
+
+                webView.CoreWebView2.Navigate(fileUri);
+
+                UpdateStatus("Navigate() called successfully, waiting for NavigationCompleted event...");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading data: {ex.Message}",
+                UpdateStatus($"ERROR in LoadAndInjectData: {ex.Message}");
+                MessageBox.Show($"Error loading data: {ex.Message}\n\n{ex.StackTrace}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
