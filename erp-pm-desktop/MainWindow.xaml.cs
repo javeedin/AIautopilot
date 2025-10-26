@@ -50,11 +50,27 @@ namespace ERPProjectManager
                 // Update status
                 UpdateStatus("Initializing application...");
 
-                // Initialize WebView2
-                await InitializeWebView();
-
-                // Clone or pull repository
+                // Clone or pull repository FIRST
                 await CloneOrUpdateRepository();
+
+                // Check if repository was cloned successfully
+                if (!Directory.Exists(projectManagementPath))
+                {
+                    MessageBox.Show(
+                        "Failed to clone repository or project-management folder not found.\n\n" +
+                        "Please check:\n" +
+                        "1. Internet connection\n" +
+                        "2. Repository URL is correct\n" +
+                        "3. Branch exists in repository\n\n" +
+                        $"Expected folder: {projectManagementPath}",
+                        "Repository Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    return;
+                }
+
+                // Initialize WebView2 AFTER repository is ready
+                await InitializeWebView();
 
                 // Start HTTP server
                 StartHttpServer();
@@ -75,9 +91,15 @@ namespace ERPProjectManager
 
             try
             {
-                // Set up WebView2 environment
-                var env = await CoreWebView2Environment.CreateAsync(null,
-                    Path.Combine(localRepoPath, "WebView2Cache"), null);
+                // Create WebView2 cache directory
+                string cacheDir = Path.Combine(localRepoPath, "WebView2Cache");
+                Directory.CreateDirectory(cacheDir);
+
+                // Set up WebView2 environment with user data folder
+                var env = await CoreWebView2Environment.CreateAsync(
+                    browserExecutableFolder: null,
+                    userDataFolder: cacheDir,
+                    options: null);
 
                 await webView.EnsureCoreWebView2Async(env);
 
@@ -101,6 +123,12 @@ namespace ERPProjectManager
                     else
                     {
                         UpdateStatus($"Navigation failed: {e.WebErrorStatus}");
+                        MessageBox.Show(
+                            $"Failed to load page: {e.WebErrorStatus}\n\n" +
+                            "Click DevTools button to see errors.",
+                            "Navigation Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
                     }
                 };
 
@@ -116,7 +144,8 @@ namespace ERPProjectManager
             {
                 MessageBox.Show($"Failed to initialize WebView2: {ex.Message}\n\n" +
                     "Please install WebView2 Runtime from:\n" +
-                    "https://developer.microsoft.com/microsoft-edge/webview2/",
+                    "https://developer.microsoft.com/microsoft-edge/webview2/\n\n" +
+                    "Download: https://go.microsoft.com/fwlink/p/?LinkId=2124703",
                     "WebView2 Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 throw;
             }
@@ -388,9 +417,39 @@ namespace ERPProjectManager
                 // Check if project-management folder exists
                 if (!Directory.Exists(projectManagementPath))
                 {
-                    MessageBox.Show("Project management website not found in repository.\n\n" +
-                        "Please ensure the 'project-management' folder exists in the repository.",
-                        "Missing Files", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(
+                        "Project management website not found in repository.\n\n" +
+                        $"Expected path:\n{projectManagementPath}\n\n" +
+                        "Please click 'Update from Git' button to download the repository.",
+                        "Missing Files",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Check if index.html exists
+                string indexPath = Path.Combine(projectManagementPath, "index.html");
+                if (!File.Exists(indexPath))
+                {
+                    MessageBox.Show(
+                        $"index.html not found!\n\n" +
+                        $"Expected at: {indexPath}\n\n" +
+                        "Please click 'Update from Git' button to download.",
+                        "Missing Files",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Check if WebView2 is initialized
+                if (webView?.CoreWebView2 == null)
+                {
+                    MessageBox.Show(
+                        "WebView2 not initialized yet.\n\n" +
+                        "Please wait for initialization to complete.",
+                        "Not Ready",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
                     return;
                 }
 
@@ -402,8 +461,11 @@ namespace ERPProjectManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading website: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Error loading website: {ex.Message}\n\n{ex.StackTrace}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 
