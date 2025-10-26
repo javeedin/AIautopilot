@@ -1,6 +1,7 @@
 // ===== Configuration =====
 const CONFIG = {
-    dataPath: '../docs/',
+    // Check if running on localhost (C# app with HTTP server) or file:// protocol
+    dataPath: window.location.protocol === 'file:' ? '../docs/' : '/docs/',
     csvFiles: {
         requirements: 'requirements/ERP_Requirements.csv',
         validationSummary: 'tracking/Feature_Validation_Summary.csv',
@@ -177,7 +178,9 @@ const DataLoader = {
 
             // Load validation details for each module
             for (const module of CONFIG.validationModules) {
-                const path = `${CONFIG.dataPath}tracking/feature_validation/${module}_Feature_Validation.csv`;
+                const path = window.location.protocol === 'file:'
+                    ? `${CONFIG.dataPath}tracking/feature_validation/${module}_Feature_Validation.csv`
+                    : `/docs/tracking/feature_validation/${module}_Feature_Validation.csv`;
                 DataStore.validations[module] = await Utils.parseCSV(path);
             }
 

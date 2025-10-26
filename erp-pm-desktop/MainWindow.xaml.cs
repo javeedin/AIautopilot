@@ -1,8 +1,9 @@
 using System;
 using System.IO;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Microsoft.Web.WebView2.Core;
 using LibGit2Sharp;
 
@@ -11,19 +12,23 @@ namespace ERPProjectManager
     /// <summary>
     /// ERP Project Management Desktop Application
     /// - Clones/Pulls from Git repository
-    /// - Serves project-management website
+    /// - Runs local HTTP server
     /// - Displays in WebView2
     /// </summary>
     public partial class MainWindow : Window
     {
         private string localRepoPath;
         private string projectManagementPath;
-        private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git"; // Change to your repo URL
+        private HttpListener httpListener;
+        private Thread serverThread;
+        private const int HTTP_PORT = 8765;
+        private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
 
         public MainWindow()
         {
             InitializeComponent();
+            Closing += MainWindow_Closing;
             InitializeAsync();
         }
 
@@ -50,13 +55,16 @@ namespace ERPProjectManager
                 // Clone or pull repository
                 await CloneOrUpdateRepository();
 
+                // Start HTTP server
+                StartHttpServer();
+
                 // Load the project management website
                 LoadProjectManagementSite();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error initializing application: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error initializing application: {ex.Message}\n\n{ex.StackTrace}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -64,35 +72,211 @@ namespace ERPProjectManager
         {
             UpdateStatus("Initializing WebView2...");
 
-            // Set up WebView2 environment
-            var env = await CoreWebView2Environment.CreateAsync(null,
-                Path.Combine(localRepoPath, "WebView2Cache"), null);
-
-            await webView.EnsureCoreWebView2Async(env);
-
-            // Enable Dev Tools (F12)
-            webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
-            webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
-
-            // Handle navigation events
-            webView.CoreWebView2.NavigationStarting += (s, e) =>
+            try
             {
-                UpdateStatus($"Loading: {e.Uri}");
-            };
+                // Set up WebView2 environment
+                var env = await CoreWebView2Environment.CreateAsync(null,
+                    Path.Combine(localRepoPath, "WebView2Cache"), null);
 
-            webView.CoreWebView2.NavigationCompleted += (s, e) =>
-            {
-                if (e.IsSuccess)
+                await webView.EnsureCoreWebView2Async(env);
+
+                // Enable Dev Tools (F12)
+                webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
+                webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
+                webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
+
+                // Handle navigation events
+                webView.CoreWebView2.NavigationStarting += (s, e) =>
                 {
-                    UpdateStatus("Ready");
+                    UpdateStatus($"Loading: {e.Uri}");
+                };
+
+                webView.CoreWebView2.NavigationCompleted += (s, e) =>
+                {
+                    if (e.IsSuccess)
+                    {
+                        UpdateStatus("Ready");
+                    }
+                    else
+                    {
+                        UpdateStatus($"Navigation failed: {e.WebErrorStatus}");
+                    }
+                };
+
+                // Handle console messages for debugging
+                webView.CoreWebView2.WebMessageReceived += (s, e) =>
+                {
+                    Console.WriteLine($"WebView Message: {e.WebMessageAsJson}");
+                };
+
+                UpdateStatus("WebView2 initialized");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to initialize WebView2: {ex.Message}\n\n" +
+                    "Please install WebView2 Runtime from:\n" +
+                    "https://developer.microsoft.com/microsoft-edge/webview2/",
+                    "WebView2 Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
+        }
+
+        private void StartHttpServer()
+        {
+            try
+            {
+                UpdateStatus($"Starting HTTP server on port {HTTP_PORT}...");
+
+                httpListener = new HttpListener();
+                httpListener.Prefixes.Add($"http://localhost:{HTTP_PORT}/");
+                httpListener.Start();
+
+                serverThread = new Thread(HandleRequests)
+                {
+                    IsBackground = true,
+                    Name = "HTTP Server Thread"
+                };
+                serverThread.Start();
+
+                UpdateStatus($"HTTP server running on http://localhost:{HTTP_PORT}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start HTTP server: {ex.Message}\n\n" +
+                    $"Port {HTTP_PORT} may be in use. Try closing other applications.",
+                    "Server Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void HandleRequests()
+        {
+            while (httpListener != null && httpListener.IsListening)
+            {
+                try
+                {
+                    var context = httpListener.GetContext();
+                    ThreadPool.QueueUserWorkItem(_ => ProcessRequest(context));
+                }
+                catch (Exception ex)
+                {
+                    if (httpListener != null && httpListener.IsListening)
+                    {
+                        Console.WriteLine($"Server error: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private void ProcessRequest(HttpListenerContext context)
+        {
+            try
+            {
+                var request = context.Request;
+                var response = context.Response;
+
+                // Get the requested path
+                string requestedPath = request.Url.AbsolutePath.TrimStart('/');
+
+                // Default to index.html
+                if (string.IsNullOrEmpty(requestedPath))
+                {
+                    requestedPath = "index.html";
+                }
+
+                // Resolve file path
+                string filePath;
+
+                // Handle paths starting with docs/ - go to repository root
+                if (requestedPath.StartsWith("docs/"))
+                {
+                    filePath = Path.Combine(localRepoPath, requestedPath);
                 }
                 else
                 {
-                    UpdateStatus($"Navigation failed: {e.WebErrorStatus}");
+                    // Everything else is in project-management folder
+                    filePath = Path.Combine(projectManagementPath, requestedPath);
                 }
-            };
 
-            UpdateStatus("WebView2 initialized");
+                // Normalize the path
+                filePath = Path.GetFullPath(filePath);
+
+                // Security check - ensure we're not accessing files outside our directories
+                if (!filePath.StartsWith(localRepoPath))
+                {
+                    response.StatusCode = 403;
+                    response.Close();
+                    return;
+                }
+
+                if (File.Exists(filePath))
+                {
+                    // Set content type
+                    string extension = Path.GetExtension(filePath).ToLowerInvariant();
+                    response.ContentType = GetContentType(extension);
+
+                    // Enable CORS
+                    response.Headers.Add("Access-Control-Allow-Origin", "*");
+                    response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                    response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+
+                    // Read and send file
+                    byte[] fileBytes = File.ReadAllBytes(filePath);
+                    response.ContentLength64 = fileBytes.Length;
+                    response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
+                    response.StatusCode = 200;
+
+                    Dispatcher.Invoke(() => UpdateStatus($"Served: {requestedPath}"));
+                }
+                else
+                {
+                    // File not found
+                    response.StatusCode = 404;
+                    byte[] errorBytes = System.Text.Encoding.UTF8.GetBytes($"File not found: {requestedPath}");
+                    response.ContentLength64 = errorBytes.Length;
+                    response.OutputStream.Write(errorBytes, 0, errorBytes.Length);
+
+                    Console.WriteLine($"404 Not Found: {filePath}");
+                }
+
+                response.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Request processing error: {ex.Message}");
+                try
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.Close();
+                }
+                catch { }
+            }
+        }
+
+        private string GetContentType(string extension)
+        {
+            return extension switch
+            {
+                ".html" => "text/html",
+                ".htm" => "text/html",
+                ".css" => "text/css",
+                ".js" => "application/javascript",
+                ".json" => "application/json",
+                ".png" => "image/png",
+                ".jpg" => "image/jpeg",
+                ".jpeg" => "image/jpeg",
+                ".gif" => "image/gif",
+                ".svg" => "image/svg+xml",
+                ".ico" => "image/x-icon",
+                ".csv" => "text/csv",
+                ".txt" => "text/plain",
+                ".xml" => "text/xml",
+                ".pdf" => "application/pdf",
+                ".woff" => "font/woff",
+                ".woff2" => "font/woff2",
+                ".ttf" => "font/ttf",
+                ".eot" => "application/vnd.ms-fontobject",
+                _ => "application/octet-stream"
+            };
         }
 
         private async Task CloneOrUpdateRepository()
@@ -121,7 +305,9 @@ namespace ERPProjectManager
                     Dispatcher.Invoke(() =>
                     {
                         UpdateStatus($"Git error: {ex.Message}");
-                        MessageBox.Show($"Git operation failed: {ex.Message}\n\nPlease check your internet connection and repository URL.",
+                        MessageBox.Show($"Git operation failed: {ex.Message}\n\n" +
+                            "Please check your internet connection and repository URL.\n\n" +
+                            "You can continue using cached data if available.",
                             "Git Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     });
                 }
@@ -141,7 +327,8 @@ namespace ERPProjectManager
                 OnTransferProgress = (progress) =>
                 {
                     double percentage = (100.0 * progress.ReceivedObjects) / progress.TotalObjects;
-                    Dispatcher.Invoke(() => UpdateStatus($"Downloading: {percentage:F0}% ({progress.ReceivedObjects}/{progress.TotalObjects} objects)"));
+                    Dispatcher.Invoke(() => UpdateStatus(
+                        $"Downloading: {percentage:F0}% ({progress.ReceivedObjects}/{progress.TotalObjects} objects)"));
                     return true;
                 }
             };
@@ -206,24 +393,9 @@ namespace ERPProjectManager
                     return;
                 }
 
-                // Load index.html
-                string indexPath = Path.Combine(projectManagementPath, "index.html");
-                if (!File.Exists(indexPath))
-                {
-                    MessageBox.Show("index.html not found in project-management folder.",
-                        "Missing Files", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                // Set virtual host mapping to allow loading local files with proper CORS
-                webView.CoreWebView2.SetVirtualHostNameToFolderMapping(
-                    "erp-pm.local",
-                    projectManagementPath,
-                    CoreWebView2HostResourceAccessKind.Allow
-                );
-
-                // Navigate to the local site
-                webView.CoreWebView2.Navigate("https://erp-pm.local/index.html");
+                // Load index.html from HTTP server
+                string url = $"http://localhost:{HTTP_PORT}/index.html";
+                webView.CoreWebView2.Navigate(url);
 
                 UpdateStatus("Loading project management website...");
             }
@@ -292,6 +464,20 @@ namespace ERPProjectManager
             {
                 System.Diagnostics.Process.Start("explorer.exe", projectManagementPath);
             }
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Stop HTTP server
+            try
+            {
+                if (httpListener != null && httpListener.IsListening)
+                {
+                    httpListener.Stop();
+                    httpListener.Close();
+                }
+            }
+            catch { }
         }
     }
 }
