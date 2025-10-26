@@ -344,5 +344,27 @@ async function refreshData() {
 // ===== Initialize on Load =====
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing application...');
+
+    // If running in C# WebView2 app, wait for data injection
+    // Detect by checking if we're on file:// protocol (C# mode) vs http:// (browser mode)
+    if (window.location.protocol === 'file:') {
+        console.log('Detected file:// protocol - waiting for C# data injection...');
+
+        // Wait up to 2 seconds for C# to inject data
+        let attempts = 0;
+        const maxAttempts = 20; // 20 attempts * 100ms = 2 seconds
+
+        while (attempts < maxAttempts && !window.CSHARP_DATA) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            attempts++;
+        }
+
+        if (window.CSHARP_DATA) {
+            console.log('C# data detected! Loading via C# injection...');
+        } else {
+            console.log('No C# data found after 2 seconds, attempting CSV load...');
+        }
+    }
+
     await DataLoader.loadAllData();
 });

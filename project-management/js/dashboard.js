@@ -302,17 +302,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load dashboard on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for data to load
-    setTimeout(() => {
+    // Wait for data to load - with retries for C# mode
+    const checkAndLoad = (attempt = 0) => {
         if (DataStore.loaded) {
+            console.log('DataStore ready, loading dashboard...');
             loadDashboard();
+        } else if (attempt < 10) {
+            // Retry up to 10 times (total 3 seconds)
+            console.log(`DataStore not ready yet, retry ${attempt + 1}/10...`);
+            setTimeout(() => checkAndLoad(attempt + 1), 300);
         } else {
-            // Retry after a second
-            setTimeout(() => {
-                if (DataStore.loaded) {
-                    loadDashboard();
-                }
-            }, 1000);
+            console.error('DataStore failed to load after 3 seconds');
         }
-    }, 500);
+    };
+
+    // Start checking after a small delay
+    setTimeout(checkAndLoad, 500);
 });
