@@ -20,6 +20,9 @@
 
     <!-- LibGit2Sharp for Git operations -->
     <PackageReference Include="LibGit2Sharp" Version="0.27.2" />
+
+    <!-- Newtonsoft.Json for JSON serialization -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
