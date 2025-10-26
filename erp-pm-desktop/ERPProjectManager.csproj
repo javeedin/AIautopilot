@@ -4,10 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
     <AssemblyName>ERPProjectManager</AssemblyName>
     <RootNamespace>ERPProjectManager</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>1.0.0</Version>
     <Authors>ERP Development Team</Authors>
     <Company>ERP Project</Company>
