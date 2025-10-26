@@ -5,9 +5,9 @@
     <Application.Resources>
         <!-- Button Style -->
         <Style TargetType="Button">
-            <Setter Property="FontFamily" value="Segoe UI"/>
-            <Setter Property="FontSize" value="13"/>
-            <Setter Property="Cursor" value="Hand"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Opacity" Value="0.8"/>
@@ -17,7 +17,7 @@
 
         <!-- TextBlock Style -->
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" value="Segoe UI"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
     </Application.Resources>
 </Application>
