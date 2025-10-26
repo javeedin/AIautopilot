@@ -2,7 +2,7 @@
 
 ## Complete Module Inventory
 
-### ✅ Completed Modules (7 Modules, 1100+ Features)
+### ✅ Completed Modules (7 Modules, 1040+ Features)
 
 #### 1. General Ledger (GL) - 180+ features
 - Organization Structure
@@ -50,8 +50,25 @@
 - Procurement Cards
 - Sourcing & RFQ
 
-#### 6. Inventory Management (INV) - Pending
-#### 7. Order Management (OM) - Pending
+#### 6. Inventory Management (INV) - 125 features
+- Item Master
+- Warehouse Management
+- Stock Transactions
+- Inventory Valuation
+- Lot and Serial Tracking
+- Physical Inventory
+- Cycle Counting
+- Min-Max Planning
+
+#### 7. Order Management (OM) - 125 features
+- Sales Order Management
+- Order Promising (ATP)
+- Pricing and Discounts
+- Order Fulfillment
+- Shipping and Delivery
+- Returns and RMAs
+- Invoicing
+- Sales Commissions
 
 ## Documentation Structure
 
@@ -71,10 +88,10 @@ Each module includes:
 
 ## Total Statistics
 
-**Documented Features:** 790+ features across 5 modules
-**Documents:** 10 files
-- 5 Requirements documents
-- 5 Feature tracking spreadsheets
+**Documented Features:** 1040+ features across 7 modules
+**Documents:** 14 files
+- 7 Requirements documents
+- 7 Feature tracking spreadsheets
 
 ## Key Features Delivered
 
@@ -132,6 +149,10 @@ All modules integrate with:
 ├── AR_Feature_Tracking.csv
 ├── PO_Requirements_Document.md
 ├── PO_Feature_Tracking.csv
+├── INV_Requirements_Document.md
+├── INV_Feature_Tracking.csv
+├── OM_Requirements_Document.md
+├── OM_Feature_Tracking.csv
 ├── README.md
 └── MODULE_SUMMARY.md
 ```
@@ -143,8 +164,10 @@ All modules integrate with:
 3. ✅ AP Module - Complete
 4. ✅ AR Module - Complete
 5. ✅ PO Module - Complete
-6. ⏳ INV Module - To be completed
-7. ⏳ OM Module - To be completed
+6. ✅ INV Module - Complete
+7. ✅ OM Module - Complete
+
+**All 7 core ERP modules documentation complete!**
 
 ## Notes for Development
 
@@ -158,4 +181,4 @@ All modules integrate with:
 
 **Document Version:** 1.0
 **Last Updated:** October 26, 2025
-**Status:** In Progress (5 of 7 modules complete)
+**Status:** Complete (7 of 7 modules complete)
