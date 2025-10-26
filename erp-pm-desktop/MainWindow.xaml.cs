@@ -97,10 +97,35 @@ namespace ERPProjectManager
 
                 webView.CoreWebView2.NavigationCompleted += async (s, e) =>
                 {
-                    if (e.IsSuccess)
+                    try
                     {
-                        UpdateStatus("Page loaded, injecting data...");
-                        await InjectDataIntoPage();
+                        UpdateStatus($"Navigation completed. Success: {e.IsSuccess}, HttpStatus: {e.HttpStatusCode}");
+
+                        if (e.IsSuccess)
+                        {
+                            UpdateStatus("Page loaded successfully, injecting data...");
+                            await Task.Delay(100); // Small delay to ensure page is fully ready
+                            await InjectDataIntoPage();
+                            UpdateStatus("Data injection complete!");
+                        }
+                        else
+                        {
+                            UpdateStatus($"Navigation failed with status: {e.HttpStatusCode}");
+                            MessageBox.Show(
+                                $"Navigation failed!\n\nSuccess: {e.IsSuccess}\nHTTP Status: {e.HttpStatusCode}",
+                                "Navigation Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        UpdateStatus($"Error in NavigationCompleted: {ex.Message}");
+                        MessageBox.Show(
+                            $"Error in NavigationCompleted event:\n\n{ex.Message}\n\n{ex.StackTrace}",
+                            "Navigation Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
                     }
                 };
 
@@ -180,6 +205,19 @@ namespace ERPProjectManager
 
                 UpdateStatus("Injecting data into page...");
 
+                // First, test if script execution works
+                try
+                {
+                    await webView.CoreWebView2.ExecuteScriptAsync("console.log('C# SCRIPT EXECUTION TEST - If you see this, script execution works!');");
+                    UpdateStatus("Script execution test passed");
+                }
+                catch (Exception testEx)
+                {
+                    MessageBox.Show($"Script execution test FAILED:\n\n{testEx.Message}",
+                        "Script Execution Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 // Wait a bit for JavaScript to fully load
                 await Task.Delay(500);
 
@@ -235,9 +273,27 @@ namespace ERPProjectManager
                     console.log('=== C# DATA INJECTION END ===');
                 ";
 
-                await webView.CoreWebView2.ExecuteScriptAsync(script);
+                // Execute the injection script
+                try
+                {
+                    var result = await webView.CoreWebView2.ExecuteScriptAsync(script);
+                    UpdateStatus($"Data injected successfully! Result: {result}");
 
-                UpdateStatus("Data injected successfully! Check DevTools (F12) for details.");
+                    // Log to console that injection completed
+                    await webView.CoreWebView2.ExecuteScriptAsync(
+                        "console.log('C#: Data injection script executed successfully');");
+                }
+                catch (Exception scriptEx)
+                {
+                    MessageBox.Show(
+                        $"Failed to execute injection script:\n\n{scriptEx.Message}\n\n" +
+                        $"JSON size: {jsonData.Length} characters\n\n" +
+                        $"This might be due to JSON being too large for ExecuteScriptAsync.",
+                        "Script Injection Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    throw;
+                }
             }
             catch (Exception ex)
             {
