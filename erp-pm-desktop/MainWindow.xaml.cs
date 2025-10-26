@@ -17,6 +17,9 @@ namespace ERPProjectManager
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
 
+        private bool dataInjected = false;
+        private int navigationCount = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -99,18 +102,28 @@ namespace ERPProjectManager
                 {
                     try
                     {
-                        UpdateStatus($"Navigation completed. Success: {e.IsSuccess}, HttpStatus: {e.HttpStatusCode}");
+                        navigationCount++;
+                        UpdateStatus($"NavigationCompleted #{navigationCount} - Success: {e.IsSuccess}, HttpStatus: {e.HttpStatusCode}");
 
                         if (e.IsSuccess)
                         {
-                            UpdateStatus("Page loaded successfully, injecting data...");
-                            await Task.Delay(100); // Small delay to ensure page is fully ready
-                            await InjectDataIntoPage();
-                            UpdateStatus("Data injection complete!");
+                            // Only inject data on the FIRST successful navigation
+                            if (!dataInjected)
+                            {
+                                UpdateStatus($"Page loaded successfully (navigation #{navigationCount}), injecting data...");
+                                await Task.Delay(100); // Small delay to ensure page is fully ready
+                                await InjectDataIntoPage();
+                                dataInjected = true;
+                                UpdateStatus("Data injection complete! Dashboard should now be visible.");
+                            }
+                            else
+                            {
+                                UpdateStatus($"Navigation #{navigationCount} completed, but data already injected. Skipping re-injection.");
+                            }
                         }
                         else
                         {
-                            UpdateStatus($"Navigation failed with status: {e.HttpStatusCode}");
+                            UpdateStatus($"Navigation #{navigationCount} failed with status: {e.HttpStatusCode}");
                             MessageBox.Show(
                                 $"Navigation failed!\n\nSuccess: {e.IsSuccess}\nHTTP Status: {e.HttpStatusCode}",
                                 "Navigation Error",
@@ -120,7 +133,7 @@ namespace ERPProjectManager
                     }
                     catch (Exception ex)
                     {
-                        UpdateStatus($"Error in NavigationCompleted: {ex.Message}");
+                        UpdateStatus($"Error in NavigationCompleted #{navigationCount}: {ex.Message}");
                         MessageBox.Show(
                             $"Error in NavigationCompleted event:\n\n{ex.Message}\n\n{ex.StackTrace}",
                             "Navigation Error",
@@ -506,6 +519,8 @@ namespace ERPProjectManager
                 }
 
                 // Reload the page with new data
+                dataInjected = false; // Reset flag to allow re-injection
+                navigationCount = 0; // Reset counter
                 await LoadAndInjectData();
 
                 MessageBox.Show(
@@ -529,6 +544,8 @@ namespace ERPProjectManager
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             UpdateStatus("Refreshing...");
+            dataInjected = false; // Reset flag to allow re-injection
+            navigationCount = 0; // Reset counter
             await CloneOrUpdateRepository();
             await LoadAndInjectData();
         }
@@ -559,6 +576,8 @@ namespace ERPProjectManager
 
         private async void HomeButton_Click(object sender, RoutedEventArgs e)
         {
+            dataInjected = false; // Reset flag to allow re-injection
+            navigationCount = 0; // Reset counter
             await LoadAndInjectData();
         }
 
