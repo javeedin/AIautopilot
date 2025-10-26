@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item active">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v1.0.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>Features Tracking</h2>
+                    <p class="subtitle">All ERP features across 16 modules - 2,118 total features</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                    <div class="user-profile">
+                        <span class="user-avatar">👤</span>
+                        <span class="user-name">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters Section -->
+            <section class="filters-section" style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <div>
+                    <select id="module-filter" class="search-input" style="max-width: 200px;">
+                        <option value="">All Modules</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="priority-filter" class="search-input" style="max-width: 200px;">
+                        <option value="">All Priorities</option>
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <input type="text" id="feature-search" class="search-input"
+                           placeholder="Search features by name or ID..." style="max-width: 100%;">
+                </div>
+            </section>
+
+            <!-- Features Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">⚙️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="displayed-features">0</h3>
+                        <p class="kpi-label">Displayed Features</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #F44336;">🎯</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="critical-features">0</h3>
+                        <p class="kpi-label">Critical Priority</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">⚡</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="high-features">0</h3>
+                        <p class="kpi-label">High Priority</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">✅</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="completed-features">0</h3>
+                        <p class="kpi-label">Completed</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Features List</h3>
+                        <button class="btn-primary" onclick="exportToCSV()">
+                            📥 Export CSV
+                        </button>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature ID</th>
+                                    <th>Module</th>
+                                    <th>Feature Name</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Implementation</th>
+                                    <th>Testing</th>
+                                    <th>All OK</th>
+                                    <th>Assigned To</th>
+                                </tr>
+                            </thead>
+                            <tbody id="features-table-body">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div style="padding: 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                        <div id="pagination-info" style="color: var(--text-secondary); font-size: 14px;">
+                            Showing 0 of 0 features
+                        </div>
+                        <div id="pagination-controls" style="display: flex; gap: 10px;">
+                            <!-- Pagination buttons -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/features.js"></script>
+</body>
+</html>
