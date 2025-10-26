@@ -160,33 +160,70 @@ namespace ERPProjectManager
                     validations
                 };
 
+                UpdateStatus($"Loaded {validationSummary.Count} summary records, {pages.Count} pages, {tables.Count} tables, {validations.Count} modules");
+
                 string jsonData = JsonConvert.SerializeObject(dataObject);
+
+                UpdateStatus("Injecting data into page...");
+
+                // Wait a bit for JavaScript to fully load
+                await Task.Delay(500);
 
                 // Inject into JavaScript
                 string script = $@"
+                    console.log('=== C# DATA INJECTION START ===');
+
+                    // Set the data
                     window.CSHARP_DATA = {jsonData};
 
-                    // Override the data loading in main.js
-                    if (typeof DataStore !== 'undefined') {{
-                        DataStore.validationSummary = window.CSHARP_DATA.validationSummary;
-                        DataStore.pages = window.CSHARP_DATA.pages;
-                        DataStore.tables = window.CSHARP_DATA.tables;
-                        DataStore.validations = window.CSHARP_DATA.validations;
-                        DataStore.loaded = true;
+                    console.log('CSHARP_DATA injected successfully');
+                    console.log('Validation Summary rows:', window.CSHARP_DATA.validationSummary.length);
+                    console.log('Pages rows:', window.CSHARP_DATA.pages.length);
+                    console.log('Tables rows:', window.CSHARP_DATA.tables.length);
+                    console.log('Modules loaded:', Object.keys(window.CSHARP_DATA.validations));
+                    console.log('Total features:', Object.values(window.CSHARP_DATA.validations).flat().length);
 
-                        console.log('Data loaded from C#!');
-                        console.log('Total features:', Object.values(DataStore.validations).flat().length);
+                    // Trigger data load if DataLoader is available
+                    if (typeof DataLoader !== 'undefined' && typeof DataLoader.loadAllData === 'function') {{
+                        console.log('Calling DataLoader.loadAllData()...');
+                        DataLoader.loadAllData().then(function() {{
+                            console.log('DataLoader.loadAllData() completed');
 
-                        // Trigger dashboard load if function exists
-                        if (typeof loadDashboard === 'function') {{
-                            loadDashboard();
+                            // Load the dashboard
+                            if (typeof loadDashboard === 'function') {{
+                                console.log('Calling loadDashboard()...');
+                                loadDashboard();
+                                console.log('loadDashboard() called');
+                            }} else {{
+                                console.error('loadDashboard function not found!');
+                            }}
+                        }});
+                    }} else {{
+                        console.error('DataLoader not available yet!');
+
+                        // Try direct population as fallback
+                        if (typeof DataStore !== 'undefined') {{
+                            console.log('Populating DataStore directly...');
+                            DataStore.validationSummary = window.CSHARP_DATA.validationSummary;
+                            DataStore.pages = window.CSHARP_DATA.pages;
+                            DataStore.tables = window.CSHARP_DATA.tables;
+                            DataStore.validations = window.CSHARP_DATA.validations;
+                            DataStore.loaded = true;
+                            console.log('DataStore populated:', DataStore);
+
+                            if (typeof loadDashboard === 'function') {{
+                                console.log('Calling loadDashboard()...');
+                                loadDashboard();
+                            }}
                         }}
                     }}
+
+                    console.log('=== C# DATA INJECTION END ===');
                 ";
 
                 await webView.CoreWebView2.ExecuteScriptAsync(script);
 
-                UpdateStatus("Data injected successfully!");
+                UpdateStatus("Data injected successfully! Check DevTools (F12) for details.");
             }
             catch (Exception ex)
             {

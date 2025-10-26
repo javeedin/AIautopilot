@@ -161,6 +161,27 @@ const DataLoader = {
         try {
             console.log('Loading all data...');
 
+            // Check if data was injected by C# application
+            if (window.CSHARP_DATA) {
+                console.log('Using data injected from C# application');
+                console.log('C# Data:', window.CSHARP_DATA);
+
+                DataStore.validationSummary = window.CSHARP_DATA.validationSummary || [];
+                DataStore.pages = window.CSHARP_DATA.pages || [];
+                DataStore.tables = window.CSHARP_DATA.tables || [];
+                DataStore.validations = window.CSHARP_DATA.validations || {};
+
+                DataStore.loaded = true;
+                console.log('Data loaded from C# successfully!');
+                console.log('Total features:', Object.values(DataStore.validations).flat().length);
+                console.log('DataStore:', DataStore);
+
+                return true;
+            }
+
+            // Otherwise, load from CSV files (for browser mode)
+            console.log('Loading from CSV files...');
+
             // Load validation summary
             DataStore.validationSummary = await Utils.parseCSV(
                 `${CONFIG.dataPath}${CONFIG.csvFiles.validationSummary}`
