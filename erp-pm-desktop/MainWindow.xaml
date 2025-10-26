@@ -70,6 +70,18 @@
                 <Separator Margin="0,0,20,0" Background="#475569"/>
 
                 <!-- Git/App Buttons -->
+                <Button x:Name="downloadButton"
+                        Click="DownloadButton_Click"
+                        ToolTip="Download latest code from GitHub to C:\javeed\Aiautopilot"
+                        Margin="0,0,5,0"
+                        Padding="10,5"
+                        Background="#10B981"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Cursor="Hand">
+                    <TextBlock Text="⬇️ Download from GitHub" FontWeight="SemiBold"/>
+                </Button>
+
                 <Button x:Name="refreshButton"
                         Click="RefreshButton_Click"
                         ToolTip="Pull latest changes from Git"

@@ -28,16 +28,30 @@ namespace ERPProjectManager
         {
             try
             {
-                string appDataPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ERPProjectManager"
-                );
-                Directory.CreateDirectory(appDataPath);
+                // Check if user has downloaded to the fixed location
+                string fixedPath = @"C:\javeed\Aiautopilot";
+                string fixedProjectPath = Path.Combine(fixedPath, "project-management");
 
-                localRepoPath = Path.Combine(appDataPath, "AIautopilot");
-                projectManagementPath = Path.Combine(localRepoPath, "project-management");
+                if (Directory.Exists(fixedProjectPath))
+                {
+                    // Use the fixed path if it exists
+                    localRepoPath = fixedPath;
+                    projectManagementPath = fixedProjectPath;
+                    UpdateStatus($"Using project from: {localRepoPath}");
+                }
+                else
+                {
+                    // Fallback to AppData location
+                    string appDataPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "ERPProjectManager"
+                    );
+                    Directory.CreateDirectory(appDataPath);
 
-                UpdateStatus("Initializing application...");
+                    localRepoPath = Path.Combine(appDataPath, "AIautopilot");
+                    projectManagementPath = Path.Combine(localRepoPath, "project-management");
+                    UpdateStatus("Initializing application...");
+                }
 
                 // Clone or pull repository FIRST
                 await CloneOrUpdateRepository();
@@ -388,6 +402,55 @@ namespace ERPProjectManager
         {
             statusText.Text = message;
             statusBar.Visibility = Visibility.Visible;
+        }
+
+        private async void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Set fixed path
+                localRepoPath = @"C:\javeed\Aiautopilot";
+                projectManagementPath = Path.Combine(localRepoPath, "project-management");
+
+                UpdateStatus($"Downloading to {localRepoPath}...");
+
+                // Create directory if it doesn't exist
+                Directory.CreateDirectory(Path.GetDirectoryName(localRepoPath));
+
+                // Clone or update
+                await CloneOrUpdateRepository();
+
+                // Verify project-management folder exists
+                if (!Directory.Exists(projectManagementPath))
+                {
+                    MessageBox.Show(
+                        $"Downloaded successfully, but project-management folder not found.\n\n" +
+                        $"Expected: {projectManagementPath}",
+                        "Warning",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Reload the page with new data
+                await LoadAndInjectData();
+
+                MessageBox.Show(
+                    $"Successfully downloaded to:\n{localRepoPath}\n\n" +
+                    "The application will now use this location for all updates.",
+                    "Download Complete",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error downloading from GitHub:\n\n{ex.Message}",
+                    "Download Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                UpdateStatus("Download failed");
+            }
         }
 
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
