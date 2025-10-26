@@ -1,0 +1,105 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+CM-001,Cost Management,Organization Setup,Cost Organization,Define cost organizations aligned with inventory organizations,Critical,Medium,Not Started,INV-001,5,,,Yes,,Setup cost organization with costing parameters
+CM-002,Cost Management,Organization Setup,Cost Book Setup,Define multiple cost books for parallel costing scenarios,High,Medium,Not Started,CM-001,4,,,Yes,,Create primary and secondary cost books
+CM-010,Cost Management,Costing Methods,Standard Costing,Support standard costing with predetermined costs,Critical,High,Not Started,CM-001,10,,,Yes,,Implement standard costing with variance tracking
+CM-011,Cost Management,Costing Methods,Average Costing,Maintain perpetual weighted average costs,Critical,High,Not Started,CM-001,9,,,Yes,,Calculate and update average costs on receipts
+CM-012,Cost Management,Costing Methods,FIFO Costing,Support First-In-First-Out costing methodology,High,High,Not Started,CM-001,10,,,Yes,,Implement FIFO cost layer management
+CM-013,Cost Management,Costing Methods,LIFO Costing,Support Last-In-First-Out costing methodology,Medium,High,Not Started,CM-001,10,,,Yes,,Implement LIFO cost layer management
+CM-014,Cost Management,Costing Methods,Actual Costing,Support actual cost capture and allocation,High,High,Not Started,CM-001,9,,,Yes,,Capture and allocate actual costs
+CM-020,Cost Management,Cost Elements,Element Definition,Define cost element structures and categories,Critical,Medium,Not Started,CM-001,5,,,Yes,,Define standard cost elements (Material Labor Overhead)
+CM-021,Cost Management,Cost Elements,Component Classes,Group cost elements into component classes,High,Medium,Not Started,CM-020,4,,,Yes,,Create cost component class hierarchies
+CM-030,Cost Management,Overhead,Rate Setup,Define and maintain overhead rates,Critical,High,Not Started,CM-020,8,,,Yes,,Create overhead rate structures with effective dates
+CM-031,Cost Management,Overhead,Overhead Allocation,Allocate overhead costs to products,Critical,High,Not Started,CM-030,10,,,Yes,,Process overhead allocations with multiple methods
+CM-032,Cost Management,Overhead,Activity-Based Costing,Support ABC methodology for overhead allocation,High,High,Not Started,CM-030,12,,,No,,Implement ABC with cost drivers and activity pools
+CM-040,Cost Management,Cost Processing,Cost Accounting Cycle,Process cost transactions through accounting cycle,Critical,High,Not Started,CM-020,10,,,Yes,,Process receipts issues and calculate COGS
+CM-041,Cost Management,Cost Processing,Transaction Processor,Automated processor for cost distributions,Critical,High,Not Started,CM-040,12,,,Yes,,Create automated cost transaction processor
+CM-042,Cost Management,Cost Processing,Inventory Valuation,Calculate inventory valuation for financial reporting,Critical,High,Not Started,INV-001,9,,,Yes,,Generate inventory valuation by costing method
+CM-050,Cost Management,Cost Updates,Standard Cost Updates,Process standard cost updates with simulation,Critical,High,Not Started,CM-010,10,,,Yes,,Simulate approve and implement cost updates
+CM-051,Cost Management,Cost Updates,Cost Rollup,Calculate rolled-up costs for assemblies,Critical,High,Not Started,CM-020,11,,,Yes,,Roll up component costs through BOM structure
+CM-052,Cost Management,Cost Updates,Mass Cost Updates,Perform mass cost updates by criteria,High,Medium,Not Started,CM-050,7,,,Yes,,Update costs in batch with preview and validation
+CM-060,Cost Management,Variance Analysis,Purchase Price Variance,Calculate and analyze PPV,Critical,Medium,Not Started,PO-001,7,,,Yes,,Calculate PPV on receipt transactions
+CM-061,Cost Management,Variance Analysis,Material Usage Variance,Track material consumption variances,High,Medium,Not Started,CM-010,6,,,Yes,,Calculate usage variance against standards
+CM-062,Cost Management,Variance Analysis,Cost Variance Reporting,Comprehensive variance reporting,Critical,Medium,Not Started,CM-060,8,,,Yes,,Generate variance reports across all types
+CM-070,Cost Management,WIP Costing,WIP Valuation,Calculate work in process valuation,High,High,Not Started,CM-040,9,,,Yes,,Value WIP by job with material labor overhead
+CM-071,Cost Management,WIP Costing,Job Costing,Track costs by individual jobs,High,High,Not Started,CM-070,10,,,Yes,,Create job cost sheets with actual tracking
+CM-080,Cost Management,Reporting,Standard Cost Reports,Generate comprehensive cost reports,Critical,Medium,Not Started,CM-040,8,,,Yes,,Generate item cost COGS WIP and variance reports
+CM-081,Cost Management,Reporting,Cost Analytics,Provide real-time cost analytics and dashboards,High,Medium,Not Started,CM-080,9,,,No,,Create interactive cost dashboards with KPIs
+CM-090,Cost Management,Integration,Inventory Integration,Integration with Inventory module,Critical,High,Not Started,INV-001,10,,,Yes,,Real-time cost updates from inventory transactions
+CM-091,Cost Management,Integration,Purchasing Integration,Integration with Purchasing module,Critical,High,Not Started,PO-001,9,,,Yes,,Capture receipt costs and calculate PPV
+CM-092,Cost Management,Integration,GL Integration,Post cost distributions to General Ledger,Critical,High,Not Started,GL-001,11,,,Yes,,Create and post cost accounting journals to GL
+CM-093,Cost Management,Integration,Order Management Integration,Provide costs for profitability analysis,High,Medium,Not Started,OM-001,7,,,Yes,,Supply cost data for margin and pricing
+CM-100,Cost Management,Period Close,Period Management,Manage cost accounting periods,Critical,Medium,Not Started,GL-100,6,,,Yes,,Open close and control cost periods
+CM-101,Cost Management,Period Close,Close Checklist,Systematic period close checklist,Critical,Medium,Not Started,CM-100,7,,,Yes,,Complete all cost activities before period close
+CM-110,Cost Management,Security,Cost Security,Implement security controls for cost data,Critical,Medium,Not Started,UR-001,6,,,Yes,,Role-based access with segregation of duties
+CM-111,Cost Management,Security,Audit Trail,Maintain comprehensive cost audit trail,Critical,Medium,Not Started,CM-110,5,,,Yes,,Log all cost changes with user and timestamp
+CM-015,Cost Management,Costing Methods,Costing Method Assignment,Assign costing methods to items and organizations,Critical,Medium,Not Started,CM-010,5,,,Yes,,Configure costing method by item or category
+CM-022,Cost Management,Cost Elements,Element Mapping,Map cost elements to GL accounts,Critical,Medium,Not Started,CM-020,5,,,Yes,,Create GL account mapping for each cost element
+CM-033,Cost Management,Overhead,Overhead Pools,Define overhead cost pools,High,Medium,Not Started,CM-030,6,,,Yes,,Create and maintain overhead pools by department
+CM-034,Cost Management,Overhead,Cost Drivers,Define and track cost drivers for ABC,High,High,Not Started,CM-032,7,,,No,,Identify and capture cost driver data
+CM-043,Cost Management,Cost Processing,COGS Calculation,Calculate cost of goods sold,Critical,High,Not Started,CM-040,8,,,Yes,,Calculate COGS on inventory issues and sales
+CM-044,Cost Management,Cost Processing,Cost Adjustments,Process cost adjustments and corrections,High,Medium,Not Started,CM-040,6,,,Yes,,Support retroactive cost adjustments
+CM-053,Cost Management,Cost Updates,Cost Simulation,Simulate cost changes before implementation,High,Medium,Not Started,CM-050,7,,,Yes,,What-if analysis for cost updates
+CM-054,Cost Management,Cost Updates,Cost Approval Workflow,Approval workflow for cost changes,Critical,Medium,Not Started,CM-050,6,,,Yes,,Multi-level approval for cost updates
+CM-063,Cost Management,Variance Analysis,Labor Variance,Track labor rate and efficiency variances,High,Medium,Not Started,CM-010,6,,,Yes,,Calculate labor variances for manufacturing
+CM-064,Cost Management,Variance Analysis,Overhead Variance,Track overhead spending and volume variances,High,Medium,Not Started,CM-031,7,,,Yes,,Calculate overhead variances by type
+CM-065,Cost Management,Variance Analysis,Variance Thresholds,Set variance alert thresholds,Medium,Low,Not Started,CM-062,3,,,Yes,,Configure variance tolerance limits
+CM-072,Cost Management,WIP Costing,WIP Transfers,Transfer costs from WIP to finished goods,High,Medium,Not Started,CM-070,6,,,Yes,,Move costs from WIP to FG on completion
+CM-073,Cost Management,WIP Costing,Scrap Costing,Account for scrap and waste costs,High,Medium,Not Started,CM-070,5,,,Yes,,Track and allocate scrap costs
+CM-082,Cost Management,Reporting,Cost Comparison Reports,Compare costs across periods and organizations,High,Medium,Not Started,CM-080,6,,,Yes,,Multi-period and multi-org cost comparison
+CM-083,Cost Management,Reporting,Profitability Analysis,Analyze profitability by product and customer,High,Medium,Not Started,CM-080,7,,,No,,Calculate and report product profitability
+CM-094,Cost Management,Integration,Multi-Org Cost Transfer,Handle interorg transfer costing,High,High,Not Started,INV-140,8,,,Yes,,Cost goods transferred between organizations
+CM-095,Cost Management,Integration,External Cost Interface,Interface with external cost systems,Medium,High,Not Started,CM-092,9,,,Yes,,Import/export costs from external systems
+CM-102,Cost Management,Period Close,Period Reconciliation,Reconcile cost subledger to GL,Critical,Medium,Not Started,CM-101,7,,,Yes,,Ensure cost entries match GL balances
+CM-103,Cost Management,Period Close,Period Rollback,Rollback and reopen closed periods,Medium,Medium,Not Started,CM-100,5,,,Yes,,Reopen periods with proper authorization
+CM-112,Cost Management,Security,Cost Data Encryption,Encrypt sensitive cost data,High,Medium,Not Started,CM-110,4,,,Yes,,Protect confidential cost information
+CM-016,Cost Management,Costing Methods,Lot Cost Tracking,Track costs by lot number,High,High,Not Started,INV-080,8,,,Yes,,Maintain separate costs for each lot
+CM-017,Cost Management,Costing Methods,Serial Cost Tracking,Track costs by serial number,Medium,High,Not Started,INV-090,8,,,Yes,,Maintain costs at serial number level
+CM-023,Cost Management,Cost Elements,Custom Cost Elements,Support custom cost element definition,Medium,Medium,Not Started,CM-020,5,,,Yes,,Allow user-defined cost elements
+CM-035,Cost Management,Overhead,Burden Rates,Calculate and apply burden rates,High,Medium,Not Started,CM-030,6,,,Yes,,Apply burden to direct costs
+CM-045,Cost Management,Cost Processing,Negative Cost Prevention,Prevent and handle negative costs,High,Medium,Not Started,CM-041,5,,,Yes,,Validate costs and prevent negative values
+CM-046,Cost Management,Cost Processing,Cost Reprocessing,Reprocess cost transactions,Medium,Medium,Not Started,CM-041,6,,,Yes,,Correct and reprocess failed transactions
+CM-055,Cost Management,Cost Updates,Assembly Cost Updates,Update costs for assemblies and sub-assemblies,High,Medium,Not Started,CM-051,7,,,Yes,,Cascade cost changes through BOM
+CM-066,Cost Management,Variance Analysis,Variance Comments,Add comments and notes to variances,Medium,Low,Not Started,CM-062,3,,,Yes,,Document variance causes and actions
+CM-074,Cost Management,WIP Costing,WIP by Department,Track WIP costs by department or work center,Medium,Medium,Not Started,CM-070,6,,,Yes,,Department-level WIP tracking
+CM-084,Cost Management,Reporting,Make vs Buy Analysis,Cost analysis for make versus buy decisions,High,Medium,Not Started,CM-080,6,,,No,,Compare internal production vs purchase costs
+CM-085,Cost Management,Reporting,Cost Reduction Reports,Identify cost reduction opportunities,High,Medium,Not Started,CM-080,6,,,No,,Analyze and report cost saving opportunities
+CM-096,Cost Management,Integration,Manufacturing Integration,Integration with Manufacturing/Production module,High,High,Not Started,CM-070,10,,,Yes,,Capture production costs and WIP
+CM-104,Cost Management,Period Close,Year-End Close,Special year-end cost closing procedures,High,Medium,Not Started,CM-101,8,,,Yes,,Complete annual cost closing activities
+CM-113,Cost Management,Security,Cost Access by BU,Control cost access by business unit,Critical,Medium,Not Started,UR-041,5,,,Yes,,Restrict cost data by user's BU access
+CM-018,Cost Management,Costing Methods,Consignment Costing,Handle consignment inventory costing,Medium,High,Not Started,PO-220,7,,,Yes,,Cost consigned inventory appropriately
+CM-036,Cost Management,Overhead,Overhead Recovery,Track overhead recovery and absorption,High,Medium,Not Started,CM-031,6,,,Yes,,Calculate over/under absorbed overhead
+CM-047,Cost Management,Cost Processing,Intercompany Costing,Handle intercompany cost transfers,High,High,Not Started,GL-140,9,,,Yes,,Cost intercompany transactions properly
+CM-056,Cost Management,Cost Updates,Global Cost Inflation,Apply global inflation factors to costs,Medium,Medium,Not Started,CM-052,5,,,Yes,,Mass update for inflation adjustments
+CM-067,Cost Management,Variance Analysis,Variance Approval,Approve and close variance accounts,High,Medium,Not Started,CM-062,5,,,Yes,,Workflow to review and approve variances
+CM-075,Cost Management,WIP Costing,Project Costing,Cost tracking for projects,Medium,High,Not Started,CM-071,10,,,No,,Track costs by project with phases
+CM-086,Cost Management,Reporting,Cost Forecasting,Forecast future costs based on trends,Medium,High,Not Started,CM-081,8,,,No,,Predictive cost modeling and forecasting
+CM-087,Cost Management,Reporting,Margin Analysis,Analyze margins by product customer channel,High,Medium,Not Started,CM-083,7,,,No,,Calculate and report margins with costs
+CM-097,Cost Management,Integration,EDI Cost Updates,Support EDI for cost data exchange,Low,High,Not Started,CM-095,8,,,Yes,,Electronic cost data exchange
+CM-105,Cost Management,Period Close,Soft Close,Perform soft close for preliminary reporting,Medium,Medium,Not Started,CM-100,4,,,Yes,,Soft close allowing adjustments
+CM-114,Cost Management,Security,Cost Report Security,Secure cost reports by role,High,Medium,Not Started,CM-110,4,,,Yes,,Control report access by user role
+CM-037,Cost Management,Overhead,Overhead Budgets,Define overhead budgets for variance analysis,Medium,Medium,Not Started,GL-180,5,,,Yes,,Create overhead budgets by period
+CM-048,Cost Management,Cost Processing,Prior Period Adjustments,Handle prior period cost adjustments,High,Medium,Not Started,CM-044,6,,,Yes,,Post adjustments to prior periods
+CM-057,Cost Management,Cost Updates,Cost History Archive,Archive historical cost data,Medium,Low,Not Started,CM-050,4,,,Yes,,Maintain cost history for reporting
+CM-068,Cost Management,Variance Analysis,Variance Investigation,Tools for variance root cause analysis,Medium,Medium,Not Started,CM-062,6,,,No,,Drill-down analysis of variances
+CM-076,Cost Management,WIP Costing,Rework Costing,Cost rework and repair activities,Medium,Medium,Not Started,CM-073,5,,,Yes,,Track costs of rework separately
+CM-088,Cost Management,Reporting,Cost Trend Analysis,Analyze cost trends over time,High,Medium,Not Started,CM-082,6,,,No,,Trend analysis with graphical reporting
+CM-098,Cost Management,Integration,API for Cost Data,REST API for cost data access,Medium,High,Not Started,CM-095,9,,,Yes,,Expose cost data via secure API
+CM-106,Cost Management,Period Close,Close Validation,Validate period close completion,High,Medium,Not Started,CM-101,5,,,Yes,,Automated validation of close checklist
+CM-115,Cost Management,Security,SOX Compliance,Ensure SOX compliance for cost processes,Critical,Medium,Not Started,GL-280,6,,,Yes,,SOX controls for cost accounting
+CM-038,Cost Management,Overhead,Variable vs Fixed Overhead,Separate variable and fixed overhead,Medium,Medium,Not Started,CM-030,5,,,Yes,,Track and allocate fixed vs variable costs
+CM-058,Cost Management,Cost Updates,What-If Costing,What-if scenarios for cost planning,Medium,Medium,Not Started,CM-053,7,,,Yes,,Model different cost scenarios
+CM-069,Cost Management,Variance Analysis,Rolling Variance Reports,Rolling 12-month variance analysis,Medium,Low,Not Started,CM-062,4,,,Yes,,Continuous variance tracking
+CM-089,Cost Management,Reporting,Cost Benchmarking,Benchmark costs against standards,Medium,Medium,Not Started,CM-088,6,,,No,,Compare costs to industry benchmarks
+CM-107,Cost Management,Period Close,Close Checklist Automation,Automate period close checklist steps,High,High,Not Started,CM-101,10,,,Yes,,Automated execution of close tasks
+CM-116,Cost Management,Security,Multi-Level Cost Approval,Multi-level approval for cost transactions,High,Medium,Not Started,UR-060,6,,,Yes,,Tiered approval based on cost amount
+CM-019,Cost Management,Costing Methods,Transfer Pricing,Support transfer pricing between entities,Medium,High,Not Started,CM-002,8,,,Yes,,Calculate transfer prices for intercompany
+CM-049,Cost Management,Cost Processing,Cost Exception Handling,Handle cost processing exceptions,High,Medium,Not Started,CM-041,6,,,Yes,,Queue and resolve cost errors
+CM-077,Cost Management,WIP Costing,By-Product Costing,Cost allocation for by-products,Low,Medium,Not Started,CM-070,5,,,Yes,,Allocate costs to by-products
+CM-099,Cost Management,Integration,Budget Integration,Integration with budgeting systems,Medium,Medium,Not Started,GL-180,6,,,Yes,,Compare actual costs to budget
+CM-108,Cost Management,Period Close,Close Notifications,Automated notifications for period close,Medium,Low,Not Started,CM-101,3,,,Yes,,Alert users of close status and tasks
+CM-117,Cost Management,Security,Cost Data Masking,Mask sensitive cost data for non-privileged users,Medium,Medium,Not Started,CM-112,5,,,Yes,,Hide detailed costs from unauthorized users
+CM-059,Cost Management,Cost Updates,Cost Import Tool,Import costs from external files,Medium,Medium,Not Started,CM-095,6,,,Yes,,Bulk import of item costs from Excel/CSV
+CM-078,Cost Management,WIP Costing,Joint Product Costing,Allocate costs to joint products,Low,High,Not Started,CM-077,7,,,Yes,,Cost allocation for joint production
+CM-090,Cost Management,Reporting,Cost Visualization,Graphical cost data visualization,Medium,Medium,Not Started,CM-081,6,,,No,,Charts and graphs for cost analysis
+CM-109,Cost Management,Period Close,Close Performance Metrics,Track period close performance,Medium,Low,Not Started,CM-100,3,,,Yes,,Measure close cycle time and efficiency
+CM-118,Cost Management,Security,Cost Segregation of Duties,Enforce segregation of duties,Critical,Medium,Not Started,UR-001,5,,,Yes,,Separate cost entry and approval roles

@@ -1,0 +1,126 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+FA-001,Fixed Assets,Setup,Asset Categories,Define asset categories for classification,Critical,Medium,Not Started,None,5,,,Yes,,Create category structure with GL defaults
+FA-002,Fixed Assets,Setup,Asset Books,Set up multiple asset books,Critical,High,Not Started,GL-001,8,,,Yes,,Configure corporate tax and IFRS books
+FA-003,Fixed Assets,Setup,Depreciation Methods,Configure depreciation methods,Critical,High,Not Started,FA-002,9,,,Yes,,Support straight-line declining balance and MACRS
+FA-010,Fixed Assets,Acquisition,Asset Addition,Add new assets to the system,Critical,High,Not Started,FA-001,10,,,Yes,,Create asset master with all required details
+FA-011,Fixed Assets,Acquisition,Assets from AP,Create assets from AP invoices,Critical,High,Not Started,AP-001,10,,,Yes,,Link AP invoices to asset additions
+FA-012,Fixed Assets,Acquisition,Construction in Progress,Track assets under construction,High,High,Not Started,FA-010,9,,,Yes,,Accumulate CIP costs and transfer to assets
+FA-020,Fixed Assets,Depreciation,Depreciation Calculation,Calculate depreciation per configured methods,Critical,High,Not Started,FA-003,12,,,Yes,,Support multiple methods and books
+FA-021,Fixed Assets,Depreciation,Depreciation Processing,Run periodic depreciation processing,Critical,High,Not Started,FA-020,10,,,Yes,,Mass depreciation with GL posting
+FA-022,Fixed Assets,Depreciation,Depreciation Adjustment,Adjust depreciation for errors and changes,High,Medium,Not Started,FA-021,7,,,Yes,,Process adjustments and recalculate prospectively
+FA-030,Fixed Assets,Transfers,Location Transfers,Transfer assets between locations,High,Medium,Not Started,FA-010,6,,,Yes,,Update location without depreciation impact
+FA-031,Fixed Assets,Transfers,Cost Center Transfers,Transfer assets between cost centers,High,High,Not Started,FA-030,8,,,Yes,,Change GL assignment and reallocate depreciation
+FA-032,Fixed Assets,Transfers,Intercompany Transfers,Transfer assets between legal entities,Medium,High,Not Started,GL-140,10,,,Yes,,Retire in source add in destination with gain/loss
+FA-040,Fixed Assets,Retirement,Asset Retirement,Retire assets from service,Critical,High,Not Started,FA-020,9,,,Yes,,Calculate gain/loss and post retirement entries
+FA-041,Fixed Assets,Retirement,Asset Sale,Process asset sales with proceeds,High,High,Not Started,FA-040,8,,,Yes,,Record sale price and calculate gain/loss
+FA-042,Fixed Assets,Retirement,Asset Disposal,Process asset disposals and scrap,High,Medium,Not Started,FA-040,6,,,Yes,,Record disposal with loss recognition
+FA-050,Fixed Assets,Physical Inventory,Physical Count,Conduct physical inventory of assets,High,Medium,Not Started,FA-010,8,,,Yes,,Generate count sheets and reconcile to records
+FA-051,Fixed Assets,Physical Inventory,Asset Verification,Verify asset existence and condition,Medium,Medium,Not Started,FA-050,6,,,Yes,,Periodic verification with photo documentation
+FA-060,Fixed Assets,Impairment,Asset Impairment,Test and record asset impairment,Medium,High,Not Started,FA-020,10,,,No,,Calculate recoverable amount and impairment loss
+FA-061,Fixed Assets,Impairment,Asset Revaluation,Revalue assets to fair value (IFRS),Low,High,Not Started,FA-060,9,,,No,,Record revaluation surplus and update basis
+FA-070,Fixed Assets,Leases,Lease Assets,Manage ROU assets per ASC 842 IFRS 16,High,High,Not Started,FA-010,12,,,No,,Calculate lease liability and ROU asset
+FA-071,Fixed Assets,Leases,Lease Modification,Process lease modifications,Medium,High,Not Started,FA-070,8,,,No,,Remeasure liability and adjust ROU asset
+FA-080,Fixed Assets,Reporting,Asset Reports,Comprehensive fixed asset reporting,Critical,Medium,Not Started,FA-020,8,,,Yes,,Generate register schedule and roll forward reports
+FA-081,Fixed Assets,Reporting,Asset Analytics,Analytics dashboards for asset portfolio,High,Medium,Not Started,FA-080,8,,,No,,Display key metrics and portfolio analysis
+FA-090,Fixed Assets,Integration,AP Integration,Integrate with Accounts Payable,Critical,High,Not Started,AP-001,10,,,Yes,,Create assets from capital invoices
+FA-091,Fixed Assets,Integration,GL Integration,Post asset transactions to General Ledger,Critical,High,Not Started,GL-001,11,,,Yes,,Post additions depreciation and retirements
+FA-092,Fixed Assets,Integration,PO Integration,Link assets to purchase orders,High,Medium,Not Started,PO-001,7,,,Yes,,Flag capital POs and link to assets
+FA-100,Fixed Assets,Security,Asset Security,Security controls for asset management,Critical,Medium,Not Started,UR-001,6,,,Yes,,Role-based access with approvals
+FA-101,Fixed Assets,Security,Audit Trail,Comprehensive audit trail for assets,Critical,Medium,Not Started,FA-100,5,,,Yes,,Log all changes with user and timestamp
+FA-004,Fixed Assets,Setup,Asset Numbering,Configure asset numbering schemes,High,Low,Not Started,FA-001,3,,,Yes,,Auto or manual asset number assignment
+FA-005,Fixed Assets,Setup,Useful Life Defaults,Set useful life defaults by category,High,Low,Not Started,FA-001,3,,,Yes,,Default useful life ranges per category
+FA-013,Fixed Assets,Acquisition,Bulk Asset Addition,Add multiple assets in batch,High,Medium,Not Started,FA-010,7,,,Yes,,Import and create assets from spreadsheet
+FA-023,Fixed Assets,Depreciation,Bonus Depreciation,Calculate bonus depreciation (tax),High,Medium,Not Started,FA-020,6,,,Yes,,Apply bonus depreciation rules per tax code
+FA-024,Fixed Assets,Depreciation,Section 179 Expense,Process Section 179 expense election,High,Medium,Not Started,FA-023,6,,,Yes,,Calculate and apply Section 179 limits
+FA-033,Fixed Assets,Transfers,Mass Transfers,Transfer multiple assets in batch,Medium,Medium,Not Started,FA-030,6,,,Yes,,Bulk transfer by criteria
+FA-043,Fixed Assets,Retirement,Trade-In Processing,Process asset trade-ins,Medium,Medium,Not Started,FA-041,6,,,Yes,,Apply trade-in value to new asset
+FA-052,Fixed Assets,Physical Inventory,Mobile Counting,Mobile app for physical counts,Medium,High,Not Started,FA-050,9,,,Yes,,Barcode scanning and real-time updates
+FA-062,Fixed Assets,Impairment,Impairment Reversal,Reverse impairment under IFRS,Low,Medium,Not Started,FA-060,5,,,No,,Restore carrying value up to original basis
+FA-072,Fixed Assets,Leases,Lease Termination,Process early lease terminations,Medium,Medium,Not Started,FA-070,6,,,No,,Calculate termination gain/loss
+FA-082,Fixed Assets,Reporting,Tax Reports,Generate tax depreciation reports,High,Medium,Not Started,FA-080,6,,,Yes,,Form 4562 and tax basis reports
+FA-093,Fixed Assets,Integration,Budget Integration,Integrate with capital budgets,Medium,Medium,Not Started,GL-180,7,,,Yes,,Track actual vs budgeted capital spend
+FA-006,Fixed Assets,Setup,Asset Tags,Generate and print asset tags,Medium,Low,Not Started,FA-010,4,,,Yes,,Barcode labels for physical assets
+FA-014,Fixed Assets,Acquisition,Asset Components,Track asset components separately,Medium,High,Not Started,FA-010,8,,,Yes,,Component-level depreciation (IFRS)
+FA-025,Fixed Assets,Depreciation,Depreciation Simulation,Simulate depreciation before posting,High,Medium,Not Started,FA-021,6,,,Yes,,Preview depreciation impact
+FA-034,Fixed Assets,Transfers,Transfer Approval,Approval workflow for asset transfers,High,Medium,Not Started,FA-031,5,,,Yes,,Route transfers for approval
+FA-044,Fixed Assets,Retirement,Retirement Approval,Approval workflow for retirements,High,Medium,Not Started,FA-040,5,,,Yes,,Require approval for high-value retirements
+FA-053,Fixed Assets,Physical Inventory,Variance Resolution,Resolve physical inventory variances,High,Medium,Not Started,FA-050,6,,,Yes,,Investigate and adjust for missing/found assets
+FA-063,Fixed Assets,Impairment,Impairment Indicators,Monitor impairment indicators,Medium,Medium,Not Started,FA-060,5,,,No,,Flag assets for impairment testing
+FA-073,Fixed Assets,Leases,Short-Term Leases,Expense short-term leases,Medium,Low,Not Started,FA-070,4,,,Yes,,Track leases under 12 months
+FA-083,Fixed Assets,Reporting,Depreciation Forecast,Project future depreciation,High,Medium,Not Started,FA-080,7,,,Yes,,Forecast depreciation for planning
+FA-094,Fixed Assets,Integration,Project Integration,Link assets to capital projects,Medium,High,Not Started,FA-012,8,,,Yes,,Associate assets with projects
+FA-007,Fixed Assets,Setup,Salvage Value,Configure salvage value rules,Medium,Low,Not Started,FA-003,3,,,Yes,,Set salvage value by category or asset
+FA-015,Fixed Assets,Acquisition,Asset Splits,Split assets into multiple assets,Medium,Medium,Not Started,FA-010,6,,,Yes,,Divide asset cost across new assets
+FA-026,Fixed Assets,Depreciation,Units of Production,Support units of production method,Medium,High,Not Started,FA-020,8,,,Yes,,Track usage units and calculate depreciation
+FA-035,Fixed Assets,Transfers,Transfer History,Maintain transfer history,Medium,Low,Not Started,FA-030,3,,,Yes,,Track all historical transfers
+FA-045,Fixed Assets,Retirement,Partial Retirement,Retire portion of asset,Medium,High,Not Started,FA-040,7,,,Yes,,Reduce cost and accumulated depreciation
+FA-054,Fixed Assets,Physical Inventory,Cycle Counting,Continuous cycle counting program,Low,Medium,Not Started,FA-050,6,,,Yes,,Count subset of assets periodically
+FA-064,Fixed Assets,Impairment,Cash Generating Units,Group assets into CGUs for impairment,Low,High,Not Started,FA-060,8,,,No,,IFRS impairment at CGU level
+FA-074,Fixed Assets,Leases,Lease Schedules,Generate detailed lease schedules,High,Medium,Not Started,FA-070,6,,,Yes,,Payment schedule and amortization
+FA-084,Fixed Assets,Reporting,Roll Forward Report,Asset roll forward by period,High,Medium,Not Started,FA-080,6,,,Yes,,Beginning additions retirements depreciation ending
+FA-095,Fixed Assets,Integration,Tax Integration,Integrate with tax systems,Medium,Medium,Not Started,FA-082,7,,,Yes,,Provide tax basis and depreciation
+FA-008,Fixed Assets,Setup,Proration Conventions,Configure depreciation proration,High,Medium,Not Started,FA-003,5,,,Yes,,Half-year mid-quarter conventions
+FA-016,Fixed Assets,Acquisition,Interest Capitalization,Capitalize interest to CIP and assets,Medium,High,Not Started,FA-012,8,,,Yes,,Calculate and add interest to asset cost
+FA-027,Fixed Assets,Depreciation,Depreciation Reserve,Track accumulated depreciation,Critical,Medium,Not Started,FA-020,6,,,Yes,,Maintain reserve per book
+FA-036,Fixed Assets,Transfers,Retroactive Transfers,Process backdated transfers,Low,Medium,Not Started,FA-031,6,,,Yes,,Recalculate depreciation for prior periods
+FA-046,Fixed Assets,Retirement,Gain Loss Reporting,Report retirement gains and losses,High,Low,Not Started,FA-040,4,,,Yes,,Summarize gains and losses by period
+FA-055,Fixed Assets,Physical Inventory,Found Assets,Process found unrecorded assets,Medium,Medium,Not Started,FA-050,5,,,Yes,,Add assets discovered in physical count
+FA-065,Fixed Assets,Impairment,Impairment Documentation,Document impairment testing,Medium,Low,Not Started,FA-060,4,,,Yes,,Attach supporting documentation
+FA-075,Fixed Assets,Leases,Low Value Leases,Expense low-value leases,Low,Low,Not Started,FA-070,3,,,Yes,,Practical expedient for low value
+FA-085,Fixed Assets,Reporting,Category Analysis,Analyze assets by category,Medium,Low,Not Started,FA-080,4,,,Yes,,Summary by asset category
+FA-096,Fixed Assets,Integration,Consolidation,Consolidate assets across entities,High,High,Not Started,GL-150,9,,,Yes,,Roll up for consolidated reporting
+FA-009,Fixed Assets,Setup,GL Account Mapping,Map asset categories to GL accounts,Critical,Medium,Not Started,FA-001,6,,,Yes,,Define accounts for cost and depreciation
+FA-017,Fixed Assets,Acquisition,Asset Groups,Group related assets,Medium,Medium,Not Started,FA-010,5,,,Yes,,Create asset groups for management
+FA-028,Fixed Assets,Depreciation,Catch-Up Depreciation,Process catch-up depreciation,High,Medium,Not Started,FA-022,6,,,Yes,,Recalculate for missed periods
+FA-037,Fixed Assets,Transfers,Transfer Documents,Generate transfer documentation,Low,Low,Not Started,FA-030,3,,,Yes,,Transfer forms and approvals
+FA-047,Fixed Assets,Retirement,Retirement Reversal,Reverse retirement transactions,Medium,Medium,Not Started,FA-040,6,,,Yes,,Un-retire assets and restore
+FA-056,Fixed Assets,Physical Inventory,Missing Assets,Process missing assets,High,Medium,Not Started,FA-050,6,,,Yes,,Research and write off if confirmed lost
+FA-066,Fixed Assets,Impairment,Fair Value Determination,Determine asset fair values,Low,High,Not Started,FA-060,7,,,No,,Valuation for impairment and revaluation
+FA-076,Fixed Assets,Leases,Variable Lease Payments,Handle variable lease payments,Medium,High,Not Started,FA-070,7,,,No,,Remeasure for variable payment changes
+FA-086,Fixed Assets,Reporting,Location Analysis,Analyze assets by location,Medium,Low,Not Started,FA-080,4,,,Yes,,Summary by asset location
+FA-097,Fixed Assets,Integration,Insurance Integration,Integrate with insurance systems,Low,Medium,Not Started,FA-010,6,,,Yes,,Provide insurable values
+FA-018,Fixed Assets,Acquisition,Asset Sourcing from PO,Create assets from purchase orders,High,High,Not Started,PO-001,8,,,Yes,,Link PO to asset on receipt
+FA-029,Fixed Assets,Depreciation,Depreciation Caps,Apply depreciation limits,Medium,Medium,Not Started,FA-020,5,,,Yes,,Luxury auto and other limits
+FA-038,Fixed Assets,Transfers,Mass Cost Center Changes,Change cost centers in bulk,Medium,Medium,Not Started,FA-031,5,,,Yes,,Reallocate multiple assets
+FA-048,Fixed Assets,Retirement,Retirement Reserve,Track retirement reserves,Low,Medium,Not Started,FA-040,5,,,Yes,,Estimate future retirement losses
+FA-057,Fixed Assets,Physical Inventory,Custodian Verification,Verify asset custodians,Medium,Low,Not Started,FA-051,4,,,Yes,,Confirm responsible parties
+FA-067,Fixed Assets,Impairment,Value in Use Calculation,Calculate value in use for impairment,Low,High,Not Started,FA-060,8,,,No,,Discount future cash flows
+FA-077,Fixed Assets,Leases,Lessee vs Lessor,Support both lessee and lessor accounting,Low,High,Not Started,FA-070,12,,,No,,Lessor accounting for leased assets
+FA-087,Fixed Assets,Reporting,Custodian Reports,Report assets by custodian,Medium,Low,Not Started,FA-080,3,,,Yes,,List assets by responsible person
+FA-098,Fixed Assets,Integration,Maintenance Integration,Integrate with maintenance systems,Low,Medium,Not Started,FA-010,7,,,Yes,,Track maintenance history
+FA-019,Fixed Assets,Acquisition,Mass Asset Updates,Update multiple assets in batch,Medium,Medium,Not Started,FA-010,6,,,Yes,,Bulk update of asset attributes
+FA-030-1,Fixed Assets,Depreciation,Method Changes,Change depreciation method,Medium,High,Not Started,FA-022,7,,,Yes,,Handle method changes with proper accounting
+FA-039,Fixed Assets,Transfers,Transfer Workflow,Automated transfer workflow,Medium,Medium,Not Started,FA-034,6,,,Yes,,Route and approve transfers
+FA-049,Fixed Assets,Retirement,Obsolete Asset Identification,Identify obsolete assets,Medium,Medium,Not Started,FA-040,5,,,No,,Flag low utilization and old assets
+FA-058,Fixed Assets,Physical Inventory,Count Sheet Generation,Generate physical count sheets,High,Low,Not Started,FA-050,4,,,Yes,,Printable count lists
+FA-068,Fixed Assets,Impairment,Goodwill Impairment,Test goodwill for impairment,Low,High,Not Started,FA-060,9,,,No,,Specialized goodwill testing
+FA-078,Fixed Assets,Leases,Sublease Accounting,Account for subleases,Low,High,Not Started,FA-070,8,,,No,,Lessee and lessor roles simultaneously
+FA-088,Fixed Assets,Reporting,Fully Depreciated Assets,Report fully depreciated assets,Medium,Low,Not Started,FA-080,3,,,Yes,,List assets with zero NBV
+FA-099,Fixed Assets,Integration,Mobile Asset Access,Mobile access to asset information,Low,High,Not Started,FA-010,9,,,Yes,,Mobile app for asset lookup
+FA-020-1,Fixed Assets,Acquisition,Donated Assets,Process donated asset additions,Low,Medium,Not Started,FA-010,5,,,Yes,,Record at fair value with no cost
+FA-031-1,Fixed Assets,Depreciation,Depreciation Holidays,Support depreciation holidays,Low,Medium,Not Started,FA-020,5,,,Yes,,Pause depreciation for specified periods
+FA-040-1,Fixed Assets,Transfers,Fleet Management,Specialized fleet management,Low,High,Not Started,FA-010,10,,,No,,Track vehicles with mileage and maintenance
+FA-050-1,Fixed Assets,Retirement,Retirement Planning,Plan future asset retirements,Low,Medium,Not Started,FA-040,6,,,No,,Forecast replacement needs
+FA-059,Fixed Assets,Physical Inventory,Condition Assessment,Assess asset condition,Low,Low,Not Started,FA-051,4,,,Yes,,Rate condition during verification
+FA-069,Fixed Assets,Impairment,Impairment Allocation,Allocate impairment to asset components,Low,High,Not Started,FA-060,7,,,No,,Pro-rata allocation of impairment
+FA-079,Fixed Assets,Leases,Lease vs Buy Analysis,Analyze lease versus buy decisions,Low,Medium,Not Started,FA-070,6,,,No,,NPV analysis of alternatives
+FA-089,Fixed Assets,Reporting,Asset Age Analysis,Analyze asset age distribution,Medium,Low,Not Started,FA-080,4,,,Yes,,Report average age by category
+FA-100-1,Fixed Assets,Integration,Capital Budget Tracking,Track capital budget utilization,Medium,Medium,Not Started,FA-093,6,,,Yes,,Compare spend to approved budgets
+FA-021-1,Fixed Assets,Acquisition,Assets from Leases,Create assets from lease contracts,Medium,High,Not Started,FA-070,8,,,Yes,,Convert lease to ROU asset
+FA-032-1,Fixed Assets,Depreciation,Bonus vs Regular,Separate bonus and regular depreciation,Medium,Medium,Not Started,FA-023,5,,,Yes,,Track components separately for tax
+FA-041-1,Fixed Assets,Transfers,Transfer Pricing,Intercompany transfer pricing,Low,High,Not Started,FA-032,8,,,No,,Determine arm's length transfer prices
+FA-051-1,Fixed Assets,Retirement,Environmental Disposal,Track environmental disposal compliance,Low,Medium,Not Started,FA-042,5,,,Yes,,Document hazmat disposal
+FA-060-1,Fixed Assets,Physical Inventory,RFID Tracking,RFID-based asset tracking,Low,High,Not Started,FA-050,10,,,Yes,,RFID tags for automated counts
+FA-070-1,Fixed Assets,Impairment,Intangible Impairment,Impairment testing for intangibles,Low,High,Not Started,FA-060,8,,,No,,Specialized rules for intangibles
+FA-080-1,Fixed Assets,Leases,Lease Disclosure Reports,Generate lease disclosure reports,Medium,Medium,Not Started,FA-074,6,,,Yes,,ASC 842 IFRS 16 disclosure requirements
+FA-090-1,Fixed Assets,Reporting,Asset Turnover,Calculate asset turnover metrics,Low,Low,Not Started,FA-081,3,,,Yes,,Revenue divided by average assets
+FA-101-1,Fixed Assets,Integration,SOX Compliance,SOX compliance for fixed assets,Critical,Medium,Not Started,GL-280,6,,,Yes,,Controls for asset processes
+FA-022-1,Fixed Assets,Acquisition,Pooled Assets,Manage pooled asset groups,Low,Medium,Not Started,FA-017,6,,,Yes,,Depreciate as single pool
+FA-033-1,Fixed Assets,Depreciation,AMT Depreciation,Calculate AMT depreciation,Low,High,Not Started,FA-024,7,,,Yes,,Alternative minimum tax calculations
+FA-042-1,Fixed Assets,Transfers,Transfer Costs,Capitalize costs of asset transfers,Low,Low,Not Started,FA-031,3,,,Yes,,Add transfer costs to asset basis
+FA-052-1,Fixed Assets,Retirement,Asset Write-Down,Write down asset values,Medium,Medium,Not Started,FA-060,6,,,Yes,,Reduce NBV without full retirement
+FA-061-1,Fixed Assets,Physical Inventory,Inventory Scheduling,Schedule physical inventories,Low,Low,Not Started,FA-050,3,,,Yes,,Calendar-based inventory planning
+FA-071-1,Fixed Assets,Impairment,Impairment Indicators Monitoring,Monitor for impairment triggers,Medium,Medium,Not Started,FA-063,6,,,No,,Continuous monitoring of indicators
+FA-081-1,Fixed Assets,Leases,Lease Renewal Options,Handle lease renewal options,Low,Medium,Not Started,FA-070,6,,,No,,Include reasonably certain renewals
+FA-091-1,Fixed Assets,Reporting,NBV Reporting,Net book value reports,High,Low,Not Started,FA-080,3,,,Yes,,Current NBV by asset and category
+FA-102,Fixed Assets,Integration,Workflow Integration,Integrate with workflow engine,Medium,High,Not Started,UR-060,8,,,Yes,,Route asset transactions for approval
