@@ -98,12 +98,33 @@ namespace ERPProjectManager
                 webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
                 webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
 
+                // Add ALL navigation event handlers for debugging
+                webView.CoreWebView2.NavigationStarting += (s, e) =>
+                {
+                    UpdateStatus($"🔵 NavigationStarting: {e.Uri}");
+                };
+
+                webView.CoreWebView2.SourceChanged += (s, e) =>
+                {
+                    UpdateStatus($"🟢 SourceChanged: {webView.CoreWebView2.Source}");
+                };
+
+                webView.CoreWebView2.ContentLoading += (s, e) =>
+                {
+                    UpdateStatus($"🟡 ContentLoading started");
+                };
+
+                webView.CoreWebView2.DOMContentLoaded += (s, e) =>
+                {
+                    UpdateStatus($"🟠 DOMContentLoaded fired");
+                };
+
                 webView.CoreWebView2.NavigationCompleted += async (s, e) =>
                 {
                     try
                     {
                         navigationCount++;
-                        UpdateStatus($"NavigationCompleted #{navigationCount} - Success: {e.IsSuccess}, HttpStatus: {e.HttpStatusCode}");
+                        UpdateStatus($"✅ NavigationCompleted #{navigationCount} - Success: {e.IsSuccess}, HttpStatus: {e.HttpStatusCode}");
 
                         if (e.IsSuccess)
                         {
