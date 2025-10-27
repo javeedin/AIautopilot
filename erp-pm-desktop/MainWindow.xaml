@@ -6,164 +6,301 @@
         Height="900"
         Width="1600"
         WindowState="Maximized"
-        Background="#F8FAFC">
+        Background="#202124">
+
+    <Window.Resources>
+        <!-- Tab Item Style -->
+        <Style x:Key="BrowserTabStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="#35363A"/>
+            <Setter Property="Foreground" Value="#9AA0A6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0"
+                                CornerRadius="8,8,0,0"
+                                Margin="2,0,0,0"
+                                Padding="12,8,4,8"
+                                MinWidth="180"
+                                MaxWidth="240">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                          Text="{TemplateBinding Header}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          FontSize="13"
+                                          VerticalAlignment="Center"
+                                          TextTrimming="CharacterEllipsis"
+                                          Margin="0,0,8,0"/>
+
+                                <Button Grid.Column="1"
+                                       x:Name="CloseButton"
+                                       Content="✕"
+                                       Width="20"
+                                       Height="20"
+                                       Background="Transparent"
+                                       Foreground="#9AA0A6"
+                                       BorderThickness="0"
+                                       FontSize="14"
+                                       Cursor="Hand"
+                                       VerticalAlignment="Center"
+                                       Tag="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#292A2D"/>
+                                <Setter Property="Foreground" Value="#E8EAED"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#3C4043"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Menu Button Style -->
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#35363A"/>
+            <Setter Property="Foreground" Value="#E8EAED"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3C4043"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Toolbar -->
-        <Border Grid.Row="0" Background="#1E293B" Padding="10">
-            <StackPanel Orientation="Horizontal">
-                <!-- Navigation Buttons -->
-                <Button x:Name="backButton"
-                        Click="BackButton_Click"
-                        ToolTip="Go Back"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="◀ Back" FontWeight="Medium"/>
+        <!-- Top Toolbar -->
+        <Border Grid.Row="0" Background="#35363A" Height="48">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Menu Button -->
+                <Button x:Name="menuButton"
+                        Grid.Column="0"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="MenuButton_Click"
+                        ToolTip="Open Menu"
+                        Margin="8,4">
+                    <TextBlock Text="☰" FontSize="20"/>
                 </Button>
 
-                <Button x:Name="forwardButton"
-                        Click="ForwardButton_Click"
-                        ToolTip="Go Forward"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="Forward ▶" FontWeight="Medium"/>
-                </Button>
-
-                <Button x:Name="homeButton"
-                        Click="HomeButton_Click"
-                        ToolTip="Go to Dashboard"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="🏠 Home" FontWeight="Medium"/>
-                </Button>
-
-                <Button x:Name="reloadButton"
-                        Click="ReloadButton_Click"
-                        ToolTip="Reload Page"
-                        Margin="0,0,20,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="🔄 Reload" FontWeight="Medium"/>
-                </Button>
-
-                <Separator Margin="0,0,20,0" Background="#475569"/>
-
-                <!-- Git/App Buttons -->
-                <Button x:Name="downloadButton"
-                        Click="DownloadButton_Click"
-                        ToolTip="Download latest code from GitHub to C:\javeed\Aiautopilot"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#10B981"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="⬇️ Download from GitHub" FontWeight="SemiBold"/>
-                </Button>
-
-                <Button x:Name="refreshButton"
-                        Click="RefreshButton_Click"
-                        ToolTip="Pull latest changes from Git"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#2563EB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="📥 Update from Git" FontWeight="SemiBold"/>
-                </Button>
-
-                <Button x:Name="openFolderButton"
-                        Click="OpenFolderButton_Click"
-                        ToolTip="Open project folder"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="📁 Open Folder" FontWeight="Medium"/>
-                </Button>
-
-                <Button x:Name="devToolsButton"
-                        Click="DevToolsButton_Click"
-                        ToolTip="Open DevTools (F12)"
-                        Margin="0,0,5,0"
-                        Padding="10,5"
-                        Background="#334155"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <TextBlock Text="🔧 DevTools" FontWeight="Medium"/>
-                </Button>
-
-                <!-- Title -->
-                <TextBlock Text="ERP Project Manager"
-                           Foreground="White"
-                           FontSize="16"
-                           FontWeight="Bold"
+                <!-- Title and Version -->
+                <StackPanel Grid.Column="1"
+                           Orientation="Horizontal"
                            VerticalAlignment="Center"
-                           Margin="30,0,5,0"/>
+                           Margin="12,0,0,0">
+                    <TextBlock Text="ERP Project Manager"
+                              Foreground="#E8EAED"
+                              FontSize="14"
+                              FontWeight="SemiBold"
+                              VerticalAlignment="Center"/>
+                    <TextBlock Text="V1.1"
+                              Foreground="#10B981"
+                              FontSize="12"
+                              FontWeight="SemiBold"
+                              VerticalAlignment="Center"
+                              Margin="8,0,0,0"/>
+                </StackPanel>
 
-                <TextBlock Text="V1.1"
-                           Foreground="#10B981"
-                           FontSize="14"
-                           FontWeight="SemiBold"
-                           VerticalAlignment="Center"
-                           Margin="0,0,0,0"/>
+                <!-- Utility Buttons -->
+                <StackPanel Grid.Column="2"
+                           Orientation="Horizontal"
+                           Margin="0,0,8,0">
+                    <Button x:Name="downloadButton"
+                            Click="DownloadButton_Click"
+                            Style="{StaticResource MenuButtonStyle}"
+                            ToolTip="Download from GitHub"
+                            Background="#10B981"
+                            Margin="4">
+                        <TextBlock Text="⬇️" FontSize="16"/>
+                    </Button>
+                    <Button x:Name="devToolsButton"
+                            Click="DevToolsButton_Click"
+                            Style="{StaticResource MenuButtonStyle}"
+                            ToolTip="Open DevTools (F12)"
+                            Margin="4">
+                        <TextBlock Text="🔧" FontSize="16"/>
+                    </Button>
+                </StackPanel>
 
-                <TextBlock Text="Desktop Application"
-                           Foreground="#94A3B8"
-                           FontSize="12"
-                           VerticalAlignment="Center"
-                           Margin="10,0,0,0"/>
-            </StackPanel>
+                <!-- Popup Menu -->
+                <Popup x:Name="menuPopup"
+                       PlacementTarget="{Binding ElementName=menuButton}"
+                       Placement="Bottom"
+                       StaysOpen="False"
+                       AllowsTransparency="True">
+                    <Border Background="#292A2D"
+                            BorderBrush="#3C4043"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="4"
+                            Effect="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
+                        <StackPanel Width="250">
+                            <!-- Project Management -->
+                            <Button Click="OpenProjectManagement_Click"
+                                   Style="{StaticResource MenuButtonStyle}"
+                                   HorizontalContentAlignment="Left"
+                                   Width="Auto"
+                                   Height="Auto"
+                                   Padding="12,10"
+                                   Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📊" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Project Management" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Separator Background="#3C4043" Margin="8,4"/>
+                            <TextBlock Text="ERP MODULES"
+                                      Foreground="#9AA0A6"
+                                      FontSize="11"
+                                      Margin="12,8,0,4"
+                                      FontWeight="SemiBold"/>
+
+                            <!-- Financial Modules -->
+                            <Button Click="OpenModule_Click" Tag="GL" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💰" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="General Ledger (GL)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="AP" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💸" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Accounts Payable (AP)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="AR" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💵" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Accounts Receivable (AR)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="CSH" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💳" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Cash Management (CSH)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="FA" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🏢" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Fixed Assets (FA)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Separator Background="#3C4043" Margin="8,4"/>
+
+                            <!-- Supply Chain -->
+                            <Button Click="OpenModule_Click" Tag="PO" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🛒" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Purchasing (PO)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="INV" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📦" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Inventory (INV)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="OM" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📋" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Order Management (OM)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Separator Background="#3C4043" Margin="8,4"/>
+
+                            <!-- Other Modules -->
+                            <Button Click="OpenModule_Click" Tag="HCM" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="👥" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Human Capital (HCM)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Click="OpenModule_Click" Tag="PAY" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Left" Width="Auto" Height="Auto" Padding="12,10" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💼" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Payroll (PAY)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
         </Border>
 
-        <!-- WebView2 -->
-        <Border Grid.Row="1" BorderThickness="0">
-            <wv2:WebView2 x:Name="webView"
-                          Source="about:blank"/>
+        <!-- Tab Strip -->
+        <Border Grid.Row="1" Background="#202124" BorderThickness="0,1,0,0" BorderBrush="#3C4043">
+            <TabControl x:Name="tabControl"
+                       Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                       Background="Transparent"
+                       BorderThickness="0"
+                       ItemContainerStyle="{StaticResource BrowserTabStyle}"
+                       SelectionChanged="TabControl_SelectionChanged">
+                <TabControl.Template>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ScrollViewer Grid.Row="0"
+                                        HorizontalScrollBarVisibility="Auto"
+                                        VerticalScrollBarVisibility="Disabled">
+                                <TabPanel IsItemsHost="True" Background="Transparent"/>
+                            </ScrollViewer>
+                            <ContentPresenter Grid.Row="1" ContentSource="SelectedContent"/>
+                        </Grid>
+                    </ControlTemplate>
+                </TabControl.Template>
+            </TabControl>
         </Border>
 
-        <!-- Status Bar -->
-        <Border x:Name="statusBar"
-                Grid.Row="2"
-                Background="#F1F5F9"
-                BorderBrush="#E2E8F0"
-                BorderThickness="0,1,0,0"
-                Padding="10,5"
-                Visibility="Visible">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Status:"
-                           Foreground="#64748B"
-                           FontWeight="SemiBold"
-                           Margin="0,0,10,0"/>
-                <TextBlock x:Name="statusText"
-                           Text="Initializing..."
-                           Foreground="#0F172A"/>
-            </StackPanel>
-        </Border>
+        <!-- Content Area (Tabs will be added here programmatically) -->
+        <Border Grid.Row="2" Background="#292A2D"/>
+
     </Grid>
 </Window>
