@@ -370,19 +370,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize the appropriate page view
     console.log('DataStore ready, loading dashboard...');
+    console.log('Checking for page load functions...');
+    console.log('typeof loadDashboard:', typeof loadDashboard);
+    console.log('typeof loadFeatures:', typeof loadFeatures);
+    console.log('window.loadDashboard:', window.loadDashboard);
+
     if (typeof loadDashboard === 'function') {
+        console.log('Calling loadDashboard()...');
         loadDashboard();
     } else if (typeof loadFeatures === 'function') {
+        console.log('Calling loadFeatures()...');
         loadFeatures();
     } else if (typeof loadValidations === 'function') {
+        console.log('Calling loadValidations()...');
         loadValidations();
     } else if (typeof loadDatabaseTables === 'function') {
+        console.log('Calling loadDatabaseTables()...');
         loadDatabaseTables();
     } else if (typeof loadPages === 'function') {
+        console.log('Calling loadPages()...');
         loadPages();
     } else if (typeof loadModules === 'function') {
+        console.log('Calling loadModules()...');
         loadModules();
     } else if (typeof loadReports === 'function') {
+        console.log('Calling loadReports()...');
         loadReports();
+    } else {
+        console.error('NO PAGE LOAD FUNCTION FOUND! Dashboard will not render.');
+        console.log('Available functions in window:', Object.keys(window).filter(k => k.includes('load')));
     }
 });
