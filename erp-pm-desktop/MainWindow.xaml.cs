@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V3.1";
+        private const string VERSION = "V3.2";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -382,12 +382,9 @@ namespace ERPProjectManager
                     await Task.Delay(1000); // Wait for DOM to settle
                     await RunPageDiagnostics(webView);
 
-                    // Ask user if page is working - AUTO-DIAGNOSTIC
-                    await Task.Delay(500); // Brief pause before asking
-                    await AskUserFeedback();
-
-                    // DevTools can be opened manually via the DevTools button
-                    Log("Page loaded successfully. Use DevTools button if debugging needed.");
+                    // Feedback popup removed - dashboard is working now!
+                    // If issues occur, use DevTools button or View Logs
+                    Log("Page loaded successfully. Dashboard ready for use.");
                 }
             };
 
