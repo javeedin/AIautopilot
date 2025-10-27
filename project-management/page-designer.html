@@ -643,7 +643,7 @@
                 <div class="component-tree" id="componentTree">
                     <div class="tree-node selected" onclick="selectNode('page')">
                         <span class="icon">📄</span>
-                        <span>Page: Customer Entry</span>
+						<span id="treePageName">Page: Customer Entry</span>
                     </div>
                     <div class="tree-children">
                         <div class="tree-node parent expanded" onclick="selectNode('region1', event)">
@@ -1250,6 +1250,11 @@ function loadPageFromURL() {
                     titleEl.innerHTML = `<span>🎨</span> ${page.name}`;
                 }
 
+				// Update UI - Tree View
+				const treePageName = document.getElementById('treePageName');
+				if (treePageName) {
+					treePageName.textContent = `Page: ${page.name}`;
+				}
                 console.log('Page loaded from URL:', pageDefinition);
             } else {
                 console.warn('Page not found with ID:', id);
