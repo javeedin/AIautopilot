@@ -87,13 +87,56 @@ namespace ERPProjectManager
         {
             UpdateStatus("Initializing WebView2...");
 
+            string cacheDir = Path.Combine(localRepoPath, "WebView2Cache");
+
             try
             {
-                string cacheDir = Path.Combine(localRepoPath, "WebView2Cache");
-                Directory.CreateDirectory(cacheDir);
+                await InitializeWebViewCore(cacheDir);
+            }
+            catch (Exception ex)
+            {
+                UpdateStatus($"WebView2 initialization failed: {ex.Message}");
 
-                var env = await CoreWebView2Environment.CreateAsync(null, cacheDir, null);
-                await webView.EnsureCoreWebView2Async(env);
+                // If initialization fails, try clearing the cache and retry
+                try
+                {
+                    UpdateStatus("Clearing WebView2 cache and retrying...");
+
+                    if (Directory.Exists(cacheDir))
+                    {
+                        Directory.Delete(cacheDir, recursive: true);
+                        UpdateStatus("WebView2 cache cleared");
+                    }
+
+                    // Wait a moment for files to release
+                    await Task.Delay(500);
+
+                    // Retry initialization with fresh cache
+                    await InitializeWebViewCore(cacheDir);
+
+                    UpdateStatus("WebView2 initialized successfully after cache clear!");
+                }
+                catch (Exception retryEx)
+                {
+                    MessageBox.Show(
+                        $"Failed to initialize WebView2 even after clearing cache:\n\n{retryEx.Message}\n\n" +
+                        $"Cache location: {cacheDir}\n\n" +
+                        "Please manually delete the cache folder and restart the app.\n\n" +
+                        "Download WebView2: https://go.microsoft.com/fwlink/p/?LinkId=2124703",
+                        "WebView2 Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    throw;
+                }
+            }
+        }
+
+        private async Task InitializeWebViewCore(string cacheDir)
+        {
+            Directory.CreateDirectory(cacheDir);
+
+            var env = await CoreWebView2Environment.CreateAsync(null, cacheDir, null);
+            await webView.EnsureCoreWebView2Async(env);
 
                 webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
                 webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
@@ -163,15 +206,7 @@ namespace ERPProjectManager
                     }
                 };
 
-                UpdateStatus("WebView2 initialized");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to initialize WebView2: {ex.Message}\n\n" +
-                    "Download: https://go.microsoft.com/fwlink/p/?LinkId=2124703",
-                    "WebView2 Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                throw;
-            }
+            UpdateStatus("WebView2 initialized");
         }
 
         private async Task LoadAndInjectData()
