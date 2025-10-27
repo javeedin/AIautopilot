@@ -98,30 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Authenticate with C# backend
     async function authenticateWithBackend(instance, username, password) {
-        // Try to call C# method if available
-        if (window.chrome && window.chrome.webview) {
-            try {
-                console.log('Calling C# authentication method...');
-
-                // Post message to C# backend
-                const authRequest = {
-                    action: 'login',
-                    instance,
-                    username,
-                    password
-                };
-
-                window.chrome.webview.postMessage(authRequest);
-
-                // Wait for C# response
-                return await waitForAuthResponse();
-            } catch (error) {
-                console.error('Error calling C# backend:', error);
-            }
-        }
-
-        // Fallback: Mock authentication for demo
-        console.warn('C# backend not available, using mock authentication');
+        // For WebView: use mock auth (C# doesn't validate, just manages tabs)
+        // C# will open dashboard tab when it receives the login message
+        console.log('Authenticating with mock credentials...');
         return mockAuthentication(instance, username, password);
     }
 
