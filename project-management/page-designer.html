@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Designer - Visual Page Builder</title>
+    <title>Page Designer - ERP Project Management</title>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base */
-        * {
-            box-sizing: border-box;
-        }
-
+        /* Override main.css for designer layout */
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: #f8f9fa;
             overflow: hidden;
         }
 
-        /* Designer Container */
-        .designer-container {
+        .main-content {
+            padding: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
         }
 
-        /* Toolbar */
+        /* Designer Toolbar */
         .designer-toolbar {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -36,7 +29,6 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 100;
         }
 
         .toolbar-left {
@@ -92,150 +84,39 @@
             border-color: white;
         }
 
-        .toolbar-btn.primary:hover {
-            background: #f0f0f0;
-        }
-
-        /* Three-Pane Layout */
         .designer-body {
-            display: flex;
             flex: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
             overflow: hidden;
+            background: #f8f9fa;
         }
 
-        /* Left Pane - Component Tree */
-        .left-pane {
-            width: 280px;
+        .designer-pane {
             background: white;
+            overflow-y: auto;
+        }
+
+        .designer-pane.left {
             border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+        }
+
+        .designer-pane.right {
+            border-left: 1px solid #e2e8f0;
         }
 
         .pane-header {
-            padding: 12px 16px;
+            padding: 16px;
             border-bottom: 1px solid #e2e8f0;
             background: #f8f9fa;
             font-weight: 600;
             font-size: 13px;
             color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .component-tree {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px;
-        }
-
-        .tree-node {
-            padding: 8px 12px;
-            margin: 2px 0;
-            cursor: pointer;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #334155;
-            transition: all 0.2s;
-            user-select: none;
-        }
-
-        .tree-node:hover {
-            background: #f1f5f9;
-        }
-
-        .tree-node.selected {
-            background: #e0e7ff;
-            color: #4338ca;
-            font-weight: 500;
-        }
-
-        .tree-node .icon {
-            font-size: 16px;
-        }
-
-        .tree-node .toggle {
-            margin-right: 4px;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-
-        .tree-node.parent > .toggle {
-            display: inline;
-        }
-
-        .tree-children {
-            padding-left: 20px;
-            display: none;
-        }
-
-        .tree-node.expanded + .tree-children {
-            display: block;
-        }
-
-        /* Center Pane - Canvas */
-        .center-pane {
-            flex: 1;
-            background: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .canvas-toolbar {
-            padding: 12px 16px;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .canvas-tabs {
-            display: flex;
-            gap: 4px;
-        }
-
-        .canvas-tab {
-            padding: 6px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748b;
-            transition: all 0.2s;
-        }
-
-        .canvas-tab.active {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-
-        .canvas-controls {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .zoom-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 12px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 13px;
         }
 
         .canvas-area {
-            flex: 1;
-            overflow: auto;
             padding: 20px;
-            position: relative;
+            overflow-y: auto;
         }
 
         .canvas-content {
@@ -245,120 +126,37 @@
             min-height: 600px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .canvas-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 16px;
-        }
-
-        .canvas-region {
-            grid-column: span 12;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            padding: 16px;
-            min-height: 100px;
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .canvas-region:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-        }
-
-        .canvas-region.drop-target {
-            border-color: #10b981;
-            background: #f0fdf4;
+            padding: 24px;
         }
 
         .region-header {
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e7ff;
             color: #1e293b;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .region-actions {
-            display: flex;
-            gap: 4px;
+        .form-field {
+            margin-bottom: 20px;
         }
 
-        .region-action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: #64748b;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .region-action-btn:hover {
-            background: #f1f5f9;
-            color: #334155;
-        }
-
-        .canvas-item {
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            background: white;
-            cursor: move;
-            transition: all 0.2s;
-        }
-
-        .canvas-item:hover {
-            border-color: #667eea;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
-        }
-
-        .canvas-item.dragging {
-            opacity: 0.5;
-        }
-
-        .item-label {
+        .field-label {
+            display: block;
             font-size: 13px;
             font-weight: 500;
             color: #475569;
             margin-bottom: 6px;
         }
 
-        .item-control {
-            padding: 8px 12px;
+        .field-input {
+            width: 100%;
+            padding: 10px 12px;
             border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
             background: #f8f9fa;
-        }
-
-        .empty-region {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-
-        /* Right Pane - Property Editor */
-        .right-pane {
-            width: 350px;
-            background: white;
-            border-left: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .property-editor {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
         }
 
         .property-group {
@@ -372,32 +170,6 @@
             padding: 8px 0;
             border-bottom: 2px solid #e0e7ff;
             margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .property-group-header:hover {
-            color: #667eea;
-        }
-
-        .property-group-toggle {
-            color: #94a3b8;
-            font-size: 12px;
-        }
-
-        .property-group.collapsed .property-group-content {
-            display: none;
-        }
-
-        .property-group.collapsed .property-group-toggle::before {
-            content: '▶';
-        }
-
-        .property-group-toggle::before {
-            content: '▼';
         }
 
         .property-field {
@@ -405,116 +177,14 @@
         }
 
         .property-label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            display: block;
             font-size: 13px;
             font-weight: 500;
             color: #475569;
             margin-bottom: 6px;
         }
 
-        .property-label .required {
-            color: #ef4444;
-        }
-
-        .property-label .help-icon {
-            color: #94a3b8;
-            cursor: help;
-            font-size: 12px;
-        }
-
-        .property-input,
-        .property-select,
-        .property-textarea {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .property-input:focus,
-        .property-select:focus,
-        .property-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .property-textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .property-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .property-checkbox input {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .property-help {
-            font-size: 11px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-
-        /* Component Palette (Floating) */
-        .component-palette {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            width: 280px;
-            max-height: 500px;
-            display: none;
-            flex-direction: column;
-            z-index: 1000;
-        }
-
-        .component-palette.visible {
-            display: flex;
-        }
-
-        .palette-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .palette-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: #1e293b;
-        }
-
-        .palette-close {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: #94a3b8;
-        }
-
-        .palette-search {
-            padding: 8px 16px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .palette-search input {
+        .property-input, .property-select {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #cbd5e1;
@@ -522,648 +192,298 @@
             font-size: 13px;
         }
 
-        .palette-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
         }
 
-        .palette-category {
-            margin-bottom: 12px;
-        }
-
-        .palette-category-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 12px;
-        }
-
-        .palette-component {
-            padding: 10px 12px;
-            margin: 2px 0;
-            border-radius: 6px;
-            cursor: move;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: #334155;
-            background: #f8f9fa;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .palette-component:hover {
-            background: #e0e7ff;
-            border-color: #667eea;
-            transform: translateX(4px);
-        }
-
-        .palette-component .icon {
-            font-size: 18px;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* Responsive */
-        @media (max-width: 1280px) {
-            .left-pane {
-                width: 250px;
-            }
-            .right-pane {
-                width: 300px;
-            }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
         }
     </style>
 </head>
 <body>
-    <div class="designer-container">
-        <!-- Toolbar -->
-        <div class="designer-toolbar">
-            <div class="toolbar-left">
-                <div class="toolbar-title">
-                    <span>🎨</span>
-                    <span>Page Designer</span>
-                    <span class="page-id-badge" id="pageIdBadge">GL-P001</span>
-                </div>
-            </div>
-            <div class="toolbar-actions">
-                <button class="toolbar-btn" onclick="undo()">
-                    <span>↩️</span>
-                    <span>Undo</span>
-                </button>
-                <button class="toolbar-btn" onclick="redo()">
-                    <span>↪️</span>
-                    <span>Redo</span>
-                </button>
-                <button class="toolbar-btn" onclick="togglePalette()">
-                    <span>➕</span>
-                    <span>Components</span>
-                </button>
-                <button class="toolbar-btn" onclick="previewPage()">
-                    <span>▶️</span>
-                    <span>Preview</span>
-                </button>
-                <button class="toolbar-btn" onclick="exportPage()">
-                    <span>📥</span>
-                    <span>Export JSON</span>
-                </button>
-                <button class="toolbar-btn primary" onclick="savePage()">
-                    <span>💾</span>
-                    <span>Save</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Three-Pane Body -->
-        <div class="designer-body">
-            <!-- Left Pane - Component Tree -->
-            <div class="left-pane">
-                <div class="pane-header">RENDERING TREE</div>
-                <div class="component-tree" id="componentTree">
-                    <div class="tree-node selected" onclick="selectNode('page')">
-                        <span class="icon">📄</span>
-                        <span>Page: Customer Entry</span>
-                    </div>
-                    <div class="tree-children">
-                        <div class="tree-node parent expanded" onclick="selectNode('region1', event)">
-                            <span class="toggle" onclick="toggleNode(event)">▼</span>
-                            <span class="icon">📋</span>
-                            <span>Form Region</span>
-                        </div>
-                        <div class="tree-children">
-                            <div class="tree-node" onclick="selectNode('item1')">
-                                <span class="icon">⌨️</span>
-                                <span>Customer Name</span>
-                            </div>
-                            <div class="tree-node" onclick="selectNode('item2')">
-                                <span class="icon">📧</span>
-                                <span>Email</span>
-                            </div>
-                            <div class="tree-node" onclick="selectNode('item3')">
-                                <span class="icon">📞</span>
-                                <span>Phone</span>
-                            </div>
-                            <div class="tree-node" onclick="selectNode('button1')">
-                                <span class="icon">💾</span>
-                                <span>Save Button</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager v2.0</p>
+                <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
+                    ✅ DESIGNER
                 </div>
             </div>
 
-            <!-- Center Pane - Canvas -->
-            <div class="center-pane">
-                <div class="canvas-toolbar">
-                    <div class="canvas-tabs">
-                        <div class="canvas-tab active">Layout</div>
-                        <div class="canvas-tab">Properties</div>
-                        <div class="canvas-tab">Processing</div>
-                    </div>
-                    <div class="canvas-controls">
-                        <div class="zoom-control">
-                            <span>🔍</span>
-                            <select id="zoomLevel" onchange="changeZoom(this.value)">
-                                <option value="50">50%</option>
-                                <option value="75">75%</option>
-                                <option value="100" selected>100%</option>
-                                <option value="125">125%</option>
-                                <option value="150">150%</option>
-                            </select>
-                        </div>
-                    </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tools
+                    </p>
                 </div>
 
-                <div class="canvas-area" id="canvasArea">
-                    <div class="canvas-content" id="canvasContent" style="transform: scale(1)">
-                        <div class="canvas-grid">
-                            <!-- Sample Region -->
-                            <div class="canvas-region" id="region1">
-                                <div class="region-header">
-                                    <span>📋 Customer Information</span>
-                                    <div class="region-actions">
-                                        <button class="region-action-btn" title="Settings">⚙️</button>
-                                        <button class="region-action-btn" title="Delete">🗑️</button>
-                                    </div>
-                                </div>
+                <a href="page-composer.html" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+            </nav>
 
-                                <div class="canvas-item" draggable="true" id="item1">
-                                    <div class="item-label">Customer Name <span style="color: #ef4444;">*</span></div>
-                                    <div class="item-control">Enter customer name</div>
-                                </div>
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v2.0</p>
+                </div>
+            </div>
+        </aside>
 
-                                <div class="canvas-item" draggable="true" id="item2">
-                                    <div class="item-label">Email <span style="color: #ef4444;">*</span></div>
-                                    <div class="item-control">example@email.com</div>
-                                </div>
+        <main class="main-content">
+            <!-- Designer Toolbar -->
+            <div class="designer-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-title">
+                        <span>🎨</span>
+                        <span id="pageTitle">Page Designer</span>
+                        <span class="page-id-badge" id="pageIdBadge">Loading...</span>
+                    </div>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="toolbar-btn" onclick="goBack()">
+                        <span>←</span>
+                        <span>Back</span>
+                    </button>
+                    <button class="toolbar-btn" onclick="savePage()">
+                        <span>💾</span>
+                        <span>Save</span>
+                    </button>
+                    <button class="toolbar-btn primary" onclick="exportPage()">
+                        <span>📥</span>
+                        <span>Export</span>
+                    </button>
+                </div>
+            </div>
 
-                                <div class="canvas-item" draggable="true" id="item3">
-                                    <div class="item-label">Phone</div>
-                                    <div class="item-control">(555) 555-5555</div>
-                                </div>
-
-                                <div style="margin-top: 20px; display: flex; gap: 12px;">
-                                    <button class="toolbar-btn primary" style="flex: none;">💾 Save</button>
-                                    <button class="toolbar-btn" style="flex: none; background: #e2e8f0; color: #475569;">❌ Cancel</button>
-                                </div>
+            <!-- Three-Pane Layout -->
+            <div class="designer-body">
+                <!-- Left Pane: Component Tree -->
+                <div class="designer-pane left">
+                    <div class="pane-header">PAGE STRUCTURE</div>
+                    <div style="padding: 16px;">
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div style="margin-bottom: 8px;">
+                                <strong>Page ID:</strong> <span id="treePageId">-</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Module:</strong> <span id="treeModule">-</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Type:</strong> <span id="treeType">-</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Pane - Property Editor -->
-            <div class="right-pane">
-                <div class="pane-header">PROPERTY EDITOR</div>
-                <div class="property-editor" id="propertyEditor">
-                    <!-- Properties will be dynamically loaded here -->
-                    <div class="property-group">
-                        <div class="property-group-header">
-                            <span>📋 Identification</span>
-                            <span class="property-group-toggle"></span>
-                        </div>
-                        <div class="property-group-content">
-                            <div class="property-field">
-                                <div class="property-label">
-                                    <span>Name</span>
-                                    <span class="required">*</span>
-                                    <span class="help-icon" title="Unique identifier">ⓘ</span>
-                                </div>
-                                <input type="text" class="property-input" value="customer_name" id="propName">
-                            </div>
-
-                            <div class="property-field">
-                                <div class="property-label">
-                                    <span>Label</span>
-                                    <span class="required">*</span>
-                                </div>
-                                <input type="text" class="property-input" value="Customer Name" id="propLabel">
-                            </div>
-
-                            <div class="property-field">
-                                <div class="property-label">Type</div>
-                                <select class="property-select" id="propType">
-                                    <option value="text" selected>Text Field</option>
-                                    <option value="textarea">Textarea</option>
-                                    <option value="number">Number</option>
-                                    <option value="date">Date Picker</option>
-                                    <option value="select">Select List (LOV)</option>
-                                    <option value="checkbox">Checkbox</option>
-                                    <option value="radio">Radio Group</option>
-                                </select>
+                <!-- Center Pane: Canvas -->
+                <div class="designer-pane center">
+                    <div class="canvas-area" id="canvasArea">
+                        <div class="canvas-content" id="canvasContent">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📐</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: #666;">Loading Page...</h3>
+                                <p id="loadingMessage">Please wait while we load your page design.</p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="property-group">
-                        <div class="property-group-header">
-                            <span>🗄️ Source</span>
-                            <span class="property-group-toggle"></span>
-                        </div>
-                        <div class="property-group-content">
+                <!-- Right Pane: Properties -->
+                <div class="designer-pane right">
+                    <div class="pane-header">PROPERTIES</div>
+                    <div style="padding: 16px;" id="propertiesPanel">
+                        <div class="property-group">
+                            <div class="property-group-header">Page Information</div>
                             <div class="property-field">
-                                <div class="property-label">Table</div>
-                                <select class="property-select" id="propTable">
-                                    <option value="">-- Select Table --</option>
-                                    <option value="CUSTOMERS" selected>CUSTOMERS</option>
-                                    <option value="ORDERS">ORDERS</option>
-                                    <option value="PRODUCTS">PRODUCTS</option>
-                                </select>
+                                <label class="property-label">Page Name</label>
+                                <input type="text" class="property-input" id="propPageName" readonly>
                             </div>
-
                             <div class="property-field">
-                                <div class="property-label">Column</div>
-                                <select class="property-select" id="propColumn">
-                                    <option value="CUSTOMER_NAME" selected>CUSTOMER_NAME</option>
-                                    <option value="CUSTOMER_CODE">CUSTOMER_CODE</option>
-                                    <option value="EMAIL">EMAIL</option>
-                                </select>
+                                <label class="property-label">Page ID</label>
+                                <input type="text" class="property-input" id="propPageId" readonly>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="property-group">
-                        <div class="property-group-header">
-                            <span>⚙️ Settings</span>
-                            <span class="property-group-toggle"></span>
-                        </div>
-                        <div class="property-group-content">
                             <div class="property-field">
-                                <label class="property-checkbox">
-                                    <input type="checkbox" checked id="propRequired">
-                                    <span>Required</span>
-                                </label>
+                                <label class="property-label">Module</label>
+                                <input type="text" class="property-input" id="propModule" readonly>
                             </div>
-
                             <div class="property-field">
-                                <div class="property-label">Max Length</div>
-                                <input type="number" class="property-input" value="100" id="propMaxLength">
-                            </div>
-
-                            <div class="property-field">
-                                <div class="property-label">Placeholder</div>
-                                <input type="text" class="property-input" value="Enter name" id="propPlaceholder">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="property-group">
-                        <div class="property-group-header">
-                            <span>✅ Validation</span>
-                            <span class="property-group-toggle"></span>
-                        </div>
-                        <div class="property-group-content">
-                            <div class="property-field">
-                                <div class="property-label">Pattern (Regex)</div>
-                                <input type="text" class="property-input" placeholder="^[A-Za-z ]+$" id="propPattern">
-                                <div class="property-help">Regular expression for validation</div>
-                            </div>
-
-                            <div class="property-field">
-                                <div class="property-label">Error Message</div>
-                                <input type="text" class="property-input" value="Name is required" id="propErrorMsg">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="property-group">
-                        <div class="property-group-header">
-                            <span>❓ Help</span>
-                            <span class="property-group-toggle"></span>
-                        </div>
-                        <div class="property-group-content">
-                            <div class="property-field">
-                                <div class="property-label">Help Text</div>
-                                <textarea class="property-textarea" id="propHelpText" placeholder="Help text for end users">Enter the name</textarea>
+                                <label class="property-label">Template</label>
+                                <input type="text" class="property-input" id="propTemplate" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Component Palette (Floating) -->
-    <div class="component-palette" id="componentPalette">
-        <div class="palette-header">
-            <div class="palette-title">Component Palette</div>
-            <button class="palette-close" onclick="togglePalette()">&times;</button>
-        </div>
-        <div class="palette-search">
-            <input type="text" placeholder="🔍 Search components..." onkeyup="searchComponents(this.value)">
-        </div>
-        <div class="palette-content" id="paletteContent">
-            <div class="palette-category">
-                <div class="palette-category-title">📝 FORM ITEMS</div>
-                <div class="palette-component" draggable="true" data-type="text">
-                    <span class="icon">⌨️</span>
-                    <span>Text Field</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="textarea">
-                    <span class="icon">📝</span>
-                    <span>Textarea</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="number">
-                    <span class="icon">🔢</span>
-                    <span>Number Input</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="date">
-                    <span class="icon">📅</span>
-                    <span>Date Picker</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="select">
-                    <span class="icon">📋</span>
-                    <span>Select List (LOV)</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="checkbox">
-                    <span class="icon">☑️</span>
-                    <span>Checkbox</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="radio">
-                    <span class="icon">🔘</span>
-                    <span>Radio Group</span>
-                </div>
-            </div>
-
-            <div class="palette-category">
-                <div class="palette-category-title">📦 REGIONS</div>
-                <div class="palette-component" draggable="true" data-type="form-region">
-                    <span class="icon">📋</span>
-                    <span>Form Region</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="grid-region">
-                    <span class="icon">📊</span>
-                    <span>Interactive Grid</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="tab-region">
-                    <span class="icon">🗂️</span>
-                    <span>Tab Container</span>
-                </div>
-            </div>
-
-            <div class="palette-category">
-                <div class="palette-category-title">🔘 BUTTONS</div>
-                <div class="palette-component" draggable="true" data-type="button-save">
-                    <span class="icon">💾</span>
-                    <span>Save Button</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="button-cancel">
-                    <span class="icon">❌</span>
-                    <span>Cancel Button</span>
-                </div>
-                <div class="palette-component" draggable="true" data-type="button-delete">
-                    <span class="icon">🗑️</span>
-                    <span>Delete Button</span>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
 
     <script>
-        // Page Definition Data Model
-        let pageDefinition = {
-            pageId: 'GL-P001',
-            pageName: 'Customer Entry',
-            pageType: 'free-form',
-            regions: [],
-            items: [],
-            buttons: [],
-            validations: [],
-            processes: []
-        };
+        let pageDefinition = null;
 
-        // Current Selection
-        let selectedNode = null;
-
-        // History for Undo/Redo
-        let history = [];
-        let historyIndex = -1;
-
-        // Initialize
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page Designer initialized');
-            loadPageFromURL(); // Load from URL parameters first
-            setupDragAndDrop();
-            setupPropertyGroupToggles();
-            loadPageFromLocalStorage();
+            console.log('Page Designer v2.0 initialized');
+            loadPageFromURL();
         });
 
-        // Tree Node Selection
-        function selectNode(nodeId, event) {
-            if (event) event.stopPropagation();
+        function loadPageFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const template = urlParams.get('template');
+            const module = urlParams.get('module');
 
-            // Remove previous selection
-            document.querySelectorAll('.tree-node').forEach(node => {
-                node.classList.remove('selected');
-            });
+            console.log('URL Parameters - id:', id, 'template:', template, 'module:', module);
 
-            // Add selection to clicked node
-            event ? event.currentTarget.classList.add('selected') :
-                    document.querySelector(`[onclick*="${nodeId}"]`).classList.add('selected');
-
-            selectedNode = nodeId;
-            loadPropertiesForNode(nodeId);
-        }
-
-        // Toggle Tree Node
-        function toggleNode(event) {
-            event.stopPropagation();
-            const node = event.target.closest('.tree-node');
-            node.classList.toggle('expanded');
-        }
-
-        // Load Properties for Selected Node
-        function loadPropertiesForNode(nodeId) {
-            // In a real app, this would load the actual properties from pageDefinition
-            console.log('Loading properties for:', nodeId);
-            // Properties are already in HTML for demo purposes
-        }
-
-        // Property Group Toggle
-        function setupPropertyGroupToggles() {
-            document.querySelectorAll('.property-group-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    this.parentElement.classList.toggle('collapsed');
-                });
-            });
-        }
-
-        // Drag and Drop Setup
-        function setupDragAndDrop() {
-            // Palette components drag
-            document.querySelectorAll('.palette-component').forEach(component => {
-                component.addEventListener('dragstart', function(e) {
-                    e.dataTransfer.setData('componentType', this.dataset.type);
-                    this.style.opacity = '0.5';
-                });
-
-                component.addEventListener('dragend', function(e) {
-                    this.style.opacity = '1';
-                });
-            });
-
-            // Canvas items drag
-            document.querySelectorAll('.canvas-item').forEach(item => {
-                item.addEventListener('dragstart', function(e) {
-                    e.dataTransfer.setData('itemId', this.id);
-                    this.classList.add('dragging');
-                });
-
-                item.addEventListener('dragend', function(e) {
-                    this.classList.remove('dragging');
-                });
-            });
-
-            // Drop zones
-            document.querySelectorAll('.canvas-region').forEach(region => {
-                region.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.classList.add('drop-target');
-                });
-
-                region.addEventListener('dragleave', function(e) {
-                    this.classList.remove('drop-target');
-                });
-
-                region.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.classList.remove('drop-target');
-
-                    const componentType = e.dataTransfer.getData('componentType');
-                    const itemId = e.dataTransfer.getData('itemId');
-
-                    if (componentType) {
-                        addComponentToRegion(this, componentType);
-                    } else if (itemId) {
-                        // Reorder existing item
-                        console.log('Reorder item:', itemId);
-                    }
-                });
-            });
-        }
-
-        // Add Component to Region
-        function addComponentToRegion(region, componentType) {
-            const newItem = document.createElement('div');
-            newItem.className = 'canvas-item';
-            newItem.draggable = true;
-            newItem.id = 'item_' + Date.now();
-
-            let itemHtml = '';
-            switch (componentType) {
-                case 'text':
-                    itemHtml = `
-                        <div class="item-label">New Text Field</div>
-                        <div class="item-control">Enter text...</div>
-                    `;
-                    break;
-                case 'textarea':
-                    itemHtml = `
-                        <div class="item-label">New Textarea</div>
-                        <div class="item-control" style="height: 60px">Enter text...</div>
-                    `;
-                    break;
-                case 'number':
-                    itemHtml = `
-                        <div class="item-label">New Number Field</div>
-                        <div class="item-control">0</div>
-                    `;
-                    break;
-                case 'date':
-                    itemHtml = `
-                        <div class="item-label">New Date Field</div>
-                        <div class="item-control">📅 MM/DD/YYYY</div>
-                    `;
-                    break;
-                case 'select':
-                    itemHtml = `
-                        <div class="item-label">New Select List</div>
-                        <div class="item-control">-- Select Option --</div>
-                    `;
-                    break;
+            if (!id) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    '❌ No page ID provided.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
             }
 
-            newItem.innerHTML = itemHtml;
-
-            // Insert before buttons if they exist, otherwise append
-            const buttons = region.querySelector('[style*="margin-top: 20px"]');
-            if (buttons) {
-                region.insertBefore(newItem, buttons);
-            } else {
-                region.appendChild(newItem);
+            // Load page from localStorage
+            const stored = localStorage.getItem('composerPages');
+            if (!stored) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    '❌ No pages found.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
             }
 
-            // Re-setup drag events
-            setupDragAndDrop();
+            const pages = JSON.parse(stored);
+            const page = pages.find(p => p.id === id);
 
-            // Add to history
-            saveToHistory();
+            if (!page) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    `❌ Page "${id}" not found.<br><a href="page-composer.html">Go back to Page Composer</a>`;
+                return;
+            }
 
-            alert('Component added! Now configure it in the Property Editor.');
-        }
-
-        // Toggle Component Palette
-        function togglePalette() {
-            document.getElementById('componentPalette').classList.toggle('visible');
-        }
-
-        // Search Components
-        function searchComponents(query) {
-            const components = document.querySelectorAll('.palette-component');
-            query = query.toLowerCase();
-
-            components.forEach(comp => {
-                const text = comp.textContent.toLowerCase();
-                comp.style.display = text.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        // Change Zoom
-        function changeZoom(level) {
-            const canvas = document.getElementById('canvasContent');
-            canvas.style.transform = `scale(${level / 100})`;
-        }
-
-        // Toolbar Actions
-        function savePage() {
-            // Collect all data from canvas and properties
-            const pageData = {
-                ...pageDefinition,
-                timestamp: new Date().toISOString()
+            // Store page definition
+            pageDefinition = {
+                pageId: page.id,
+                pageName: page.name,
+                pageType: template || page.type || 'free-form',
+                module: module || page.module || '',
+                definition: page.definition || {},
+                baseTable: page.definition?.baseTable || null
             };
 
-            localStorage.setItem('currentPage', JSON.stringify(pageData));
-            alert('✅ Page saved successfully!');
+            console.log('Page loaded - ID:', pageDefinition.pageId, 'Name:', pageDefinition.pageName, 'Module:', pageDefinition.module);
+
+            // Update UI
+            updatePageUI();
+        }
+
+        function updatePageUI() {
+            if (!pageDefinition) return;
+
+            // Update toolbar
+            document.getElementById('pageTitle').textContent = pageDefinition.pageName;
+            document.getElementById('pageIdBadge').textContent = pageDefinition.pageId;
+
+            // Update tree panel
+            document.getElementById('treePageId').textContent = pageDefinition.pageId;
+            document.getElementById('treeModule').textContent = pageDefinition.module || 'N/A';
+            document.getElementById('treeType').textContent = pageDefinition.pageType || 'free-form';
+
+            // Update properties panel
+            document.getElementById('propPageName').value = pageDefinition.pageName;
+            document.getElementById('propPageId').value = pageDefinition.pageId;
+            document.getElementById('propModule').value = pageDefinition.module || 'N/A';
+            document.getElementById('propTemplate').value = pageDefinition.pageType || 'free-form';
+
+            // Render canvas
+            renderCanvas();
+        }
+
+        function renderCanvas() {
+            const canvas = document.getElementById('canvasContent');
+            
+            const baseTable = pageDefinition.baseTable;
+            const tableName = baseTable ? baseTable.tableName : 'Not specified';
+
+            canvas.innerHTML = `
+                <div class="region-header">
+                    📋 ${pageDefinition.pageName}
+                </div>
+
+                <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="font-size: 13px; color: #64748b;">
+                        <div style="margin-bottom: 8px;"><strong>Page ID:</strong> ${pageDefinition.pageId}</div>
+                        <div style="margin-bottom: 8px;"><strong>Module:</strong> ${pageDefinition.module}</div>
+                        <div style="margin-bottom: 8px;"><strong>Type:</strong> ${pageDefinition.pageType}</div>
+                        <div><strong>Base Table:</strong> ${tableName}</div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 1</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 2</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 3</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div style="margin-top: 24px; display: flex; gap: 12px;">
+                    <button class="toolbar-btn primary" style="flex: none;">💾 Save</button>
+                    <button class="toolbar-btn" style="flex: none; background: #e2e8f0; color: #475569;">❌ Cancel</button>
+                </div>
+            `;
+        }
+
+        function goBack() {
+            window.location.href = 'page-composer.html';
+        }
+
+        function savePage() {
+            alert('✅ Page saved successfully!\n\nPage: ' + pageDefinition.pageName);
         }
 
         function exportPage() {
-            const pageData = {
-                ...pageDefinition,
-                exportDate: new Date().toISOString()
-            };
-
-            const json = JSON.stringify(pageData, null, 2);
+            const json = JSON.stringify(pageDefinition, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1171,115 +491,7 @@
             a.download = `${pageDefinition.pageId}_definition.json`;
             a.click();
             URL.revokeObjectURL(url);
-
-            alert('✅ Page exported as JSON!');
         }
-
-        function previewPage() {
-            alert('🎬 Preview mode coming soon!\n\nThis will render the page with sample data for testing.');
-            // In Phase 3, open preview in new window/modal
-        }
-
-        function undo() {
-            if (historyIndex > 0) {
-                historyIndex--;
-                restoreFromHistory();
-                alert('↩️ Undo');
-            }
-        }
-
-        function redo() {
-            if (historyIndex < history.length - 1) {
-                historyIndex++;
-                restoreFromHistory();
-                alert('↪️ Redo');
-            }
-        }
-
-        function saveToHistory() {
-            const state = JSON.stringify(pageDefinition);
-            history = history.slice(0, historyIndex + 1);
-            history.push(state);
-            historyIndex = history.length - 1;
-        }
-
-        function restoreFromHistory() {
-            if (history[historyIndex]) {
-                pageDefinition = JSON.parse(history[historyIndex]);
-                // Re-render canvas
-                console.log('Restored from history');
-            }
-        }
-
-        function loadPageFromURL() {
-            // Read URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id'); // Page Composer sends 'id' not 'pageId'
-            const template = urlParams.get('template'); // Page Composer sends 'template' not 'pageType'
-            const module = urlParams.get('module');
-
-            console.log('URL Parameters:', {id, template, module});
-
-            if (id) {
-                // Load page from localStorage using the ID
-                const stored = localStorage.getItem('composerPages');
-                if (stored) {
-                    const pages = JSON.parse(stored);
-                    const page = pages.find(p => p.id === id);
-
-                    if (page) {
-                        // Initialize page definition from stored page data
-                        pageDefinition = {
-                            pageId: page.id,
-                            pageName: page.name,
-                            pageType: template || page.type || 'free-form',
-                            layoutType: page.type || template || 'free-form',
-                            module: module || page.module || '',
-                            regions: [],
-                            items: [],
-                            buttons: [],
-                            validations: [],
-                            processes: [],
-                            definition: page.definition || {}
-                        };
-
-                        // Update UI
-                        document.getElementById('pageIdBadge').textContent = page.id;
-                        const titleEl = document.querySelector('.toolbar-title');
-                        if (titleEl) {
-                            titleEl.innerHTML = `<span>🎨</span> ${page.name}`;
-                        }
-
-                        console.log('Page loaded from URL:', pageDefinition);
-                    } else {
-                        console.warn('Page not found with ID:', id);
-                    }
-                } else {
-                    console.warn('No saved pages found in localStorage');
-                }
-            }
-        }
-
-        function loadPageFromLocalStorage() {
-            const saved = localStorage.getItem('currentPage');
-            if (saved) {
-                const savedDef = JSON.parse(saved);
-                // Only load from localStorage if it matches the current page ID
-                if (savedDef.pageId === pageDefinition.pageId) {
-                    pageDefinition = savedDef;
-                    console.log('Restored saved progress from localStorage');
-                }
-            }
-        }
-
-        // Real-time Property Updates
-        document.querySelectorAll('.property-input, .property-select, .property-textarea').forEach(input => {
-            input.addEventListener('change', function() {
-                // Update canvas in real-time
-                console.log('Property changed:', this.id, '=', this.value);
-                // saveToHistory();
-            });
-        });
     </script>
 </body>
 </html>
