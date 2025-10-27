@@ -1214,38 +1214,51 @@
 function loadPageFromURL() {
     // Read URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const pageId = urlParams.get('pageId');
-    const pageName = urlParams.get('pageName');
-    const pageType = urlParams.get('pageType');
-    const layoutType = urlParams.get('layoutType');
+    const id = urlParams.get('id'); // Page Composer sends 'id' not 'pageId'
+    const template = urlParams.get('template'); // Page Composer sends 'template' not 'pageType'
     const module = urlParams.get('module');
 
-    if (pageId && pageName) {
-        // Initialize page definition from URL parameters
-        pageDefinition = {
-            pageId: pageId,
-            pageName: pageName,
-            pageType: pageType || 'free-form',
-            layoutType: layoutType || 'customer',
-            module: module || '',
-            regions: [],
-            items: [],
-            buttons: [],
-            validations: [],
-            processes: []
-        };
+    console.log('URL Parameters:', {id, template, module});
 
-        // Update UI
-        document.getElementById('pageIdBadge').textContent = pageId;
-        const titleEl = document.querySelector('.toolbar-title');
-        if (titleEl) {
-            titleEl.innerHTML = `<span>🎨</span> ${pageName}`;
+    if (id) {
+        // Load page from localStorage using the ID
+        const stored = localStorage.getItem('composerPages');
+        if (stored) {
+            const pages = JSON.parse(stored);
+            const page = pages.find(p => p.id === id);
+
+            if (page) {
+                // Initialize page definition from stored page data
+                pageDefinition = {
+                    pageId: page.id,
+                    pageName: page.name,
+                    pageType: template || page.type || 'free-form',
+                    layoutType: page.type || template || 'free-form',
+                    module: module || page.module || '',
+                    regions: [],
+                    items: [],
+                    buttons: [],
+                    validations: [],
+                    processes: [],
+                    definition: page.definition || {}
+                };
+
+                // Update UI
+                document.getElementById('pageIdBadge').textContent = page.id;
+                const titleEl = document.querySelector('.toolbar-title');
+                if (titleEl) {
+                    titleEl.innerHTML = `<span>🎨</span> ${page.name}`;
+                }
+
+                console.log('Page loaded from URL:', pageDefinition);
+            } else {
+                console.warn('Page not found with ID:', id);
+            }
+        } else {
+            console.warn('No saved pages found in localStorage');
         }
-
-        console.log('Page loaded from URL:', pageDefinition);
     }
 }
-
 
 
 function loadPageFromLocalStorage() {
