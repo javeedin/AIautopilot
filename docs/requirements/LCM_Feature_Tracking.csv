@@ -1,0 +1,105 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+LCM-001,Landed Cost,Setup,Cost Elements,Define landed cost elements (freight duty insurance fees),Critical,Medium,Not Started,CM-020,5,,,Yes,,Define standard landed cost elements with GL mapping
+LCM-002,Landed Cost,Setup,Allocation Rules,Define rules for allocating landed costs to receipts,Critical,High,Not Started,LCM-001,7,,,Yes,,Create allocation rules with multiple bases and methods
+LCM-010,Landed Cost,Freight,Charge Capture,Capture freight charges from carriers,Critical,Medium,Not Started,PO-001,6,,,Yes,,Record freight charges by shipment with carrier details
+LCM-011,Landed Cost,Freight,Rate Management,Maintain freight rates and calculate estimates,High,High,Not Started,LCM-010,8,,,Yes,,Create carrier rate tables with automatic calculation
+LCM-012,Landed Cost,Freight,Freight Audit,Audit freight invoices against expected charges,High,Medium,Not Started,LCM-011,7,,,Yes,,Compare actual vs estimated freight and flag variances
+LCM-020,Landed Cost,Duty Customs,HTS Classification,Maintain Harmonized Tariff Schedule codes,Critical,Medium,Not Started,INV-001,6,,,Yes,,Assign and maintain HTS codes for imported items
+LCM-021,Landed Cost,Duty Customs,Duty Calculation,Calculate import duties based on customs value,Critical,High,Not Started,LCM-020,9,,,Yes,,Calculate ad valorem specific and compound duties
+LCM-022,Landed Cost,Duty Customs,Customs Valuation,Determine customs value per WTO methods,Critical,High,Not Started,LCM-021,10,,,No,,Calculate transaction value with required adjustments
+LCM-023,Landed Cost,Duty Customs,Free Trade Agreements,Manage FTA programs for duty reduction,High,High,Not Started,LCM-020,10,,,Yes,,Support multiple FTAs with origin verification
+LCM-030,Landed Cost,Other Costs,Insurance Costs,Track and allocate insurance costs,High,Medium,Not Started,LCM-001,5,,,Yes,,Capture and allocate cargo insurance to shipments
+LCM-031,Landed Cost,Other Costs,Brokerage Fees,Manage customs brokerage and clearance fees,High,Medium,Not Started,LCM-020,6,,,Yes,,Track broker fees and link to customs entries
+LCM-032,Landed Cost,Other Costs,Handling Storage,Track warehouse handling and storage charges,Medium,Medium,Not Started,LCM-001,5,,,Yes,,Capture container handling demurrage and storage costs
+LCM-040,Landed Cost,Processing,Cost Accruals,Accrue estimated landed costs at receipt,Critical,High,Not Started,PO-140,8,,,Yes,,Accrue landed costs before actual invoices received
+LCM-041,Landed Cost,Processing,Cost Allocation,Allocate landed costs to PO lines and receipts,Critical,High,Not Started,LCM-002,10,,,Yes,,Apply allocation rules and update inventory costs
+LCM-042,Landed Cost,Processing,Cost Variances,Track variances between estimated and actual,High,Medium,Not Started,LCM-040,6,,,Yes,,Calculate and post landed cost variances
+LCM-050,Landed Cost,Shipment,Shipment Management,Track shipments from origin to destination,High,Medium,Not Started,PO-001,7,,,Yes,,Create and track shipments with all costs
+LCM-051,Landed Cost,Shipment,In-Transit Tracking,Track goods in-transit inventory,High,Medium,Not Started,LCM-050,7,,,Yes,,Provide visibility to in-transit inventory
+LCM-060,Landed Cost,Compliance,Import Export,Ensure import/export regulatory compliance,Critical,High,Not Started,LCM-020,10,,,No,,Validate compliance with trade regulations
+LCM-061,Landed Cost,Compliance,Country of Origin,Track and document country of origin,High,Medium,Not Started,INV-001,5,,,Yes,,Maintain origin certificates and track changes
+LCM-062,Landed Cost,Compliance,Duty Drawback,Manage duty drawback claims,Medium,High,Not Started,LCM-021,9,,,Yes,,Track eligible imports and generate drawback claims
+LCM-070,Landed Cost,Reporting,Cost Reports,Generate comprehensive landed cost reports,Critical,Medium,Not Started,LCM-041,7,,,Yes,,Standard reports for landed cost analysis
+LCM-071,Landed Cost,Reporting,TCO Analysis,Analyze total cost of ownership,High,Medium,Not Started,LCM-070,8,,,No,,Calculate and compare TCO by supplier and item
+LCM-080,Landed Cost,Integration,Purchasing Integration,Integration with Purchasing module,Critical,High,Not Started,PO-001,10,,,Yes,,Receive PO data and link landed costs to POs
+LCM-081,Landed Cost,Integration,Inventory Integration,Update inventory values with landed costs,Critical,High,Not Started,INV-001,10,,,Yes,,Adjust inventory valuation with allocated costs
+LCM-082,Landed Cost,Integration,Cost Mgmt Integration,Provide landed costs to Cost Management,High,High,Not Started,CM-001,8,,,Yes,,Feed landed costs to cost elements and rollups
+LCM-083,Landed Cost,Integration,AP Integration,Interface with AP for invoice processing,Critical,High,Not Started,AP-001,9,,,Yes,,Create AP invoices for landed cost charges
+LCM-084,Landed Cost,Integration,GL Integration,Post landed cost transactions to GL,Critical,High,Not Started,GL-001,10,,,Yes,,Post accruals allocations and variances to GL
+LCM-090,Landed Cost,Multi-Currency,Currency Support,Handle landed costs in multiple currencies,High,High,Not Started,GL-060,9,,,Yes,,Support multi-currency with proper conversion
+LCM-100,Landed Cost,Security,LCM Security,Implement security controls for landed cost,Critical,Medium,Not Started,UR-001,5,,,Yes,,Role-based access with segregation of duties
+LCM-101,Landed Cost,Security,Audit Trail,Maintain audit trail for all transactions,Critical,Medium,Not Started,LCM-100,5,,,Yes,,Log all changes with user and timestamp
+LCM-003,Landed Cost,Setup,Cost Defaults,Set default landed cost elements by supplier/item,High,Medium,Not Started,LCM-001,4,,,Yes,,Configure defaults to streamline cost entry
+LCM-013,Landed Cost,Freight,Multi-Leg Freight,Handle multi-leg freight shipments,Medium,High,Not Started,LCM-010,7,,,Yes,,Track costs for shipments with multiple carriers
+LCM-014,Landed Cost,Freight,Freight Terms,Manage FOB and freight payment terms,High,Medium,Not Started,PO-080,5,,,Yes,,Determine freight responsibility based on terms
+LCM-024,Landed Cost,Duty Customs,Preferential Tariffs,Manage preferential tariff programs,High,High,Not Started,LCM-023,8,,,Yes,,Apply reduced duty rates under trade programs
+LCM-025,Landed Cost,Duty Customs,Anti-Dumping Duties,Calculate anti-dumping and countervailing duties,Medium,High,Not Started,LCM-021,7,,,Yes,,Apply ADD/CVD when applicable
+LCM-033,Landed Cost,Other Costs,Assist Costs,Track and value assists (tools dies molds),Medium,Medium,Not Started,LCM-022,6,,,Yes,,Include assist value in customs valuation
+LCM-034,Landed Cost,Other Costs,Royalty Fees,Capture royalty and license fees,Medium,Medium,Not Started,LCM-022,5,,,Yes,,Add royalties to customs value
+LCM-043,Landed Cost,Processing,Allocation Override,Allow manual override of cost allocation,Medium,Medium,Not Started,LCM-041,4,,,Yes,,Enable authorized overrides with approval
+LCM-044,Landed Cost,Processing,Reallocation,Reprocess landed cost allocation,Medium,Medium,Not Started,LCM-041,6,,,Yes,,Reallocate costs when errors found
+LCM-052,Landed Cost,Shipment,Container Tracking,Track shipping containers and pallets,High,Medium,Not Started,LCM-050,6,,,Yes,,Monitor container status and deposits
+LCM-053,Landed Cost,Shipment,BOL Management,Manage bills of lading,High,Medium,Not Started,LCM-050,5,,,Yes,,Capture and track BOL information
+LCM-063,Landed Cost,Compliance,Denied Party Screening,Screen against denied parties lists,Critical,High,Not Started,LCM-060,8,,,Yes,,Validate no transactions with denied parties
+LCM-064,Landed Cost,Compliance,Export Controls,Manage export control classifications,High,High,Not Started,LCM-060,8,,,No,,Track ECCN and validate license requirements
+LCM-072,Landed Cost,Reporting,Freight Analysis,Analyze freight costs and trends,High,Medium,Not Started,LCM-070,6,,,Yes,,Generate freight cost analysis reports
+LCM-073,Landed Cost,Reporting,Duty Reports,Generate duty and tariff reports,High,Medium,Not Started,LCM-070,6,,,Yes,,Report on duties paid by item supplier country
+LCM-085,Landed Cost,Integration,Carrier Integration,Integrate with carrier systems,Medium,High,Not Started,LCM-010,10,,,Yes,,Receive freight charges and tracking from carriers
+LCM-086,Landed Cost,Integration,Broker Integration,Integrate with customs broker systems,Medium,High,Not Started,LCM-031,10,,,Yes,,Exchange data with customs brokers
+LCM-091,Landed Cost,Multi-Currency,Exchange Rate Variance,Track exchange rate variances on landed costs,High,Medium,Not Started,LCM-090,6,,,Yes,,Calculate and post currency variances
+LCM-004,Landed Cost,Setup,Proration Methods,Define cost proration calculation methods,High,Medium,Not Started,LCM-002,5,,,Yes,,Support multiple proration formulas
+LCM-015,Landed Cost,Freight,Freight Claims,Process freight claims and refunds,Medium,Medium,Not Started,LCM-012,5,,,Yes,,Track and process freight overcharge claims
+LCM-026,Landed Cost,Duty Customs,Duty Deferral,Support duty deferral programs,Medium,High,Not Started,LCM-021,7,,,Yes,,Handle bonded warehouse and FTZ scenarios
+LCM-035,Landed Cost,Other Costs,Compliance Costs,Track trade compliance service costs,Low,Low,Not Started,LCM-001,3,,,Yes,,Capture costs for compliance services
+LCM-045,Landed Cost,Processing,Batch Allocation,Process landed cost allocation in batch,High,High,Not Started,LCM-041,8,,,Yes,,Allocate costs for multiple shipments at once
+LCM-054,Landed Cost,Shipment,Arrival Notification,Automated arrival notifications,Medium,Low,Not Started,LCM-050,4,,,Yes,,Alert stakeholders when shipment arrives
+LCM-065,Landed Cost,Compliance,License Management,Track import/export licenses,High,Medium,Not Started,LCM-060,6,,,Yes,,Manage license applications and expirations
+LCM-074,Landed Cost,Reporting,Variance Analysis,Analyze landed cost variances,High,Medium,Not Started,LCM-042,6,,,Yes,,Report on estimate vs actual variances
+LCM-087,Landed Cost,Integration,EDI Support,Support EDI for customs and shipping,Medium,High,Not Started,LCM-085,10,,,Yes,,Implement EDI transactions for trade data
+LCM-092,Landed Cost,Multi-Currency,Triangulation,Support EMU triangulation,Low,High,Not Started,LCM-090,5,,,Yes,,Handle Euro currency triangulation
+LCM-005,Landed Cost,Setup,Tolerance Limits,Set tolerance limits for variances,Medium,Low,Not Started,LCM-042,3,,,Yes,,Define acceptable variance thresholds
+LCM-016,Landed Cost,Freight,Freight Accrual,Accrue freight costs,High,Medium,Not Started,LCM-040,6,,,Yes,,Estimate and accrue freight at shipment
+LCM-027,Landed Cost,Duty Customs,Ruling Letters,Track classification ruling letters,Medium,Medium,Not Started,LCM-020,5,,,Yes,,Maintain library of binding rulings
+LCM-036,Landed Cost,Other Costs,Demurrage Detention,Track demurrage and detention charges,Medium,Medium,Not Started,LCM-032,5,,,Yes,,Calculate per diem charges for container delays
+LCM-046,Landed Cost,Processing,Negative Cost Prevention,Prevent negative landed costs,High,Medium,Not Started,LCM-041,4,,,Yes,,Validate allocations result in positive costs
+LCM-055,Landed Cost,Shipment,Shipment Consolidation,Consolidate multiple POs in one shipment,High,High,Not Started,LCM-050,8,,,Yes,,Allocate costs across consolidated POs
+LCM-066,Landed Cost,Compliance,Record Retention,Maintain compliance record retention,High,Medium,Not Started,LCM-101,5,,,Yes,,Archive required documents per regulations
+LCM-075,Landed Cost,Reporting,FTA Utilization,Report on FTA utilization rates,Medium,Medium,Not Started,LCM-023,5,,,Yes,,Calculate duty savings from FTA usage
+LCM-088,Landed Cost,Integration,Trade Management Systems,Integrate with global trade management,Low,High,Not Started,LCM-060,12,,,No,,Connect to GTM systems for compliance
+LCM-006,Landed Cost,Setup,Approval Workflow,Workflow for landed cost approvals,High,Medium,Not Started,UR-060,5,,,Yes,,Require approval for cost allocations
+LCM-017,Landed Cost,Freight,Prepaid vs Collect,Handle prepaid and collect freight separately,High,Medium,Not Started,LCM-014,5,,,Yes,,Process freight based on payment terms
+LCM-028,Landed Cost,Duty Customs,Quota Management,Manage tariff rate quotas,Low,High,Not Started,LCM-020,8,,,Yes,,Track quota utilization and apply rates
+LCM-037,Landed Cost,Other Costs,Per Diem Charges,Calculate per diem storage charges,Low,Medium,Not Started,LCM-032,4,,,Yes,,Compute daily storage costs
+LCM-047,Landed Cost,Processing,Cost Reversal,Reverse allocated landed costs,Medium,Medium,Not Started,LCM-041,5,,,Yes,,Reverse and correct erroneous allocations
+LCM-056,Landed Cost,Shipment,Partial Shipments,Handle partial shipments,High,Medium,Not Started,LCM-050,6,,,Yes,,Allocate costs to partial receipts
+LCM-067,Landed Cost,Compliance,Audit Support,Support trade compliance audits,High,Medium,Not Started,LCM-101,6,,,Yes,,Generate compliance audit documentation
+LCM-076,Landed Cost,Reporting,Supplier Comparison,Compare landed costs by supplier,High,Medium,Not Started,LCM-071,6,,,No,,Analyze total landed cost by supplier
+LCM-089,Landed Cost,Integration,Warehouse Integration,Integrate with warehouse systems,Medium,Medium,Not Started,INV-120,7,,,Yes,,Exchange arrival and handling data
+LCM-093,Landed Cost,Multi-Currency,Currency Gain Loss,Post currency gains and losses,High,Medium,Not Started,LCM-091,5,,,Yes,,Record exchange variances in GL
+LCM-007,Landed Cost,Setup,Element Mapping,Map landed cost elements to GL accounts,Critical,Medium,Not Started,LCM-001,5,,,Yes,,Define GL accounts for each cost element
+LCM-018,Landed Cost,Freight,Carrier Performance,Track carrier performance metrics,Low,Medium,Not Started,LCM-010,5,,,No,,Monitor on-time delivery and cost
+LCM-029,Landed Cost,Duty Customs,Related Party Valuation,Handle related party transactions,Medium,High,Not Started,LCM-022,7,,,No,,Apply special valuation for related parties
+LCM-038,Landed Cost,Other Costs,Inspection Fees,Track customs exam and inspection fees,Low,Low,Not Started,LCM-031,3,,,Yes,,Capture exam fees when incurred
+LCM-048,Landed Cost,Processing,Period Close,Close landed cost accounting period,High,Medium,Not Started,CM-100,6,,,Yes,,Complete period-end landed cost processing
+LCM-057,Landed Cost,Shipment,Shipment Documents,Attach documents to shipments,Medium,Medium,Not Started,LCM-050,4,,,Yes,,Upload and link shipping documents
+LCM-068,Landed Cost,Compliance,Substantial Transformation,Track substantial transformation,Low,High,Not Started,LCM-061,6,,,No,,Determine when origin changes
+LCM-077,Landed Cost,Reporting,Cost Trending,Analyze landed cost trends,Medium,Medium,Not Started,LCM-070,6,,,Yes,,Trend analysis over time
+LCM-094,Landed Cost,Multi-Currency,Historical Rates,Maintain historical exchange rates,Medium,Low,Not Started,LCM-090,3,,,Yes,,Archive rates for audit and analysis
+LCM-019,Landed Cost,Freight,Accessorial Charges,Track freight accessorial charges,Medium,Medium,Not Started,LCM-010,4,,,Yes,,Capture fuel surcharge liftgate etc
+LCM-030-1,Landed Cost,Other Costs,Container Deposits,Track container deposits and returns,Low,Low,Not Started,LCM-052,3,,,Yes,,Manage refundable container deposits
+LCM-049,Landed Cost,Processing,Allocation Validation,Validate allocation calculations,High,Medium,Not Started,LCM-041,5,,,Yes,,Ensure allocations balance and are correct
+LCM-069,Landed Cost,Compliance,Trade Agreements,Maintain trade agreement database,Medium,Medium,Not Started,LCM-023,5,,,Yes,,Library of all applicable trade agreements
+LCM-078,Landed Cost,Reporting,Drawback Opportunity,Identify duty drawback opportunities,Low,Medium,Not Started,LCM-062,5,,,No,,Analyze potential drawback claims
+LCM-095,Landed Cost,Multi-Currency,Rate Type Support,Support multiple exchange rate types,Medium,Medium,Not Started,LCM-090,4,,,Yes,,Corporate spot average daily rates
+LCM-020-1,Landed Cost,Freight,Inbound Freight Only,Process inbound freight separately,High,Medium,Not Started,LCM-010,4,,,Yes,,Distinguish inbound from outbound freight
+LCM-039,Landed Cost,Other Costs,Packing Costs,Track packing and crating costs,Low,Low,Not Started,LCM-001,3,,,Yes,,Include packing in landed cost
+LCM-050-1,Landed Cost,Processing,Cost Approval,Approve landed cost allocations,High,Medium,Not Started,LCM-006,5,,,Yes,,Workflow for cost approval before posting
+LCM-070-1,Landed Cost,Compliance,Certificate Management,Manage origin and compliance certificates,Medium,Medium,Not Started,LCM-061,5,,,Yes,,Track certificate validity and renewals
+LCM-079,Landed Cost,Reporting,What-If Analysis,Model what-if landed cost scenarios,Low,Medium,Not Started,LCM-071,6,,,No,,Simulate impact of cost changes
+LCM-096,Landed Cost,Multi-Currency,Currency by Element,Support different currencies by cost element,Medium,High,Not Started,LCM-090,6,,,Yes,,Allow each cost element in its own currency
+LCM-021-1,Landed Cost,Freight,Backhaul Freight,Track backhaul and return freight,Low,Medium,Not Started,LCM-010,4,,,Yes,,Capture return freight costs
+LCM-040-1,Landed Cost,Other Costs,Commission Costs,Track buying commissions,Low,Medium,Not Started,LCM-001,4,,,Yes,,Include commissions in landed cost
+LCM-051-1,Landed Cost,Processing,Split Allocation,Split costs across multiple receipts,High,High,Not Started,LCM-041,7,,,Yes,,Allocate to receipts at different times
+LCM-071-1,Landed Cost,Compliance,Section 301 Duties,Track Section 301 additional duties,Medium,Medium,Not Started,LCM-025,5,,,Yes,,Apply additional tariffs per trade actions
+LCM-080-1,Landed Cost,Reporting,Cost Dashboard,Landed cost KPI dashboard,Medium,Medium,Not Started,LCM-070,6,,,No,,Visual dashboard for key metrics
+LCM-097,Landed Cost,Multi-Currency,Functional Currency,Support functional currency valuation,High,Medium,Not Started,LCM-090,5,,,Yes,,Value inventory in functional currency

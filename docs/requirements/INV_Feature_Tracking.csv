@@ -1,0 +1,126 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+INV-001,Inventory,Item Master,Item Creation,Create and maintain inventory item master,Critical,Medium,Not Started,PO-001,5,,Not Started,Not Started,Yes,Foundation for inventory,Items can be created
+INV-002,Inventory,Item Master,Item Types,Support item types (Raw Material WIP Finished Goods),High,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Item categorization,Types supported
+INV-003,Inventory,Item Master,Item Status,Active Inactive Obsolete status management,High,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Item lifecycle,Status changes work
+INV-004,Inventory,Item Master,UOM Management,Unit of measure and conversions,Critical,Medium,Not Started,INV-001,5,,Not Started,Not Started,Yes,Quantity management,UOM functional
+INV-005,Inventory,Item Master,Lot Control Flag,Enable lot control per item,High,Low,Not Started,INV-001,2,,Not Started,Not Started,Yes,Lot tracking,Flag set
+INV-006,Inventory,Item Master,Serial Control Flag,Enable serial control per item,High,Low,Not Started,INV-001,2,,Not Started,Not Started,Yes,Serial tracking,Flag set
+INV-007,Inventory,Item Master,ABC Classification,Assign ABC class to items,Medium,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Item prioritization,Classification assigned
+INV-008,Inventory,Item Master,Shelf Life,Define shelf life for items,Medium,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Expiration tracking,Shelf life set
+INV-010,Inventory,Item Planning,Safety Stock,Define safety stock levels,High,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Stock planning,Safety stock set
+INV-011,Inventory,Item Planning,Reorder Point,Set reorder point for replenishment,High,Medium,Not Started,INV-001,4,,Not Started,Not Started,Yes,Auto replenishment,Reorder point works
+INV-012,Inventory,Item Planning,Min-Max Levels,Define minimum and maximum stock levels,High,Medium,Not Started,INV-001,4,,Not Started,Not Started,Yes,Stock planning,Min-Max set
+INV-013,Inventory,Item Planning,Lead Time,Procurement and manufacturing lead times,High,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Planning data,Lead times set
+INV-014,Inventory,Item Planning,EOQ Calculation,Economic order quantity calculation,Medium,Medium,Not Started,INV-001,5,,Not Started,Not Started,Yes,Order optimization,EOQ calculated
+INV-020,Inventory,Item Costing,Standard Cost,Maintain standard cost per item,Critical,Medium,Not Started,INV-001,5,,Not Started,Not Started,Yes,Inventory valuation,Standard cost set
+INV-021,Inventory,Item Costing,Average Cost,Calculate moving average cost,Critical,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Valuation method,Average cost works
+INV-022,Inventory,Item Costing,Cost Elements,Material Labor Overhead cost elements,Medium,Medium,Not Started,INV-020,5,,Not Started,Not Started,Yes,Cost breakdown,Elements tracked
+INV-023,Inventory,Item Costing,Cost Update,Update standard costs with approval,High,High,Not Started,INV-020,7,,Not Started,Not Started,Yes,Cost management,Updates work
+INV-030,Inventory,Warehouse,Warehouse Setup,Create and configure warehouses,Critical,Medium,Not Started,GL-004,5,,Not Started,Not Started,Yes,Inventory locations,Warehouses created
+INV-031,Inventory,Warehouse,Warehouse Types,Distribution Center Store Plant types,Medium,Low,Not Started,INV-030,3,,Not Started,Not Started,Yes,Warehouse categorization,Types supported
+INV-032,Inventory,Warehouse,Default Accounts,Inventory COGS Variance accounts,Critical,Medium,Not Started,INV-030 GL-040,5,,Not Started,Not Started,Yes,GL integration,Accounts assigned
+INV-033,Inventory,Warehouse,Business Unit Assignment,Assign warehouse to business unit,High,Low,Not Started,INV-030 GL-004,3,,Not Started,Not Started,Yes,Organization structure,BU assignment works
+INV-040,Inventory,Locations,Location Setup,Define storage locations within warehouse,High,Medium,Not Started,INV-030,6,,Not Started,Not Started,Yes,Warehouse organization,Locations created
+INV-041,Inventory,Locations,Location Types,Storage Receiving Shipping Inspection types,High,Low,Not Started,INV-040,3,,Not Started,Not Started,Yes,Location categorization,Types supported
+INV-042,Inventory,Locations,Location Capacity,Define location capacity and dimensions,Medium,Low,Not Started,INV-040,4,,Not Started,Not Started,Yes,Space management,Capacity tracked
+INV-043,Inventory,Locations,ABC Zones,Assign locations to ABC zones,Medium,Low,Not Started,INV-040,3,,Not Started,Not Started,Yes,Pick optimization,Zones assigned
+INV-044,Inventory,Locations,Pick Sequence,Define pick sequence for locations,Medium,Low,Not Started,INV-040,3,,Not Started,Not Started,Yes,Picking efficiency,Sequence set
+INV-050,Inventory,Subinventories,Subinventory Setup,Create subinventories within warehouse,High,Medium,Not Started,INV-030,5,,Not Started,Not Started,Yes,Inventory segregation,Subinventories created
+INV-051,Inventory,Subinventories,Asset vs Expense,Designate asset or expense subinventory,Critical,Low,Not Started,INV-050,3,,Not Started,Not Started,Yes,Accounting treatment,Classification set
+INV-052,Inventory,Subinventories,Nettable Flag,Include in available quantity calculation,High,Low,Not Started,INV-050,2,,Not Started,Not Started,Yes,Availability calc,Flag enforced
+INV-053,Inventory,Subinventories,Tracking Flags,Lot Serial tracking per subinventory,Medium,Low,Not Started,INV-050,3,,Not Started,Not Started,Yes,Subinv control,Tracking flags set
+INV-060,Inventory,Transactions,Receipt Transaction,Record inventory receipts,Critical,High,Not Started,INV-001 PO-120,8,,Not Started,Not Started,Yes,Inventory inbound,Receipts processed
+INV-061,Inventory,Transactions,Issue Transaction,Record inventory issues,Critical,High,Not Started,INV-001,8,,Not Started,Not Started,Yes,Inventory outbound,Issues processed
+INV-062,Inventory,Transactions,Transfer Transaction,Record inventory transfers,High,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Stock movement,Transfers processed
+INV-063,Inventory,Transactions,Adjustment Transaction,Record inventory adjustments,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Inventory corrections,Adjustments processed
+INV-064,Inventory,Transactions,Transaction Number,Auto-generate transaction numbers,High,Low,Not Started,INV-060,3,,Not Started,Not Started,Yes,Transaction tracking,Numbering works
+INV-065,Inventory,Transactions,Transaction Date,Capture transaction date and time,Critical,Low,Not Started,INV-060,2,,Not Started,Not Started,Yes,Transaction tracking,Date captured
+INV-066,Inventory,Transactions,Reason Codes,Categorize transaction reasons,Medium,Low,Not Started,INV-060,3,,Not Started,Not Started,Yes,Transaction classification,Reasons captured
+INV-067,Inventory,Transactions,Real-Time Update,Update inventory balances in real-time,Critical,High,Not Started,INV-060,8,,Not Started,Not Started,Yes,Current balances,Real-time updates work
+INV-070,Inventory,Valuation,Standard Costing,Use standard cost for valuation,Critical,High,Not Started,INV-020,8,,Not Started,Not Started,Yes,Valuation method,Standard costing works
+INV-071,Inventory,Valuation,Average Costing,Use moving average for valuation,Critical,High,Not Started,INV-021,9,,Not Started,Not Started,Yes,Valuation method,Average costing works
+INV-072,Inventory,Valuation,FIFO Costing,First In First Out valuation,Medium,High,Not Started,INV-001,9,,Not Started,Not Started,Yes,Valuation method,FIFO works
+INV-073,Inventory,Valuation,Cost Variance,Track and report cost variances,High,High,Not Started,INV-070,7,,Not Started,Not Started,Yes,Variance management,Variances tracked
+INV-074,Inventory,Valuation,Inventory Value Report,Report total inventory value,Critical,Medium,Not Started,INV-070,6,,Not Started,Not Started,Yes,Financial reporting,Report functional
+INV-080,Inventory,Lot Tracking,Lot Number Generation,Auto or manual lot number generation,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Lot management,Generation works
+INV-081,Inventory,Lot Tracking,Lot Attributes,Manufacture date expiration vendor lot,High,Medium,Not Started,INV-080,5,,Not Started,Not Started,Yes,Lot information,Attributes captured
+INV-082,Inventory,Lot Tracking,Lot Status,Available Hold Quarantine Expired status,High,Medium,Not Started,INV-080,4,,Not Started,Not Started,Yes,Lot control,Status management works
+INV-083,Inventory,Lot Tracking,Shelf Life Tracking,Track item shelf life and expiration,Medium,Medium,Not Started,INV-080,5,,Not Started,Not Started,Yes,Expiration management,Tracking works
+INV-084,Inventory,Lot Tracking,FEFO Processing,First Expired First Out picking,Medium,High,Not Started,INV-083,7,,Not Started,Not Started,Yes,Expiration control,FEFO works
+INV-085,Inventory,Lot Tracking,Lot Traceability,Forward and backward lot tracing,High,High,Not Started,INV-080,8,,Not Started,Not Started,Yes,Quality tracing,Traceability works
+INV-086,Inventory,Lot Tracking,Lot Split Merge,Split or merge lot numbers,Medium,Medium,Not Started,INV-080,6,,Not Started,Not Started,Yes,Lot management,Split/merge works
+INV-090,Inventory,Serial Tracking,Serial Number Generation,Auto or manual serial generation,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Serial management,Generation works
+INV-091,Inventory,Serial Tracking,Serial Control Points,Receipt Sales Both control points,High,Medium,Not Started,INV-090,5,,Not Started,Not Started,Yes,Serial control,Control points work
+INV-092,Inventory,Serial Tracking,Serial Status,In Inventory In Transit Installed status,High,Low,Not Started,INV-090,4,,Not Started,Not Started,Yes,Serial tracking,Status management works
+INV-093,Inventory,Serial Tracking,Serial Attributes,Warranty dates and custom attributes,Medium,Medium,Not Started,INV-090,5,,Not Started,Not Started,Yes,Serial information,Attributes captured
+INV-094,Inventory,Serial Tracking,Serial History,Complete serial transaction history,High,Medium,Not Started,INV-090,6,,Not Started,Not Started,Yes,Serial traceability,History tracked
+INV-095,Inventory,Serial Tracking,Serial Ranges,Define and manage serial ranges,Medium,Low,Not Started,INV-090,4,,Not Started,Not Started,Yes,Serial organization,Ranges work
+INV-100,Inventory,Physical Inventory,Count Program Setup,Setup physical count programs,High,High,Not Started,INV-030,8,,Not Started,Not Started,Yes,Count planning,Programs setup
+INV-101,Inventory,Physical Inventory,Count Frequency,Annual Quarterly Monthly frequency,Medium,Low,Not Started,INV-100,3,,Not Started,Not Started,Yes,Count schedule,Frequency set
+INV-102,Inventory,Physical Inventory,Count Scope,Full warehouse Zone ABC scope,Medium,Medium,Not Started,INV-100,5,,Not Started,Not Started,Yes,Count planning,Scope defined
+INV-103,Inventory,Physical Inventory,Count Sheet Generation,Generate count sheets,High,Medium,Not Started,INV-100,6,,Not Started,Not Started,Yes,Count execution,Sheets generated
+INV-104,Inventory,Physical Inventory,Count Entry,Enter physical count results,Critical,Medium,Not Started,INV-103,6,,Not Started,Not Started,Yes,Count capture,Entry works
+INV-105,Inventory,Physical Inventory,Mobile Count,Mobile app for count entry,Medium,High,Not Started,INV-104,8,,Not Started,Not Started,Yes,Count efficiency,Mobile works
+INV-106,Inventory,Physical Inventory,Variance Analysis,Analyze count variances,High,High,Not Started,INV-104,7,,Not Started,Not Started,Yes,Variance management,Analysis works
+INV-107,Inventory,Physical Inventory,Recount Rules,Trigger recount for large variances,High,Medium,Not Started,INV-106,6,,Not Started,Not Started,Yes,Count accuracy,Recount works
+INV-108,Inventory,Physical Inventory,Count Approval,Approve count and adjustments,High,Medium,Not Started,INV-104,5,,Not Started,Not Started,Yes,Count control,Approval works
+INV-110,Inventory,Cycle Counting,Cycle Count Schedule,Schedule cycle counts by ABC,High,High,Not Started,INV-007,7,,Not Started,Not Started,Yes,Ongoing counts,Schedule works
+INV-111,Inventory,Cycle Counting,ABC Frequency,Different frequency by ABC class,Medium,Medium,Not Started,INV-110,5,,Not Started,Not Started,Yes,Count optimization,Frequency works
+INV-112,Inventory,Cycle Counting,Auto Triggers,Automatic cycle count triggers,Medium,High,Not Started,INV-110,7,,Not Started,Not Started,Yes,Count automation,Triggers work
+INV-113,Inventory,Cycle Counting,Count Accuracy,Track cycle count accuracy metrics,Medium,Medium,Not Started,INV-110,6,,Not Started,Not Started,Yes,Performance tracking,Accuracy tracked
+INV-120,Inventory,Transfers,Inter-Warehouse Transfer,Transfer between warehouses,High,High,Not Started,INV-030,8,,Not Started,Not Started,Yes,Multi-warehouse,Transfers work
+INV-121,Inventory,Transfers,Transfer Order,Create transfer orders,High,Medium,Not Started,INV-120,6,,Not Started,Not Started,Yes,Transfer control,Orders created
+INV-122,Inventory,Transfers,In-Transit Tracking,Track in-transit inventory,High,High,Not Started,INV-120,7,,Not Started,Not Started,Yes,Transfer visibility,Tracking works
+INV-123,Inventory,Transfers,Transfer Approval,Approve transfer orders,Medium,Medium,Not Started,INV-121,5,,Not Started,Not Started,Yes,Transfer control,Approval works
+INV-124,Inventory,Transfers,Transfer Valuation,Value inter-entity transfers,High,High,Not Started,INV-120,7,,Not Started,Not Started,Yes,Transfer pricing,Valuation works
+INV-125,Inventory,Transfers,Intra-Warehouse Transfer,Transfer within warehouse,High,Medium,Not Started,INV-050,6,,Not Started,Not Started,Yes,Internal moves,Transfers work
+INV-130,Inventory,Adjustments,Adjustment Creation,Create inventory adjustments,High,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Inventory corrections,Adjustments created
+INV-131,Inventory,Adjustments,Adjustment Types,Quantity Value Status adjustments,High,Medium,Not Started,INV-130,5,,Not Started,Not Started,Yes,Adjustment categorization,Types supported
+INV-132,Inventory,Adjustments,Adjustment Reasons,Reason codes for adjustments,Medium,Low,Not Started,INV-130,3,,Not Started,Not Started,Yes,Adjustment tracking,Reasons captured
+INV-133,Inventory,Adjustments,Adjustment Approval,Approval workflow for adjustments,High,High,Not Started,INV-130 UR-170,7,,Not Started,Not Started,Yes,Adjustment control,Approval works
+INV-134,Inventory,Adjustments,Approval Limits,Amount-based approval limits,High,Medium,Not Started,INV-133,5,,Not Started,Not Started,Yes,Authorization control,Limits enforced
+INV-135,Inventory,Adjustments,GL Impact,Post adjustments to GL,Critical,High,Not Started,INV-130 GL-180,8,,Not Started,Not Started,Yes,Financial integration,GL posting works
+INV-136,Inventory,Adjustments,Adjustment Reversal,Reverse incorrect adjustments,High,Medium,Not Started,INV-130,6,,Not Started,Not Started,Yes,Error correction,Reversal works
+INV-140,Inventory,Min-Max Planning,Min-Max Setup,Define min-max parameters per item,High,Medium,Not Started,INV-012,6,,Not Started,Not Started,Yes,Replenishment planning,Setup complete
+INV-141,Inventory,Min-Max Planning,Planning Run,Execute min-max planning,High,High,Not Started,INV-140,8,,Not Started,Not Started,Yes,Auto replenishment,Planning runs
+INV-142,Inventory,Min-Max Planning,Replenishment Suggestions,Generate purchase or transfer suggestions,High,High,Not Started,INV-141,7,,Not Started,Not Started,Yes,Planning output,Suggestions generated
+INV-143,Inventory,Min-Max Planning,Auto Requisition,Auto-create purchase requisitions,Medium,High,Not Started,INV-142 PO-030,8,,Not Started,Not Started,Yes,Automation,Requisitions created
+INV-144,Inventory,Min-Max Planning,Planner Review,Review and approve suggestions,Medium,Medium,Not Started,INV-142,5,,Not Started,Not Started,Yes,Planning control,Review works
+INV-150,Inventory,ABC Analysis,ABC Calculation,Calculate ABC classification,Medium,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Item prioritization,Calculation works
+INV-151,Inventory,ABC Analysis,Classification Criteria,Value movement criticality criteria,Medium,Medium,Not Started,INV-150,5,,Not Started,Not Started,Yes,Flexible classification,Criteria work
+INV-152,Inventory,ABC Analysis,Auto Reclassification,Automatic periodic reclassification,Medium,Medium,Not Started,INV-150,6,,Not Started,Not Started,Yes,Dynamic classification,Reclassification works
+INV-153,Inventory,ABC Analysis,ABC Reporting,ABC analysis reports,Medium,Medium,Not Started,INV-150,5,,Not Started,Not Started,Yes,Analysis visibility,Reports functional
+INV-160,Inventory,Period Close,Transaction Cutoff,Enforce transaction cutoff dates,Critical,Medium,Not Started,INV-060,6,,Not Started,Not Started,Yes,Period control,Cutoff enforced
+INV-161,Inventory,Period Close,Inventory Valuation,Period-end inventory valuation,Critical,High,Not Started,INV-070,8,,Not Started,Not Started,Yes,Financial close,Valuation complete
+INV-162,Inventory,Period Close,COGS Calculation,Calculate cost of goods sold,Critical,High,Not Started,INV-161,8,,Not Started,Not Started,Yes,Financial reporting,COGS calculated
+INV-163,Inventory,Period Close,Variance Analysis,Analyze cost and quantity variances,High,High,Not Started,INV-161,7,,Not Started,Not Started,Yes,Variance management,Analysis works
+INV-164,Inventory,Period Close,Slow-Moving Analysis,Identify slow-moving inventory,High,Medium,Not Started,INV-161,6,,Not Started,Not Started,Yes,Inventory optimization,Analysis works
+INV-165,Inventory,Period Close,Obsolescence Review,Review obsolete inventory,High,Medium,Not Started,INV-161,6,,Not Started,Not Started,Yes,Inventory quality,Review works
+INV-166,Inventory,Period Close,GL Reconciliation,Reconcile inventory to GL,Critical,High,Not Started,INV-161 GL-180,8,,Not Started,Not Started,Yes,Data integrity,Reconciliation works
+INV-170,Inventory,Reporting,Inventory Balance,Report on-hand inventory by item location,Critical,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Stock visibility,Report works
+INV-171,Inventory,Reporting,Stock Status,Available Reserved In-Transit status,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Availability visibility,Report works
+INV-172,Inventory,Reporting,Transaction History,Item transaction history report,High,Low,Not Started,INV-060,4,,Not Started,Not Started,Yes,Transaction audit,Report works
+INV-173,Inventory,Reporting,Lot Serial Traceability,Lot and serial traceability report,High,Medium,Not Started,INV-080,6,,Not Started,Not Started,Yes,Traceability,Report works
+INV-174,Inventory,Reporting,Inventory Aging,Age inventory by receipt date,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Aging visibility,Report works
+INV-175,Inventory,Reporting,Slow-Moving Report,Identify slow-moving items,Medium,Medium,Not Started,INV-001,5,,Not Started,Not Started,Yes,Inventory management,Report works
+INV-176,Inventory,Reporting,Physical Count Variance,Count variance report,High,Low,Not Started,INV-106,4,,Not Started,Not Started,Yes,Count accuracy,Report works
+INV-177,Inventory,Reporting,COGS Report,Cost of goods sold report,Critical,Medium,Not Started,INV-162,6,,Not Started,Not Started,Yes,Financial reporting,Report works
+INV-180,Inventory,Analytics,Inventory Turnover,Calculate inventory turnover ratio,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Performance metric,Calculation works
+INV-181,Inventory,Analytics,DIO Calculation,Days inventory outstanding,High,Medium,Not Started,INV-001,6,,Not Started,Not Started,Yes,Performance metric,DIO calculated
+INV-182,Inventory,Analytics,Stock-Out Analysis,Analyze stock-out occurrences,Medium,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Service level,Analysis works
+INV-183,Inventory,Analytics,Carrying Cost,Calculate inventory carrying costs,Medium,High,Not Started,INV-001,7,,Not Started,Not Started,Yes,Cost analysis,Calculation works
+INV-184,Inventory,Analytics,Accuracy Metrics,Inventory accuracy metrics,Medium,Medium,Not Started,INV-100,6,,Not Started,Not Started,Yes,Performance tracking,Metrics calculated
+INV-190,Inventory,Integration,PO Integration,Integrate with Purchase Orders,Critical,High,Not Started,PO-240,9,,Not Started,Not Started,Yes,Receipt processing,PO integration works
+INV-191,Inventory,Integration,OM Integration,Integrate with Order Management,Critical,High,Not Started,INV-001,9,,Not Started,Not Started,Yes,Fulfillment processing,OM integration works
+INV-192,Inventory,Integration,GL Integration,Post inventory transactions to GL,Critical,High,Not Started,GL-200,9,,Not Started,Not Started,Yes,Financial integration,GL posting works
+INV-193,Inventory,Integration,Manufacturing Integration,Integrate with production,Medium,High,Not Started,INV-001,9,,Not Started,Not Started,Yes,WIP processing,MFG integration works
+INV-200,Inventory,Security,Inventory Roles,Predefined inventory roles,Critical,Medium,Not Started,UR-025,5,,Not Started,Not Started,Yes,Access control,Roles configured
+INV-201,Inventory,Security,Transaction Privileges,Receipt Issue Transfer privileges,High,Medium,Not Started,UR-060,5,,Not Started,Not Started,Yes,Function control,Privileges enforced
+INV-202,Inventory,Security,Adjustment Approval Authority,Approval limits for adjustments,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Authorization control,Authority enforced
+INV-203,Inventory,Security,Warehouse Access,Warehouse-level data access,High,High,Not Started,UR-040,7,,Not Started,Not Started,Yes,Data isolation,Warehouse security works
+INV-204,Inventory,Security,Audit Trail,Complete inventory activity audit,Critical,Medium,Not Started,UR-140,6,,Not Started,Not Started,Yes,Compliance,Audit trail complete
+INV-210,Inventory,Technical,Performance,Support high-volume transactions,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Scalability,Performance requirements met
+INV-211,Inventory,Technical,Real-Time Processing,Real-time inventory updates,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Current data,Real-time works
+INV-212,Inventory,Technical,API Integration,REST APIs for inventory operations,High,High,Not Started,,9,,Not Started,Not Started,Yes,System integration,APIs functional
+INV-220,Inventory,Compliance,Inventory Accounting Standards,GAAP IFRS inventory compliance,High,High,Not Started,,7,,Not Started,Not Started,Yes,Financial compliance,Standards met
+INV-221,Inventory,Compliance,SOX Compliance,SOX controls for inventory,High,High,Not Started,UR-271,7,,Not Started,Not Started,Yes,Regulatory compliance,SOX compliant

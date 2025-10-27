@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Project Management Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="page-composer.html" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tracking
+                    </p>
+                </div>
+
+                <a href="development-readiness.html" class="nav-item">
+                    <span class="nav-icon">🚦</span>
+                    <span class="nav-text">Readiness</span>
+                </a>
+                <a href="phased-approach.html" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Phased Approach</span>
+                </a>
+                <a href="tech-decisions.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">Tech Decisions</span>
+                </a>
+                <a href="dev-activity-log.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Activity Log</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v1.1.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>Project Dashboard</h2>
+                    <p class="subtitle">Real-time ERP development tracking</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                    <div class="user-profile">
+                        <span class="user-avatar">👤</span>
+                        <span class="user-name">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📦</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-modules">16</h3>
+                        <p class="kpi-label">Total Modules</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">⚙️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-features">2,118</h3>
+                        <p class="kpi-label">Total Features</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">📄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-pages">238</h3>
+                        <p class="kpi-label">Application Pages</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9C27B0;">🗄️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-tables">260+</h3>
+                        <p class="kpi-label">Database Tables</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card highlight">
+                    <div class="kpi-icon" style="background: #F44336;">🎯</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="completion-rate">0.0%</h3>
+                        <p class="kpi-label">Completion Rate</p>
+                        <div class="kpi-progress">
+                            <div class="kpi-progress-bar" id="completion-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Module Progress Overview</h3>
+                        <select id="chart-filter" class="chart-select">
+                            <option value="all">All Modules</option>
+                            <option value="financial">Financial</option>
+                            <option value="supply-chain">Supply Chain</option>
+                            <option value="hcm">Human Capital</option>
+                        </select>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="moduleProgressChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Feature Priority Distribution</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="priorityChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Status Overview -->
+            <section class="status-section">
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Development Status</h3>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <div class="status-icon not-started">⏸️</div>
+                            <div class="status-content">
+                                <h4 id="status-not-started">2,118</h4>
+                                <p>Not Started</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-icon in-progress">🔄</div>
+                            <div class="status-content">
+                                <h4 id="status-in-progress">0</h4>
+                                <p>In Progress</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-icon code-complete">✔️</div>
+                            <div class="status-content">
+                                <h4 id="status-complete">0</h4>
+                                <p>Code Complete</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-icon testing">🧪</div>
+                            <div class="status-content">
+                                <h4 id="status-testing">0</h4>
+                                <p>Testing</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-icon production">🚀</div>
+                            <div class="status-content">
+                                <h4 id="status-production">0</h4>
+                                <p>Production</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-icon blocked">🚫</div>
+                            <div class="status-content">
+                                <h4 id="status-blocked">0</h4>
+                                <p>Blocked</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Module Priorities</h3>
+                    </div>
+                    <div class="priority-list" id="priority-list">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity / Module Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Module Status Overview</h3>
+                        <input type="text" id="module-search" class="search-input" placeholder="Search modules...">
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table" id="modules-table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Features</th>
+                                    <th>Critical</th>
+                                    <th>High</th>
+                                    <th>Pages</th>
+                                    <th>Tables</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modules-table-body">
+                                <!-- Dynamic content will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

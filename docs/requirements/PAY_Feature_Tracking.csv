@@ -1,0 +1,104 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+PAY-001,Payroll,Setup,Payroll Configuration,Configure payroll system parameters,Critical,High,Not Started,HCM-001,8,,,Yes,,Pay frequency schedule and processing rules
+PAY-002,Payroll,Setup,Payroll Entities,Define payroll legal entities,Critical,Medium,Not Started,GL-001,6,,,Yes,,Tax IDs and entity structure
+PAY-003,Payroll,Setup,Pay Groups,Group employees for processing,Critical,Medium,Not Started,PAY-001,5,,,Yes,,Pay groups with schedules
+PAY-010,Payroll,Earnings,Earning Codes,Define earning types,Critical,Medium,Not Started,PAY-001,6,,,Yes,,Comprehensive earning code library
+PAY-011,Payroll,Earnings,Salary Wage Calc,Calculate gross pay,Critical,High,Not Started,HCM-020,10,,,Yes,,Salary and hourly calculations
+PAY-012,Payroll,Earnings,Supplemental Pay,Process bonuses and commissions,High,Medium,Not Started,PAY-011,7,,,Yes,,Supplemental withholding methods
+PAY-020,Payroll,Deductions,Deduction Codes,Define deduction types,Critical,Medium,Not Started,PAY-001,6,,,Yes,,Tax benefit and voluntary deductions
+PAY-021,Payroll,Deductions,Tax Withholding,Calculate tax withholding,Critical,High,Not Started,PAY-020,12,,,Yes,,Federal state and local tax calculation
+PAY-022,Payroll,Deductions,Benefit Deductions,Process benefit deductions,Critical,High,Not Started,PAY-092,9,,,Yes,,Health insurance 401k HSA FSA
+PAY-030,Payroll,Garnishments,Garnishment Mgmt,Process garnishments,High,High,Not Started,PAY-020,10,,,Yes,,Court orders and priority rules
+PAY-031,Payroll,Garnishments,Child Support,Process child support withholding,High,High,Not Started,PAY-030,8,,,Yes,,Income withholding orders
+PAY-040,Payroll,Processing,Payroll Run,Execute payroll calculation,Critical,High,Not Started,PAY-091,12,,,Yes,,Full payroll cycle processing
+PAY-041,Payroll,Processing,Off-Cycle Payroll,Process off-cycle payments,High,Medium,Not Started,PAY-040,7,,,Yes,,Exceptions and terminations
+PAY-042,Payroll,Processing,Retroactive Processing,Process retro pay adjustments,High,High,Not Started,PAY-040,9,,,Yes,,Backdated changes and corrections
+PAY-050,Payroll,Payment,Direct Deposit,Electronic wage payment,Critical,High,Not Started,PAY-040,10,,,Yes,,ACH file generation and transmission
+PAY-051,Payroll,Payment,Check Processing,Print and issue payroll checks,High,Medium,Not Started,PAY-040,8,,,Yes,,Check printing and positive pay
+PAY-052,Payroll,Payment,Pay Cards,Support payroll debit cards,Medium,Medium,Not Started,PAY-050,6,,,Yes,,Card funding and management
+PAY-060,Payroll,Reporting,Pay Statements,Generate employee pay stubs,Critical,Medium,Not Started,PAY-040,7,,,Yes,,Electronic and paper pay stubs
+PAY-061,Payroll,Reporting,Payroll Reports,Operational payroll reports,Critical,Medium,Not Started,PAY-040,8,,,Yes,,Registers and summary reports
+PAY-062,Payroll,Reporting,Payroll Analytics,Analytics and dashboards,High,Medium,Not Started,PAY-061,8,,,No,,Labor cost and payroll metrics
+PAY-070,Payroll,Tax,Tax Filing Remittance,Manage tax obligations,Critical,High,Not Started,PAY-021,11,,,Yes,,941 940 and state returns
+PAY-071,Payroll,Tax,W-2 Processing,Generate annual W-2 forms,Critical,High,Not Started,PAY-070,10,,,Yes,,W-2 generation and filing
+PAY-072,Payroll,Tax,1099 Processing,Generate 1099 forms for contractors,High,Medium,Not Started,AP-001,8,,,Yes,,1099-NEC and 1099-MISC
+PAY-080,Payroll,Multi-State,Multi-State Payroll,Support multi-state employees,High,High,Not Started,PAY-021,11,,,Yes,,State tax and unemployment
+PAY-081,Payroll,Multi-State,Local Tax,Manage local taxes,High,High,Not Started,PAY-080,9,,,Yes,,City county school district taxes
+PAY-082,Payroll,Multi-State,International Payroll,Support global payroll,Low,High,Not Started,PAY-080,15,,,No,,Multi-currency and country rules
+PAY-090,Payroll,Integration,HCM Integration,Integration with HCM module,Critical,High,Not Started,HCM-001,10,,,Yes,,Employee and compensation data
+PAY-091,Payroll,Integration,Time Integration,Import time and attendance,Critical,High,Not Started,None,10,,,Yes,,Hours worked for pay calculation
+PAY-092,Payroll,Integration,Benefits Integration,Sync benefit deductions,Critical,High,Not Started,None,9,,,Yes,,Benefit enrollment and costs
+PAY-093,Payroll,Integration,GL Integration,Post payroll to General Ledger,Critical,High,Not Started,GL-001,11,,,Yes,,Payroll expense and liability entries
+PAY-100,Payroll,Year-End,Year-End Close,Close payroll year,Critical,High,Not Started,PAY-071,10,,,Yes,,W-2 processing and year reset
+PAY-101,Payroll,Year-End,Quarter-End Process,Close payroll quarter,Critical,Medium,Not Started,PAY-070,7,,,Yes,,Form 941 and state quarterly
+PAY-110,Payroll,Corrections,Payroll Corrections,Process payroll errors,Critical,Medium,Not Started,PAY-040,7,,,Yes,,Error corrections and reprocessing
+PAY-111,Payroll,Corrections,Manual Adjustments,Manual payroll adjustments,High,Medium,Not Started,PAY-110,6,,,Yes,,Approved manual changes
+PAY-120,Payroll,Self-Service,Payroll Inquiry,Employee payroll self-service,Critical,Medium,Not Started,HCM-060,8,,,Yes,,View pay stubs and history
+PAY-121,Payroll,Self-Service,Payroll Updates,Update payroll information,High,Medium,Not Started,PAY-120,6,,,Yes,,W-4 and direct deposit changes
+PAY-130,Payroll,Compliance,Wage Hour Compliance,FLSA and wage law compliance,Critical,Medium,Not Started,HCM-095,7,,,Yes,,Minimum wage and overtime rules
+PAY-131,Payroll,Compliance,Payroll Audit,Audit trail and SOX compliance,Critical,Medium,Not Started,PAY-110,6,,,Yes,,Complete change logging
+PAY-004,Payroll,Setup,Pay Calendar,Define pay periods and dates,Critical,Medium,Not Started,PAY-001,5,,,Yes,,Annual pay calendar setup
+PAY-013,Payroll,Earnings,Overtime Calculation,Calculate overtime pay,Critical,High,Not Started,PAY-011,8,,,Yes,,FLSA overtime rules 1.5x and 2x
+PAY-023,Payroll,Deductions,Pre-Tax vs Post-Tax,Handle tax treatment,Critical,Medium,Not Started,PAY-020,6,,,Yes,,Deduction order and tax impact
+PAY-032,Payroll,Garnishments,Tax Levy,Process IRS and state levies,High,Medium,Not Started,PAY-030,7,,,Yes,,Tax levy calculations
+PAY-043,Payroll,Processing,Payroll Validation,Validate payroll before posting,Critical,Medium,Not Started,PAY-040,7,,,Yes,,Pre-post validation checks
+PAY-053,Payroll,Payment,Payment Reversal,Reverse payroll payments,High,Medium,Not Started,PAY-050,6,,,Yes,,ACH reversals and voids
+PAY-063,Payroll,Reporting,Labor Distribution,Labor cost by department/project,High,Medium,Not Started,PAY-061,7,,,Yes,,Cost allocation reporting
+PAY-073,Payroll,Tax,Tax Table Updates,Maintain current tax tables,Critical,Medium,Not Started,PAY-021,6,,,Yes,,Annual and ad-hoc tax updates
+PAY-082-1,Payroll,Multi-State,State Disability,Calculate state disability insurance,Medium,Medium,Not Started,PAY-080,7,,,Yes,,CA SDI NY DBL etc
+PAY-094,Payroll,Integration,Absence Integration,Integrate with absence management,High,High,Not Started,None,8,,,Yes,,PTO balances and payouts
+PAY-102,Payroll,Year-End,W-2c Corrections,Process W-2 corrections,High,Medium,Not Started,PAY-071,6,,,Yes,,Corrected W-2 forms
+PAY-112,Payroll,Corrections,Overpayment Recovery,Recover employee overpayments,High,Medium,Not Started,PAY-110,6,,,Yes,,Repayment plans and deductions
+PAY-122,Payroll,Self-Service,Tax Documents,Provide tax documents online,High,Medium,Not Started,PAY-120,5,,,Yes,,W-2 and 1095 online access
+PAY-005,Payroll,Setup,Payroll Approvers,Define approval workflow,High,Medium,Not Started,UR-060,5,,,Yes,,Multi-level payroll approvals
+PAY-014,Payroll,Earnings,Shift Differential,Calculate shift premiums,Medium,Medium,Not Started,PAY-011,5,,,Yes,,Night and weekend differentials
+PAY-024,Payroll,Deductions,401k Limits,Enforce 401k annual limits,Critical,Medium,Not Started,PAY-022,6,,,Yes,,IRS contribution limits
+PAY-033,Payroll,Garnishments,Bankruptcy Orders,Process bankruptcy garnishments,Medium,Medium,Not Started,PAY-030,6,,,Yes,,Chapter 13 wage orders
+PAY-044,Payroll,Processing,Multi-Currency Pay,Support multiple currencies,Low,High,Not Started,GL-060,9,,,Yes,,Foreign currency payroll
+PAY-054,Payroll,Payment,Void and Reissue,Void and reissue payments,High,Medium,Not Started,PAY-051,6,,,Yes,,Lost or damaged checks
+PAY-064,Payroll,Reporting,Payroll Reconciliation,Reconcile payroll to GL,Critical,Medium,Not Started,PAY-093,7,,,Yes,,Payroll subledger reconciliation
+PAY-074,Payroll,Tax,Electronic Filing,File taxes electronically,High,High,Not Started,PAY-070,9,,,Yes,,EFTPS and state e-file
+PAY-083,Payroll,Multi-State,Reciprocal Agreements,Handle state reciprocal agreements,Medium,Medium,Not Started,PAY-080,5,,,Yes,,Prevent double taxation
+PAY-095,Payroll,Integration,Workers Comp,Integrate with workers compensation,Medium,Medium,Not Started,PAY-093,7,,,Yes,,WC rates and premium calculation
+PAY-103,Payroll,Year-End,ACA Reporting,Generate ACA forms 1095,High,High,Not Started,PAY-092,9,,,Yes,,1095-B and 1095-C forms
+PAY-113,Payroll,Corrections,Mass Pay Adjustments,Bulk payroll corrections,Medium,Medium,Not Started,PAY-111,6,,,Yes,,Mass updates and corrections
+PAY-123,Payroll,Self-Service,Payroll Notifications,Email payroll alerts,Medium,Low,Not Started,PAY-120,4,,,Yes,,Pay stub available notifications
+PAY-006,Payroll,Setup,Rounding Rules,Configure pay rounding,Medium,Low,Not Started,PAY-001,3,,,Yes,,Hour and dollar rounding
+PAY-015,Payroll,Earnings,Piece Rate Pay,Calculate piece rate earnings,Low,Medium,Not Started,PAY-011,6,,,Yes,,Units produced × rate
+PAY-025,Payroll,Deductions,HSA Contributions,Manage HSA deductions,High,Medium,Not Started,PAY-022,5,,,Yes,,HSA limits and employer contributions
+PAY-034,Payroll,Garnishments,Student Loans,Process student loan garnishments,Medium,Medium,Not Started,PAY-030,5,,,Yes,,Administrative wage garnishment
+PAY-045,Payroll,Processing,Pay on Demand,Support earned wage access,Low,High,Not Started,PAY-040,10,,,No,,Early wage access programs
+PAY-055,Payroll,Payment,Split Payments,Split net pay to multiple accounts,High,Medium,Not Started,PAY-050,6,,,Yes,,Allocate by amount or percentage
+PAY-065,Payroll,Reporting,Payroll Variance,Analyze payroll variances,Medium,Medium,Not Started,PAY-062,6,,,No,,Period over period comparison
+PAY-075,Payroll,Tax,Tax Notices,Manage tax notices and responses,High,Medium,Not Started,PAY-070,6,,,Yes,,IRS and state notice tracking
+PAY-084,Payroll,Multi-State,Municipal Taxes,Handle municipal payroll taxes,Medium,Medium,Not Started,PAY-081,6,,,Yes,,City-specific requirements
+PAY-096,Payroll,Integration,Third-Party Sick Pay,Integrate sick pay providers,Medium,High,Not Started,PAY-094,8,,,Yes,,STD LTD integration
+PAY-104,Payroll,Year-End,Prior Year Adjustments,Process prior year corrections,High,Medium,Not Started,PAY-102,7,,,Yes,,Amend prior year returns
+PAY-114,Payroll,Corrections,Payroll Reversals,Reverse entire payroll runs,High,High,Not Started,PAY-110,8,,,Yes,,Full payroll reversal capability
+PAY-124,Payroll,Self-Service,Mobile Payroll,Mobile payroll access,Medium,High,Not Started,PAY-120,9,,,Yes,,Native mobile pay stub access
+PAY-007,Payroll,Setup,Holiday Pay Rules,Configure holiday pay,Medium,Medium,Not Started,PAY-001,5,,,Yes,,Eligibility and calculation rules
+PAY-016,Payroll,Earnings,Longevity Pay,Calculate service-based pay,Low,Low,Not Started,PAY-011,4,,,Yes,,Years of service bonuses
+PAY-026,Payroll,Deductions,FSA Administration,Manage FSA deductions,High,Medium,Not Started,PAY-022,6,,,Yes,,Healthcare and dependent care FSA
+PAY-035,Payroll,Garnishments,Multiple Garnishments,Handle concurrent garnishments,High,High,Not Started,PAY-030,8,,,Yes,,Priority and pro-ration rules
+PAY-046,Payroll,Processing,Negative Pay,Handle negative pay scenarios,Medium,Medium,Not Started,PAY-040,5,,,Yes,,Overpayment and recovery
+PAY-056,Payroll,Payment,Prenote Process,Prenote new direct deposits,High,Low,Not Started,PAY-050,4,,,Yes,,5-day prenote verification
+PAY-066,Payroll,Reporting,Certified Payroll,Generate certified payroll reports,Medium,Medium,Not Started,PAY-061,6,,,Yes,,Davis-Bacon prevailing wage
+PAY-076,Payroll,Tax,Unemployment Tax,Calculate and pay unemployment,Critical,High,Not Started,PAY-021,9,,,Yes,,FUTA and SUTA calculations
+PAY-085,Payroll,Multi-State,Work Location Tracking,Track employee work locations,High,Medium,Not Started,HCM-015,6,,,Yes,,Multi-state work assignments
+PAY-097,Payroll,Integration,Pension Integration,Integrate with pension systems,Medium,High,Not Started,PAY-092,8,,,Yes,,Defined benefit plan contributions
+PAY-105,Payroll,Year-End,Escheatment,Report unclaimed wages,Medium,Medium,Not Started,PAY-051,6,,,Yes,,Abandoned property compliance
+PAY-115,Payroll,Corrections,Payroll Reconciliation,Reconcile payroll discrepancies,High,Medium,Not Started,PAY-064,6,,,Yes,,Identify and resolve variances
+PAY-125,Payroll,Self-Service,Payroll FAQs,Self-service help and FAQs,Low,Low,Not Started,PAY-120,3,,,Yes,,Common payroll questions
+PAY-008,Payroll,Setup,Fringe Benefits,Configure taxable fringe benefits,Medium,Medium,Not Started,PAY-010,5,,,Yes,,Personal use of company car etc
+PAY-017,Payroll,Earnings,Severance Pay,Calculate severance payments,High,Medium,Not Started,HCM-072,6,,,Yes,,Severance formulas and taxation
+PAY-027,Payroll,Deductions,Roth 401k,Support Roth 401k contributions,High,Medium,Not Started,PAY-024,5,,,Yes,,Post-tax Roth deferrals
+PAY-036,Payroll,Garnishments,Garnishment Limits,Enforce garnishment limits,Critical,Medium,Not Started,PAY-030,6,,,Yes,,Disposable income calculations
+PAY-047,Payroll,Processing,Final Pay,Process termination final pay,Critical,High,Not Started,HCM-072,8,,,Yes,,State-specific final pay rules
+PAY-057,Payroll,Payment,Positive Pay,Generate positive pay files,High,Medium,Not Started,CSH-080,6,,,Yes,,Check fraud prevention
+PAY-067,Payroll,Reporting,Equal Pay Reporting,Support pay equity analysis,Medium,Medium,Not Started,HCM-085,7,,,No,,Gender pay gap reporting
+PAY-077,Payroll,Tax,Tax Credits,Track employment tax credits,Medium,High,Not Started,PAY-076,7,,,Yes,,WOTC and other tax credits
+PAY-086,Payroll,Multi-State,Telecommuter Tax,Handle remote worker taxation,High,High,Not Started,PAY-085,8,,,Yes,,COVID-era remote work tax rules
+PAY-098,Payroll,Integration,Payroll API,Expose payroll data via API,Medium,High,Not Started,PAY-120,9,,,Yes,,RESTful API for integrations
+PAY-106,Payroll,Year-End,Year-End Checklist,Year-end processing checklist,High,Low,Not Started,PAY-100,4,,,Yes,,Guided year-end process
+PAY-116,Payroll,Corrections,Audit Corrections,Correct audit findings,High,Medium,Not Started,PAY-131,6,,,Yes,,Systematic correction process
+PAY-126,Payroll,Self-Service,Print Pay History,Print cumulative pay history,Low,Low,Not Started,PAY-120,3,,,Yes,,Multi-period pay statements
