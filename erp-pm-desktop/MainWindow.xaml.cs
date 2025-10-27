@@ -509,9 +509,61 @@ namespace ERPProjectManager
                                 case "openModule":
                                     string moduleId = json["moduleId"]?.ToString() ?? "";
                                     Log($"Opening ERP module: {moduleId}");
-                                    if (moduleId == "GL")
+
+                                    // Handle all 16 ERP modules
+                                    switch (moduleId)
                                     {
-                                        await CreateNewTab("💰 GL Dashboard", "erp-gl-dashboard");
+                                        case "GL":
+                                            await CreateNewTab("💰 General Ledger", "erp-gl-dashboard");
+                                            break;
+                                        case "AP":
+                                            await CreateNewTab("💸 Accounts Payable", "erp-ap-dashboard");
+                                            break;
+                                        case "AR":
+                                            await CreateNewTab("💵 Accounts Receivable", "erp-ar-dashboard");
+                                            break;
+                                        case "PO":
+                                            await CreateNewTab("📦 Purchase Orders", "erp-po-dashboard");
+                                            break;
+                                        case "INV":
+                                            await CreateNewTab("📊 Inventory", "erp-inv-dashboard");
+                                            break;
+                                        case "HCM":
+                                            await CreateNewTab("👥 Human Capital Mgmt", "erp-hcm-dashboard");
+                                            break;
+                                        case "PAY":
+                                            await CreateNewTab("💰 Payroll", "erp-pay-dashboard");
+                                            break;
+                                        case "CSH":
+                                            await CreateNewTab("💵 Cash Management", "erp-csh-dashboard");
+                                            break;
+                                        case "FA":
+                                            await CreateNewTab("🏢 Fixed Assets", "erp-fa-dashboard");
+                                            break;
+                                        case "OM":
+                                            await CreateNewTab("📱 Order Management", "erp-om-dashboard");
+                                            break;
+                                        case "ABS":
+                                            await CreateNewTab("📊 Absence Management", "erp-abs-dashboard");
+                                            break;
+                                        case "REC":
+                                            await CreateNewTab("🎯 Recruitment", "erp-rec-dashboard");
+                                            break;
+                                        case "CM":
+                                            await CreateNewTab("🤝 Contract Management", "erp-cm-dashboard");
+                                            break;
+                                        case "PDM":
+                                            await CreateNewTab("🛠️ Product Data Mgmt", "erp-pdm-dashboard");
+                                            break;
+                                        case "LCM":
+                                            await CreateNewTab("📋 Lifecycle Management", "erp-lcm-dashboard");
+                                            break;
+                                        case "UR":
+                                            await CreateNewTab("👤 User Roles", "erp-ur-dashboard");
+                                            break;
+                                        default:
+                                            Log($"Unknown module ID: {moduleId}");
+                                            break;
                                     }
                                     break;
 
