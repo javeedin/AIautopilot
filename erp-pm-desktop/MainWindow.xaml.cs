@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V2.2";
+        private const string VERSION = "V2.3";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -377,6 +377,10 @@ namespace ERPProjectManager
                     // Inject CSV data to avoid CORS issues
                     Log("Navigation successful, injecting CSV data...");
                     await InjectCsvData(webView);
+
+                    // Run diagnostics to check page rendering
+                    await Task.Delay(500); // Wait for DOM to settle
+                    await RunPageDiagnostics(webView);
 
                     // DevTools can be opened manually via the DevTools button
                     // Auto-opening disabled to prevent window confusion
@@ -778,6 +782,69 @@ namespace ERPProjectManager
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Cleanup if needed
+        }
+
+        private async Task RunPageDiagnostics(WebView2 webView)
+        {
+            try
+            {
+                Log("===== PAGE DIAGNOSTICS =====");
+
+                // Check if body has content
+                var bodyContentResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "document.body ? document.body.innerHTML.length : 0"
+                );
+                Log($"Body HTML length: {bodyContentResult} characters");
+
+                // Check CSS links
+                var cssLinksResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "document.querySelectorAll('link[rel=\"stylesheet\"]').length"
+                );
+                Log($"CSS <link> tags found: {cssLinksResult}");
+
+                // Check if sidebar exists
+                var sidebarResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "document.querySelector('.sidebar') ? 'YES' : 'NO'"
+                );
+                Log($"Sidebar element exists: {sidebarResult}");
+
+                // Check if main-content exists
+                var mainContentResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "document.querySelector('.main-content') ? 'YES' : 'NO'"
+                );
+                Log($"Main-content element exists: {mainContentResult}");
+
+                // Check body background color
+                var bgColorResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "window.getComputedStyle(document.body).backgroundColor"
+                );
+                Log($"Body background color: {bgColorResult}");
+
+                // Check window dimensions
+                var windowSizeResult = await webView.CoreWebView2.ExecuteScriptAsync(
+                    "`${window.innerWidth}x${window.innerHeight}`"
+                );
+                Log($"Window size: {windowSizeResult}");
+
+                // Check for any CSS load errors
+                var cssStatusResult = await webView.CoreWebView2.ExecuteScriptAsync(@"
+                    (function() {
+                        var links = document.querySelectorAll('link[rel=""stylesheet""]');
+                        var status = [];
+                        links.forEach(function(link) {
+                            status.push(link.href + ' -> sheet: ' + (link.sheet ? 'LOADED' : 'FAILED'));
+                        });
+                        return status.join(' | ');
+                    })()
+                ");
+                Log($"CSS load status: {cssStatusResult}");
+
+                Log("===== END DIAGNOSTICS =====");
+            }
+            catch (Exception ex)
+            {
+                Log($"Diagnostics error: {ex.Message}");
+            }
         }
     }
 }
