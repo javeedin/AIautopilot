@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Readiness - ERP Project Manager</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Page Content -->
+        <div class="main-content">
+            <!-- Page Header -->
+            <header class="page-header">
+                <div class="page-title">
+                    <h1>🚦 Development Readiness Assessment</h1>
+                    <p class="subtitle">Track what's ready and what's missing before development</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
+            </header>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #10b981;">✅</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="ready-count">0</h3>
+                        <p class="kpi-label">Ready Items</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #f59e0b;">🔨</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="in-progress-count">0</h3>
+                        <p class="kpi-label">In Progress</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #ef4444;">❌</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="missing-count">0</h3>
+                        <p class="kpi-label">Missing/Blocked</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #3b82f6;">📊</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="overall-percent">0%</h3>
+                        <p class="kpi-label">Overall Readiness</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filters -->
+            <section class="filter-section">
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter" onchange="updateReadinessListing()">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter" onchange="updateReadinessListing()">
+                        <option value="all">All Status</option>
+                        <option value="Ready">✅ Ready</option>
+                        <option value="In Progress">🔨 In Progress</option>
+                        <option value="Missing">❌ Missing</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priority-filter">Priority:</label>
+                    <select id="priority-filter" onchange="updateReadinessListing()">
+                        <option value="all">All Priorities</option>
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Readiness Listing -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h2>📋 Readiness Items</h2>
+                        <span id="filtered-count" class="record-count">0 items</span>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Item</th>
+                                    <th>Status</th>
+                                    <th>Completeness %</th>
+                                    <th>Priority</th>
+                                    <th>Owner</th>
+                                    <th>Blocker</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="readiness-table-body">
+                                <tr><td colspan="8" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/development-readiness.js"></script>
+</body>
+</html>

@@ -26,6 +26,12 @@ const DataStore = {
     pages: null,
     tables: null,
     tablesDetailed: null, // Column-level details for each table
+    developmentReadiness: null, // Development readiness tracking
+    phasedApproach: null, // Phased approach plan
+    techDecisions: null, // Technology decisions tracking
+    devActivityLog: null, // Development activity log
+    pageDevStatus: null, // Page development status
+    pageTableMapping: null, // Page to table mappings
     loaded: false
 };
 
@@ -175,12 +181,24 @@ const DataLoader = {
                 DataStore.tables = window.CSHARP_DATA.tables || [];
                 DataStore.tablesDetailed = window.CSHARP_DATA.tablesDetailed || [];
                 DataStore.validations = window.CSHARP_DATA.validations || {};
+                DataStore.developmentReadiness = window.CSHARP_DATA.developmentReadiness || [];
+                DataStore.phasedApproach = window.CSHARP_DATA.phasedApproach || [];
+                DataStore.techDecisions = window.CSHARP_DATA.techDecisions || [];
+                DataStore.devActivityLog = window.CSHARP_DATA.devActivityLog || [];
+                DataStore.pageDevStatus = window.CSHARP_DATA.pageDevStatus || [];
+                DataStore.pageTableMapping = window.CSHARP_DATA.pageTableMapping || [];
 
                 DataStore.loaded = true;
                 console.log('Data loaded from C# successfully!');
                 console.log('Total features:', Object.values(DataStore.validations).flat().length);
                 console.log('Tables count:', DataStore.tables.length);
                 console.log('TablesDetailed count:', DataStore.tablesDetailed.length);
+                console.log('Development Readiness items:', DataStore.developmentReadiness.length);
+                console.log('Phased Approach items:', DataStore.phasedApproach.length);
+                console.log('Tech Decisions:', DataStore.techDecisions.length);
+                console.log('Dev Activity Log entries:', DataStore.devActivityLog.length);
+                console.log('Page Dev Status records:', DataStore.pageDevStatus.length);
+                console.log('Page-Table Mappings:', DataStore.pageTableMapping.length);
                 console.log('DataStore:', DataStore);
 
                 return true;

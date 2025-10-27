@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Technology Decisions - ERP Project Manager</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="page-header">
+                <div class="page-title">
+                    <h1>🛠️ Technology Decisions</h1>
+                    <p class="subtitle">Track technology stack decisions and choices</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn-refresh" onclick="window.location.reload()">🔄 Refresh</button>
+                </div>
+            </header>
+
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #10b981;">✅</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="confirmed-count">0</h3>
+                        <p class="kpi-label">Confirmed</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #f59e0b;">⏳</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="pending-count">0</h3>
+                        <p class="kpi-label">Pending Decision</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #ef4444;">🚫</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="blocker-count">0</h3>
+                        <p class="kpi-label">Blocking Dev</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #8b5cf6;">⚡</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="critical-count">0</h3>
+                        <p class="kpi-label">Critical Priority</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="filter-section">
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter" onchange="updateDecisionsListing()">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter" onchange="updateDecisionsListing()">
+                        <option value="all">All Status</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priority-filter">Priority:</label>
+                    <select id="priority-filter" onchange="updateDecisionsListing()">
+                        <option value="all">All Priorities</option>
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h2>📋 Technology Stack Decisions</h2>
+                        <span id="filtered-count">0 decisions</span>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Decision Item</th>
+                                    <th>Status</th>
+                                    <th>Selected Option</th>
+                                    <th>Alternative Options</th>
+                                    <th>Priority</th>
+                                    <th>Rationale</th>
+                                    <th>Blocker For</th>
+                                </tr>
+                            </thead>
+                            <tbody id="decisions-table-body">
+                                <tr><td colspan="8" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/tech-decisions.js"></script>
+</body>
+</html>

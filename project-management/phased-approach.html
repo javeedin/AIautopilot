@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phased Approach - ERP Project Manager</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="page-header">
+                <div class="page-title">
+                    <h1>🎯 Phased Development Approach</h1>
+                    <p class="subtitle">Track development phases and milestones</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn-refresh" onclick="window.location.reload()">🔄 Refresh</button>
+                </div>
+            </header>
+
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #10b981;">✅</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="completed-phases">0</h3>
+                        <p class="kpi-label">Completed Phases</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #3b82f6;">🔄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="in-progress-phases">0</h3>
+                        <p class="kpi-label">In Progress</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #f59e0b;">⏸️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="pending-phases">0</h3>
+                        <p class="kpi-label">Not Started</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #8b5cf6;">📊</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="overall-progress">0%</h3>
+                        <p class="kpi-label">Overall Progress</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h2>📅 Development Phases</h2>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Phase</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Target Date</th>
+                                    <th>Deliverables</th>
+                                    <th>Dependencies</th>
+                                </tr>
+                            </thead>
+                            <tbody id="phases-table-body">
+                                <tr><td colspan="7" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/phased-approach.js"></script>
+</body>
+</html>

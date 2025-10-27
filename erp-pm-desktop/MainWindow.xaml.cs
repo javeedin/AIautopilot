@@ -605,6 +605,27 @@ namespace ERPProjectManager
                     }
                 }
 
+                // Read development tracking files
+                Log("Loading development tracking data...");
+
+                var developmentReadiness = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Development_Readiness.csv"));
+                Log($"Loaded {developmentReadiness.Count} readiness items");
+
+                var phasedApproach = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Phased_Approach.csv"));
+                Log($"Loaded {phasedApproach.Count} phased approach items");
+
+                var techDecisions = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Technology_Decisions.csv"));
+                Log($"Loaded {techDecisions.Count} technology decisions");
+
+                var devActivityLog = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Development_Activity_Log.csv"));
+                Log($"Loaded {devActivityLog.Count} development activity log entries");
+
+                var pageDevStatus = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Page_Development_Status.csv"));
+                Log($"Loaded {pageDevStatus.Count} page development status records");
+
+                var pageTableMapping = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Page_Table_Mapping.csv"));
+                Log($"Loaded {pageTableMapping.Count} page-table mappings");
+
                 // Build the data object
                 var data = new
                 {
@@ -612,7 +633,13 @@ namespace ERPProjectManager
                     pages,
                     tables,
                     tablesDetailed,
-                    validations
+                    validations,
+                    developmentReadiness,
+                    phasedApproach,
+                    techDecisions,
+                    devActivityLog,
+                    pageDevStatus,
+                    pageTableMapping
                 };
 
                 // Serialize to JSON
