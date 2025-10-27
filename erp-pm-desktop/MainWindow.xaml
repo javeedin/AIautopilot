@@ -274,7 +274,6 @@
         <!-- Tab Strip -->
         <Border Grid.Row="1" Background="#202124" BorderThickness="0,1,0,0" BorderBrush="#3C4043">
             <TabControl x:Name="tabControl"
-                       Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                        Background="Transparent"
                        BorderThickness="0"
                        ItemContainerStyle="{StaticResource BrowserTabStyle}"
