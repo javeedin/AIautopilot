@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Composer - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .composer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .btn-new-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-new-page:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .page-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid #667eea;
+        }
+
+        .page-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .page-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .page-id {
+            font-size: 12px;
+            color: #64748b;
+            font-family: 'Courier New', monospace;
+        }
+
+        .page-module {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .page-type {
+            font-size: 14px;
+            color: #64748b;
+            margin: 8px 0;
+        }
+
+        .page-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .page-stat {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-edit, .btn-export, .btn-delete {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-edit:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn-export:hover {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .template-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .template-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .template-card.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+
+        .template-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .template-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .template-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-next {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tools
+                    </p>
+                </div>
+
+                <a href="page-composer.html" class="nav-item active">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tracking
+                    </p>
+                </div>
+
+                <a href="development-readiness.html" class="nav-item">
+                    <span class="nav-icon">🚦</span>
+                    <span class="nav-text">Readiness</span>
+                </a>
+                <a href="phased-approach.html" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Phased Approach</span>
+                </a>
+                <a href="tech-decisions.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">Tech Decisions</span>
+                </a>
+                <a href="dev-activity-log.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Activity Log</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v1.1.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>🎨 Page Composer</h2>
+                    <p class="subtitle">Visual page designer for rapid development</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-new-page" onclick="openNewPageModal()">
+                        <span>➕</span> New Page
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <select class="filter-select" id="moduleFilter" onchange="filterPages()">
+                    <option value="">All Modules</option>
+                    <option value="GL">GL - General Ledger</option>
+                    <option value="AP">AP - Accounts Payable</option>
+                    <option value="AR">AR - Accounts Receivable</option>
+                    <option value="PO">PO - Purchase Orders</option>
+                    <option value="INV">INV - Inventory</option>
+                    <option value="HCM">HCM - Human Capital</option>
+                    <option value="PAY">PAY - Payroll</option>
+                    <option value="CSH">CSH - Cash Management</option>
+                    <option value="FA">FA - Fixed Assets</option>
+                    <option value="OM">OM - Order Management</option>
+                    <option value="ABS">ABS - Absence Management</option>
+                    <option value="REC">REC - Recruitment</option>
+                    <option value="CM">CM - Contract Management</option>
+                    <option value="PDM">PDM - Product Data</option>
+                    <option value="LCM">LCM - Lifecycle Management</option>
+                    <option value="UR">UR - User Roles</option>
+                </select>
+
+                <select class="filter-select" id="typeFilter" onchange="filterPages()">
+                    <option value="">All Types</option>
+                    <option value="free-form">Free-form Page</option>
+                    <option value="master-detail">Master-Detail Page</option>
+                    <option value="list">List Page</option>
+                    <option value="report">Report Page</option>
+                </select>
+
+                <select class="filter-select" id="statusFilter" onchange="filterPages()">
+                    <option value="">All Status</option>
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="archived">Archived</option>
+                </select>
+            </div>
+
+            <!-- Pages Grid -->
+            <div class="pages-grid" id="pagesGrid">
+                <!-- Pages will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">🎨</div>
+                <div class="empty-title">No Pages Yet</div>
+                <div class="empty-desc">Create your first page using the visual page composer</div>
+                <button class="btn-new-page" onclick="openNewPageModal()" style="margin-top: 20px;">
+                    <span>➕</span> Create First Page
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Page Modal -->
+    <div class="modal" id="newPageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Page</h3>
+                <button class="modal-close" onclick="closeNewPageModal()">&times;</button>
+            </div>
+
+            <div id="step1" class="modal-step">
+                <div class="form-group">
+                    <label class="form-label">Module</label>
+                    <select class="form-select" id="newPageModule">
+                        <option value="">Select Module...</option>
+                        <option value="GL">GL - General Ledger</option>
+                        <option value="AP">AP - Accounts Payable</option>
+                        <option value="AR">AR - Accounts Receivable</option>
+                        <option value="PO">PO - Purchase Orders</option>
+                        <option value="INV">INV - Inventory</option>
+                        <option value="HCM">HCM - Human Capital Management</option>
+                        <option value="PAY">PAY - Payroll</option>
+                        <option value="CSH">CSH - Cash Management</option>
+                        <option value="FA">FA - Fixed Assets</option>
+                        <option value="OM">OM - Order Management</option>
+                        <option value="ABS">ABS - Absence Management</option>
+                        <option value="REC">REC - Recruitment</option>
+                        <option value="CM">CM - Contract Management</option>
+                        <option value="PDM">PDM - Product Data Management</option>
+                        <option value="LCM">LCM - Lifecycle Management</option>
+                        <option value="UR">UR - User Roles</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Page Name</label>
+                    <input type="text" class="form-input" id="newPageName" placeholder="e.g., Invoice Entry Form">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Page ID</label>
+                    <input type="text" class="form-input" id="newPageId" placeholder="e.g., GL-P050" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Page Template</label>
+                    <div class="template-grid">
+                        <div class="template-card" onclick="selectTemplate('free-form')">
+                            <div class="template-icon">📝</div>
+                            <div class="template-name">Free-form Page</div>
+                            <div class="template-desc">Single record form with custom fields</div>
+                        </div>
+                        <div class="template-card" onclick="selectTemplate('master-detail')">
+                            <div class="template-icon">📋</div>
+                            <div class="template-name">Master-Detail</div>
+                            <div class="template-desc">Header form with detail grids</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeNewPageModal()">Cancel</button>
+                    <button class="btn-next" onclick="createPage()">Create & Design</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data storage (in real app, this would be in a database)
+        let pages = [];
+        let selectedTemplate = null;
+
+        // Load pages from localStorage
+        function loadPages() {
+            const stored = localStorage.getItem('composerPages');
+            if (stored) {
+                pages = JSON.parse(stored);
+            }
+            renderPages();
+        }
+
+        // Save pages to localStorage
+        function savePages() {
+            localStorage.setItem('composerPages', JSON.stringify(pages));
+        }
+
+        // Render pages grid
+        function renderPages() {
+            const grid = document.getElementById('pagesGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (pages.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = pages.map(page => `
+                <div class="page-card" onclick="editPage('${page.id}')">
+                    <div class="page-card-header">
+                        <div>
+                            <div class="page-icon">${page.icon}</div>
+                            <div class="page-title">${page.name}</div>
+                            <div class="page-id">${page.id}</div>
+                        </div>
+                        <span class="page-module">${page.module}</span>
+                    </div>
+                    <div class="page-type">📄 ${page.type === 'free-form' ? 'Free-form Page' : 'Master-Detail Page'}</div>
+                    <div class="page-stats">
+                        <span class="page-stat">📊 ${page.fields || 0} fields</span>
+                        <span class="page-stat">⏱️ ${page.created}</span>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn-edit" onclick="event.stopPropagation(); editPage('${page.id}')">✏️ Edit</button>
+                        <button class="btn-export" onclick="event.stopPropagation(); exportPage('${page.id}')">📤 Export</button>
+                        <button class="btn-delete" onclick="event.stopPropagation(); deletePage('${page.id}')">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter pages
+        function filterPages() {
+            const moduleFilter = document.getElementById('moduleFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            // Implement filtering logic here
+            renderPages();
+        }
+
+        // Open new page modal
+        function openNewPageModal() {
+            document.getElementById('newPageModal').classList.add('active');
+        }
+
+        // Close new page modal
+        function closeNewPageModal() {
+            document.getElementById('newPageModal').classList.remove('active');
+            document.getElementById('newPageModule').value = '';
+            document.getElementById('newPageName').value = '';
+            document.getElementById('newPageId').value = '';
+            selectedTemplate = null;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+        }
+
+        // Select template
+        function selectTemplate(type) {
+            selectedTemplate = type;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Generate page ID
+        document.getElementById('newPageModule').addEventListener('change', function() {
+            const module = this.value;
+            if (module) {
+                const count = pages.filter(p => p.module === module).length + 1;
+                document.getElementById('newPageId').value = `${module}-P${String(count).padStart(3, '0')}`;
+            }
+        });
+
+        // Create page
+        function createPage() {
+            const module = document.getElementById('newPageModule').value;
+            const name = document.getElementById('newPageName').value;
+            const id = document.getElementById('newPageId').value;
+
+            if (!module || !name || !selectedTemplate) {
+                alert('Please fill all fields and select a template');
+                return;
+            }
+
+            const newPage = {
+                id: id,
+                module: module,
+                name: name,
+                type: selectedTemplate,
+                icon: selectedTemplate === 'free-form' ? '📝' : '📋',
+                fields: 0,
+                created: new Date().toLocaleDateString(),
+                status: 'draft',
+                definition: {}
+            };
+
+            pages.push(newPage);
+            savePages();
+            closeNewPageModal();
+            renderPages();
+
+            // Redirect to designer
+            alert(`Page ${id} created! Opening designer...\n\n(Designer interface will be created in next step)`);
+            // window.location.href = `page-designer.html?id=${id}`;
+        }
+
+        // Edit page
+        function editPage(id) {
+            alert(`Opening designer for page ${id}...\n\n(Designer interface will be created in next step)`);
+            // window.location.href = `page-designer.html?id=${id}`;
+        }
+
+        // Export page
+        function exportPage(id) {
+            const page = pages.find(p => p.id === id);
+            if (!page) return;
+
+            const json = JSON.stringify(page, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${page.id}_definition.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Delete page
+        function deletePage(id) {
+            if (confirm(`Are you sure you want to delete page ${id}?`)) {
+                pages = pages.filter(p => p.id !== id);
+                savePages();
+                renderPages();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPages();
+        });
+    </script>
+</body>
+</html>
