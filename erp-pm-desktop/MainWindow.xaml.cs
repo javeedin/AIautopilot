@@ -309,6 +309,35 @@ namespace ERPProjectManager
             webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
             webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
 
+            // Add console message handler to capture JavaScript errors
+            webView.CoreWebView2.WebMessageReceived += (s, e) =>
+            {
+                try
+                {
+                    var json = Newtonsoft.Json.Linq.JObject.Parse(e.WebMessageAsJson);
+                    string type = json["type"]?.ToString() ?? "unknown";
+                    string message = json["message"]?.ToString() ?? "";
+
+                    string logPrefix = type.ToUpper();
+                    if (type == "error")
+                    {
+                        Log($"JS ERROR: {message}");
+                    }
+                    else if (type == "warn")
+                    {
+                        Log($"JS WARN: {message}");
+                    }
+                    else
+                    {
+                        Log($"JS LOG: {message}");
+                    }
+                }
+                catch
+                {
+                    Log($"WebMessage (raw): {e.WebMessageAsJson}");
+                }
+            };
+
             // Add navigation event handlers with logging
             webView.CoreWebView2.NavigationStarting += (s, e) =>
             {
@@ -322,7 +351,42 @@ namespace ERPProjectManager
                 {
                     Log($"Navigation FAILED with error code: {e.WebErrorStatus}");
                 }
+                else
+                {
+                    // Open DevTools automatically to see console
+                    Log("Opening DevTools for debugging...");
+                    webView.CoreWebView2.OpenDevToolsWindow();
+                }
             };
+
+            // Add console message interception
+            webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(@"
+                (function() {
+                    const originalConsoleLog = console.log;
+                    const originalConsoleError = console.error;
+                    const originalConsoleWarn = console.warn;
+
+                    console.log = function(...args) {
+                        originalConsoleLog.apply(console, args);
+                        window.chrome.webview.postMessage({type: 'log', message: args.join(' ')});
+                    };
+
+                    console.error = function(...args) {
+                        originalConsoleError.apply(console, args);
+                        window.chrome.webview.postMessage({type: 'error', message: args.join(' ')});
+                    };
+
+                    console.warn = function(...args) {
+                        originalConsoleWarn.apply(console, args);
+                        window.chrome.webview.postMessage({type: 'warn', message: args.join(' ')});
+                    };
+
+                    // Catch unhandled errors
+                    window.addEventListener('error', function(e) {
+                        window.chrome.webview.postMessage({type: 'error', message: 'Uncaught: ' + e.message + ' at ' + e.filename + ':' + e.lineno});
+                    });
+                })();
+            ");
 
             // Wait a bit to ensure WebView2 is fully ready
             Log("InitializeWebViewCore: Waiting 100ms for WebView2 to be fully ready");
