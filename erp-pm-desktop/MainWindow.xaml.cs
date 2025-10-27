@@ -566,13 +566,29 @@ namespace ERPProjectManager
                 var tables = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Database_Tables_Master.csv"));
                 Log($"Loaded {tables.Count} tables");
 
-                // Read detailed table structure (columns)
-                var tablesDetailed = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Database_Tables_Detailed.csv"));
-                Log($"Loaded {tablesDetailed.Count} table columns");
+                // Read detailed table structure (columns) from all module CSV files
+                var tablesDetailed = new List<Dictionary<string, string>>();
+                string[] modules = { "GL", "UR", "AP", "AR", "PO", "INV", "OM", "CM", "LCM", "PDM", "CSH", "FA", "HCM", "PAY", "ABS", "REC" };
+
+                foreach (var module in modules)
+                {
+                    var columnPath = Path.Combine(localRepoPath, $"docs/requirements/database_modules/{module}_Module_Database_Columns.csv");
+                    if (File.Exists(columnPath))
+                    {
+                        var moduleColumns = await ReadCsvFile(columnPath);
+                        tablesDetailed.AddRange(moduleColumns);
+                        Log($"Loaded {moduleColumns.Count} columns for module {module}");
+                    }
+                    else
+                    {
+                        Log($"WARNING: Module columns file not found: {columnPath}");
+                    }
+                }
+
+                Log($"Loaded {tablesDetailed.Count} total table columns from all modules");
 
                 // Read validation details for each module
                 var validations = new Dictionary<string, List<Dictionary<string, string>>>();
-                string[] modules = { "GL", "UR", "AP", "AR", "PO", "INV", "OM", "CM", "LCM", "PDM", "CSH", "FA", "HCM", "PAY", "ABS", "REC" };
 
                 foreach (var module in modules)
                 {
