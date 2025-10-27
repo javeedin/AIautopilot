@@ -66,7 +66,7 @@ function updateTablesListing() {
     });
 
     tableBody.innerHTML = filteredTables.map(table => `
-        <tr>
+        <tr onclick="showTableDetails('${table.Table_ID}', '${table.Table_Name}')" style="cursor: pointer;">
             <td>
                 <div class="module-badge ${Utils.getModuleColor(table.Module_ID)}">
                     ${table.Module_ID || 'N/A'}
@@ -107,11 +107,116 @@ function setupTableFilters() {
     }
 }
 
+// Show table details modal
+function showTableDetails(tableId, tableName) {
+    const columns = DataStore.tablesDetailed.filter(col => col.Table_ID === tableId);
+
+    if (!columns || columns.length === 0) {
+        alert('No column details available for this table');
+        return;
+    }
+
+    const modal = document.getElementById('tableDetailsModal');
+    const modalTitle = document.getElementById('modalTableName');
+    const columnsBody = document.getElementById('modalColumnsBody');
+    const ddlText = document.getElementById('modalDDLText');
+
+    modalTitle.textContent = tableName;
+
+    // Populate columns table
+    columnsBody.innerHTML = columns.map(col => `
+        <tr>
+            <td><strong>${col.Column_Name || '-'}</strong></td>
+            <td>${col.Data_Type || '-'}</td>
+            <td>
+                <span class="badge badge-${col.Nullable === 'NOT NULL' ? 'critical' : 'low'}">
+                    ${col.Nullable || 'NULL'}
+                </span>
+            </td>
+            <td>${col.Default_Value || '-'}</td>
+            <td>${col.Description || '-'}</td>
+            <td>
+                <span class="badge badge-${col.Column_Category === 'PK' ? 'critical' : 'medium'}">
+                    ${col.Column_Category || '-'}
+                </span>
+            </td>
+        </tr>
+    `).join('');
+
+    // Generate Oracle DDL
+    const ddl = generateOracleDDL(tableName, columns);
+    ddlText.textContent = ddl;
+
+    // Show modal
+    modal.style.display = 'block';
+}
+
+// Generate Oracle CREATE TABLE DDL
+function generateOracleDDL(tableName, columns) {
+    let ddl = `CREATE TABLE ${tableName} (\n`;
+
+    // Add columns
+    const columnDefs = columns.map(col => {
+        let def = `    ${col.Column_Name} ${col.Data_Type}`;
+        if (col.Default_Value) {
+            def += ` DEFAULT ${col.Default_Value}`;
+        }
+        if (col.Nullable === 'NOT NULL') {
+            def += ' NOT NULL';
+        }
+        return def;
+    });
+
+    ddl += columnDefs.join(',\n');
+
+    // Add primary key constraint
+    const pkColumns = columns.filter(col => col.Column_Category === 'PK');
+    if (pkColumns.length > 0) {
+        ddl += `,\n    CONSTRAINT pk_${tableName.toLowerCase()} PRIMARY KEY (${pkColumns.map(c => c.Column_Name).join(', ')})`;
+    }
+
+    ddl += '\n);';
+
+    // Add comments
+    ddl += `\n\n-- Table Comment\nCOMMENT ON TABLE ${tableName} IS 'Auto-generated from ERP requirements';\n`;
+
+    columns.forEach(col => {
+        if (col.Description) {
+            ddl += `\nCOMMENT ON COLUMN ${tableName}.${col.Column_Name} IS '${col.Description.replace(/'/g, "''")}';`;
+        }
+    });
+
+    return ddl;
+}
+
+// Close modal
+function closeTableModal() {
+    document.getElementById('tableDetailsModal').style.display = 'none';
+}
+
+// Copy DDL to clipboard
+function copyDDL() {
+    const ddlText = document.getElementById('modalDDLText');
+    navigator.clipboard.writeText(ddlText.textContent).then(() => {
+        alert('DDL copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy:', err);
+    });
+}
+
 // Load database tables on page load
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded, checking for loadDatabaseTables function...');
     if (typeof loadDatabaseTables === 'function') {
         await DataLoader.loadAllData();
         loadDatabaseTables();
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('tableDetailsModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     }
 });

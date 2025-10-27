@@ -25,6 +25,7 @@ const DataStore = {
     validationSummary: null,
     pages: null,
     tables: null,
+    tablesDetailed: null, // Column-level details for each table
     loaded: false
 };
 
@@ -172,6 +173,7 @@ const DataLoader = {
                 DataStore.validationSummary = window.CSHARP_DATA.validationSummary || [];
                 DataStore.pages = window.CSHARP_DATA.pages || [];
                 DataStore.tables = window.CSHARP_DATA.tables || [];
+                DataStore.tablesDetailed = window.CSHARP_DATA.tablesDetailed || [];
                 DataStore.validations = window.CSHARP_DATA.validations || {};
 
                 DataStore.loaded = true;

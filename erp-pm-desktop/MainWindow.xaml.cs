@@ -566,6 +566,10 @@ namespace ERPProjectManager
                 var tables = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Database_Tables_Master.csv"));
                 Log($"Loaded {tables.Count} tables");
 
+                // Read detailed table structure (columns)
+                var tablesDetailed = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Database_Tables_Detailed.csv"));
+                Log($"Loaded {tablesDetailed.Count} table columns");
+
                 // Read validation details for each module
                 var validations = new Dictionary<string, List<Dictionary<string, string>>>();
                 string[] modules = { "GL", "UR", "AP", "AR", "PO", "INV", "OM", "CM", "LCM", "PDM", "CSH", "FA", "HCM", "PAY", "ABS", "REC" };
@@ -591,6 +595,7 @@ namespace ERPProjectManager
                     validationSummary,
                     pages,
                     tables,
+                    tablesDetailed,
                     validations
                 };
 
