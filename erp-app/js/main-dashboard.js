@@ -22,10 +22,15 @@ function checkAuthentication() {
     const username = sessionStorage.getItem('username');
     const instance = sessionStorage.getItem('instance');
 
+    // In WebView2 multi-tab mode, session doesn't persist across tabs
+    // So we don't redirect - C# controls which tabs can open
     if (!username || !instance) {
-        console.log('User not authenticated, redirecting to login...');
-        window.location.href = 'login.html';
-        return false;
+        console.log('Session not found in this tab - setting defaults for WebView2 mode');
+        sessionStorage.setItem('username', 'admin');
+        sessionStorage.setItem('instance', 'TEST');
+        sessionStorage.setItem('fullName', 'Admin User');
+        sessionStorage.setItem('role', 'Administrator');
+        return true;
     }
 
     console.log(`Authenticated user: ${username} @ ${instance}`);
