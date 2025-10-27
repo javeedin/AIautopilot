@@ -91,55 +91,59 @@
                     <button class="btn-refresh" onclick="refreshData()">
                         <span>🔄</span> Refresh
                     </button>
+                </div>
+            </header>
 
+            <!-- Summary KPI Cards -->
             <section class="kpi-section">
                 <div class="kpi-card">
-                    <div class="kpi-icon" style="background: #3b82f6;">📊
+                    <div class="kpi-icon" style="background: #3b82f6;">📊</div>
                     <div class="kpi-content">
                         <h3 class="kpi-value" id="total-activities">0</h3>
                         <p class="kpi-label">Total Activities</p>
-                    
-                
+                    </div>
+                </div>
                 <div class="kpi-card">
-                    <div class="kpi-icon" style="background: #10b981;">✅
+                    <div class="kpi-icon" style="background: #10b981;">✅</div>
                     <div class="kpi-content">
                         <h3 class="kpi-value" id="completed-activities">0</h3>
                         <p class="kpi-label">Completed</p>
-                    
-                
+                    </div>
+                </div>
                 <div class="kpi-card">
-                    <div class="kpi-icon" style="background: #ef4444;">❌
+                    <div class="kpi-icon" style="background: #ef4444;">❌</div>
                     <div class="kpi-content">
                         <h3 class="kpi-value" id="failed-activities">0</h3>
                         <p class="kpi-label">Failed/Errors</p>
-                    
-                
+                    </div>
+                </div>
                 <div class="kpi-card">
-                    <div class="kpi-icon" style="background: #8b5cf6;">⏱️
+                    <div class="kpi-icon" style="background: #8b5cf6;">⏱️</div>
                     <div class="kpi-content">
                         <h3 class="kpi-value" id="total-time">0h</h3>
                         <p class="kpi-label">Total Time Spent</p>
-                    
-                
+                    </div>
+                </div>
             </section>
 
+            <!-- Filters -->
             <section class="filter-section">
                 <div class="filter-group">
                     <label for="module-filter">Module:</label>
                     <select id="module-filter" onchange="updateActivityListing()">
                         <option value="all">All Modules</option>
                     </select>
-                
+                </div>
                 <div class="filter-group">
                     <label for="page-filter">Page ID:</label>
                     <input type="text" id="page-filter" placeholder="Filter by Page ID..." onkeyup="updateActivityListing()">
-                
+                </div>
                 <div class="filter-group">
                     <label for="action-filter">Action Type:</label>
                     <select id="action-filter" onchange="updateActivityListing()">
                         <option value="all">All Actions</option>
                     </select>
-                
+                </div>
                 <div class="filter-group">
                     <label for="status-filter">Status:</label>
                     <select id="status-filter" onchange="updateActivityListing()">
@@ -148,15 +152,16 @@
                         <option value="In Progress">🔄 In Progress</option>
                         <option value="Failed">❌ Failed</option>
                     </select>
-                
+                </div>
             </section>
 
+            <!-- Activity Listing -->
             <section class="table-section">
                 <div class="table-card">
                     <div class="table-header">
                         <h2>📋 Activity Log</h2>
-                        <span id="filtered-count">0 activities</span>
-                    
+                        <span id="filtered-count" class="record-count">0 activities</span>
+                    </div>
                     <div class="table-body">
                         <table class="data-table">
                             <thead>
@@ -176,17 +181,13 @@
                                 <tr><td colspan="9" style="text-align: center; padding: 40px;">Loading...</td></tr>
                             </tbody>
                         </table>
-                    
-                
+                    </div>
+                </div>
             </section>
-        
-    
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/dev-activity-log.js"></script>
-</body>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/dev-activity-log.js"></script>
 </body>
