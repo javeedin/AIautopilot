@@ -31,12 +31,15 @@ function updateTablesSummary() {
     document.getElementById('total-tables').textContent = Utils.formatNumber(totalTables);
     document.getElementById('total-modules').textContent = Utils.formatNumber(modules);
 
+    // Count tables with detailed column information
+    const tablesWithDetails = getAvailableTableCount();
+
     // Count tables by type (if available)
     const transactional = tables.filter(t => t.Table_Type === 'Transaction').length;
     const master = tables.filter(t => t.Table_Type === 'Master').length;
 
     document.getElementById('transactional-tables').textContent = Utils.formatNumber(transactional || Math.floor(totalTables * 0.6));
-    document.getElementById('master-tables').textContent = Utils.formatNumber(master || Math.floor(totalTables * 0.4));
+    document.getElementById('master-tables').textContent = `${Utils.formatNumber(master || Math.floor(totalTables * 0.4))} (${tablesWithDetails} with 📋 details)`;
 }
 
 function updateTablesListing() {
@@ -65,14 +68,24 @@ function updateTablesListing() {
         return aName.localeCompare(bName);
     });
 
-    tableBody.innerHTML = filteredTables.map(table => `
-        <tr onclick="showTableDetails('${table.Table_ID}', '${table.Table_Name}')" style="cursor: pointer;">
+    tableBody.innerHTML = filteredTables.map(table => {
+        // Check if this table has column details available
+        const hasDetails = DataStore.tablesDetailed &&
+                          DataStore.tablesDetailed.some(col => col.Table_ID === table.Table_ID);
+
+        const clickable = hasDetails ? 'cursor: pointer;' : 'cursor: default; opacity: 0.6;';
+        const onclick = hasDetails ?
+            `onclick="showTableDetails('${table.Table_ID}', '${table.Table_Name}')"` :
+            `onclick="alert('Column details not available for this table yet.\\n\\nOnly ${getAvailableTableCount()} tables have detailed column information.')"`;
+
+        return `
+        <tr ${onclick} style="${clickable}">
             <td>
                 <div class="module-badge ${Utils.getModuleColor(table.Module_ID)}">
                     ${table.Module_ID || 'N/A'}
                 </div>
             </td>
-            <td><strong>${table.Table_Name || '-'}</strong></td>
+            <td><strong>${table.Table_Name || '-'}</strong>${hasDetails ? ' 📋' : ''}</td>
             <td>${table.Description || '-'}</td>
             <td>
                 <span class="badge badge-${table.Table_Type === 'Transaction' ? 'high' : 'medium'}">
@@ -81,7 +94,14 @@ function updateTablesListing() {
             </td>
             <td>${table.Column_Count || '-'}</td>
         </tr>
-    `).join('');
+    `;
+    }).join('');
+}
+
+function getAvailableTableCount() {
+    if (!DataStore.tablesDetailed) return 0;
+    const uniqueTables = new Set(DataStore.tablesDetailed.map(col => col.Table_ID));
+    return uniqueTables.size;
 }
 
 function setupTableFilters() {
@@ -110,25 +130,9 @@ function setupTableFilters() {
 // Show table details modal
 function showTableDetails(tableId, tableName) {
     console.log('showTableDetails called:', tableId, tableName);
-    console.log('DataStore.tablesDetailed:', DataStore.tablesDetailed);
-    console.log('DataStore.tablesDetailed length:', DataStore.tablesDetailed ? DataStore.tablesDetailed.length : 'NULL');
-
-    if (!DataStore.tablesDetailed || DataStore.tablesDetailed.length === 0) {
-        alert('Table column data not loaded. Please check logs.');
-        console.error('DataStore.tablesDetailed is empty or null');
-        return;
-    }
 
     const columns = DataStore.tablesDetailed.filter(col => col.Table_ID === tableId);
-    console.log('Filtered columns for', tableId, ':', columns.length);
-
-    if (columns.length === 0) {
-        // Try to find any table to see what IDs exist
-        const sampleIds = DataStore.tablesDetailed.slice(0, 5).map(c => c.Table_ID);
-        console.log('Sample Table_IDs in data:', sampleIds);
-        alert(`No column details available for table ID: ${tableId}\n\nSample IDs in data: ${sampleIds.join(', ')}`);
-        return;
-    }
+    console.log('Found', columns.length, 'columns for', tableId);
 
     const modal = document.getElementById('tableDetailsModal');
     const modalTitle = document.getElementById('modalTableName');
