@@ -172,8 +172,24 @@ namespace ERPProjectManager
                 tabControl.SelectedItem = tabItem;
                 Log("Tab added to TabControl");
 
-                // Initialize WebView2
+                // Initialize WebView2 with fresh cache
                 string cacheDir = Path.Combine(localRepoPath, "WebView2Cache");
+
+                // IMPORTANT: Clear cache to force JavaScript reload (fixes caching issues)
+                if (Directory.Exists(cacheDir))
+                {
+                    try
+                    {
+                        Log("Clearing WebView2 cache to ensure fresh JavaScript files...");
+                        Directory.Delete(cacheDir, recursive: true);
+                        Log("Cache cleared successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log($"WARNING: Could not clear cache: {ex.Message}");
+                    }
+                }
+
                 Log($"Initializing WebView2 with cache: {cacheDir}");
                 await InitializeWebView(webView, cacheDir);
 
