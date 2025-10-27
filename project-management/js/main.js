@@ -179,6 +179,8 @@ const DataLoader = {
                 DataStore.loaded = true;
                 console.log('Data loaded from C# successfully!');
                 console.log('Total features:', Object.values(DataStore.validations).flat().length);
+                console.log('Tables count:', DataStore.tables.length);
+                console.log('TablesDetailed count:', DataStore.tablesDetailed.length);
                 console.log('DataStore:', DataStore);
 
                 return true;

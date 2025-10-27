@@ -109,10 +109,24 @@ function setupTableFilters() {
 
 // Show table details modal
 function showTableDetails(tableId, tableName) {
-    const columns = DataStore.tablesDetailed.filter(col => col.Table_ID === tableId);
+    console.log('showTableDetails called:', tableId, tableName);
+    console.log('DataStore.tablesDetailed:', DataStore.tablesDetailed);
+    console.log('DataStore.tablesDetailed length:', DataStore.tablesDetailed ? DataStore.tablesDetailed.length : 'NULL');
 
-    if (!columns || columns.length === 0) {
-        alert('No column details available for this table');
+    if (!DataStore.tablesDetailed || DataStore.tablesDetailed.length === 0) {
+        alert('Table column data not loaded. Please check logs.');
+        console.error('DataStore.tablesDetailed is empty or null');
+        return;
+    }
+
+    const columns = DataStore.tablesDetailed.filter(col => col.Table_ID === tableId);
+    console.log('Filtered columns for', tableId, ':', columns.length);
+
+    if (columns.length === 0) {
+        // Try to find any table to see what IDs exist
+        const sampleIds = DataStore.tablesDetailed.slice(0, 5).map(c => c.Table_ID);
+        console.log('Sample Table_IDs in data:', sampleIds);
+        alert(`No column details available for table ID: ${tableId}\n\nSample IDs in data: ${sampleIds.join(', ')}`);
         return;
     }
 
