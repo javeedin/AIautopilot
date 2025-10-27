@@ -33,13 +33,11 @@ function updateTablesSummary() {
 
     // Count tables with detailed column information
     const tablesWithDetails = getAvailableTableCount();
+    const tablesWithoutDetails = totalTables - tablesWithDetails;
 
-    // Count tables by type (if available)
-    const transactional = tables.filter(t => t.Table_Type === 'Transaction').length;
-    const master = tables.filter(t => t.Table_Type === 'Master').length;
-
-    document.getElementById('transactional-tables').textContent = Utils.formatNumber(transactional || Math.floor(totalTables * 0.6));
-    document.getElementById('master-tables').textContent = `${Utils.formatNumber(master || Math.floor(totalTables * 0.4))} (${tablesWithDetails} with 📋 details)`;
+    // Show tables with vs without column details
+    document.getElementById('transactional-tables').textContent = Utils.formatNumber(tablesWithDetails);
+    document.getElementById('master-tables').textContent = `${Utils.formatNumber(tablesWithoutDetails)} (${tablesWithDetails} with 📋 details)`;
 }
 
 function updateTablesListing() {
@@ -76,6 +74,10 @@ function updateTablesListing() {
         const hasDetails = DataStore.tablesDetailed &&
                           DataStore.tablesDetailed.some(col => col.Table_ID === table.Table_ID);
 
+        // Count actual columns for this table
+        const columnCount = DataStore.tablesDetailed ?
+            DataStore.tablesDetailed.filter(col => col.Table_ID === table.Table_ID).length : 0;
+
         const clickable = hasDetails ? 'cursor: pointer;' : 'cursor: default; opacity: 0.6;';
         const onclick = hasDetails ?
             `onclick="showTableDetails('${table.Table_ID}', '${table.Table_Name}')"` :
@@ -89,13 +91,9 @@ function updateTablesListing() {
                 </div>
             </td>
             <td><strong>${table.Table_Name || '-'}</strong>${hasDetails ? ' 📋' : ''}</td>
-            <td>${table.Description || '-'}</td>
-            <td>
-                <span class="badge badge-${table.Table_Type === 'Transaction' ? 'high' : 'medium'}">
-                    ${table.Table_Type || 'Unknown'}
-                </span>
-            </td>
-            <td>${table.Column_Count || '-'}</td>
+            <td>${table.Table_Description || '-'}</td>
+            <td>${table.Primary_Key || '-'}</td>
+            <td>${columnCount > 0 ? columnCount : table.Estimated_Rows || '-'}</td>
         </tr>
     `;
     });
