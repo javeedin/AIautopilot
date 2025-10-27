@@ -116,13 +116,25 @@ namespace ERPProjectManager
                 await InitializeWebView(webView, cacheDir);
 
                 // Navigate to URL
+                if (webView.CoreWebView2 == null)
+                {
+                    MessageBox.Show("ERROR: CoreWebView2 is NULL after initialization!", "Critical Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 if (moduleUrls.ContainsKey(moduleKey))
                 {
                     string url = moduleUrls[moduleKey];
                     if (File.Exists(url))
                     {
                         MessageBox.Show($"Navigating to: {url}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                        webView.CoreWebView2.Navigate(new Uri(url).AbsoluteUri);
+
+                        string fileUri = new Uri(url).AbsoluteUri;
+                        MessageBox.Show($"Full URI: {fileUri}\n\nAbout to call Navigate()...", "Debug URI", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        webView.CoreWebView2.Navigate(fileUri);
+
+                        MessageBox.Show("Navigate() called successfully!", "Debug Navigate", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -183,6 +195,20 @@ namespace ERPProjectManager
 
             webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
             webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
+
+            // Add navigation event handlers for debugging
+            webView.CoreWebView2.NavigationStarting += (s, e) =>
+            {
+                MessageBox.Show($"NavigationStarting: {e.Uri}", "Navigation Event", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
+
+            webView.CoreWebView2.NavigationCompleted += (s, e) =>
+            {
+                MessageBox.Show($"NavigationCompleted: Success={e.IsSuccess}, HttpStatus={e.HttpStatusCode}", "Navigation Event", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
+
+            // Wait a bit to ensure WebView2 is fully ready
+            await Task.Delay(100);
         }
 
         private async Task CloneOrUpdateRepository()
