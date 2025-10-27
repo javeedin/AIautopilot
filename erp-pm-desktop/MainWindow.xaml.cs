@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V2.3";
+        private const string VERSION = "V3.0";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -379,11 +379,14 @@ namespace ERPProjectManager
                     await InjectCsvData(webView);
 
                     // Run diagnostics to check page rendering
-                    await Task.Delay(500); // Wait for DOM to settle
+                    await Task.Delay(1000); // Wait for DOM to settle
                     await RunPageDiagnostics(webView);
 
+                    // Ask user if page is working - AUTO-DIAGNOSTIC
+                    await Task.Delay(500); // Brief pause before asking
+                    await AskUserFeedback();
+
                     // DevTools can be opened manually via the DevTools button
-                    // Auto-opening disabled to prevent window confusion
                     Log("Page loaded successfully. Use DevTools button if debugging needed.");
                 }
             };
@@ -844,6 +847,120 @@ namespace ERPProjectManager
             catch (Exception ex)
             {
                 Log($"Diagnostics error: {ex.Message}");
+            }
+        }
+
+        private async Task AskUserFeedback()
+        {
+            await Dispatcher.InvokeAsync(async () =>
+            {
+                var result = MessageBox.Show(
+                    "Is the dashboard displaying correctly?\n\n" +
+                    "✓ Can you see the sidebar with navigation?\n" +
+                    "✓ Can you see KPI cards with module counts?\n" +
+                    "✓ Can you see charts and tables?\n\n" +
+                    "Click YES if you see the dashboard.\n" +
+                    "Click NO if the page is blank or has issues.",
+                    "Dashboard Status Check",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    Log("USER FEEDBACK: Dashboard NOT displaying correctly");
+                    await SaveDiagnosticReport();
+                }
+                else
+                {
+                    Log("USER FEEDBACK: Dashboard displaying correctly ✓");
+                }
+            });
+        }
+
+        private async Task SaveDiagnosticReport()
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+                string reportPath = Path.Combine(desktopPath, $"ERP_Diagnostic_Report_{timestamp}.txt");
+
+                var report = new System.Text.StringBuilder();
+                report.AppendLine("========================================");
+                report.AppendLine("ERP PROJECT MANAGER - DIAGNOSTIC REPORT");
+                report.AppendLine("========================================");
+                report.AppendLine($"Generated: {DateTime.Now}");
+                report.AppendLine($"Version: {VERSION}");
+                report.AppendLine($"Repository: {localRepoPath}");
+                report.AppendLine();
+                report.AppendLine("========================================");
+                report.AppendLine("COMPLETE APPLICATION LOGS");
+                report.AppendLine("========================================");
+                report.AppendLine();
+
+                foreach (var log in logs)
+                {
+                    report.AppendLine(log);
+                }
+
+                report.AppendLine();
+                report.AppendLine("========================================");
+                report.AppendLine("SYSTEM INFORMATION");
+                report.AppendLine("========================================");
+                report.AppendLine($"OS: {Environment.OSVersion}");
+                report.AppendLine($"64-bit OS: {Environment.Is64BitOperatingSystem}");
+                report.AppendLine($".NET Version: {Environment.Version}");
+                report.AppendLine($"Machine Name: {Environment.MachineName}");
+                report.AppendLine($"User: {Environment.UserName}");
+                report.AppendLine();
+                report.AppendLine("========================================");
+                report.AppendLine("FILES VERIFICATION");
+                report.AppendLine("========================================");
+
+                // Check file existence
+                string[] criticalFiles = {
+                    "project-management/index.html",
+                    "project-management/css/main.css",
+                    "project-management/css/dashboard.css",
+                    "project-management/js/main.js",
+                    "project-management/js/dashboard.js"
+                };
+
+                foreach (var file in criticalFiles)
+                {
+                    string fullPath = Path.Combine(localRepoPath, file);
+                    bool exists = File.Exists(fullPath);
+                    long size = exists ? new FileInfo(fullPath).Length : 0;
+                    report.AppendLine($"{file}: {(exists ? $"EXISTS ({size} bytes)" : "MISSING")}");
+                }
+
+                report.AppendLine();
+                report.AppendLine("========================================");
+                report.AppendLine("END OF REPORT");
+                report.AppendLine("========================================");
+
+                await File.WriteAllTextAsync(reportPath, report.ToString());
+
+                Log($"Diagnostic report saved to: {reportPath}");
+
+                var openResult = MessageBox.Show(
+                    $"Diagnostic report saved successfully!\n\n" +
+                    $"Location: {reportPath}\n\n" +
+                    $"Please share this file with Claude Code for automatic fixing.\n\n" +
+                    "Would you like to open the file location?",
+                    "Report Saved",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Information);
+
+                if (openResult == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{reportPath}\"");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"Error saving diagnostic report: {ex.Message}");
+                MessageBox.Show($"Error saving diagnostic report: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
