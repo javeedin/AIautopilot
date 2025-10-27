@@ -823,7 +823,7 @@
 
                             <div class="property-field">
                                 <div class="property-label">Placeholder</div>
-                                <input type="text" class="property-input" value="Enter customer name" id="propPlaceholder">
+                                <input type="text" class="property-input" value="Enter name" id="propPlaceholder">
                             </div>
                         </div>
                     </div>
@@ -842,7 +842,7 @@
 
                             <div class="property-field">
                                 <div class="property-label">Error Message</div>
-                                <input type="text" class="property-input" value="Customer name is required" id="propErrorMsg">
+                                <input type="text" class="property-input" value="Name is required" id="propErrorMsg">
                             </div>
                         </div>
                     </div>
@@ -855,7 +855,7 @@
                         <div class="property-group-content">
                             <div class="property-field">
                                 <div class="property-label">Help Text</div>
-                                <textarea class="property-textarea" id="propHelpText" placeholder="Help text for end users">Enter the legal name of the customer</textarea>
+                                <textarea class="property-textarea" id="propHelpText" placeholder="Help text for end users">Enter the name</textarea>
                             </div>
                         </div>
                     </div>
@@ -963,6 +963,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page Designer initialized');
+            loadPageFromURL(); // Load from URL parameters first
             setupDragAndDrop();
             setupPropertyGroupToggles();
             loadPageFromLocalStorage();
@@ -1210,11 +1211,50 @@
             }
         }
 
+        function loadPageFromURL() {
+            // Read URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageId = urlParams.get('pageId');
+            const pageName = urlParams.get('pageName');
+            const pageType = urlParams.get('pageType');
+            const layoutType = urlParams.get('layoutType');
+            const module = urlParams.get('module');
+
+            if (pageId && pageName) {
+                // Initialize page definition from URL parameters
+                pageDefinition = {
+                    pageId: pageId,
+                    pageName: pageName,
+                    pageType: pageType || 'free-form',
+                    layoutType: layoutType || 'customer',
+                    module: module || '',
+                    regions: [],
+                    items: [],
+                    buttons: [],
+                    validations: [],
+                    processes: []
+                };
+
+                // Update UI
+                document.getElementById('pageIdBadge').textContent = pageId;
+                const titleEl = document.querySelector('.toolbar-title');
+                if (titleEl) {
+                    titleEl.innerHTML = `<span>🎨</span> ${pageName}`;
+                }
+
+                console.log('Page loaded from URL:', pageDefinition);
+            }
+        }
+
         function loadPageFromLocalStorage() {
             const saved = localStorage.getItem('currentPage');
             if (saved) {
-                pageDefinition = JSON.parse(saved);
-                document.getElementById('pageIdBadge').textContent = pageDefinition.pageId;
+                const savedDef = JSON.parse(saved);
+                // Only load from localStorage if it matches the current page ID
+                if (savedDef.pageId === pageDefinition.pageId) {
+                    pageDefinition = savedDef;
+                    console.log('Restored saved progress from localStorage');
+                }
             }
         }
 
