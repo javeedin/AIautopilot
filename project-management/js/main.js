@@ -367,4 +367,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     await DataLoader.loadAllData();
+
+    // Initialize the appropriate page view
+    console.log('DataStore ready, loading dashboard...');
+    if (typeof loadDashboard === 'function') {
+        loadDashboard();
+    } else if (typeof loadFeatures === 'function') {
+        loadFeatures();
+    } else if (typeof loadValidations === 'function') {
+        loadValidations();
+    } else if (typeof loadDatabaseTables === 'function') {
+        loadDatabaseTables();
+    } else if (typeof loadPages === 'function') {
+        loadPages();
+    } else if (typeof loadModules === 'function') {
+        loadModules();
+    } else if (typeof loadReports === 'function') {
+        loadReports();
+    }
 });
