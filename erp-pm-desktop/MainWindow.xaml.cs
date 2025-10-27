@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V1.9";
+        private const string VERSION = "V2.0";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -447,9 +447,23 @@ namespace ERPProjectManager
                         if (branch != null)
                         {
                             Log($"Checking out branch: {BRANCH_NAME}");
-                            Commands.Checkout(repo, branch);
+
+                            // Use CheckoutOptions to force file updates
+                            var checkoutOptions = new CheckoutOptions
+                            {
+                                CheckoutModifiers = CheckoutModifiers.Force,
+                                CheckoutNotifyFlags = CheckoutNotifyFlags.Updated
+                            };
+
+                            Commands.Checkout(repo, branch, checkoutOptions);
+                            Log("Checkout completed with Force flag");
+
                             var signature = new Signature("ERP Manager", "erp@local.com", DateTimeOffset.Now);
                             repo.Reset(ResetMode.Hard, branch.Tip);
+                            Log("Hard reset completed");
+
+                            // Clean working directory to remove any unstaged changes
+                            repo.RemoveUntrackedFiles();
                             Log("Repository updated successfully");
 
                             // Verify JavaScript files were actually updated
