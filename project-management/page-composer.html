@@ -832,13 +832,13 @@
             closeNewPageModal();
             renderPages();
 
-            // Redirect to designer
-            window.location.href = `page-designer.html?id=${id}`;
+            // Redirect to designer (with cache-busting)
+            window.location.href = `page-designer.html?id=${id}&_t=${Date.now()}`;
         }
 
         // Edit page
         function editPage(id) {
-            window.location.href = `page-designer.html?id=${id}`;
+            window.location.href = `page-designer.html?id=${id}&_t=${Date.now()}`;
         }
 
         // Export page
@@ -1140,6 +1140,8 @@
                 params.append('detailTabs', JSON.stringify(wizardData.detailTabs));
             }
 
+            // Add cache-busting timestamp to force fresh load
+            params.append('_t', Date.now());
             window.location.href = `page-designer.html?${params.toString()}`;
         }
 
