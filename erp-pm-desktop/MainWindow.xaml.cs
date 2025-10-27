@@ -17,6 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
+        private const string VERSION = "V1.8";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -77,6 +78,9 @@ namespace ERPProjectManager
         {
             try
             {
+                Log($"========================================");
+                Log($"ERP Project Manager {VERSION} Starting");
+                Log($"========================================");
                 Log("Application starting - InitializeAsync");
 
                 // Check if user has downloaded to the fixed location
@@ -118,6 +122,7 @@ namespace ERPProjectManager
                     return;
                 }
                 Log("Repository ready");
+                Log($"Expected JavaScript version in repository: V1.7 (should match {VERSION})");
 
                 // Setup module URLs
                 Log("Setting up module URLs");
