@@ -29,15 +29,97 @@
             <header class="top-bar">
                 <div class="page-title">
                     <h2>Application Pages</h2>
-                    <p class="subtitle">238 UI pages inventory</p>
+                    <p class="subtitle">UI pages inventory and navigation structure</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
                 </div>
             </header>
-            <div class="empty-state" style="padding: 100px 20px;">
-                <div class="empty-state-icon">📄</div>
-                <h3 class="empty-state-title">Application Pages</h3>
-                <p class="empty-state-description">UI pages inventory - Under development</p>
-            </div>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">📄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-pages">0</h3>
+                        <p class="kpi-label">Total Pages</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📦</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-modules-pages">0</h3>
+                        <p class="kpi-label">Modules</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">📋</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="list-pages">0</h3>
+                        <p class="kpi-label">List Pages</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9C27B0;">📝</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="detail-pages">0</h3>
+                        <p class="kpi-label">Detail Pages</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pages Listing -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Application Pages</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <select id="module-filter" class="search-input" style="width: 200px;">
+                                <option value="all">All Modules</option>
+                                <option value="GL">General Ledger (GL)</option>
+                                <option value="UR">User Management (UR)</option>
+                                <option value="AP">Accounts Payable (AP)</option>
+                                <option value="AR">Accounts Receivable (AR)</option>
+                                <option value="PO">Purchasing (PO)</option>
+                                <option value="INV">Inventory (INV)</option>
+                                <option value="OM">Order Management (OM)</option>
+                                <option value="CM">Cost Management (CM)</option>
+                                <option value="LCM">Landed Cost (LCM)</option>
+                                <option value="PDM">Product Management (PDM)</option>
+                                <option value="CSH">Cash Management (CSH)</option>
+                                <option value="FA">Fixed Assets (FA)</option>
+                                <option value="HCM">Human Capital (HCM)</option>
+                                <option value="PAY">Payroll (PAY)</option>
+                                <option value="ABS">Absence (ABS)</option>
+                                <option value="REC">Recruitment (REC)</option>
+                            </select>
+                            <input type="text" id="page-search" class="search-input" placeholder="Search pages...">
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Page ID</th>
+                                    <th>Page Name</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pages-table-body">
+                                <tr><td colspan="5" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/pages.js"></script>
 </body>
 </html>

@@ -7,6 +7,99 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        .module-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .module-badge.large {
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .module-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .module-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .module-stat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .module-stat-icon {
+            font-size: 24px;
+        }
+
+        .module-stat-content {
+            flex: 1;
+        }
+
+        .module-stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .module-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .module-card-footer {
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .progress-percent {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -31,13 +124,56 @@
                     <h2>Modules Overview</h2>
                     <p class="subtitle">16 ERP modules detailed view</p>
                 </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
             </header>
-            <div class="empty-state" style="padding: 100px 20px;">
-                <div class="empty-state-icon">📦</div>
-                <h3 class="empty-state-title">Modules Overview</h3>
-                <p class="empty-state-description">Module details page - Under development</p>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📦</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-modules">0</h3>
+                        <p class="kpi-label">Total Modules</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">⚙️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-features-modules">0</h3>
+                        <p class="kpi-label">Total Features</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">📄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-pages-modules">0</h3>
+                        <p class="kpi-label">Total Pages</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9C27B0;">🗄️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-tables-modules">0</h3>
+                        <p class="kpi-label">Total Tables</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modules Grid -->
+            <div class="modules-grid" id="modules-grid">
+                <!-- Modules will be dynamically loaded here -->
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                    Loading modules...
+                </div>
             </div>
         </main>
     </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/modules.js"></script>
 </body>
 </html>

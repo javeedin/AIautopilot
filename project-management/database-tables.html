@@ -29,15 +29,97 @@
             <header class="top-bar">
                 <div class="page-title">
                     <h2>Database Tables</h2>
-                    <p class="subtitle">260+ tables across all modules</p>
+                    <p class="subtitle">Complete database schema browser</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
                 </div>
             </header>
-            <div class="empty-state" style="padding: 100px 20px;">
-                <div class="empty-state-icon">🗄️</div>
-                <h3 class="empty-state-title">Database Tables</h3>
-                <p class="empty-state-description">Database schema browser - Under development</p>
-            </div>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9C27B0;">🗄️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-tables">0</h3>
+                        <p class="kpi-label">Total Tables</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📦</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-modules">0</h3>
+                        <p class="kpi-label">Modules</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">📝</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="transactional-tables">0</h3>
+                        <p class="kpi-label">Transaction Tables</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">📋</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="master-tables">0</h3>
+                        <p class="kpi-label">Master Tables</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables Listing -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Database Tables</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <select id="module-filter" class="search-input" style="width: 200px;">
+                                <option value="all">All Modules</option>
+                                <option value="GL">General Ledger (GL)</option>
+                                <option value="UR">User Management (UR)</option>
+                                <option value="AP">Accounts Payable (AP)</option>
+                                <option value="AR">Accounts Receivable (AR)</option>
+                                <option value="PO">Purchasing (PO)</option>
+                                <option value="INV">Inventory (INV)</option>
+                                <option value="OM">Order Management (OM)</option>
+                                <option value="CM">Cost Management (CM)</option>
+                                <option value="LCM">Landed Cost (LCM)</option>
+                                <option value="PDM">Product Management (PDM)</option>
+                                <option value="CSH">Cash Management (CSH)</option>
+                                <option value="FA">Fixed Assets (FA)</option>
+                                <option value="HCM">Human Capital (HCM)</option>
+                                <option value="PAY">Payroll (PAY)</option>
+                                <option value="ABS">Absence (ABS)</option>
+                                <option value="REC">Recruitment (REC)</option>
+                            </select>
+                            <input type="text" id="table-search" class="search-input" placeholder="Search tables...">
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Table Name</th>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th>Columns</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tables-table-body">
+                                <tr><td colspan="5" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/database-tables.js"></script>
 </body>
 </html>

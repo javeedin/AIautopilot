@@ -31,13 +31,112 @@
                     <h2>Feature Validations</h2>
                     <p class="subtitle">Track coding, implementation, and testing status</p>
                 </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
             </header>
-            <div class="empty-state" style="padding: 100px 20px;">
-                <div class="empty-state-icon">✅</div>
-                <h3 class="empty-state-title">Feature Validations</h3>
-                <p class="empty-state-description">Validation tracking page - Under development</p>
-            </div>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">⚙️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-features">0</h3>
+                        <p class="kpi-label">Total Features</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9E9E9E;">⏸️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="not-started">0</h3>
+                        <p class="kpi-label">Not Started</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">🔄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="in-progress">0</h3>
+                        <p class="kpi-label">In Progress</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">✓</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="code-complete">0</h3>
+                        <p class="kpi-label">Code Complete</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #10B981;">🚀</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="production">0</h3>
+                        <p class="kpi-label">Production</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #F44336;">🚫</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="blocked">0</h3>
+                        <p class="kpi-label">Blocked</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filters and Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Feature Validations</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <select id="module-filter" class="search-input" style="width: 200px;">
+                                <option value="all">All Modules</option>
+                                <option value="GL">General Ledger (GL)</option>
+                                <option value="UR">User Management (UR)</option>
+                                <option value="AP">Accounts Payable (AP)</option>
+                                <option value="AR">Accounts Receivable (AR)</option>
+                                <option value="PO">Purchasing (PO)</option>
+                                <option value="INV">Inventory (INV)</option>
+                                <option value="OM">Order Management (OM)</option>
+                                <option value="CM">Cost Management (CM)</option>
+                                <option value="LCM">Landed Cost (LCM)</option>
+                                <option value="PDM">Product Management (PDM)</option>
+                                <option value="CSH">Cash Management (CSH)</option>
+                                <option value="FA">Fixed Assets (FA)</option>
+                                <option value="HCM">Human Capital (HCM)</option>
+                                <option value="PAY">Payroll (PAY)</option>
+                                <option value="ABS">Absence (ABS)</option>
+                                <option value="REC">Recruitment (REC)</option>
+                            </select>
+                            <input type="text" id="validation-search" class="search-input" placeholder="Search features...">
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Feature ID</th>
+                                    <th>Feature Name</th>
+                                    <th>Priority</th>
+                                    <th>Coding Status</th>
+                                    <th>Implementation</th>
+                                    <th>Testing</th>
+                                    <th>All OK</th>
+                                </tr>
+                            </thead>
+                            <tbody id="validations-table-body">
+                                <tr><td colspan="8" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/validations.js"></script>
 </body>
 </html>
