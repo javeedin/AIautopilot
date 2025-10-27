@@ -68,7 +68,10 @@ function updateTablesListing() {
         return aName.localeCompare(bName);
     });
 
-    tableBody.innerHTML = filteredTables.map(table => {
+    console.log('updateTablesListing - DataStore.tablesDetailed count:', DataStore.tablesDetailed ? DataStore.tablesDetailed.length : 0);
+    console.log('updateTablesListing - Available tables with details:', getAvailableTableCount());
+
+    const htmlRows = filteredTables.map(table => {
         // Check if this table has column details available
         const hasDetails = DataStore.tablesDetailed &&
                           DataStore.tablesDetailed.some(col => col.Table_ID === table.Table_ID);
@@ -95,7 +98,21 @@ function updateTablesListing() {
             <td>${table.Column_Count || '-'}</td>
         </tr>
     `;
-    }).join('');
+    });
+
+    tableBody.innerHTML = htmlRows.join('');
+
+    // Log first table with details to verify onclick is present
+    const firstWithDetails = filteredTables.find(t =>
+        DataStore.tablesDetailed && DataStore.tablesDetailed.some(col => col.Table_ID === t.Table_ID)
+    );
+    if (firstWithDetails) {
+        const index = filteredTables.indexOf(firstWithDetails);
+        console.log('First table with details:', firstWithDetails.Table_ID, firstWithDetails.Table_Name);
+        console.log('Sample HTML (first 250 chars):', htmlRows[index].substring(0, 250));
+    } else {
+        console.log('WARNING: No tables with details found in filtered list!');
+    }
 }
 
 function getAvailableTableCount() {
@@ -129,15 +146,31 @@ function setupTableFilters() {
 
 // Show table details modal
 function showTableDetails(tableId, tableName) {
-    console.log('showTableDetails called:', tableId, tableName);
+    console.log('=== showTableDetails called ===');
+    console.log('Table ID:', tableId);
+    console.log('Table Name:', tableName);
+    console.log('DataStore.tablesDetailed exists:', !!DataStore.tablesDetailed);
+    console.log('DataStore.tablesDetailed length:', DataStore.tablesDetailed ? DataStore.tablesDetailed.length : 0);
 
     const columns = DataStore.tablesDetailed.filter(col => col.Table_ID === tableId);
     console.log('Found', columns.length, 'columns for', tableId);
+
+    if (columns.length === 0) {
+        console.error('ERROR: No columns found for table', tableId);
+        console.log('Sample Table_IDs in data:', DataStore.tablesDetailed.slice(0, 5).map(c => c.Table_ID));
+        alert('No column details found for this table.');
+        return;
+    }
 
     const modal = document.getElementById('tableDetailsModal');
     const modalTitle = document.getElementById('modalTableName');
     const columnsBody = document.getElementById('modalColumnsBody');
     const ddlText = document.getElementById('modalDDLText');
+
+    console.log('Modal element found:', !!modal);
+    console.log('Modal title element found:', !!modalTitle);
+    console.log('Columns body element found:', !!columnsBody);
+    console.log('DDL text element found:', !!ddlText);
 
     modalTitle.textContent = tableName;
 
@@ -164,9 +197,13 @@ function showTableDetails(tableId, tableName) {
     // Generate Oracle DDL
     const ddl = generateOracleDDL(tableName, columns);
     ddlText.textContent = ddl;
+    console.log('DDL generated, length:', ddl.length);
 
     // Show modal
+    console.log('Setting modal display to block...');
     modal.style.display = 'block';
+    console.log('Modal display set to:', modal.style.display);
+    console.log('=== showTableDetails completed ===');
 }
 
 // Generate Oracle CREATE TABLE DDL
