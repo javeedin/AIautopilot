@@ -1,3 +1,6 @@
+// ===== main.js Version V1.7 =====
+console.log('*** main.js VERSION V1.7 LOADED ***');
+
 // ===== Configuration =====
 const CONFIG = {
     // Check if running on localhost (C# app with HTTP server) or file:// protocol

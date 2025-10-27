@@ -1,3 +1,6 @@
+// ===== dashboard.js Version V1.7 =====
+console.log('*** dashboard.js VERSION V1.7 LOADED ***');
+
 // ===== Dashboard Specific Functions =====
 
 let moduleProgressChart = null;
