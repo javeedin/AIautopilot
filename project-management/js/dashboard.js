@@ -5,32 +5,80 @@ let priorityChart = null;
 
 // Load Dashboard
 async function loadDashboard() {
-    if (!DataStore.loaded) {
-        await DataLoader.loadAllData();
-    }
+    try {
+        console.log('loadDashboard() called');
 
-    updateKPIs();
-    updateStatusCards();
-    updatePriorityList();
-    updateModulesTable();
-    createCharts();
+        if (!DataStore.loaded) {
+            console.log('DataStore not loaded, loading now...');
+            await DataLoader.loadAllData();
+        }
+
+        console.log('Updating KPIs...');
+        updateKPIs();
+
+        console.log('Updating status cards...');
+        updateStatusCards();
+
+        console.log('Updating priority list...');
+        updatePriorityList();
+
+        console.log('Updating modules table...');
+        updateModulesTable();
+
+        console.log('Creating charts...');
+        createCharts();
+
+        console.log('Dashboard loaded successfully!');
+    } catch (error) {
+        console.error('ERROR in loadDashboard():', error);
+        console.error('Stack trace:', error.stack);
+    }
 }
 
 // Update KPI Cards
 function updateKPIs() {
-    const stats = DataLoader.getStats();
-    if (!stats) return;
+    try {
+        console.log('updateKPIs() - Getting stats...');
+        const stats = DataLoader.getStats();
+        if (!stats) {
+            console.error('updateKPIs() - No stats returned from DataLoader.getStats()');
+            return;
+        }
+        console.log('updateKPIs() - Stats:', stats);
 
-    // Update KPI values
-    document.getElementById('total-modules').textContent = stats.modules;
-    document.getElementById('total-features').textContent = Utils.formatNumber(stats.features);
-    document.getElementById('total-pages').textContent = Utils.formatNumber(stats.pages);
-    document.getElementById('total-tables').textContent = Utils.formatNumber(stats.tables) + '+';
+        // Update KPI values
+        console.log('updateKPIs() - Updating DOM elements...');
+        const totalModules = document.getElementById('total-modules');
+        if (!totalModules) console.error('Element not found: total-modules');
+        else totalModules.textContent = stats.modules;
 
-    // Update completion rate
-    const completionRate = parseFloat(stats.completionRate);
-    document.getElementById('completion-rate').textContent = completionRate.toFixed(1) + '%';
-    document.getElementById('completion-bar').style.width = completionRate + '%';
+        const totalFeatures = document.getElementById('total-features');
+        if (!totalFeatures) console.error('Element not found: total-features');
+        else totalFeatures.textContent = Utils.formatNumber(stats.features);
+
+        const totalPages = document.getElementById('total-pages');
+        if (!totalPages) console.error('Element not found: total-pages');
+        else totalPages.textContent = Utils.formatNumber(stats.pages);
+
+        const totalTables = document.getElementById('total-tables');
+        if (!totalTables) console.error('Element not found: total-tables');
+        else totalTables.textContent = Utils.formatNumber(stats.tables) + '+';
+
+        // Update completion rate
+        const completionRate = parseFloat(stats.completionRate);
+        const completionRateElem = document.getElementById('completion-rate');
+        if (!completionRateElem) console.error('Element not found: completion-rate');
+        else completionRateElem.textContent = completionRate.toFixed(1) + '%';
+
+        const completionBar = document.getElementById('completion-bar');
+        if (!completionBar) console.error('Element not found: completion-bar');
+        else completionBar.style.width = completionRate + '%';
+
+        console.log('updateKPIs() - Complete');
+    } catch (error) {
+        console.error('ERROR in updateKPIs():', error);
+        console.error('Stack:', error.stack);
+    }
 }
 
 // Update Status Cards
