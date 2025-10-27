@@ -45,19 +45,42 @@ namespace ERPProjectManager
             });
         }
 
+        private Window logWindow = null;
+        private TextBox logTextBox = null;
+
         private void LogViewerButton_Click(object sender, RoutedEventArgs e)
         {
-            var logWindow = new Window
+            // If log window already exists, just bring it to front
+            if (logWindow != null)
             {
-                Title = "Application Logs",
-                Width = 800,
-                Height = 600,
+                // Update the log content
+                logTextBox.Text = string.Join(Environment.NewLine, logs);
+                logWindow.Activate();
+                logWindow.Focus();
+                return;
+            }
+
+            // Create new log window
+            logWindow = new Window
+            {
+                Title = "Application Logs - Real-time Monitor",
+                Width = 900,
+                Height = 700,
                 Background = System.Windows.Media.Brushes.Black,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = this
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                Left = SystemParameters.PrimaryScreenWidth - 920,
+                Top = 20,
+                Topmost = true,  // Always on top
+                ShowInTaskbar = true
             };
 
-            var textBox = new TextBox
+            // Create Grid container for TextBox and Button
+            var grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            // Create TextBox for logs
+            logTextBox = new TextBox
             {
                 Text = string.Join(Environment.NewLine, logs),
                 IsReadOnly = true,
@@ -69,9 +92,90 @@ namespace ERPProjectManager
                 Background = System.Windows.Media.Brushes.Black,
                 Padding = new Thickness(10)
             };
+            Grid.SetRow(logTextBox, 0);
 
-            logWindow.Content = textBox;
-            logWindow.ShowDialog();
+            // Create Button panel
+            var buttonPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Background = System.Windows.Media.Brushes.Black,
+                Margin = new Thickness(5)
+            };
+
+            // Clear button
+            var clearButton = new System.Windows.Controls.Button
+            {
+                Content = "🗑️ Clear Logs",
+                Width = 120,
+                Height = 30,
+                Margin = new Thickness(5),
+                Background = System.Windows.Media.Brushes.DarkRed,
+                Foreground = System.Windows.Media.Brushes.White,
+                BorderBrush = System.Windows.Media.Brushes.Red,
+                Cursor = System.Windows.Input.Cursors.Hand
+            };
+            clearButton.Click += (s, args) =>
+            {
+                logs.Clear();
+                logTextBox.Text = "";
+                Log("Logs cleared.");
+            };
+
+            // Refresh button
+            var refreshButton = new System.Windows.Controls.Button
+            {
+                Content = "🔄 Refresh",
+                Width = 100,
+                Height = 30,
+                Margin = new Thickness(5),
+                Background = System.Windows.Media.Brushes.DarkGreen,
+                Foreground = System.Windows.Media.Brushes.White,
+                BorderBrush = System.Windows.Media.Brushes.Green,
+                Cursor = System.Windows.Input.Cursors.Hand
+            };
+            refreshButton.Click += (s, args) =>
+            {
+                logTextBox.Text = string.Join(Environment.NewLine, logs);
+                logTextBox.ScrollToEnd();
+            };
+
+            // Always On Top toggle
+            var toggleTopmost = new System.Windows.Controls.Button
+            {
+                Content = "📌 Always On Top: ON",
+                Width = 150,
+                Height = 30,
+                Margin = new Thickness(5),
+                Background = System.Windows.Media.Brushes.DarkBlue,
+                Foreground = System.Windows.Media.Brushes.White,
+                BorderBrush = System.Windows.Media.Brushes.Blue,
+                Cursor = System.Windows.Input.Cursors.Hand
+            };
+            toggleTopmost.Click += (s, args) =>
+            {
+                logWindow.Topmost = !logWindow.Topmost;
+                toggleTopmost.Content = logWindow.Topmost ? "📌 Always On Top: ON" : "📌 Always On Top: OFF";
+            };
+
+            buttonPanel.Children.Add(clearButton);
+            buttonPanel.Children.Add(refreshButton);
+            buttonPanel.Children.Add(toggleTopmost);
+            Grid.SetRow(buttonPanel, 1);
+
+            grid.Children.Add(logTextBox);
+            grid.Children.Add(buttonPanel);
+
+            logWindow.Content = grid;
+
+            // When window closes, clear the reference
+            logWindow.Closed += (s, args) =>
+            {
+                logWindow = null;
+                logTextBox = null;
+            };
+
+            logWindow.Show();  // Show instead of ShowDialog - non-modal
         }
 
         private async void InitializeAsync()
