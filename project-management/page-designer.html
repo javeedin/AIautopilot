@@ -643,7 +643,7 @@
                 <div class="component-tree" id="componentTree">
                     <div class="tree-node selected" onclick="selectNode('page')">
                         <span class="icon">📄</span>
-						<span id="treePageName">Page: Customer Entry</span>
+                        <span>Page: Customer Entry</span>
                     </div>
                     <div class="tree-children">
                         <div class="tree-node parent expanded" onclick="selectNode('region1', event)">
@@ -823,7 +823,7 @@
 
                             <div class="property-field">
                                 <div class="property-label">Placeholder</div>
-                                <input type="text" class="property-input" value="Enter customer name" id="propPlaceholder">
+                                <input type="text" class="property-input" value="Enter name" id="propPlaceholder">
                             </div>
                         </div>
                     </div>
@@ -842,7 +842,7 @@
 
                             <div class="property-field">
                                 <div class="property-label">Error Message</div>
-                                <input type="text" class="property-input" value="Customer name is required" id="propErrorMsg">
+                                <input type="text" class="property-input" value="Name is required" id="propErrorMsg">
                             </div>
                         </div>
                     </div>
@@ -855,7 +855,7 @@
                         <div class="property-group-content">
                             <div class="property-field">
                                 <div class="property-label">Help Text</div>
-                                <textarea class="property-textarea" id="propHelpText" placeholder="Help text for end users">Enter the legal name of the customer</textarea>
+                                <textarea class="property-textarea" id="propHelpText" placeholder="Help text for end users">Enter the name</textarea>
                             </div>
                         </div>
                     </div>
@@ -963,7 +963,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page Designer initialized');
-		    loadPageFromURL(); // Load from URL parameters first
+            loadPageFromURL(); // Load from URL parameters first
             setupDragAndDrop();
             setupPropertyGroupToggles();
             loadPageFromLocalStorage();
@@ -1211,72 +1211,66 @@
             }
         }
 
-function loadPageFromURL() {
-    // Read URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id'); // Page Composer sends 'id' not 'pageId'
-    const template = urlParams.get('template'); // Page Composer sends 'template' not 'pageType'
-    const module = urlParams.get('module');
+        function loadPageFromURL() {
+            // Read URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id'); // Page Composer sends 'id' not 'pageId'
+            const template = urlParams.get('template'); // Page Composer sends 'template' not 'pageType'
+            const module = urlParams.get('module');
 
-    console.log('URL Parameters:', {id, template, module});
+            console.log('URL Parameters:', {id, template, module});
 
-    if (id) {
-        // Load page from localStorage using the ID
-        const stored = localStorage.getItem('composerPages');
-        if (stored) {
-            const pages = JSON.parse(stored);
-            const page = pages.find(p => p.id === id);
+            if (id) {
+                // Load page from localStorage using the ID
+                const stored = localStorage.getItem('composerPages');
+                if (stored) {
+                    const pages = JSON.parse(stored);
+                    const page = pages.find(p => p.id === id);
 
-            if (page) {
-                // Initialize page definition from stored page data
-                pageDefinition = {
-                    pageId: page.id,
-                    pageName: page.name,
-                    pageType: template || page.type || 'free-form',
-                    layoutType: page.type || template || 'free-form',
-                    module: module || page.module || '',
-                    regions: [],
-                    items: [],
-                    buttons: [],
-                    validations: [],
-                    processes: [],
-                    definition: page.definition || {}
-                };
+                    if (page) {
+                        // Initialize page definition from stored page data
+                        pageDefinition = {
+                            pageId: page.id,
+                            pageName: page.name,
+                            pageType: template || page.type || 'free-form',
+                            layoutType: page.type || template || 'free-form',
+                            module: module || page.module || '',
+                            regions: [],
+                            items: [],
+                            buttons: [],
+                            validations: [],
+                            processes: [],
+                            definition: page.definition || {}
+                        };
 
-                // Update UI
-                document.getElementById('pageIdBadge').textContent = page.id;
-                const titleEl = document.querySelector('.toolbar-title');
-                if (titleEl) {
-                    titleEl.innerHTML = `<span>🎨</span> ${page.name}`;
+                        // Update UI
+                        document.getElementById('pageIdBadge').textContent = page.id;
+                        const titleEl = document.querySelector('.toolbar-title');
+                        if (titleEl) {
+                            titleEl.innerHTML = `<span>🎨</span> ${page.name}`;
+                        }
+
+                        console.log('Page loaded from URL:', pageDefinition);
+                    } else {
+                        console.warn('Page not found with ID:', id);
+                    }
+                } else {
+                    console.warn('No saved pages found in localStorage');
                 }
-
-				// Update UI - Tree View
-				const treePageName = document.getElementById('treePageName');
-				if (treePageName) {
-					treePageName.textContent = `Page: ${page.name}`;
-				}
-                console.log('Page loaded from URL:', pageDefinition);
-            } else {
-                console.warn('Page not found with ID:', id);
             }
-        } else {
-            console.warn('No saved pages found in localStorage');
         }
-    }
-}
 
-
-function loadPageFromLocalStorage() {
-    const saved = localStorage.getItem('currentPage');
-    if (saved) {
-        const savedDef = JSON.parse(saved);
-        // Only load from localStorage if it matches the current page ID
-        if (savedDef.pageId === pageDefinition.pageId) {
-            pageDefinition = savedDef;
-            console.log('Restored saved progress from localStorage');
+        function loadPageFromLocalStorage() {
+            const saved = localStorage.getItem('currentPage');
+            if (saved) {
+                const savedDef = JSON.parse(saved);
+                // Only load from localStorage if it matches the current page ID
+                if (savedDef.pageId === pageDefinition.pageId) {
+                    pageDefinition = savedDef;
+                    console.log('Restored saved progress from localStorage');
+                }
+            }
         }
-    }
-}
 
         // Real-time Property Updates
         document.querySelectorAll('.property-input, .property-select, .property-textarea').forEach(input => {
