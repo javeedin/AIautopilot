@@ -673,14 +673,12 @@
             renderPages();
 
             // Redirect to designer
-            alert(`Page ${id} created! Opening designer...\n\n(Designer interface will be created in next step)`);
-            // window.location.href = `page-designer.html?id=${id}`;
+            window.location.href = `page-designer.html?id=${id}`;
         }
 
         // Edit page
         function editPage(id) {
-            alert(`Opening designer for page ${id}...\n\n(Designer interface will be created in next step)`);
-            // window.location.href = `page-designer.html?id=${id}`;
+            window.location.href = `page-designer.html?id=${id}`;
         }
 
         // Export page
