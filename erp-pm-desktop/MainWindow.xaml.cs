@@ -19,6 +19,7 @@ namespace ERPProjectManager
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
+        private List<string> logs = new List<string>();
 
         public MainWindow()
         {
@@ -27,18 +28,67 @@ namespace ERPProjectManager
             InitializeAsync();
         }
 
+        private void Log(string message)
+        {
+            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+            string logEntry = $"[{timestamp}] {message}";
+            logs.Add(logEntry);
+
+            // Update status bar
+            Dispatcher.Invoke(() =>
+            {
+                if (statusText != null)
+                {
+                    statusText.Text = message;
+                }
+            });
+        }
+
+        private void LogViewerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var logWindow = new Window
+            {
+                Title = "Application Logs",
+                Width = 800,
+                Height = 600,
+                Background = System.Windows.Media.Brushes.Black,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = this
+            };
+
+            var textBox = new TextBox
+            {
+                Text = string.Join(Environment.NewLine, logs),
+                IsReadOnly = true,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                FontFamily = new System.Windows.Media.FontFamily("Consolas"),
+                FontSize = 12,
+                Foreground = System.Windows.Media.Brushes.LimeGreen,
+                Background = System.Windows.Media.Brushes.Black,
+                Padding = new Thickness(10)
+            };
+
+            logWindow.Content = textBox;
+            logWindow.ShowDialog();
+        }
+
         private async void InitializeAsync()
         {
             try
             {
+                Log("Application starting - InitializeAsync");
+
                 // Check if user has downloaded to the fixed location
                 string fixedPath = @"C:\javeed\Aiautopilot";
                 string fixedProjectPath = Path.Combine(fixedPath, "project-management");
 
+                Log($"Checking for fixed path: {fixedPath}");
                 if (Directory.Exists(fixedProjectPath))
                 {
                     localRepoPath = fixedPath;
                     projectManagementPath = fixedProjectPath;
+                    Log($"Using fixed path: {localRepoPath}");
                 }
                 else
                 {
@@ -49,13 +99,16 @@ namespace ERPProjectManager
                     Directory.CreateDirectory(appDataPath);
                     localRepoPath = Path.Combine(appDataPath, "AIautopilot");
                     projectManagementPath = Path.Combine(localRepoPath, "project-management");
+                    Log($"Using AppData path: {localRepoPath}");
                 }
 
                 // Clone or pull repository
+                Log("Cloning or updating repository...");
                 await CloneOrUpdateRepository();
 
                 if (!Directory.Exists(projectManagementPath))
                 {
+                    Log($"ERROR: project-management folder not found at {projectManagementPath}");
                     MessageBox.Show(
                         $"Failed to clone repository or project-management folder not found.\n\n" +
                         $"Expected folder: {projectManagementPath}",
@@ -64,15 +117,19 @@ namespace ERPProjectManager
                         MessageBoxImage.Error);
                     return;
                 }
+                Log("Repository ready");
 
                 // Setup module URLs
+                Log("Setting up module URLs");
                 SetupModuleUrls();
 
                 // Open Project Management tab by default
+                Log("Opening default Project Management tab");
                 await CreateNewTab("📊 Project Management", "project-management");
             }
             catch (Exception ex)
             {
+                Log($"ERROR in InitializeAsync: {ex.Message}");
                 MessageBox.Show($"Error initializing application: {ex.Message}\n\n{ex.StackTrace}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -97,8 +154,11 @@ namespace ERPProjectManager
         {
             try
             {
+                Log($"Creating new tab: {tabTitle} (Module: {moduleKey})");
+
                 // Create new WebView2
                 var webView = new WebView2();
+                Log("WebView2 instance created");
 
                 // Create tab item
                 var tabItem = new TabItem
@@ -110,45 +170,67 @@ namespace ERPProjectManager
                 // Add to tab control
                 tabControl.Items.Add(tabItem);
                 tabControl.SelectedItem = tabItem;
+                Log("Tab added to TabControl");
 
                 // Initialize WebView2
                 string cacheDir = Path.Combine(localRepoPath, "WebView2Cache");
+                Log($"Initializing WebView2 with cache: {cacheDir}");
                 await InitializeWebView(webView, cacheDir);
 
                 // Navigate to URL
                 if (webView.CoreWebView2 == null)
                 {
+                    Log("ERROR: CoreWebView2 is NULL after initialization!");
                     MessageBox.Show("ERROR: CoreWebView2 is NULL after initialization!", "Critical Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                Log("CoreWebView2 initialized successfully");
 
                 if (moduleUrls.ContainsKey(moduleKey))
                 {
                     string url = moduleUrls[moduleKey];
+                    Log($"Module URL found: {url}");
+
                     if (File.Exists(url))
                     {
-                        MessageBox.Show($"Navigating to: {url}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Log("File exists, converting to URI...");
 
-                        string fileUri = new Uri(url).AbsoluteUri;
-                        MessageBox.Show($"Full URI: {fileUri}\n\nAbout to call Navigate()...", "Debug URI", MessageBoxButton.OK, MessageBoxImage.Information);
+                        try
+                        {
+                            // Fix: Properly handle Windows file paths
+                            string normalizedPath = url.Replace("\\", "/");
+                            Log($"Normalized path: {normalizedPath}");
 
-                        webView.CoreWebView2.Navigate(fileUri);
+                            string fileUri = new Uri(normalizedPath).AbsoluteUri;
+                            Log($"URI created: {fileUri}");
 
-                        MessageBox.Show("Navigate() called successfully!", "Debug Navigate", MessageBoxButton.OK, MessageBoxImage.Information);
+                            Log("Calling Navigate()...");
+                            webView.CoreWebView2.Navigate(fileUri);
+                            Log("Navigate() completed successfully");
+                        }
+                        catch (Exception uriEx)
+                        {
+                            Log($"ERROR creating URI: {uriEx.Message}");
+                            MessageBox.Show($"Error creating URI from path:\n{url}\n\nError: {uriEx.Message}",
+                                "URI Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
+                        Log($"ERROR: File not found: {url}");
                         MessageBox.Show($"File not found:\n{url}", "File Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 else
                 {
+                    Log($"ERROR: Module key '{moduleKey}' not found. Available: {string.Join(", ", moduleUrls.Keys)}");
                     MessageBox.Show($"Module key '{moduleKey}' not found in moduleUrls dictionary.\n\nAvailable keys: {string.Join(", ", moduleUrls.Keys)}",
                         "Module Key Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
             {
+                Log($"ERROR creating tab: {ex.Message}");
                 MessageBox.Show($"Error creating tab: {ex.Message}\n\n{ex.StackTrace}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -158,22 +240,29 @@ namespace ERPProjectManager
         {
             try
             {
+                Log("InitializeWebView: Starting initialization");
                 await InitializeWebViewCore(webView, cacheDir);
+                Log("InitializeWebView: Completed successfully");
             }
             catch (Exception ex)
             {
+                Log($"InitializeWebView: Error occurred: {ex.Message}");
                 // Try clearing cache and retry
                 try
                 {
+                    Log("InitializeWebView: Attempting to clear cache and retry");
                     if (Directory.Exists(cacheDir))
                     {
                         Directory.Delete(cacheDir, recursive: true);
+                        Log("InitializeWebView: Cache deleted");
                     }
                     await Task.Delay(500);
                     await InitializeWebViewCore(webView, cacheDir);
+                    Log("InitializeWebView: Retry successful");
                 }
                 catch (Exception retryEx)
                 {
+                    Log($"InitializeWebView: Retry FAILED: {retryEx.Message}");
                     MessageBox.Show(
                         $"Failed to initialize WebView2:\n\n{retryEx.Message}\n\n" +
                         $"Cache location: {cacheDir}\n\n" +
@@ -189,26 +278,38 @@ namespace ERPProjectManager
 
         private async Task InitializeWebViewCore(WebView2 webView, string cacheDir)
         {
+            Log($"InitializeWebViewCore: Creating cache directory: {cacheDir}");
             Directory.CreateDirectory(cacheDir);
+
+            Log("InitializeWebViewCore: Creating CoreWebView2Environment");
             var env = await CoreWebView2Environment.CreateAsync(null, cacheDir, null);
+
+            Log("InitializeWebViewCore: Ensuring CoreWebView2 is ready");
             await webView.EnsureCoreWebView2Async(env);
 
+            Log("InitializeWebViewCore: Configuring settings");
             webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
             webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
 
-            // Add navigation event handlers for debugging
+            // Add navigation event handlers with logging
             webView.CoreWebView2.NavigationStarting += (s, e) =>
             {
-                MessageBox.Show($"NavigationStarting: {e.Uri}", "Navigation Event", MessageBoxButton.OK, MessageBoxImage.Information);
+                Log($"NavigationStarting: {e.Uri}");
             };
 
             webView.CoreWebView2.NavigationCompleted += (s, e) =>
             {
-                MessageBox.Show($"NavigationCompleted: Success={e.IsSuccess}, HttpStatus={e.HttpStatusCode}", "Navigation Event", MessageBoxButton.OK, MessageBoxImage.Information);
+                Log($"NavigationCompleted: Success={e.IsSuccess}, HttpStatus={e.HttpStatusCode}");
+                if (!e.IsSuccess)
+                {
+                    Log($"Navigation FAILED with error code: {e.WebErrorStatus}");
+                }
             };
 
             // Wait a bit to ensure WebView2 is fully ready
+            Log("InitializeWebViewCore: Waiting 100ms for WebView2 to be fully ready");
             await Task.Delay(100);
+            Log("InitializeWebViewCore: Initialization complete");
         }
 
         private async Task CloneOrUpdateRepository()
@@ -217,16 +318,20 @@ namespace ERPProjectManager
             {
                 if (!Directory.Exists(localRepoPath))
                 {
+                    Log($"Cloning repository to: {localRepoPath}");
                     Repository.Clone(REPO_URL, localRepoPath, new CloneOptions
                     {
                         BranchName = BRANCH_NAME,
                         Checkout = true
                     });
+                    Log("Repository cloned successfully");
                 }
                 else if (Directory.Exists(Path.Combine(localRepoPath, ".git")))
                 {
+                    Log("Repository exists, updating...");
                     using (var repo = new Repository(localRepoPath))
                     {
+                        Log("Fetching latest changes");
                         var remote = repo.Network.Remotes["origin"];
                         var refSpecs = remote.FetchRefSpecs.Select(x => x.Specification);
                         Commands.Fetch(repo, remote.Name, refSpecs, null, null);
@@ -234,15 +339,26 @@ namespace ERPProjectManager
                         var branch = repo.Branches[BRANCH_NAME];
                         if (branch != null)
                         {
+                            Log($"Checking out branch: {BRANCH_NAME}");
                             Commands.Checkout(repo, branch);
                             var signature = new Signature("ERP Manager", "erp@local.com", DateTimeOffset.Now);
                             repo.Reset(ResetMode.Hard, branch.Tip);
+                            Log("Repository updated successfully");
+                        }
+                        else
+                        {
+                            Log($"WARNING: Branch {BRANCH_NAME} not found");
                         }
                     }
+                }
+                else
+                {
+                    Log("WARNING: Repository path exists but no .git folder found");
                 }
             }
             catch (Exception ex)
             {
+                Log($"Git operation failed: {ex.Message}");
                 MessageBox.Show($"Git operation failed: {ex.Message}",
                     "Git Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
