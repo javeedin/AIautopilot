@@ -482,13 +482,21 @@
 
     <!-- New Page Modal -->
     <div class="modal" id="newPageModal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
                 <h3 class="modal-title">Create New Page</h3>
                 <button class="modal-close" onclick="closeNewPageModal()">&times;</button>
             </div>
 
-            <div id="step1" class="modal-step">
+            <!-- Progress Indicator -->
+            <div style="display: flex; gap: 8px; padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px;">
+                <div id="step-indicator-1" class="step-indicator active">1. Basic Info</div>
+                <div id="step-indicator-2" class="step-indicator">2. Data Source</div>
+                <div id="step-indicator-3" class="step-indicator" style="display: none;">3. Detail Tables</div>
+            </div>
+
+            <!-- Step 1: Basic Info -->
+            <div id="wizard-step-1" class="wizard-step">
                 <div class="form-group">
                     <label class="form-label">Module</label>
                     <select class="form-select" id="newPageModule">
@@ -540,12 +548,161 @@
 
                 <div class="modal-actions">
                     <button class="btn-cancel" onclick="closeNewPageModal()">Cancel</button>
-                    <button class="btn-next" onclick="createPage()">Create & Design</button>
+                    <button class="btn-next" onclick="wizardNext(1)">Next: Select Table</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Table Selection -->
+            <div id="wizard-step-2" class="wizard-step" style="display: none;">
+                <!-- For Free-form -->
+                <div id="freeform-table-selection">
+                    <div class="form-group">
+                        <label class="form-label">Base Table</label>
+                        <div style="display: flex; gap: 8px;">
+                            <select class="form-select" id="baseTable" style="flex: 1;">
+                                <option value="">-- Select Table --</option>
+                            </select>
+                            <button class="btn-next" onclick="refreshTableList()" style="padding: 8px 16px;">🔄</button>
+                        </div>
+                        <div class="property-help" style="margin-top: 8px;">Table containing the main data for this form</div>
+                    </div>
+
+                    <div id="tableInfo" style="display: none; background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600;">Table Information</h4>
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div><strong>Table:</strong> <span id="infoTableName"></span></div>
+                            <div><strong>Primary Key:</strong> <span id="infoPrimaryKey"></span></div>
+                            <div><strong>Description:</strong> <span id="infoDescription"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For Master-Detail -->
+                <div id="masterdetail-table-selection" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Header Table (Master)</label>
+                        <select class="form-select" id="headerTable">
+                            <option value="">-- Select Header Table --</option>
+                        </select>
+                        <div class="property-help">Main table for the header form (e.g., PO_HEADERS, AP_INVOICES)</div>
+                    </div>
+
+                    <div id="headerTableInfo" style="display: none; background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600;">Header Table Information</h4>
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div><strong>Table:</strong> <span id="infoHeaderTableName"></span></div>
+                            <div><strong>Primary Key:</strong> <span id="infoHeaderPrimaryKey"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 24px;">
+                    <button class="btn-cancel" onclick="wizardPrevious(2)">← Previous</button>
+                    <button class="btn-next" id="step2NextBtn">Next: Configure Details</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Detail Tables (Master-Detail only) -->
+            <div id="wizard-step-3" class="wizard-step" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Detail Tab Pages</label>
+                    <div class="property-help">Add one or more tab pages with detail tables (e.g., Line Items, Distributions)</div>
+                </div>
+
+                <div id="detailTabsList" style="margin: 16px 0;">
+                    <!-- Detail tabs will be added here -->
+                </div>
+
+                <button onclick="addDetailTab()" style="width: 100%; padding: 12px; border: 2px dashed #cbd5e1; background: #f8f9fa; border-radius: 8px; cursor: pointer; color: #475569; font-weight: 500;">
+                    ➕ Add Detail Tab
+                </button>
+
+                <div class="modal-actions" style="margin-top: 24px;">
+                    <button class="btn-cancel" onclick="wizardPrevious(3)">← Previous</button>
+                    <button class="btn-next" onclick="createPageFromWizard()">Create & Design</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <style>
+        .step-indicator {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            background: #e2e8f0;
+            color: #64748b;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        .wizard-step {
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .detail-tab-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .detail-tab-item .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .detail-tab-item .tab-number {
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .detail-tab-item .tab-delete {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .detail-tab-item .tab-delete:hover {
+            background: #fee2e2;
+        }
+    </style>
+
+    <script src="js/table-data-loader.js"></script>
     <script>
         // Sample data storage (in real app, this would be in a database)
         let pages = [];
@@ -704,6 +861,362 @@
                 renderPages();
             }
         }
+
+        // ==================== WIZARD FUNCTIONS ====================
+
+        // Wizard state
+        let currentWizardStep = 1;
+        let wizardData = {
+            module: '',
+            pageName: '',
+            pageId: '',
+            template: '',
+            baseTable: null,
+            headerTable: null,
+            detailTabs: []
+        };
+        let detailTabCounter = 0;
+
+        // Navigate to next wizard step
+        function wizardNext(currentStep) {
+            // Validate current step
+            if (currentStep === 1) {
+                const module = document.getElementById('newPageModule').value;
+                const pageName = document.getElementById('newPageName').value;
+
+                if (!module || !pageName || !selectedTemplate) {
+                    alert('Please fill in Module, Page Name, and select a Template');
+                    return;
+                }
+
+                // Store wizard data
+                wizardData.module = module;
+                wizardData.pageName = pageName;
+                wizardData.pageId = document.getElementById('newPageId').value;
+                wizardData.template = selectedTemplate;
+
+                // Refresh table list based on module
+                refreshTableList();
+
+                // Show/hide appropriate sections based on template
+                if (selectedTemplate === 'free-form') {
+                    document.getElementById('freeform-table-selection').style.display = 'block';
+                    document.getElementById('masterdetail-table-selection').style.display = 'none';
+                    document.getElementById('step-indicator-3').style.display = 'none';
+                    // Change Step 2 button for free-form
+                    document.getElementById('step2NextBtn').textContent = 'Create & Design';
+                    document.getElementById('step2NextBtn').onclick = function() { createPageFromWizard(); };
+                } else if (selectedTemplate === 'master-detail') {
+                    document.getElementById('freeform-table-selection').style.display = 'none';
+                    document.getElementById('masterdetail-table-selection').style.display = 'block';
+                    document.getElementById('step-indicator-3').style.display = 'flex';
+                    // Change Step 2 button for master-detail
+                    document.getElementById('step2NextBtn').textContent = 'Next: Configure Details';
+                    document.getElementById('step2NextBtn').onclick = function() { wizardNext(2); };
+                }
+
+                // Move to step 2
+                document.getElementById('wizard-step-1').style.display = 'none';
+                document.getElementById('wizard-step-2').style.display = 'block';
+                document.getElementById('step-indicator-1').classList.remove('active');
+                document.getElementById('step-indicator-1').classList.add('completed');
+                document.getElementById('step-indicator-2').classList.add('active');
+                currentWizardStep = 2;
+            }
+            else if (currentStep === 2 && selectedTemplate === 'master-detail') {
+                // Validate table selection
+                const headerTable = document.getElementById('headerTable').value;
+                if (!headerTable) {
+                    alert('Please select a Header Table');
+                    return;
+                }
+
+                // Store header table
+                const selectedTableData = tablesData.find(t => t.tableName === headerTable);
+                wizardData.headerTable = selectedTableData;
+
+                // Move to step 3 (detail tables)
+                document.getElementById('wizard-step-2').style.display = 'none';
+                document.getElementById('wizard-step-3').style.display = 'block';
+                document.getElementById('step-indicator-2').classList.remove('active');
+                document.getElementById('step-indicator-2').classList.add('completed');
+                document.getElementById('step-indicator-3').classList.add('active');
+                currentWizardStep = 3;
+            }
+        }
+
+        // Navigate to previous wizard step
+        function wizardPrevious(currentStep) {
+            if (currentStep === 2) {
+                document.getElementById('wizard-step-2').style.display = 'none';
+                document.getElementById('wizard-step-1').style.display = 'block';
+                document.getElementById('step-indicator-2').classList.remove('active');
+                document.getElementById('step-indicator-2').classList.remove('completed');
+                document.getElementById('step-indicator-1').classList.add('active');
+                document.getElementById('step-indicator-1').classList.remove('completed');
+                currentWizardStep = 1;
+            }
+            else if (currentStep === 3) {
+                document.getElementById('wizard-step-3').style.display = 'none';
+                document.getElementById('wizard-step-2').style.display = 'block';
+                document.getElementById('step-indicator-3').classList.remove('active');
+                document.getElementById('step-indicator-3').classList.remove('completed');
+                document.getElementById('step-indicator-2').classList.add('active');
+                document.getElementById('step-indicator-2').classList.remove('completed');
+                currentWizardStep = 2;
+            }
+        }
+
+        // Refresh table list based on selected module
+        function refreshTableList() {
+            const module = wizardData.module;
+
+            // Filter tables by module
+            const moduleTables = tablesData.filter(t => t.moduleId === module);
+
+            // Populate baseTable dropdown (for free-form)
+            const baseTableSelect = document.getElementById('baseTable');
+            baseTableSelect.innerHTML = '<option value="">-- Select Table --</option>';
+            moduleTables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.tableName;
+                option.textContent = `${table.tableName} - ${table.description}`;
+                option.dataset.tableId = table.tableId;
+                option.dataset.primaryKey = table.primaryKey;
+                baseTableSelect.appendChild(option);
+            });
+
+            // Populate headerTable dropdown (for master-detail)
+            const headerTableSelect = document.getElementById('headerTable');
+            headerTableSelect.innerHTML = '<option value="">-- Select Header Table --</option>';
+            moduleTables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.tableName;
+                option.textContent = `${table.tableName} - ${table.description}`;
+                option.dataset.tableId = table.tableId;
+                option.dataset.primaryKey = table.primaryKey;
+                headerTableSelect.appendChild(option);
+            });
+
+            console.log(`Loaded ${moduleTables.length} tables for module ${module}`);
+        }
+
+        // Add detail tab for master-detail
+        function addDetailTab() {
+            detailTabCounter++;
+            const tabsList = document.getElementById('detailTabsList');
+
+            // Filter tables by current module
+            const moduleTables = tablesData.filter(t => t.moduleId === wizardData.module);
+
+            const detailTabHtml = `
+                <div class="detail-tab-item" id="detail-tab-${detailTabCounter}">
+                    <div class="tab-header">
+                        <span class="tab-number">Detail Tab ${detailTabCounter}</span>
+                        <button class="tab-delete" onclick="removeDetailTab(${detailTabCounter})" title="Delete">🗑️</button>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 13px;">
+                            Tab Name
+                        </label>
+                        <input type="text" id="detail-tab-name-${detailTabCounter}"
+                               placeholder="e.g., Line Items"
+                               style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 13px;">
+                            Detail Table
+                        </label>
+                        <select id="detail-tab-table-${detailTabCounter}"
+                                style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                            <option value="">-- Select Detail Table --</option>
+                            ${moduleTables.map(table =>
+                                `<option value="${table.tableName}" data-table-id="${table.tableId}" data-primary-key="${table.primaryKey}">
+                                    ${table.tableName} - ${table.description}
+                                </option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                </div>
+            `;
+
+            tabsList.insertAdjacentHTML('beforeend', detailTabHtml);
+        }
+
+        // Remove detail tab
+        function removeDetailTab(tabId) {
+            const tabElement = document.getElementById(`detail-tab-${tabId}`);
+            if (tabElement && confirm('Remove this detail tab?')) {
+                tabElement.remove();
+            }
+        }
+
+        // Create page from wizard data
+        function createPageFromWizard() {
+            // Collect all wizard data
+            if (wizardData.template === 'free-form') {
+                const baseTable = document.getElementById('baseTable').value;
+                if (!baseTable) {
+                    alert('Please select a Base Table');
+                    return;
+                }
+
+                const selectedOption = document.getElementById('baseTable').selectedOptions[0];
+                wizardData.baseTable = {
+                    tableName: baseTable,
+                    tableId: selectedOption.dataset.tableId,
+                    primaryKey: selectedOption.dataset.primaryKey
+                };
+            }
+            else if (wizardData.template === 'master-detail') {
+                // Collect detail tabs
+                wizardData.detailTabs = [];
+                for (let i = 1; i <= detailTabCounter; i++) {
+                    const tabElement = document.getElementById(`detail-tab-${i}`);
+                    if (!tabElement) continue; // Skip deleted tabs
+
+                    const tabName = document.getElementById(`detail-tab-name-${i}`).value;
+                    const tabTable = document.getElementById(`detail-tab-table-${i}`).value;
+
+                    if (tabName && tabTable) {
+                        const selectedOption = document.getElementById(`detail-tab-table-${i}`).selectedOptions[0];
+                        wizardData.detailTabs.push({
+                            name: tabName,
+                            tableName: tabTable,
+                            tableId: selectedOption.dataset.tableId,
+                            primaryKey: selectedOption.dataset.primaryKey
+                        });
+                    }
+                }
+
+                if (wizardData.detailTabs.length === 0) {
+                    alert('Please add at least one detail tab');
+                    return;
+                }
+            }
+
+            // Create page object
+            const newPage = {
+                id: wizardData.pageId,
+                module: wizardData.module,
+                name: wizardData.pageName,
+                type: wizardData.template,
+                icon: wizardData.template === 'free-form' ? '📝' : '📋',
+                fields: 0,
+                created: new Date().toLocaleDateString(),
+                status: 'draft',
+                definition: {
+                    baseTable: wizardData.baseTable,
+                    headerTable: wizardData.headerTable,
+                    detailTabs: wizardData.detailTabs
+                }
+            };
+
+            // Save page
+            pages.push(newPage);
+            savePages();
+
+            // Close modal and reset
+            closeNewPageModal();
+            resetWizard();
+            renderPages();
+
+            // Redirect to designer with table configuration
+            const params = new URLSearchParams({
+                id: newPage.id,
+                template: wizardData.template,
+                module: wizardData.module
+            });
+
+            if (wizardData.template === 'free-form' && wizardData.baseTable) {
+                params.append('baseTable', wizardData.baseTable.tableName);
+                params.append('baseTableId', wizardData.baseTable.tableId);
+            } else if (wizardData.template === 'master-detail' && wizardData.headerTable) {
+                params.append('headerTable', wizardData.headerTable.tableName);
+                params.append('headerTableId', wizardData.headerTable.tableId);
+                params.append('detailTabs', JSON.stringify(wizardData.detailTabs));
+            }
+
+            window.location.href = `page-designer.html?${params.toString()}`;
+        }
+
+        // Reset wizard to initial state
+        function resetWizard() {
+            currentWizardStep = 1;
+            wizardData = {
+                module: '',
+                pageName: '',
+                pageId: '',
+                template: '',
+                baseTable: null,
+                headerTable: null,
+                detailTabs: []
+            };
+            detailTabCounter = 0;
+
+            // Reset UI
+            document.getElementById('wizard-step-1').style.display = 'block';
+            document.getElementById('wizard-step-2').style.display = 'none';
+            document.getElementById('wizard-step-3').style.display = 'none';
+
+            document.getElementById('step-indicator-1').classList.add('active');
+            document.getElementById('step-indicator-1').classList.remove('completed');
+            document.getElementById('step-indicator-2').classList.remove('active', 'completed');
+            document.getElementById('step-indicator-3').classList.remove('active', 'completed');
+
+            document.getElementById('detailTabsList').innerHTML = '';
+        }
+
+        // Event listeners for table selection to show info
+        document.addEventListener('DOMContentLoaded', function() {
+            // Base table selection (free-form)
+            document.getElementById('baseTable').addEventListener('change', function() {
+                const tableName = this.value;
+                const selectedOption = this.selectedOptions[0];
+
+                if (tableName) {
+                    document.getElementById('infoTableName').textContent = tableName;
+                    document.getElementById('infoPrimaryKey').textContent = 'Primary Key: ' + selectedOption.dataset.primaryKey;
+                    document.getElementById('tableInfo').style.display = 'flex';
+                } else {
+                    document.getElementById('tableInfo').style.display = 'none';
+                }
+            });
+
+            // Header table selection (master-detail)
+            document.getElementById('headerTable').addEventListener('change', function() {
+                const tableName = this.value;
+                const selectedOption = this.selectedOptions[0];
+
+                if (tableName) {
+                    document.getElementById('infoHeaderTableName').textContent = tableName;
+                    document.getElementById('infoHeaderPrimaryKey').textContent = 'Primary Key: ' + selectedOption.dataset.primaryKey;
+                    document.getElementById('headerTableInfo').style.display = 'flex';
+                } else {
+                    document.getElementById('headerTableInfo').style.display = 'none';
+                }
+            });
+        });
+
+        // Update selectTemplate to reset wizard when template changes
+        function selectTemplate(type) {
+            selectedTemplate = type;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Override closeNewPageModal to reset wizard
+        function closeNewPageModal() {
+            document.getElementById('newPageModal').classList.remove('active');
+            document.getElementById('newPageModule').value = '';
+            document.getElementById('newPageName').value = '';
+            document.getElementById('newPageId').value = '';
+            selectedTemplate = null;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            resetWizard();
+        }
+
+        // ==================== END WIZARD FUNCTIONS ====================
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
