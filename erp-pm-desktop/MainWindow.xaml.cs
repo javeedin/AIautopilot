@@ -252,12 +252,33 @@ namespace ERPProjectManager
 
             // ERP Application paths
             string erpAppPath = Path.Combine(localRepoPath, "erp-app");
+            string erpModulesPath = Path.Combine(erpAppPath, "modules");
+
             moduleUrls["erp-login"] = Path.Combine(erpAppPath, "login.html");
             moduleUrls["erp-dashboard"] = Path.Combine(erpAppPath, "main-dashboard.html");
-            moduleUrls["erp-gl-dashboard"] = Path.Combine(erpAppPath, "modules", "gl-dashboard.html");
-            moduleUrls["erp-gl-currencies"] = Path.Combine(erpAppPath, "modules", "gl-currencies.html");
 
-            // Legacy module URLs (for old PM dashboard)
+            // All 16 ERP Module Dashboards
+            moduleUrls["erp-gl-dashboard"] = Path.Combine(erpModulesPath, "gl-dashboard.html");
+            moduleUrls["erp-ap-dashboard"] = Path.Combine(erpModulesPath, "ap-dashboard.html");
+            moduleUrls["erp-ar-dashboard"] = Path.Combine(erpModulesPath, "ar-dashboard.html");
+            moduleUrls["erp-po-dashboard"] = Path.Combine(erpModulesPath, "po-dashboard.html");
+            moduleUrls["erp-inv-dashboard"] = Path.Combine(erpModulesPath, "inv-dashboard.html");
+            moduleUrls["erp-hcm-dashboard"] = Path.Combine(erpModulesPath, "hcm-dashboard.html");
+            moduleUrls["erp-pay-dashboard"] = Path.Combine(erpModulesPath, "pay-dashboard.html");
+            moduleUrls["erp-csh-dashboard"] = Path.Combine(erpModulesPath, "csh-dashboard.html");
+            moduleUrls["erp-fa-dashboard"] = Path.Combine(erpModulesPath, "fa-dashboard.html");
+            moduleUrls["erp-om-dashboard"] = Path.Combine(erpModulesPath, "om-dashboard.html");
+            moduleUrls["erp-abs-dashboard"] = Path.Combine(erpModulesPath, "abs-dashboard.html");
+            moduleUrls["erp-rec-dashboard"] = Path.Combine(erpModulesPath, "rec-dashboard.html");
+            moduleUrls["erp-cm-dashboard"] = Path.Combine(erpModulesPath, "cm-dashboard.html");
+            moduleUrls["erp-pdm-dashboard"] = Path.Combine(erpModulesPath, "pdm-dashboard.html");
+            moduleUrls["erp-lcm-dashboard"] = Path.Combine(erpModulesPath, "lcm-dashboard.html");
+            moduleUrls["erp-ur-dashboard"] = Path.Combine(erpModulesPath, "ur-dashboard.html");
+
+            // Sample pages
+            moduleUrls["erp-gl-currencies"] = Path.Combine(erpModulesPath, "gl-currencies.html");
+
+            // Legacy module URLs (for old PM dashboard compatibility)
             moduleUrls["GL"] = Path.Combine(projectManagementPath, "modules.html");
             moduleUrls["AP"] = Path.Combine(projectManagementPath, "modules.html");
             moduleUrls["AR"] = Path.Combine(projectManagementPath, "modules.html");
