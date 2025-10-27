@@ -197,12 +197,30 @@ namespace ERPProjectManager
 
                         try
                         {
-                            // Fix: Properly handle Windows file paths
+                            // Fix: Properly create file:// URI from Windows file path
                             string normalizedPath = url.Replace("\\", "/");
                             Log($"Normalized path: {normalizedPath}");
 
-                            string fileUri = new Uri(normalizedPath).AbsoluteUri;
-                            Log($"URI created: {fileUri}");
+                            // Uppercase drive letter if present (e.g., c:/ -> C:/)
+                            if (normalizedPath.Length >= 2 && normalizedPath[1] == ':')
+                            {
+                                normalizedPath = char.ToUpper(normalizedPath[0]) + normalizedPath.Substring(1);
+                                Log($"Uppercased drive letter: {normalizedPath}");
+                            }
+
+                            // Ensure the path has file:// scheme
+                            string fileUri;
+                            if (!normalizedPath.StartsWith("file://"))
+                            {
+                                // Add file:// scheme for local files
+                                fileUri = "file:///" + normalizedPath;
+                            }
+                            else
+                            {
+                                fileUri = normalizedPath;
+                            }
+
+                            Log($"File URI: {fileUri}");
 
                             Log("Calling Navigate()...");
                             webView.CoreWebView2.Navigate(fileUri);
