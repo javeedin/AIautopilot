@@ -16,8 +16,8 @@ namespace ERPProjectManager
         private string localRepoPath;
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
-        private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V3.2";
+        private const string BRANCH_NAME = "claude/erp-multi-tab-architecture-011CUXKZzfk2hZKHdsWDycQD";
+        private const string VERSION = "V4.0 - ERP Multi-Tab";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
