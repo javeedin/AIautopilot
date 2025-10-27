@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (result.success) {
                 console.log('Login successful!', result);
-                showAlert('success', 'Login successful! Redirecting...');
+                showAlert('success', 'Login successful! Opening dashboard...');
 
                 // Store session info (C# will manage actual session)
                 sessionStorage.setItem('username', username);
@@ -51,10 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('fullName', result.fullName || username);
                 sessionStorage.setItem('role', result.role || 'User');
 
-                // Redirect to main dashboard
-                setTimeout(() => {
-                    window.location.href = 'main-dashboard.html';
-                }, 1000);
+                // Tell C# to open dashboard in new tab (don't redirect this tab)
+                if (window.chrome && window.chrome.webview) {
+                    console.log('Requesting C# to open dashboard in new tab...');
+                    window.chrome.webview.postMessage({
+                        action: 'login',
+                        username: username,
+                        instance: instance,
+                        fullName: result.fullName || username,
+                        role: result.role || 'User'
+                    });
+                } else {
+                    // Fallback for browser testing - redirect same tab
+                    setTimeout(() => {
+                        window.location.href = 'main-dashboard.html';
+                    }, 1000);
+                }
             } else {
                 console.error('Login failed:', result.message);
                 showAlert('error', result.message || 'Invalid credentials');

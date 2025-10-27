@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using LibGit2Sharp;
@@ -284,6 +285,20 @@ namespace ERPProjectManager
                 {
                     Header = tabTitle,
                     Content = webView
+                };
+
+                // Add close button handler
+                tabItem.Loaded += (s, args) =>
+                {
+                    var closeButton = FindVisualChild<Button>(tabItem, "CloseButton");
+                    if (closeButton != null)
+                    {
+                        closeButton.Click += (sender, e) =>
+                        {
+                            e.Handled = true;
+                            CloseTab(tabItem);
+                        };
+                    }
                 };
 
                 // Add to tab control
@@ -1181,6 +1196,67 @@ namespace ERPProjectManager
                 Log($"Error saving diagnostic report: {ex.Message}");
                 MessageBox.Show($"Error saving diagnostic report: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // ===== Tab Management =====
+
+        private void CloseTab(TabItem tabItem)
+        {
+            if (tabItem == null) return;
+
+            Log($"Closing tab: {tabItem.Header}");
+
+            // Don't close if it's the last tab
+            if (tabControl.Items.Count <= 1)
+            {
+                Log("Cannot close last tab");
+                return;
+            }
+
+            // Dispose WebView2 if present
+            if (tabItem.Content is WebView2 webView)
+            {
+                try
+                {
+                    webView.Dispose();
+                    Log("WebView2 disposed");
+                }
+                catch (Exception ex)
+                {
+                    Log($"Error disposing WebView2: {ex.Message}");
+                }
+            }
+
+            // Remove tab
+            tabControl.Items.Remove(tabItem);
+            Log("Tab removed");
+        }
+
+        private static T FindVisualChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            if (parent == null) return null;
+
+            T foundChild = null;
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is T typedChild && (string.IsNullOrEmpty(childName) ||
+                    (child is FrameworkElement fe && fe.Name == childName)))
+                {
+                    foundChild = typedChild;
+                    break;
+                }
+                else
+                {
+                    foundChild = FindVisualChild<T>(child, childName);
+                    if (foundChild != null) break;
+                }
+            }
+
+            return foundChild;
         }
     }
 }
