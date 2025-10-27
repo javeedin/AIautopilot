@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V2.0";
+        private const string VERSION = "V2.1";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -463,8 +463,17 @@ namespace ERPProjectManager
                             Log("Hard reset completed");
 
                             // Clean working directory to remove any unstaged changes
-                            repo.RemoveUntrackedFiles();
-                            Log("Repository updated successfully");
+                            try
+                            {
+                                repo.RemoveUntrackedFiles();
+                                Log("Repository updated successfully");
+                            }
+                            catch (Exception cleanEx)
+                            {
+                                // Ignore cleanup errors (e.g., locked files from Visual Studio)
+                                Log($"WARNING: Could not clean all untracked files: {cleanEx.Message}");
+                                Log("Repository updated successfully (with cleanup warnings)");
+                            }
 
                             // Verify JavaScript files were actually updated
                             string mainJsPath = Path.Combine(localRepoPath, "project-management", "js", "main.js");
@@ -520,8 +529,16 @@ namespace ERPProjectManager
             catch (Exception ex)
             {
                 Log($"Git operation failed: {ex.Message}");
-                MessageBox.Show($"Git operation failed: {ex.Message}",
-                    "Git Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                // Only show error message if it's a critical issue (not just cleanup warnings)
+                if (!ex.Message.Contains("could not remove") && !ex.Message.Contains("cannot access the file"))
+                {
+                    MessageBox.Show($"Git operation failed: {ex.Message}",
+                        "Git Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    Log("Non-critical git cleanup error - continuing normally");
+                }
             }
         }
 
