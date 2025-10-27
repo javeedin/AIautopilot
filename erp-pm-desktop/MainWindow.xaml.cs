@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V1.8";
+        private const string VERSION = "V1.9";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -451,6 +451,46 @@ namespace ERPProjectManager
                             var signature = new Signature("ERP Manager", "erp@local.com", DateTimeOffset.Now);
                             repo.Reset(ResetMode.Hard, branch.Tip);
                             Log("Repository updated successfully");
+
+                            // Verify JavaScript files were actually updated
+                            string mainJsPath = Path.Combine(localRepoPath, "project-management", "js", "main.js");
+                            string dashboardJsPath = Path.Combine(localRepoPath, "project-management", "js", "dashboard.js");
+
+                            if (File.Exists(mainJsPath))
+                            {
+                                var mainJsContent = File.ReadAllText(mainJsPath);
+                                if (mainJsContent.Contains("*** main.js VERSION V1.7 LOADED ***"))
+                                {
+                                    Log("✓ Verified: main.js contains V1.7 version stamp");
+                                }
+                                else
+                                {
+                                    Log("✗ ERROR: main.js does NOT contain V1.7 version stamp!");
+                                    Log($"First 200 chars of main.js: {mainJsContent.Substring(0, Math.Min(200, mainJsContent.Length))}");
+                                }
+                            }
+                            else
+                            {
+                                Log($"✗ ERROR: main.js not found at {mainJsPath}");
+                            }
+
+                            if (File.Exists(dashboardJsPath))
+                            {
+                                var dashboardJsContent = File.ReadAllText(dashboardJsPath);
+                                if (dashboardJsContent.Contains("*** dashboard.js VERSION V1.7 LOADED ***"))
+                                {
+                                    Log("✓ Verified: dashboard.js contains V1.7 version stamp");
+                                }
+                                else
+                                {
+                                    Log("✗ ERROR: dashboard.js does NOT contain V1.7 version stamp!");
+                                    Log($"First 200 chars of dashboard.js: {dashboardJsContent.Substring(0, Math.Min(200, dashboardJsContent.Length))}");
+                                }
+                            }
+                            else
+                            {
+                                Log($"✗ ERROR: dashboard.js not found at {dashboardJsPath}");
+                            }
                         }
                         else
                         {
