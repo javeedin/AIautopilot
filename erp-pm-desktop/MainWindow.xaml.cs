@@ -121,13 +121,23 @@ namespace ERPProjectManager
                     string url = moduleUrls[moduleKey];
                     if (File.Exists(url))
                     {
+                        MessageBox.Show($"Navigating to: {url}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         webView.CoreWebView2.Navigate(new Uri(url).AbsoluteUri);
                     }
+                    else
+                    {
+                        MessageBox.Show($"File not found:\n{url}", "File Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Module key '{moduleKey}' not found in moduleUrls dictionary.\n\nAvailable keys: {string.Join(", ", moduleUrls.Keys)}",
+                        "Module Key Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error creating tab: {ex.Message}",
+                MessageBox.Show($"Error creating tab: {ex.Message}\n\n{ex.StackTrace}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
