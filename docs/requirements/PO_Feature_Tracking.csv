@@ -1,0 +1,152 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+PO-001,Purchasing,Item Master,Item Creation,Create and maintain item master records,Critical,Medium,Not Started,,5,,Not Started,Not Started,Yes,Foundation for procurement,Items can be created
+PO-002,Purchasing,Item Master,Item Types,Support different item types (Materials Services Assets),High,Low,Not Started,PO-001,3,,Not Started,Not Started,Yes,Item categorization,Types supported
+PO-003,Purchasing,Item Master,Item Categories,Hierarchical item categorization,High,Medium,Not Started,PO-001,5,,Not Started,Not Started,Yes,Item organization,Categories work
+PO-004,Purchasing,Item Master,UOM Management,Unit of measure setup and conversion,Critical,Medium,Not Started,PO-001,5,,Not Started,Not Started,Yes,Quantity management,UOM functional
+PO-005,Purchasing,Item Master,Item Status,Active Inactive Obsolete status management,High,Low,Not Started,PO-001,3,,Not Started,Not Started,Yes,Item lifecycle,Status changes work
+PO-006,Purchasing,Item Master,Make Buy Indicator,Designate items as make or buy,Medium,Low,Not Started,PO-001,2,,Not Started,Not Started,Yes,Planning indicator,Indicator set
+PO-007,Purchasing,Item Master,Purchasable Flag,Control which items can be purchased,High,Low,Not Started,PO-001,2,,Not Started,Not Started,Yes,Purchase control,Flag enforced
+PO-010,Purchasing,Item Suppliers,Item Supplier Assignment,Assign approved suppliers to items,High,Medium,Not Started,PO-001 AP-001,5,,Not Started,Not Started,Yes,Supplier relationships,Assignment works
+PO-011,Purchasing,Item Suppliers,Preferred Supplier,Designate preferred supplier per item,High,Low,Not Started,PO-010,3,,Not Started,Not Started,Yes,Default supplier,Preference works
+PO-012,Purchasing,Item Suppliers,Supplier Part Number,Maintain supplier part numbers,Medium,Low,Not Started,PO-010,3,,Not Started,Not Started,Yes,Cross-reference,Part numbers stored
+PO-013,Purchasing,Item Suppliers,Lead Time,Define supplier lead times per item,High,Low,Not Started,PO-010,3,,Not Started,Not Started,Yes,Planning data,Lead times maintained
+PO-014,Purchasing,Item Suppliers,MOQ and Multiples,Minimum order quantity and order multiples,Medium,Low,Not Started,PO-010,3,,Not Started,Not Started,Yes,Order constraints,MOQ enforced
+PO-015,Purchasing,Item Suppliers,Supplier Ranking,Rank suppliers by performance,Medium,Medium,Not Started,PO-010,4,,Not Started,Not Started,Yes,Supplier selection,Rankings work
+PO-020,Purchasing,Item Pricing,Item Price Maintenance,Maintain item pricing by supplier,High,Medium,Not Started,PO-010,5,,Not Started,Not Started,Yes,Cost management,Pricing maintained
+PO-021,Purchasing,Item Pricing,Price Breaks,Quantity-based price breaks,Medium,Medium,Not Started,PO-020,5,,Not Started,Not Started,Yes,Volume discounts,Price breaks work
+PO-022,Purchasing,Item Pricing,Contract Pricing,Maintain contract-based pricing,Medium,Medium,Not Started,PO-020,5,,Not Started,Not Started,Yes,Agreement pricing,Contract prices work
+PO-023,Purchasing,Item Pricing,Price History,Track price history over time,Medium,Low,Not Started,PO-020,4,,Not Started,Not Started,Yes,Price trending,History tracked
+PO-030,Purchasing,Requisitions,Requisition Creation,Create purchase requisitions,Critical,High,Not Started,UR-001,8,,Not Started,Not Started,Yes,Core procurement,Requisitions created
+PO-031,Purchasing,Requisitions,Requisition Header,Requisition number date requester need-by,Critical,Medium,Not Started,PO-030,5,,Not Started,Not Started,Yes,Requisition identification,Header captured
+PO-032,Purchasing,Requisitions,Requisition Lines,Multiple line items per requisition,Critical,High,Not Started,PO-030,7,,Not Started,Not Started,Yes,Line detail,Lines can be entered
+PO-033,Purchasing,Requisitions,Requisition Types,Purchase Transfer requisition types,Medium,Low,Not Started,PO-030,3,,Not Started,Not Started,Yes,Type categorization,Types supported
+PO-034,Purchasing,Requisitions,Account Distribution,GL account coding for requisitions,Critical,High,Not Started,PO-032 GL-040,7,,Not Started,Not Started,Yes,GL integration,Distributions work
+PO-035,Purchasing,Requisitions,Catalog Requisitioning,Requisition from supplier catalogs,High,High,Not Started,PO-030,8,,Not Started,Not Started,Yes,Ease of use,Catalog requisition works
+PO-036,Purchasing,Requisitions,Copy Requisition,Copy from previous requisitions,Medium,Low,Not Started,PO-030,4,,Not Started,Not Started,Yes,Efficiency,Copy functional
+PO-037,Purchasing,Requisitions,Requisition Import,Import requisitions from file,Medium,High,Not Started,PO-030,7,,Not Started,Not Started,Yes,Bulk processing,Import works
+PO-040,Purchasing,Requisition Approval,Approval Workflow,Multi-level requisition approval,Critical,High,Not Started,PO-030 UR-170,9,,Not Started,Not Started,Yes,Procurement control,Workflow functional
+PO-041,Purchasing,Requisition Approval,Amount-Based Routing,Route by requisition amount,High,Medium,Not Started,PO-040,6,,Not Started,Not Started,Yes,Approval efficiency,Routing works
+PO-042,Purchasing,Requisition Approval,Department Approval,Department budget owner approval,High,Medium,Not Started,PO-040,6,,Not Started,Not Started,Yes,Budget control,Department approval works
+PO-043,Purchasing,Requisition Approval,Manager Hierarchy,Manager hierarchy approval,High,Medium,Not Started,PO-040,6,,Not Started,Not Started,Yes,Org approval,Hierarchy works
+PO-044,Purchasing,Requisition Approval,Category Approval,Approval routing by item category,Medium,Medium,Not Started,PO-040,5,,Not Started,Not Started,Yes,Category control,Category routing works
+PO-045,Purchasing,Requisition Approval,Approval Delegation,Delegate approval authority,Medium,Medium,Not Started,PO-040 UR-120,5,,Not Started,Not Started,Yes,Workflow continuity,Delegation works
+PO-050,Purchasing,Purchase Orders,PO Creation,Create purchase orders,Critical,High,Not Started,PO-030 AP-001,9,,Not Started,Not Started,Yes,Core procurement,POs created
+PO-051,Purchasing,Purchase Orders,PO from Requisition,Convert requisition to PO,Critical,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Requisition fulfillment,Conversion works
+PO-052,Purchasing,Purchase Orders,Manual PO Entry,Direct PO creation without requisition,High,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Direct procurement,Manual PO works
+PO-053,Purchasing,Purchase Orders,PO Header,PO number type date supplier buyer,Critical,Medium,Not Started,PO-050,5,,Not Started,Not Started,Yes,PO identification,Header captured
+PO-054,Purchasing,Purchase Orders,PO Lines,Multiple line items per PO,Critical,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Line detail,Lines can be entered
+PO-055,Purchasing,Purchase Orders,PO Types,Standard Blanket Contract Planned PO types,High,Medium,Not Started,PO-050,5,,Not Started,Not Started,Yes,PO categorization,Types supported
+PO-056,Purchasing,Purchase Orders,Multi-Currency PO,Foreign currency purchase orders,High,High,Not Started,PO-050 GL-091,7,,Not Started,Not Started,Yes,Global procurement,Multi-currency works
+PO-057,Purchasing,Purchase Orders,Copy PO,Copy from existing POs,Medium,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,Efficiency,Copy functional
+PO-060,Purchasing,PO Pricing,Price Negotiation,Update negotiated prices on PO,High,Medium,Not Started,PO-050,5,,Not Started,Not Started,Yes,Price management,Negotiation works
+PO-061,Purchasing,PO Pricing,Tax Calculation,Automatic tax calculation on PO,High,High,Not Started,PO-050,7,,Not Started,Not Started,Yes,Tax compliance,Tax calc works
+PO-062,Purchasing,PO Pricing,Freight Charges,Freight and handling charges,Medium,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,Total cost,Freight captured
+PO-063,Purchasing,PO Pricing,Discount Terms,Early payment discount terms,Medium,Medium,Not Started,PO-050,4,,Not Started,Not Started,Yes,Cost savings,Discounts work
+PO-064,Purchasing,PO Pricing,Price Tolerance,Price variance tolerance checking,High,Medium,Not Started,PO-060,5,,Not Started,Not Started,Yes,Price control,Tolerance enforced
+PO-070,Purchasing,PO Terms,Terms and Conditions,PO terms and conditions,High,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,Legal terms,Terms attached
+PO-071,Purchasing,PO Terms,Payment Terms,Payment terms on PO,High,Low,Not Started,PO-050,3,,Not Started,Not Started,Yes,Payment scheduling,Terms applied
+PO-072,Purchasing,PO Terms,Delivery Terms,Incoterms and delivery terms,Medium,Low,Not Started,PO-050,3,,Not Started,Not Started,Yes,Shipping terms,Delivery terms set
+PO-073,Purchasing,PO Terms,Shipping Method,Shipping method specification,Medium,Low,Not Started,PO-050,3,,Not Started,Not Started,Yes,Logistics,Method specified
+PO-074,Purchasing,PO Terms,Ship-To and Bill-To,Specify shipping and billing locations,High,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,Location control,Locations set
+PO-080,Purchasing,PO Modifications,PO Change Orders,Modify existing POs,High,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,PO changes,Change orders work
+PO-081,Purchasing,PO Modifications,Revision History,Track PO revision history,High,Medium,Not Started,PO-080,5,,Not Started,Not Started,Yes,Audit trail,History tracked
+PO-082,Purchasing,PO Modifications,Change Approval,Approval for significant changes,High,High,Not Started,PO-080,7,,Not Started,Not Started,Yes,Change control,Approval works
+PO-083,Purchasing,PO Modifications,Supplier Notification,Notify supplier of changes,Medium,Low,Not Started,PO-080,4,,Not Started,Not Started,Yes,Communication,Notification sent
+PO-090,Purchasing,Blanket POs,Blanket PO Creation,Create blanket purchase orders,High,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Agreement management,Blanket POs created
+PO-091,Purchasing,Blanket POs,Agreement Amount,Define total agreement amount or quantity,High,Low,Not Started,PO-090,3,,Not Started,Not Started,Yes,Commitment tracking,Amount tracked
+PO-092,Purchasing,Blanket POs,Effective Dates,Start and end dates for blanket PO,High,Low,Not Started,PO-090,3,,Not Started,Not Started,Yes,Agreement period,Dates enforced
+PO-093,Purchasing,Blanket POs,Release Mechanism,Create releases against blanket PO,Critical,High,Not Started,PO-090,8,,Not Started,Not Started,Yes,Blanket utilization,Releases work
+PO-094,Purchasing,Blanket POs,Remaining Balance,Track remaining amount quantity,High,Medium,Not Started,PO-093,5,,Not Started,Not Started,Yes,Balance visibility,Balance tracked
+PO-095,Purchasing,Blanket POs,Auto-Renewal,Automatic blanket PO renewal,Medium,Medium,Not Started,PO-090,6,,Not Started,Not Started,Yes,Agreement continuity,Renewal works
+PO-100,Purchasing,Contract POs,Contract PO Creation,Create contract purchase orders,Medium,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Contract management,Contract POs created
+PO-101,Purchasing,Contract POs,Contract Terms,Master agreement terms and conditions,Medium,Medium,Not Started,PO-100,5,,Not Started,Not Started,Yes,Agreement terms,Terms maintained
+PO-102,Purchasing,Contract POs,Price Schedules,Contract price lists and schedules,Medium,Medium,Not Started,PO-100,6,,Not Started,Not Started,Yes,Pricing agreements,Schedules work
+PO-103,Purchasing,Contract POs,Volume Commitments,Track volume commitments,Medium,Medium,Not Started,PO-100,5,,Not Started,Not Started,Yes,Commitment tracking,Volumes tracked
+PO-104,Purchasing,Contract POs,Contract Compliance,Monitor contract compliance,Medium,High,Not Started,PO-100,7,,Not Started,Not Started,Yes,Compliance tracking,Monitoring works
+PO-110,Purchasing,PO Approval,PO Approval Workflow,Multi-level PO approval,Critical,High,Not Started,PO-050 UR-170,9,,Not Started,Not Started,Yes,PO control,Workflow functional
+PO-111,Purchasing,PO Approval,Amount Thresholds,Approval routing by PO amount,High,Medium,Not Started,PO-110,6,,Not Started,Not Started,Yes,Approval efficiency,Thresholds work
+PO-112,Purchasing,PO Approval,Supplier Approval,New supplier approval requirement,High,Medium,Not Started,PO-110,5,,Not Started,Not Started,Yes,Supplier control,Approval works
+PO-113,Purchasing,PO Approval,Price Variance Approval,Approve price variances from requisition,High,Medium,Not Started,PO-110,6,,Not Started,Not Started,Yes,Price control,Variance approval works
+PO-114,Purchasing,PO Approval,Budget Approval,Budget funds checking approval,High,High,Not Started,PO-110 GL-390,7,,Not Started,Not Started,Yes,Budget control,Budget approval works
+PO-115,Purchasing,PO Approval,Change Order Approval,Approval for PO changes,High,Medium,Not Started,PO-080,6,,Not Started,Not Started,Yes,Change control,Change approval works
+PO-120,Purchasing,Receiving,Receipt Entry,Record receipt of goods and services,Critical,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Goods receipt,Receipts entered
+PO-121,Purchasing,Receiving,Receipt Header,Receipt number date PO reference,Critical,Medium,Not Started,PO-120,5,,Not Started,Not Started,Yes,Receipt identification,Header captured
+PO-122,Purchasing,Receiving,Receipt Lines,Receipt line items with quantities,Critical,High,Not Started,PO-120,7,,Not Started,Not Started,Yes,Receipt detail,Lines entered
+PO-123,Purchasing,Receiving,Mobile Receipt,Mobile app for receiving,Medium,High,Not Started,PO-120,8,,Not Started,Not Started,Yes,Warehouse efficiency,Mobile receipt works
+PO-124,Purchasing,Receiving,Barcode Scanning,Scan barcodes to receive,Medium,High,Not Started,PO-120,7,,Not Started,Not Started,Yes,Automation,Scanning works
+PO-125,Purchasing,Receiving,ASN Integration,Advance Ship Notice integration,Medium,High,Not Started,PO-120,8,,Not Started,Not Started,Yes,Receiving automation,ASN works
+PO-130,Purchasing,Receipt Tolerance,Over-Receipt Tolerance,Allow over-receipt within tolerance,High,Medium,Not Started,PO-120,5,,Not Started,Not Started,Yes,Receipt flexibility,Tolerance enforced
+PO-131,Purchasing,Receipt Tolerance,Under-Receipt Tolerance,Allow under-receipt within tolerance,High,Medium,Not Started,PO-120,5,,Not Started,Not Started,Yes,Receipt flexibility,Tolerance enforced
+PO-132,Purchasing,Receipt Tolerance,Tolerance by Category,Category-specific tolerances,Medium,Medium,Not Started,PO-130,5,,Not Started,Not Started,Yes,Flexible control,Category tolerance works
+PO-133,Purchasing,Receipt Tolerance,Exception Handling,Handle tolerance exceptions,High,Medium,Not Started,PO-130,6,,Not Started,Not Started,Yes,Exception management,Handling works
+PO-140,Purchasing,Receipt Inspection,Inspection Routing,Route receipts to inspection,Medium,Medium,Not Started,PO-120,6,,Not Started,Not Started,Yes,Quality control,Routing works
+PO-141,Purchasing,Receipt Inspection,Quality Hold,Place receipts on quality hold,Medium,Low,Not Started,PO-140,4,,Not Started,Not Started,Yes,Quality control,Hold works
+PO-142,Purchasing,Receipt Inspection,Inspection Results,Record inspection results,Medium,Medium,Not Started,PO-140,5,,Not Started,Not Started,Yes,Quality tracking,Results recorded
+PO-143,Purchasing,Receipt Inspection,Accept Reject,Accept or reject inspected goods,Medium,Medium,Not Started,PO-142,5,,Not Started,Not Started,Yes,Quality decision,Decision works
+PO-144,Purchasing,Receipt Inspection,Move to Stock,Move accepted goods to stock,Medium,Low,Not Started,PO-143,4,,Not Started,Not Started,Yes,Inventory update,Stock movement works
+PO-150,Purchasing,Receipt Corrections,Receipt Reversal,Reverse incorrect receipts,High,High,Not Started,PO-120,7,,Not Started,Not Started,Yes,Error correction,Reversal works
+PO-151,Purchasing,Receipt Corrections,Quantity Adjustment,Adjust receipt quantities,High,Medium,Not Started,PO-120,5,,Not Started,Not Started,Yes,Correction capability,Adjustment works
+PO-152,Purchasing,Receipt Corrections,Correction Reasons,Reason codes for corrections,Medium,Low,Not Started,PO-150,3,,Not Started,Not Started,Yes,Audit trail,Reasons captured
+PO-160,Purchasing,Returns to Vendor,RTV Creation,Create return to vendor transactions,High,High,Not Started,PO-120,8,,Not Started,Not Started,Yes,Return processing,RTVs created
+PO-161,Purchasing,Returns to Vendor,Return Reasons,Categorize return reasons,Medium,Low,Not Started,PO-160,3,,Not Started,Not Started,Yes,Return tracking,Reasons captured
+PO-162,Purchasing,Returns to Vendor,RMA Number,Track supplier return authorization,Medium,Low,Not Started,PO-160,3,,Not Started,Not Started,Yes,Supplier coordination,RMA tracked
+PO-163,Purchasing,Returns to Vendor,Credit or Replacement,Specify credit or replacement expectation,High,Medium,Not Started,PO-160,5,,Not Started,Not Started,Yes,Return outcome,Expectation set
+PO-164,Purchasing,Returns to Vendor,RTV Shipping,Generate shipping documentation,Medium,Medium,Not Started,PO-160,5,,Not Started,Not Started,Yes,Return logistics,Shipping docs generated
+PO-165,Purchasing,Returns to Vendor,Credit Memo Matching,Match credit memo to RTV,High,High,Not Started,PO-160 AP-180,7,,Not Started,Not Started,Yes,Return closure,Matching works
+PO-170,Purchasing,Supplier Catalogs,Catalog Setup,Setup supplier catalog configuration,Medium,High,Not Started,AP-001,7,,Not Started,Not Started,Yes,Catalog management,Catalogs setup
+PO-171,Purchasing,Supplier Catalogs,Catalog Items,Maintain catalog item listings,Medium,Medium,Not Started,PO-170,6,,Not Started,Not Started,Yes,Item availability,Items maintained
+PO-172,Purchasing,Supplier Catalogs,Punchout Integration,Integrate with supplier e-commerce,Medium,High,Not Started,PO-170,9,,Not Started,Not Started,Yes,Catalog integration,Punchout works
+PO-173,Purchasing,Supplier Catalogs,Catalog Search,Search capability across catalogs,Medium,Medium,Not Started,PO-170,6,,Not Started,Not Started,Yes,Item discovery,Search works
+PO-174,Purchasing,Supplier Catalogs,Catalog Updates,Automatic catalog updates,Medium,Medium,Not Started,PO-170,6,,Not Started,Not Started,Yes,Current pricing,Updates work
+PO-180,Purchasing,Procurement Cards,P-Card Setup,Setup procurement card program,Medium,High,Not Started,,7,,Not Started,Not Started,Yes,P-Card management,Setup complete
+PO-181,Purchasing,Procurement Cards,Card Assignment,Assign cards to employees,Medium,Low,Not Started,PO-180,4,,Not Started,Not Started,Yes,Cardholder management,Assignment works
+PO-182,Purchasing,Procurement Cards,Card Limits,Transaction and period limits,Medium,Medium,Not Started,PO-180,5,,Not Started,Not Started,Yes,Spending control,Limits enforced
+PO-183,Purchasing,Procurement Cards,Transaction Import,Import P-Card transactions,Medium,High,Not Started,PO-180,8,,Not Started,Not Started,Yes,Transaction capture,Import works
+PO-184,Purchasing,Procurement Cards,Transaction Reconciliation,Reconcile P-Card transactions,Medium,High,Not Started,PO-183,7,,Not Started,Not Started,Yes,Expense management,Reconciliation works
+PO-185,Purchasing,Procurement Cards,P-Card Approval,Approval workflow for P-Card expenses,Medium,High,Not Started,PO-184 UR-170,7,,Not Started,Not Started,Yes,Expense control,Approval works
+PO-190,Purchasing,Sourcing RFQ,RFQ Creation,Create Request for Quotation,Medium,High,Not Started,PO-001,8,,Not Started,Not Started,Yes,Competitive sourcing,RFQs created
+PO-191,Purchasing,Sourcing RFQ,RFQ Distribution,Distribute RFQ to suppliers,Medium,Medium,Not Started,PO-190,5,,Not Started,Not Started,Yes,Supplier communication,Distribution works
+PO-192,Purchasing,Sourcing RFQ,Quote Receipt,Receive and record supplier quotes,Medium,High,Not Started,PO-190,7,,Not Started,Not Started,Yes,Quote management,Quotes received
+PO-193,Purchasing,Sourcing RFQ,Quote Comparison,Compare supplier quotes,Medium,High,Not Started,PO-192,7,,Not Started,Not Started,Yes,Bid analysis,Comparison works
+PO-194,Purchasing,Sourcing RFQ,Supplier Selection,Award selection and notification,Medium,Medium,Not Started,PO-193,6,,Not Started,Not Started,Yes,Award process,Selection works
+PO-195,Purchasing,Sourcing RFQ,PO from RFQ,Create PO from awarded RFQ,Medium,Medium,Not Started,PO-194,6,,Not Started,Not Started,Yes,RFQ to PO,Creation works
+PO-200,Purchasing,PO Matching,Two-Way Matching,Match invoice to PO,High,High,Not Started,PO-050 AP-080,8,,Not Started,Not Started,Yes,Invoice verification,2-way matching works
+PO-201,Purchasing,PO Matching,Three-Way Matching,Match invoice PO and receipt,Critical,High,Not Started,PO-120 AP-081,9,,Not Started,Not Started,Yes,Complete verification,3-way matching works
+PO-202,Purchasing,PO Matching,Four-Way Matching,Match invoice PO receipt inspection,Medium,High,Not Started,PO-140 AP-082,9,,Not Started,Not Started,Yes,Quality verification,4-way matching works
+PO-203,Purchasing,PO Matching,Match Tolerances,Configure matching tolerances,High,Medium,Not Started,PO-200,5,,Not Started,Not Started,Yes,Flexible matching,Tolerances work
+PO-204,Purchasing,PO Matching,Match Exceptions,Handle matching variances,High,High,Not Started,PO-200,7,,Not Started,Not Started,Yes,Exception processing,Handling works
+PO-210,Purchasing,Period Close,PO Period Close,Month-end close for purchasing,Critical,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Financial close,Close process works
+PO-211,Purchasing,Period Close,Receipt Cutoff,Enforce receipt cutoff dates,Critical,Medium,Not Started,PO-210,6,,Not Started,Not Started,Yes,Accurate accruals,Cutoff enforced
+PO-212,Purchasing,Period Close,Uninvoiced Receipts,Accrue uninvoiced receipts,Critical,High,Not Started,PO-210,8,,Not Started,Not Started,Yes,Accrual accounting,Accrual works
+PO-213,Purchasing,Period Close,PO Commitment Review,Review open PO commitments,High,Medium,Not Started,PO-210,6,,Not Started,Not Started,Yes,Commitment tracking,Review works
+PO-214,Purchasing,Period Close,Variance Analysis,Analyze price and quantity variances,High,Medium,Not Started,PO-210,6,,Not Started,Not Started,Yes,Performance analysis,Analysis works
+PO-220,Purchasing,Reporting,Open PO Report,Report open purchase orders,High,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,PO visibility,Report works
+PO-221,Purchasing,Reporting,PO by Supplier,Purchase orders by supplier,High,Low,Not Started,PO-050,4,,Not Started,Not Started,Yes,Supplier analysis,Report works
+PO-222,Purchasing,Reporting,Receipt Register,Detailed receipt listing,High,Low,Not Started,PO-120,4,,Not Started,Not Started,Yes,Receipt tracking,Report works
+PO-223,Purchasing,Reporting,Unmatched Receipts,Receipts pending invoice,High,Medium,Not Started,PO-120,5,,Not Started,Not Started,Yes,Matching visibility,Report works
+PO-224,Purchasing,Reporting,Open Requisitions,Pending requisitions report,High,Low,Not Started,PO-030,4,,Not Started,Not Started,Yes,Requisition tracking,Report works
+PO-225,Purchasing,Reporting,PO Commitment,Open commitment report,High,Medium,Not Started,PO-050,5,,Not Started,Not Started,Yes,Budget tracking,Report works
+PO-226,Purchasing,Reporting,Blanket PO Utilization,Blanket PO usage report,Medium,Medium,Not Started,PO-090,5,,Not Started,Not Started,Yes,Agreement tracking,Report works
+PO-230,Purchasing,Analytics,Spend Analysis,Analyze spend by supplier category buyer,High,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Spend visibility,Analysis works
+PO-231,Purchasing,Analytics,Supplier Performance,Track supplier performance metrics,Medium,High,Not Started,PO-050,8,,Not Started,Not Started,Yes,Supplier management,Tracking works
+PO-232,Purchasing,Analytics,Price Variance Analysis,Analyze purchase price variances,Medium,High,Not Started,PO-050,7,,Not Started,Not Started,Yes,Cost analysis,Analysis works
+PO-233,Purchasing,Analytics,Lead Time Analysis,Analyze supplier lead times,Medium,Medium,Not Started,PO-120,6,,Not Started,Not Started,Yes,Delivery performance,Analysis works
+PO-234,Purchasing,Analytics,Maverick Spending,Identify non-catalog spending,Medium,High,Not Started,PO-050,7,,Not Started,Not Started,Yes,Compliance tracking,Detection works
+PO-235,Purchasing,Analytics,Contract Compliance,Monitor contract compliance,Medium,High,Not Started,PO-100,7,,Not Started,Not Started,Yes,Agreement adherence,Monitoring works
+PO-240,Purchasing,Integration,AP Integration,Integrate with Accounts Payable,Critical,High,Not Started,AP-300,9,,Not Started,Not Started,Yes,Procure to pay,AP integration works
+PO-241,Purchasing,Integration,Inventory Integration,Integrate with Inventory Management,Critical,High,Not Started,PO-120,9,,Not Started,Not Started,Yes,Receipt to stock,Inventory integration works
+PO-242,Purchasing,Integration,GL Integration,Post commitments and accruals to GL,Critical,High,Not Started,GL-200,9,,Not Started,Not Started,Yes,Financial integration,GL posting works
+PO-243,Purchasing,Integration,Requisition Integration,Requisition to PO conversion,Critical,High,Not Started,PO-051,8,,Not Started,Not Started,Yes,Requisition fulfillment,Integration works
+PO-250,Purchasing,Supplier Portal,Portal Access,Supplier self-service portal,Medium,High,Not Started,AP-290,8,,Not Started,Not Started,Yes,Supplier collaboration,Portal functional
+PO-251,Purchasing,Supplier Portal,PO Visibility,Suppliers view PO status,Medium,Medium,Not Started,PO-250,6,,Not Started,Not Started,Yes,Supplier visibility,Visibility works
+PO-252,Purchasing,Supplier Portal,ASN Submission,Suppliers submit advance ship notice,Medium,High,Not Started,PO-250,8,,Not Started,Not Started,Yes,Receipt automation,ASN works
+PO-253,Purchasing,Supplier Portal,Invoice Submission,Suppliers submit invoices online,Medium,High,Not Started,PO-250,8,,Not Started,Not Started,Yes,Invoice automation,Submission works
+PO-260,Purchasing,Security,PO Roles,Predefined PO roles (Manager Buyer Receiver),Critical,Medium,Not Started,UR-025,5,,Not Started,Not Started,Yes,Access control,Roles configured
+PO-261,Purchasing,Security,Approval Limits,Requisition and PO approval limits,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Authorization control,Limits enforced
+PO-262,Purchasing,Security,Data Security,Business unit and buyer data access,High,High,Not Started,UR-040,7,,Not Started,Not Started,Yes,Data isolation,Security enforced
+PO-263,Purchasing,Security,Audit Trail,Complete PO activity audit trail,Critical,Medium,Not Started,UR-140,6,,Not Started,Not Started,Yes,Compliance,Audit trail complete
+PO-270,Purchasing,Technical,Performance,Support high-volume PO processing,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Scalability,Performance requirements met
+PO-271,Purchasing,Technical,API Integration,REST APIs for PO operations,High,High,Not Started,,9,,Not Started,Not Started,Yes,System integration,APIs functional
+PO-280,Purchasing,Compliance,SOX Compliance,SOX controls for procurement,High,High,Not Started,UR-271,7,,Not Started,Not Started,Yes,Regulatory compliance,SOX compliant
+PO-281,Purchasing,Compliance,Procurement Regulations,Procurement policy compliance,High,High,Not Started,,7,,Not Started,Not Started,Yes,Policy adherence,Compliance met
+PO-282,Purchasing,Compliance,Contract Compliance,Monitor contract compliance,Medium,High,Not Started,PO-100,7,,Not Started,Not Started,Yes,Agreement adherence,Compliance tracked

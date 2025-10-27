@@ -1,0 +1,255 @@
+Page_ID,Module_ID,Module_Name,Page_Name,Page_Type,Page_Category,Feature_IDs,Description,User_Roles,Menu_Path,Estimated_Complexity
+GL-P001,GL,General Ledger,Enterprise Configuration,Form,Setup,GL-001,Create and configure enterprise entity,System Administrator,Setup > Organization > Enterprise,Medium
+GL-P002,GL,General Ledger,Legal Entities List,List,Setup,GL-002,Browse and search legal entities,System Administrator,Setup > Organization > Legal Entities,Low
+GL-P003,GL,General Ledger,Legal Entity Form,Form,Setup,"GL-002,GL-003",Create/edit legal entity with all attributes,System Administrator,Setup > Organization > Legal Entities > New/Edit,Medium
+GL-P004,GL,General Ledger,Business Units List,List,Setup,GL-004,Browse and search business units,System Administrator,Setup > Organization > Business Units,Low
+GL-P005,GL,General Ledger,Business Unit Form,Form,Setup,"GL-004,GL-006",Create/edit business unit with attributes,System Administrator,Setup > Organization > Business Units > New/Edit,Medium
+GL-P006,GL,General Ledger,Organization Hierarchy,Tree View,Setup,"GL-005,GL-007",Define and visualize org hierarchies,System Administrator,Setup > Organization > Hierarchies,High
+GL-P007,GL,General Ledger,User-BU Assignment,Form,Setup,GL-008,Assign users to business units and modules,System Administrator,Setup > Organization > User Assignments,Medium
+GL-P008,GL,General Ledger,Chart of Accounts List,List,Setup,GL-010,Browse available charts of accounts,GL Administrator,Setup > GL > Chart of Accounts,Low
+GL-P009,GL,General Ledger,COA Designer,Designer,Setup,"GL-010,GL-011,GL-012,GL-013,GL-014",Visual COA designer with segments,GL Administrator,Setup > GL > COA Designer,High
+GL-P010,GL,General Ledger,Value Sets List,List,Setup,GL-020,Browse and search value sets,GL Administrator,Setup > GL > Value Sets,Low
+GL-P011,GL,General Ledger,Value Set Form,Form,Setup,"GL-020,GL-021,GL-022",Create/edit value set with validation,GL Administrator,Setup > GL > Value Sets > New/Edit,High
+GL-P012,GL,General Ledger,Value Set Values,Grid,Setup,"GL-023,GL-024,GL-025",Maintain values within value set,GL Administrator,Setup > GL > Value Sets > Values,Medium
+GL-P013,GL,General Ledger,Ledgers List,List,Setup,GL-030,Browse general ledgers,GL Administrator,Setup > GL > Ledgers,Low
+GL-P014,GL,General Ledger,Ledger Form,Form,Setup,"GL-030,GL-031,GL-032",Create/edit ledger configuration,GL Administrator,Setup > GL > Ledgers > New/Edit,High
+GL-P015,GL,General Ledger,Accounting Calendars List,List,Setup,GL-040,Browse accounting calendars,GL Administrator,Setup > GL > Calendars,Low
+GL-P016,GL,General Ledger,Calendar Form,Form,Setup,"GL-040,GL-041,GL-042,GL-043",Create/edit calendar with periods,GL Administrator,Setup > GL > Calendars > New/Edit,Medium
+GL-P017,GL,General Ledger,Period Management,Grid,Operations,"GL-044,GL-045,GL-046",Open/close accounting periods,GL Manager,GL > Period Management,Medium
+GL-P018,GL,General Ledger,Currencies List,List,Setup,GL-060,Browse and search currencies,GL Administrator,Setup > GL > Currencies,Low
+GL-P019,GL,General Ledger,Currency Form,Form,Setup,"GL-060,GL-061,GL-062,GL-063",Create/edit currency with precision,GL Administrator,Setup > GL > Currencies > New/Edit,Low
+GL-P020,GL,General Ledger,Exchange Rates,Grid,Setup,"GL-070,GL-071,GL-072,GL-073,GL-074",Maintain daily exchange rates,GL Accountant,Setup > GL > Exchange Rates,Medium
+GL-P021,GL,General Ledger,Journal Entry,Form,Transactions,"GL-080,GL-081,GL-082,GL-083,GL-084,GL-085,GL-086,GL-087",Create manual journal entries,GL Accountant,GL > Journals > New Entry,High
+GL-P022,GL,General Ledger,Journals List,List,Transactions,GL-080,Browse and search journal entries,GL Accountant,GL > Journals,Medium
+GL-P023,GL,General Ledger,Journal Approval,Workflow,Transactions,"GL-090,GL-091,GL-092",Review and approve journals,GL Manager,GL > Journals > Approvals,Medium
+GL-P024,GL,General Ledger,Journal Posting,Process,Transactions,"GL-100,GL-101,GL-102,GL-103",Post journals to GL,GL Accountant,GL > Journals > Post,Medium
+GL-P025,GL,General Ledger,Recurring Journals,List,Transactions,"GL-110,GL-111,GL-112,GL-113",Manage recurring journal templates,GL Accountant,GL > Journals > Recurring,Medium
+GL-P026,GL,General Ledger,Budget Entry,Form,Budgets,"GL-120,GL-121,GL-122,GL-123",Create and edit budgets,Budget Analyst,GL > Budgets > Entry,High
+GL-P027,GL,General Ledger,Budgets List,List,Budgets,GL-120,Browse budget versions,Budget Analyst,GL > Budgets,Low
+GL-P028,GL,General Ledger,Budget Upload,Upload,Budgets,GL-124,Import budgets from spreadsheet,Budget Analyst,GL > Budgets > Upload,Medium
+GL-P029,GL,General Ledger,Budget Inquiry,Report,Inquiry,"GL-125,GL-126",Query budget vs actual,Budget Analyst,GL > Budgets > Inquiry,Medium
+GL-P030,GL,General Ledger,Account Inquiry,Report,Inquiry,"GL-130,GL-131,GL-132,GL-133",Drill-down account balances,GL Accountant,GL > Inquiry > Accounts,High
+GL-P031,GL,General Ledger,Trial Balance,Report,Reports,GL-140,View/export trial balance,GL Accountant,GL > Reports > Trial Balance,Medium
+GL-P032,GL,General Ledger,Balance Sheet,Report,Reports,GL-141,Financial statement - Balance sheet,Finance Manager,GL > Reports > Balance Sheet,High
+GL-P033,GL,General Ledger,Income Statement,Report,Reports,GL-142,Financial statement - P&L,Finance Manager,GL > Reports > Income Statement,High
+GL-P034,GL,General Ledger,Cash Flow Statement,Report,Reports,GL-143,Cash flow statement,Finance Manager,GL > Reports > Cash Flow,High
+GL-P035,GL,General Ledger,GL Dashboard,Dashboard,Analytics,"GL-160,GL-161,GL-162",GL summary with KPIs,GL Manager,GL > Dashboard,High
+GL-P036,GL,General Ledger,Period Close Checklist,Checklist,Operations,"GL-150,GL-151,GL-152",Period close task management,GL Manager,GL > Period Close,Medium
+GL-P037,GL,General Ledger,Intercompany Transactions,List,Transactions,"GL-170,GL-171,GL-172,GL-173",Manage IC transactions,GL Accountant,GL > Intercompany,High
+GL-P038,GL,General Ledger,Allocations Setup,List,Setup,"GL-180,GL-181,GL-182",Define allocation rules,GL Administrator,Setup > GL > Allocations,Medium
+GL-P039,GL,General Ledger,Run Allocations,Process,Operations,"GL-183,GL-184,GL-185",Execute allocation process,GL Accountant,GL > Allocations > Run,Medium
+GL-P040,GL,General Ledger,Revaluation Process,Process,Operations,"GL-190,GL-191,GL-192",Run currency revaluation,GL Accountant,GL > Revaluation,High
+
+UR-P001,UR,User Management,Users List,List,Security,UR-010,Browse and search system users,System Administrator,Security > Users,Low
+UR-P002,UR,User Management,User Form,Form,Security,"UR-010,UR-011,UR-012,UR-013,UR-014",Create/edit user with authentication,System Administrator,Security > Users > New/Edit,Medium
+UR-P003,UR,User Management,Roles List,List,Security,UR-030,Browse security roles,Security Administrator,Security > Roles,Low
+UR-P004,UR,User Management,Role Form,Form,Security,"UR-030,UR-031,UR-032,UR-033",Create/edit roles with permissions,Security Administrator,Security > Roles > New/Edit,High
+UR-P005,UR,User Management,Permission Matrix,Grid,Security,"UR-040,UR-041,UR-042",Assign permissions to roles,Security Administrator,Security > Permissions,High
+UR-P006,UR,User Management,User-Role Assignment,Grid,Security,"UR-050,UR-051,UR-052",Assign roles to users,Security Administrator,Security > User Assignments,Medium
+UR-P007,UR,User Management,Data Security Policies,List,Security,"UR-060,UR-061,UR-062",Define row-level security,Security Administrator,Security > Data Security,High
+UR-P008,UR,User Management,User Access Report,Report,Reports,UR-070,User access audit report,Security Administrator,Security > Reports > Access,Medium
+UR-P009,UR,User Management,Login History,Report,Security,UR-080,View user login audit trail,Security Administrator,Security > Reports > Login History,Low
+UR-P010,UR,User Management,My Profile,Form,Self-Service,UR-020,User self-service profile,All Users,My Account > Profile,Low
+UR-P011,UR,User Management,Change Password,Form,Self-Service,UR-015,User password change,All Users,My Account > Change Password,Low
+UR-P012,UR,User Management,Session Management,List,Security,UR-090,View/kill active sessions,System Administrator,Security > Sessions,Medium
+
+AP-P001,AP,Accounts Payable,Suppliers List,List,Master Data,AP-010,Browse and search suppliers,AP Clerk,AP > Suppliers,Low
+AP-P002,AP,Accounts Payable,Supplier Form,Form,Master Data,"AP-010,AP-011,AP-012,AP-013,AP-014",Create/edit supplier master,AP Clerk,AP > Suppliers > New/Edit,Medium
+AP-P003,AP,Accounts Payable,Supplier Sites,Grid,Master Data,"AP-020,AP-021",Manage supplier site locations,AP Clerk,AP > Suppliers > Sites,Medium
+AP-P004,AP,Accounts Payable,Supplier Contacts,Grid,Master Data,AP-022,Maintain supplier contact info,AP Clerk,AP > Suppliers > Contacts,Low
+AP-P005,AP,Accounts Payable,Invoice Entry,Form,Transactions,"AP-030,AP-031,AP-032,AP-033,AP-034,AP-035",Create AP invoices,AP Clerk,AP > Invoices > New,High
+AP-P006,AP,Accounts Payable,Invoices List,List,Transactions,AP-030,Browse and search AP invoices,AP Clerk,AP > Invoices,Medium
+AP-P007,AP,Accounts Payable,Invoice Approval,Workflow,Transactions,"AP-040,AP-041,AP-042",Review and approve invoices,AP Manager,AP > Invoices > Approvals,Medium
+AP-P008,AP,Accounts Payable,Invoice Holds,List,Transactions,"AP-050,AP-051,AP-052",Manage invoice payment holds,AP Clerk,AP > Invoices > Holds,Medium
+AP-P009,AP,Accounts Payable,Payment Selection,Process,Payments,"AP-060,AP-061,AP-062,AP-063",Select invoices for payment,AP Clerk,AP > Payments > Selection,High
+AP-P010,AP,Accounts Payable,Payment Batches,List,Payments,AP-064,Review payment batches,AP Clerk,AP > Payments > Batches,Medium
+AP-P011,AP,Accounts Payable,Payment Approval,Workflow,Payments,"AP-065,AP-066",Approve payment batches,AP Manager,AP > Payments > Approvals,Medium
+AP-P012,AP,Accounts Payable,Payment Processing,Process,Payments,"AP-067,AP-068,AP-069",Generate payments (checks/EFT),AP Clerk,AP > Payments > Process,High
+AP-P013,AP,Accounts Payable,Expense Reports,List,Expenses,"AP-150,AP-151,AP-152",Manage employee expense reports,AP Clerk,AP > Expense Reports,Medium
+AP-P014,AP,Accounts Payable,Submit Expense Report,Form,Self-Service,"AP-150,AP-151",Employee expense submission,All Employees,My Expenses > Submit,Medium
+AP-P015,AP,Accounts Payable,AP Dashboard,Dashboard,Analytics,AP-160,AP summary with aging,AP Manager,AP > Dashboard,High
+AP-P016,AP,Accounts Payable,Aging Report,Report,Reports,AP-161,Supplier aging analysis,AP Manager,AP > Reports > Aging,Medium
+AP-P017,AP,Accounts Payable,Cash Requirements,Report,Reports,AP-162,Cash flow forecast,AP Manager,AP > Reports > Cash Requirements,High
+AP-P018,AP,Accounts Payable,1099 Processing,Process,Tax,"AP-170,AP-171",Process 1099 forms,AP Clerk,AP > Tax > 1099,Medium
+
+AR-P001,AR,Accounts Receivable,Customers List,List,Master Data,AR-010,Browse and search customers,AR Clerk,AR > Customers,Low
+AR-P002,AR,Accounts Receivable,Customer Form,Form,Master Data,"AR-010,AR-011,AR-012,AR-013",Create/edit customer master,AR Clerk,AR > Customers > New/Edit,Medium
+AR-P003,AR,Accounts Receivable,Customer Sites,Grid,Master Data,"AR-020,AR-021",Manage customer bill-to/ship-to,AR Clerk,AR > Customers > Sites,Medium
+AR-P004,AR,Accounts Receivable,Customer Contacts,Grid,Master Data,AR-022,Maintain customer contacts,AR Clerk,AR > Customers > Contacts,Low
+AR-P005,AR,Accounts Receivable,Invoice Entry,Form,Transactions,"AR-030,AR-031,AR-032,AR-033",Create AR invoices,AR Clerk,AR > Invoices > New,High
+AR-P006,AR,Accounts Receivable,Invoices List,List,Transactions,AR-030,Browse and search AR invoices,AR Clerk,AR > Invoices,Medium
+AR-P007,AR,Accounts Receivable,Auto Invoice,Process,Transactions,"AR-035,AR-036,AR-037",Import invoices from source,AR Clerk,AR > Invoices > Auto Invoice,High
+AR-P008,AR,Accounts Receivable,Receipt Entry,Form,Receipts,"AR-050,AR-051,AR-052",Record customer payments,AR Clerk,AR > Receipts > New,Medium
+AR-P009,AR,Accounts Receivable,Receipts List,List,Receipts,AR-050,Browse customer receipts,AR Clerk,AR > Receipts,Medium
+AR-P010,AR,Accounts Receivable,Receipt Application,Form,Receipts,"AR-060,AR-061,AR-062",Apply receipts to invoices,AR Clerk,AR > Receipts > Application,High
+AR-P011,AR,Accounts Receivable,Credit Memos,Form,Transactions,"AR-070,AR-071",Create credit memos,AR Clerk,AR > Credit Memos,Medium
+AR-P012,AR,Accounts Receivable,Collections Workbench,Workbench,Collections,"AR-120,AR-121,AR-122,AR-123",Manage collections activities,Collections Agent,AR > Collections,High
+AR-P013,AR,Accounts Receivable,Dunning Letters,Process,Collections,"AR-130,AR-131,AR-132",Generate dunning letters,Collections Manager,AR > Collections > Dunning,Medium
+AR-P014,AR,Accounts Receivable,AR Dashboard,Dashboard,Analytics,AR-140,AR summary with DSO,AR Manager,AR > Dashboard,High
+AR-P015,AR,Accounts Receivable,Aging Report,Report,Reports,AR-141,Customer aging analysis,AR Manager,AR > Reports > Aging,Medium
+AR-P016,AR,Accounts Receivable,Cash Forecast,Report,Reports,AR-142,Expected cash receipts,AR Manager,AR > Reports > Cash Forecast,High
+AR-P017,AR,Accounts Receivable,Revenue Recognition,Process,Accounting,"AR-100,AR-101,AR-102",Process revenue recognition,AR Accountant,AR > Revenue Recognition,High
+
+PO-P001,PO,Purchasing,Items Catalog,List,Master Data,PO-010,Browse purchasable items,Buyer,PO > Items,Low
+PO-P002,PO,Purchasing,Requisition Entry,Form,Requisitions,"PO-020,PO-021,PO-022",Create purchase requisition,Requester,PO > Requisitions > New,Medium
+PO-P003,PO,Purchasing,Requisitions List,List,Requisitions,PO-020,Browse and search requisitions,Requester,PO > Requisitions,Medium
+PO-P004,PO,Purchasing,Requisition Approval,Workflow,Requisitions,"PO-030,PO-031,PO-032",Approve purchase requisitions,Manager,PO > Requisitions > Approvals,Medium
+PO-P005,PO,Purchasing,PO Entry,Form,Purchase Orders,"PO-040,PO-041,PO-042,PO-043,PO-044,PO-045",Create purchase orders,Buyer,PO > Purchase Orders > New,High
+PO-P006,PO,Purchasing,Purchase Orders List,List,Purchase Orders,PO-040,Browse and search POs,Buyer,PO > Purchase Orders,Medium
+PO-P007,PO,Purchasing,PO Approval,Workflow,Purchase Orders,"PO-050,PO-051,PO-052",Approve purchase orders,Purchasing Manager,PO > POs > Approvals,Medium
+PO-P008,PO,Purchasing,Receiving,Form,Receipts,"PO-070,PO-071,PO-072,PO-073",Record goods receipt,Receiving Clerk,PO > Receiving > New,High
+PO-P009,PO,Purchasing,Receipts List,List,Receipts,PO-070,Browse receipts,Receiving Clerk,PO > Receipts,Medium
+PO-P010,PO,Purchasing,Supplier Catalogs,List,Catalogs,"PO-110,PO-111,PO-112",Browse supplier punchout catalogs,Requester,PO > Catalogs,Medium
+PO-P011,PO,Purchasing,Contracts/Blanket POs,List,Contracts,"PO-120,PO-121,PO-122",Manage blanket purchase agreements,Buyer,PO > Contracts,High
+PO-P012,PO,Purchasing,PO Dashboard,Dashboard,Analytics,PO-140,Purchasing metrics and KPIs,Purchasing Manager,PO > Dashboard,High
+PO-P013,PO,Purchasing,Spend Analysis,Report,Reports,PO-141,Spend by supplier/category,Purchasing Manager,PO > Reports > Spend Analysis,High
+
+INV-P001,INV,Inventory,Items List,List,Master Data,INV-010,Browse and search inventory items,Inventory Clerk,INV > Items,Low
+INV-P002,INV,Inventory,Item Form,Form,Master Data,"INV-010,INV-011,INV-012,INV-013,INV-014",Create/edit item master,Inventory Administrator,INV > Items > New/Edit,High
+INV-P003,INV,Inventory,Organizations List,List,Setup,INV-020,Browse inventory organizations,Inventory Administrator,Setup > INV > Organizations,Low
+INV-P004,INV,Inventory,Subinventories,List,Setup,"INV-030,INV-031",Manage subinventories/locations,Inventory Administrator,Setup > INV > Subinventories,Medium
+INV-P005,INV,Inventory,Onhand Inquiry,Report,Inquiry,"INV-040,INV-041,INV-042",Query onhand quantities,Inventory Clerk,INV > Inquiry > Onhand,Medium
+INV-P006,INV,Inventory,Miscellaneous Transactions,Form,Transactions,"INV-050,INV-051,INV-052",Record misc issue/receipt,Inventory Clerk,INV > Transactions > Misc,Medium
+INV-P007,INV,Inventory,Transactions List,List,Transactions,INV-050,Browse inventory transactions,Inventory Clerk,INV > Transactions,Medium
+INV-P008,INV,Inventory,Transfer Orders,Form,Transfers,"INV-060,INV-061,INV-062",Inter-org transfer orders,Inventory Clerk,INV > Transfers,High
+INV-P009,INV,Inventory,Physical Inventory,Workbench,Counting,"INV-070,INV-071,INV-072,INV-073",Manage physical inventory counts,Inventory Clerk,INV > Physical Inventory,High
+INV-P010,INV,Inventory,Cycle Counting,Workbench,Counting,"INV-080,INV-081,INV-082",Perpetual cycle counting,Inventory Clerk,INV > Cycle Counting,High
+INV-P011,INV,Inventory,Lot/Serial Inquiry,Report,Inquiry,"INV-090,INV-091",Track lot/serial numbers,Inventory Clerk,INV > Inquiry > Lot Serial,Medium
+INV-P012,INV,Inventory,Inventory Dashboard,Dashboard,Analytics,INV-110,Inventory KPIs and metrics,Inventory Manager,INV > Dashboard,High
+INV-P013,INV,Inventory,Stock Status Report,Report,Reports,INV-111,Stock levels and availability,Inventory Manager,INV > Reports > Stock Status,Medium
+INV-P014,INV,Inventory,Min-Max Planning,Process,Planning,"INV-100,INV-101,INV-102",Run min-max replenishment,Inventory Planner,INV > Planning > Min-Max,High
+
+OM-P001,OM,Order Management,Price Lists,List,Pricing,"OM-010,OM-011,OM-012",Manage customer price lists,Pricing Analyst,OM > Pricing > Price Lists,Medium
+OM-P002,OM,Order Management,Pricing Rules,List,Pricing,"OM-020,OM-021,OM-022",Define pricing and discount rules,Pricing Analyst,OM > Pricing > Rules,High
+OM-P003,OM,Order Management,Sales Order Entry,Form,Orders,"OM-030,OM-031,OM-032,OM-033,OM-034,OM-035",Create sales orders,Sales Representative,OM > Orders > New,High
+OM-P004,OM,Order Management,Sales Orders List,List,Orders,OM-030,Browse and search sales orders,Sales Representative,OM > Orders,Medium
+OM-P005,OM,Order Management,Order Approval,Workflow,Orders,"OM-040,OM-041,OM-042",Approve sales orders,Sales Manager,OM > Orders > Approvals,Medium
+OM-P006,OM,Order Management,Order Holds,List,Orders,"OM-050,OM-051,OM-052",Manage order holds,Order Management Clerk,OM > Orders > Holds,Medium
+OM-P007,OM,Order Management,Pick Release,Process,Fulfillment,"OM-060,OM-061,OM-062",Release orders for picking,Warehouse Supervisor,OM > Fulfillment > Pick Release,High
+OM-P008,OM,Order Management,Ship Confirm,Process,Fulfillment,"OM-070,OM-071,OM-072,OM-073",Confirm shipments,Shipping Clerk,OM > Fulfillment > Ship Confirm,High
+OM-P009,OM,Order Management,Invoice Interface,Process,Invoicing,"OM-080,OM-081",Transfer to AR for invoicing,Order Management Clerk,OM > Invoicing > Interface,Medium
+OM-P010,OM,Order Management,Returns (RMA),Form,Returns,"OM-090,OM-091,OM-092",Process return merchandise,Customer Service,OM > Returns > New,High
+OM-P011,OM,Order Management,Returns List,List,Returns,OM-090,Browse RMAs,Customer Service,OM > Returns,Medium
+OM-P012,OM,Order Management,Quotes,Form,Quotes,"OM-100,OM-101,OM-102",Create sales quotations,Sales Representative,OM > Quotes > New,Medium
+OM-P013,OM,Order Management,OM Dashboard,Dashboard,Analytics,OM-110,Order management metrics,Sales Manager,OM > Dashboard,High
+OM-P014,OM,Order Management,Backlog Report,Report,Reports,OM-111,Open orders backlog,Sales Manager,OM > Reports > Backlog,Medium
+
+HCM-P001,HCM,HCM,Employees List,List,Master Data,HCM-010,Browse and search employees,HR Administrator,HCM > Employees,Low
+HCM-P002,HCM,HCM,Employee Form,Form,Master Data,"HCM-010,HCM-011,HCM-012,HCM-013,HCM-014",Create/edit employee master,HR Administrator,HCM > Employees > New/Edit,High
+HCM-P003,HCM,HCM,Organization Chart,Tree View,Organization,"HCM-020,HCM-021,HCM-022",Visualize org structure,HR Administrator,HCM > Organization > Chart,High
+HCM-P004,HCM,HCM,Jobs List,List,Organization,HCM-030,Browse job definitions,HR Administrator,HCM > Organization > Jobs,Low
+HCM-P005,HCM,HCM,Job Form,Form,Organization,"HCM-030,HCM-031",Create/edit job definitions,HR Administrator,HCM > Organization > Jobs > New/Edit,Medium
+HCM-P006,HCM,HCM,Positions List,List,Organization,HCM-040,Browse position inventory,HR Administrator,HCM > Organization > Positions,Low
+HCM-P007,HCM,HCM,Position Form,Form,Organization,"HCM-040,HCM-041,HCM-042",Create/edit positions,HR Administrator,HCM > Organization > Positions > New/Edit,Medium
+HCM-P008,HCM,HCM,Compensation Workbench,Workbench,Compensation,"HCM-050,HCM-051,HCM-052,HCM-053",Manage employee compensation,Compensation Analyst,HCM > Compensation,High
+HCM-P009,HCM,HCM,Benefits Enrollment,Form,Benefits,"HCM-060,HCM-061,HCM-062",Enroll in benefit plans,Employee (Self-Service),My Benefits > Enrollment,High
+HCM-P010,HCM,HCM,Benefits Administration,List,Benefits,"HCM-060,HCM-063",Manage benefit plans and enrollments,Benefits Administrator,HCM > Benefits,Medium
+HCM-P011,HCM,HCM,Performance Reviews,Form,Performance,"HCM-070,HCM-071,HCM-072",Conduct performance reviews,Manager/Employee,HCM > Performance > Reviews,High
+HCM-P012,HCM,HCM,Goals Management,List,Performance,"HCM-073,HCM-074",Set and track employee goals,Manager/Employee,HCM > Performance > Goals,Medium
+HCM-P013,HCM,HCM,Competency Assessment,Form,Talent,"HCM-080,HCM-081",Assess employee competencies,Manager,HCM > Talent > Competencies,Medium
+HCM-P014,HCM,HCM,Succession Planning,Workbench,Talent,"HCM-082,HCM-083",Plan succession for key positions,HR Manager,HCM > Talent > Succession,High
+HCM-P015,HCM,HCM,Learning Catalog,List,Learning,"HCM-090,HCM-091",Browse training courses,All Employees,HCM > Learning > Catalog,Low
+HCM-P016,HCM,HCM,Course Enrollment,Form,Learning,HCM-092,Enroll in training courses,Employee (Self-Service),My Learning > Enroll,Low
+HCM-P017,HCM,HCM,My Profile,Form,Self-Service,HCM-100,Employee self-service profile,All Employees,My Profile,Low
+HCM-P018,HCM,HCM,My Team,Dashboard,Manager Self-Service,HCM-101,Manager team dashboard,All Managers,My Team,High
+HCM-P019,HCM,HCM,HCM Dashboard,Dashboard,Analytics,HCM-110,HR metrics and headcount,HR Manager,HCM > Dashboard,High
+HCM-P020,HCM,HCM,Headcount Report,Report,Reports,HCM-111,Headcount by org/location,HR Manager,HCM > Reports > Headcount,Medium
+
+PAY-P001,PAY,Payroll,Payroll Setup,Form,Setup,"PAY-010,PAY-011,PAY-012",Configure payroll parameters,Payroll Administrator,Setup > Payroll > Configuration,High
+PAY-P002,PAY,Payroll,Earnings Codes,List,Setup,"PAY-020,PAY-021",Manage earnings definitions,Payroll Administrator,Setup > Payroll > Earnings,Medium
+PAY-P003,PAY,Payroll,Deductions Codes,List,Setup,"PAY-030,PAY-031",Manage deduction definitions,Payroll Administrator,Setup > Payroll > Deductions,Medium
+PAY-P004,PAY,Payroll,Tax Configuration,List,Setup,"PAY-040,PAY-041,PAY-042",Configure tax authorities and rates,Payroll Administrator,Setup > Payroll > Taxes,High
+PAY-P005,PAY,Payroll,Employee Earnings,Grid,Employee Setup,"PAY-050,PAY-051",Assign earnings to employees,Payroll Clerk,Payroll > Employee Setup > Earnings,Medium
+PAY-P006,PAY,Payroll,Employee Deductions,Grid,Employee Setup,"PAY-052,PAY-053",Assign deductions to employees,Payroll Clerk,Payroll > Employee Setup > Deductions,Medium
+PAY-P007,PAY,Payroll,Time Entry,Form,Time,"PAY-070,PAY-071,PAY-072",Enter employee time,Timekeeper,Payroll > Time Entry,Medium
+PAY-P008,PAY,Payroll,My Timesheet,Form,Self-Service,PAY-070,Employee time entry,All Employees,My Timesheet,Medium
+PAY-P009,PAY,Payroll,Payroll Run,Wizard,Processing,"PAY-090,PAY-091,PAY-092,PAY-093",Execute payroll calculation,Payroll Specialist,Payroll > Run Payroll,High
+PAY-P010,PAY,Payroll,Payroll Results,List,Processing,PAY-094,Review payroll results,Payroll Specialist,Payroll > Results,Medium
+PAY-P011,PAY,Payroll,Paycheck Register,Report,Reports,PAY-095,Paycheck detail report,Payroll Manager,Payroll > Reports > Register,Medium
+PAY-P012,PAY,Payroll,Payment Generation,Process,Payments,"PAY-100,PAY-101",Generate paychecks/direct deposits,Payroll Specialist,Payroll > Payments,High
+PAY-P013,PAY,Payroll,W-2 Processing,Process,Tax,"PAY-110,PAY-111",Generate W-2 forms,Payroll Specialist,Payroll > Tax > W-2,High
+PAY-P014,PAY,Payroll,Quarterly Tax Reports,Process,Tax,"PAY-120,PAY-121",941/940 tax reporting,Payroll Specialist,Payroll > Tax > Quarterly,High
+PAY-P015,PAY,Payroll,Payroll Dashboard,Dashboard,Analytics,PAY-130,Payroll metrics and trends,Payroll Manager,Payroll > Dashboard,High
+
+ABS-P001,ABS,Absence,Absence Plans,List,Setup,"ABS-010,ABS-011,ABS-012",Configure absence/leave plans,HR Administrator,Setup > Absence > Plans,Medium
+ABS-P002,ABS,Absence,Absence Types,List,Setup,"ABS-020,ABS-021",Define absence types,HR Administrator,Setup > Absence > Types,Low
+ABS-P003,ABS,Absence,Submit Absence Request,Form,Self-Service,"ABS-030,ABS-031",Request time off,All Employees,My Absence > Request,Medium
+ABS-P004,ABS,Absence,Absence Requests List,List,Transactions,ABS-030,Browse absence requests,HR Administrator,Absence > Requests,Low
+ABS-P005,ABS,Absence,Absence Approval,Workflow,Transactions,"ABS-040,ABS-041",Approve/reject time-off requests,All Managers,My Approvals > Absences,Medium
+ABS-P006,ABS,Absence,Absence Balances,Report,Inquiry,"ABS-050,ABS-051",View employee absence balances,Employee/Manager,My Absence > Balances,Low
+ABS-P007,ABS,Absence,Team Calendar,Calendar,Manager Self-Service,ABS-052,View team absence calendar,All Managers,My Team > Calendar,Medium
+ABS-P008,ABS,Absence,FMLA Case Management,Form,Compliance,"ABS-060,ABS-061",Manage FMLA cases,HR Administrator,Absence > FMLA,High
+ABS-P009,ABS,Absence,Absence Dashboard,Dashboard,Analytics,ABS-070,Absence trends and metrics,HR Manager,Absence > Dashboard,Medium
+
+REC-P001,REC,Recruitment,Requisitions List,List,Requisitions,REC-010,Browse job requisitions,Recruiter,Recruiting > Requisitions,Low
+REC-P002,REC,Recruitment,Requisition Form,Form,Requisitions,"REC-010,REC-011,REC-012",Create/edit job requisition,Hiring Manager,Recruiting > Requisitions > New/Edit,Medium
+REC-P003,REC,Recruitment,Job Posting,Form,Postings,"REC-020,REC-021,REC-022",Create and post job ads,Recruiter,Recruiting > Postings > New,High
+REC-P004,REC,Recruitment,Candidates List,List,Candidates,REC-030,Browse candidate database,Recruiter,Recruiting > Candidates,Medium
+REC-P005,REC,Recruitment,Candidate Profile,Form,Candidates,"REC-030,REC-031,REC-032",View/edit candidate profile,Recruiter,Recruiting > Candidates > Profile,Medium
+REC-P006,REC,Recruitment,Online Application,Form,External,"REC-040,REC-041",Public job application form,Candidates,Careers > Apply,High
+REC-P007,REC,Recruitment,Applications List,List,Applications,REC-040,Browse job applications,Recruiter,Recruiting > Applications,Medium
+REC-P008,REC,Recruitment,Application Review,Form,Applications,"REC-042,REC-043",Screen and review applications,Recruiter,Recruiting > Applications > Review,High
+REC-P009,REC,Recruitment,Interview Scheduling,Calendar,Interviews,"REC-050,REC-051,REC-052",Schedule candidate interviews,Recruiter,Recruiting > Interviews,High
+REC-P010,REC,Recruitment,Interview Feedback,Form,Interviews,REC-053,Submit interview evaluation,Interviewer,My Interviews > Feedback,Medium
+REC-P011,REC,Recruitment,Offer Management,Form,Offers,"REC-060,REC-061,REC-062",Create and manage job offers,Recruiter,Recruiting > Offers,High
+REC-P012,REC,Recruitment,Onboarding Tasks,Checklist,Onboarding,"REC-070,REC-071",New hire onboarding checklist,Recruiter/New Hire,Recruiting > Onboarding,Medium
+REC-P013,REC,Recruitment,Recruiting Dashboard,Dashboard,Analytics,REC-080,Recruiting metrics and pipeline,Recruiting Manager,Recruiting > Dashboard,High
+REC-P014,REC,Recruitment,Hiring Velocity Report,Report,Reports,REC-081,Time-to-hire metrics,Recruiting Manager,Recruiting > Reports > Velocity,Medium
+
+CM-P001,CM,Cost Management,Costing Methods,List,Setup,"CM-010,CM-011,CM-012",Configure item costing methods,Cost Accountant,Setup > Cost > Methods,High
+CM-P002,CM,Cost Management,Item Costs,List,Costs,"CM-020,CM-021,CM-022",Maintain item cost details,Cost Accountant,Cost > Item Costs,High
+CM-P003,CM,Cost Management,Standard Cost Update,Process,Costs,"CM-030,CM-031,CM-032",Update standard costs,Cost Accountant,Cost > Standard Cost Update,High
+CM-P004,CM,Cost Management,Cost Rollup,Process,Costs,"CM-040,CM-041",Roll up component costs,Cost Accountant,Cost > Cost Rollup,High
+CM-P005,CM,Cost Management,Variance Analysis,Report,Analysis,"CM-050,CM-051,CM-052",Analyze cost variances,Cost Accountant,Cost > Reports > Variances,High
+CM-P006,CM,Cost Management,Overhead Allocations,Process,Overhead,"CM-060,CM-061",Allocate overhead to products,Cost Accountant,Cost > Overhead,High
+CM-P007,CM,Cost Management,Cost Dashboard,Dashboard,Analytics,CM-070,Cost management KPIs,Cost Manager,Cost > Dashboard,High
+
+LCM-P001,LCM,Landed Cost,Shipments List,List,Shipments,LCM-010,Browse international shipments,Logistics Coordinator,Landed Cost > Shipments,Medium
+LCM-P002,LCM,Landed Cost,Shipment Form,Form,Shipments,"LCM-010,LCM-011,LCM-012",Create/track shipment,Logistics Coordinator,Landed Cost > Shipments > New/Edit,High
+LCM-P003,LCM,Landed Cost,Freight Charges,Form,Costs,"LCM-020,LCM-021",Record freight charges,Logistics Coordinator,Landed Cost > Freight,Medium
+LCM-P004,LCM,Landed Cost,Duty Calculation,Process,Costs,"LCM-030,LCM-031,LCM-032",Calculate import duties,Import Specialist,Landed Cost > Duties,High
+LCM-P005,LCM,Landed Cost,HTS Code Lookup,Search,Reference,LCM-033,Search harmonized tariff codes,Import Specialist,Landed Cost > HTS Codes,Medium
+LCM-P006,LCM,Landed Cost,Cost Allocation,Process,Costs,"LCM-040,LCM-041",Allocate landed costs to items,Logistics Coordinator,Landed Cost > Allocations,High
+LCM-P007,LCM,Landed Cost,TCO Analysis,Report,Analysis,LCM-060,Total cost of ownership report,Purchasing Manager,Landed Cost > Reports > TCO,High
+
+PDM-P001,PDM,Product Management,Products List,List,Products,PDM-010,Browse product catalog,Product Manager,Products > Catalog,Low
+PDM-P002,PDM,Product Management,Product Form,Form,Products,"PDM-010,PDM-011,PDM-012,PDM-013",Create/edit product master,Product Manager,Products > Catalog > New/Edit,High
+PDM-P003,PDM,Product Management,Product Attributes,Grid,Products,"PDM-020,PDM-021,PDM-022",Manage flexible attributes,Product Manager,Products > Attributes,High
+PDM-P004,PDM,Product Management,Categories,Tree View,Taxonomy,"PDM-030,PDM-031,PDM-032",Manage product taxonomy,Product Manager,Products > Categories,Medium
+PDM-P005,PDM,Product Management,Product Relationships,Grid,Products,"PDM-040,PDM-041,PDM-042",Define product relationships,Product Manager,Products > Relationships,Medium
+PDM-P006,PDM,Product Management,Digital Assets,Gallery,Assets,"PDM-050,PDM-051",Manage product images/videos,Product Manager,Products > Digital Assets,High
+PDM-P007,PDM,Product Management,Product Lifecycle,Workflow,Lifecycle,"PDM-060,PDM-061",Manage product lifecycle stages,Product Manager,Products > Lifecycle,Medium
+PDM-P008,PDM,Product Management,Catalog Publishing,Process,Catalogs,"PDM-070,PDM-071,PDM-072",Publish multi-channel catalogs,Product Manager,Products > Publish,High
+
+CSH-P001,CSH,Cash Management,Bank Accounts,List,Setup,"CSH-010,CSH-011,CSH-012",Manage bank accounts,Treasury Analyst,Setup > Cash > Bank Accounts,Medium
+CSH-P002,CSH,Cash Management,Bank Statements,List,Transactions,"CSH-020,CSH-021",Import bank statements,Treasury Analyst,Cash > Bank Statements,Medium
+CSH-P003,CSH,Cash Management,Bank Reconciliation,Workbench,Reconciliation,"CSH-030,CSH-031,CSH-032",Reconcile bank accounts,Treasury Analyst,Cash > Reconciliation,High
+CSH-P004,CSH,Cash Management,Cash Position,Dashboard,Treasury,"CSH-040,CSH-041",View daily cash position,Treasury Manager,Cash > Position,High
+CSH-P005,CSH,Cash Management,Cash Forecast,Report,Treasury,"CSH-050,CSH-051,CSH-052",Cash flow forecasting,Treasury Manager,Cash > Forecast,High
+CSH-P006,CSH,Cash Management,Positive Pay,Process,Fraud Prevention,"CSH-060,CSH-061",Generate positive pay files,Treasury Analyst,Cash > Positive Pay,Medium
+CSH-P007,CSH,Cash Management,Cash Dashboard,Dashboard,Analytics,CSH-070,Treasury metrics and KPIs,Treasury Manager,Cash > Dashboard,High
+
+FA-P001,FA,Fixed Assets,Asset Categories,List,Setup,"FA-010,FA-011",Manage asset categories,FA Administrator,Setup > Assets > Categories,Low
+FA-P002,FA,Fixed Assets,Depreciation Books,List,Setup,"FA-020,FA-021,FA-022",Configure depreciation books,FA Administrator,Setup > Assets > Books,High
+FA-P003,FA,Fixed Assets,Depreciation Methods,List,Setup,"FA-030,FA-031",Define depreciation methods,FA Administrator,Setup > Assets > Methods,Medium
+FA-P004,FA,Fixed Assets,Assets List,List,Assets,FA-040,Browse asset inventory,FA Clerk,Assets > Asset Register,Medium
+FA-P005,FA,Fixed Assets,Asset Form,Form,Assets,"FA-040,FA-041,FA-042,FA-043",Create/edit asset master,FA Clerk,Assets > Asset Register > New/Edit,High
+FA-P006,FA,Fixed Assets,Asset Addition,Form,Transactions,"FA-050,FA-051",Capitalize new assets,FA Clerk,Assets > Additions,Medium
+FA-P007,FA,Fixed Assets,Asset Adjustment,Form,Transactions,"FA-060,FA-061",Adjust asset cost/life,FA Clerk,Assets > Adjustments,Medium
+FA-P008,FA,Fixed Assets,Asset Transfer,Form,Transactions,"FA-070,FA-071",Transfer between locations/depts,FA Clerk,Assets > Transfers,Medium
+FA-P009,FA,Fixed Assets,Asset Retirement,Form,Transactions,"FA-080,FA-081,FA-082",Retire/dispose assets,FA Clerk,Assets > Retirements,High
+FA-P010,FA,Fixed Assets,Depreciation Run,Process,Processing,"FA-090,FA-091,FA-092",Calculate period depreciation,FA Accountant,Assets > Depreciation > Run,High
+FA-P011,FA,Fixed Assets,Physical Inventory,Workbench,Inventory,"FA-100,FA-101,FA-102",Asset physical verification,FA Clerk,Assets > Physical Inventory,High
+FA-P012,FA,Fixed Assets,Lease Assets,List,Leases,"FA-110,FA-111,FA-112",Manage lease assets (ASC 842),FA Accountant,Assets > Leases,High
+FA-P013,FA,Fixed Assets,CIP Projects,List,CIP,"FA-120,FA-121,FA-122",Construction in progress,FA Accountant,Assets > CIP,High
+FA-P014,FA,Fixed Assets,FA Dashboard,Dashboard,Analytics,FA-130,Asset metrics and depreciation,FA Manager,Assets > Dashboard,High
+FA-P015,FA,Fixed Assets,Asset Register Report,Report,Reports,FA-131,Complete asset register,FA Manager,Assets > Reports > Register,Medium
+
+COMMON-P001,Common,Common,Home Dashboard,Dashboard,Home,,Personalized home page,All Users,Home,High
+COMMON-P002,Common,Common,Notifications Center,List,Notifications,,View system notifications,All Users,Notifications,Medium
+COMMON-P003,Common,Common,My Approvals,Workflow,Approvals,,Centralized approval workbench,Approvers,My Approvals,High
+COMMON-P004,Common,Common,Reports Library,List,Reports,,Browse all reports,All Users,Reports,Medium
+COMMON-P005,Common,Common,Favorites,List,Navigation,,User bookmarks,All Users,Favorites,Low
+COMMON-P006,Common,Common,Search Global,Search,Navigation,,Global search across modules,All Users,Search,High
+COMMON-P007,Common,Common,Help Center,Documentation,Help,,Online help and documentation,All Users,Help,Low
+COMMON-P008,Common,Common,System Settings,Form,Administration,,System-wide configuration,System Administrator,Administration > Settings,High

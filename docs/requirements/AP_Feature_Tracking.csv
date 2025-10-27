@@ -1,0 +1,178 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+AP-001,Accounts Payable,Supplier Management,Supplier Registration,Create and maintain supplier master records,Critical,Medium,Not Started,UR-001,5,,Not Started,Not Started,Yes,Foundation for AP,Suppliers can be created with required fields
+AP-002,Accounts Payable,Supplier Management,Supplier Number Assignment,Manual or auto-generated supplier numbers,High,Low,Not Started,AP-001,2,,Not Started,Not Started,Yes,Unique supplier ID,Number assignment works
+AP-003,Accounts Payable,Supplier Management,Supplier Types,Support different supplier types (Individual Corp Govt),Medium,Low,Not Started,AP-001,3,,Not Started,Not Started,Yes,Supplier categorization,Types can be assigned
+AP-004,Accounts Payable,Supplier Management,Supplier Classification,Strategic Preferred Standard classifications,Medium,Low,Not Started,AP-001,3,,Not Started,Not Started,Yes,Supplier segmentation,Classifications work
+AP-005,Accounts Payable,Supplier Management,Supplier Status,Active Inactive Hold status management,High,Medium,Not Started,AP-001,4,,Not Started,Not Started,Yes,Supplier lifecycle,Status changes enforced
+AP-006,Accounts Payable,Supplier Management,Tax ID Management,Tax identification number tracking and validation,Critical,Low,Not Started,AP-001,3,,Not Started,Not Started,Yes,Tax compliance,Tax IDs captured
+AP-007,Accounts Payable,Supplier Management,Parent-Child Suppliers,Hierarchical supplier relationships,Medium,Medium,Not Started,AP-001,5,,Not Started,Not Started,Yes,Supplier groups,Hierarchy functional
+AP-008,Accounts Payable,Supplier Management,Supplier Merge,Merge duplicate supplier records,Medium,High,Not Started,AP-001,7,,Not Started,Not Started,Yes,Data cleanup,Merge capability works
+AP-010,Accounts Payable,Supplier Sites,Supplier Site Management,Multiple sites/locations per supplier,Critical,Medium,Not Started,AP-001,5,,Not Started,Not Started,Yes,Multi-location suppliers,Sites can be created
+AP-011,Accounts Payable,Supplier Sites,Site Types,Pay Order Both site types,High,Low,Not Started,AP-010,2,,Not Started,Not Started,Yes,Site categorization,Site types supported
+AP-012,Accounts Payable,Supplier Sites,Site Addresses,Billing shipping remittance addresses,High,Low,Not Started,AP-010,3,,Not Started,Not Started,Yes,Multiple address types,Addresses maintained
+AP-013,Accounts Payable,Supplier Sites,Primary Site,Designate primary site per supplier,Medium,Low,Not Started,AP-010,2,,Not Started,Not Started,Yes,Default site,Primary site set
+AP-014,Accounts Payable,Supplier Sites,Site Payment Terms,Site-specific payment terms,High,Medium,Not Started,AP-010,4,,Not Started,Not Started,Yes,Flexible terms,Site terms work
+AP-015,Accounts Payable,Supplier Sites,Site Tax Registration,Site-level tax registration numbers,Medium,Medium,Not Started,AP-010,4,,Not Started,Not Started,Yes,Tax compliance,Site tax IDs captured
+AP-020,Accounts Payable,Supplier Contacts,Contact Management,Maintain supplier contact information,High,Low,Not Started,AP-001,3,,Not Started,Not Started,Yes,Communication,Contacts can be added
+AP-021,Accounts Payable,Supplier Contacts,Contact Roles,Accounts Purchasing Primary contact roles,Medium,Low,Not Started,AP-020,2,,Not Started,Not Started,Yes,Role assignment,Roles functional
+AP-022,Accounts Payable,Supplier Contacts,Contact Communications,Email and phone for contacts,High,Low,Not Started,AP-020,2,,Not Started,Not Started,Yes,Contact info,Communications captured
+AP-030,Accounts Payable,Supplier Banking,Bank Account Setup,Maintain supplier bank account information,Critical,Medium,Not Started,AP-001,5,,Not Started,Not Started,Yes,Payment processing,Bank accounts created
+AP-031,Accounts Payable,Supplier Banking,Multiple Bank Accounts,Support multiple accounts per supplier,High,Medium,Not Started,AP-030,4,,Not Started,Not Started,Yes,Payment flexibility,Multiple accounts work
+AP-032,Accounts Payable,Supplier Banking,Bank Account Validation,Validate routing and account numbers,High,Medium,Not Started,AP-030,5,,Not Started,Not Started,Yes,Payment accuracy,Validation enforced
+AP-033,Accounts Payable,Supplier Banking,Default Bank Account,Designate default payment account,High,Low,Not Started,AP-031,2,,Not Started,Not Started,Yes,Payment automation,Default account works
+AP-034,Accounts Payable,Supplier Banking,Third-Party Accounts,Support third-party payment accounts,Medium,Medium,Not Started,AP-030,5,,Not Started,Not Started,Yes,Payment flexibility,Third-party payments work
+AP-040,Accounts Payable,Payment Terms,Payment Terms Setup,Define standard payment terms,Critical,Low,Not Started,,3,,Not Started,Not Started,Yes,Payment scheduling,Terms configured
+AP-041,Accounts Payable,Payment Terms,Discount Terms,Early payment discount terms,High,Medium,Not Started,AP-040,4,,Not Started,Not Started,Yes,Discount capture,Discount calculation works
+AP-042,Accounts Payable,Payment Terms,Due Date Calculation,Automatic due date calculation,Critical,Medium,Not Started,AP-040,4,,Not Started,Not Started,Yes,Payment scheduling,Due dates calculated
+AP-043,Accounts Payable,Payment Terms,Discount Date Calculation,Calculate discount eligibility date,High,Medium,Not Started,AP-041,4,,Not Started,Not Started,Yes,Discount optimization,Discount dates calculated
+AP-044,Accounts Payable,Payment Terms,Grace Period,Grace period for payment terms,Medium,Low,Not Started,AP-040,3,,Not Started,Not Started,Yes,Payment flexibility,Grace period works
+AP-050,Accounts Payable,Invoice Entry,Manual Invoice Entry,User entry of supplier invoices,Critical,High,Not Started,AP-001,8,,Not Started,Not Started,Yes,Core AP functionality,Manual entry works
+AP-051,Accounts Payable,Invoice Entry,Invoice Header,Invoice number date type amount tax,Critical,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Invoice identification,Header fields captured
+AP-052,Accounts Payable,Invoice Entry,Invoice Lines,Multiple line items per invoice,Critical,High,Not Started,AP-050,7,,Not Started,Not Started,Yes,Line detail,Lines can be entered
+AP-053,Accounts Payable,Invoice Entry,Invoice Distributions,GL account distributions for lines,Critical,High,Not Started,AP-052 GL-040,7,,Not Started,Not Started,Yes,GL accounting,Distributions work
+AP-054,Accounts Payable,Invoice Entry,Multi-Currency Invoices,Foreign currency invoice entry,High,High,Not Started,AP-050 GL-091,7,,Not Started,Not Started,Yes,Global operations,Multi-currency works
+AP-055,Accounts Payable,Invoice Entry,Invoice Attachments,Attach scanned invoices and documents,High,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Supporting docs,Attachments functional
+AP-056,Accounts Payable,Invoice Entry,Invoice Templates,Reusable invoice templates,Medium,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Efficient entry,Templates work
+AP-060,Accounts Payable,Invoice Import,File Import,Import invoices from CSV Excel,High,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Bulk processing,Import functional
+AP-061,Accounts Payable,Invoice Import,EDI Import,Electronic Data Interchange invoice receipt,Medium,High,Not Started,AP-050,9,,Not Started,Not Started,Yes,Automated invoice receipt,EDI works
+AP-062,Accounts Payable,Invoice Import,Email Import,Invoice receipt via email,Medium,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Convenience,Email import works
+AP-063,Accounts Payable,Invoice Import,OCR Scanning,Scan and auto-populate invoice data,Medium,High,Not Started,AP-050,10,,Not Started,Not Started,Yes,Automation,OCR functional
+AP-064,Accounts Payable,Invoice Import,Import Validation,Validate imported invoice data,High,Medium,Not Started,AP-060,6,,Not Started,Not Started,Yes,Data quality,Validation works
+AP-070,Accounts Payable,Invoice Validation,Duplicate Check,Prevent duplicate invoice entry,Critical,High,Not Started,AP-050,7,,Not Started,Not Started,Yes,Payment accuracy,Duplicate detection works
+AP-071,Accounts Payable,Invoice Validation,Supplier Validation,Validate supplier is active and not on hold,Critical,Medium,Not Started,AP-050,4,,Not Started,Not Started,Yes,Valid suppliers,Validation enforced
+AP-072,Accounts Payable,Invoice Validation,Account Validation,Validate GL account codes,Critical,Medium,Not Started,AP-053,4,,Not Started,Not Started,Yes,Valid accounting,Account validation works
+AP-073,Accounts Payable,Invoice Validation,Amount Validation,Validate invoice amounts and calculations,High,Low,Not Started,AP-050,3,,Not Started,Not Started,Yes,Data accuracy,Amount validation works
+AP-074,Accounts Payable,Invoice Validation,Tax Validation,Validate tax codes and amounts,High,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Tax compliance,Tax validation works
+AP-075,Accounts Payable,Invoice Validation,Budget Check,Check budget availability,Medium,High,Not Started,AP-053 GL-390,7,,Not Started,Not Started,Yes,Budget control,Budget check works
+AP-080,Accounts Payable,PO Matching,2-Way Matching,Match invoice to PO (quantity price),High,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Invoice verification,2-way matching works
+AP-081,Accounts Payable,PO Matching,3-Way Matching,Match invoice PO and receipt,Critical,High,Not Started,AP-080,9,,Not Started,Not Started,Yes,Complete verification,3-way matching works
+AP-082,Accounts Payable,PO Matching,4-Way Matching,Match invoice PO receipt and inspection,Medium,High,Not Started,AP-081,8,,Not Started,Not Started,Yes,Quality control,4-way matching works
+AP-083,Accounts Payable,PO Matching,Matching Tolerance,Configure price and quantity tolerances,High,Medium,Not Started,AP-080,5,,Not Started,Not Started,Yes,Flexible matching,Tolerances work
+AP-084,Accounts Payable,PO Matching,Match Exception Handling,Handle matching variances,High,High,Not Started,AP-080,7,,Not Started,Not Started,Yes,Exception processing,Exceptions handled
+AP-085,Accounts Payable,PO Matching,Force Match,Override matching holds with approval,Medium,Medium,Not Started,AP-084,5,,Not Started,Not Started,Yes,Exception resolution,Force match works
+AP-090,Accounts Payable,Invoice Holds,System Holds,Automatic holds for validation failures,Critical,High,Not Started,AP-050,7,,Not Started,Not Started,Yes,Payment control,System holds work
+AP-091,Accounts Payable,Invoice Holds,Manual Holds,User-placed holds on invoices,High,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Payment control,Manual holds work
+AP-092,Accounts Payable,Invoice Holds,Matching Holds,Holds for PO matching variances,High,Medium,Not Started,AP-084,5,,Not Started,Not Started,Yes,Matching control,Matching holds work
+AP-093,Accounts Payable,Invoice Holds,Tax Holds,Holds for missing tax information,Medium,Low,Not Started,AP-074,4,,Not Started,Not Started,Yes,Tax compliance,Tax holds work
+AP-094,Accounts Payable,Invoice Holds,Hold Release,Release holds when conditions met,High,Medium,Not Started,AP-090,6,,Not Started,Not Started,Yes,Payment processing,Release functional
+AP-095,Accounts Payable,Invoice Holds,Hold Workflow,Approval workflow for hold release,Medium,High,Not Started,AP-094,7,,Not Started,Not Started,Yes,Controlled release,Workflow works
+AP-100,Accounts Payable,Invoice Approval,Approval Workflow,Multi-level invoice approval,Critical,High,Not Started,AP-050 UR-170,9,,Not Started,Not Started,Yes,Invoice control,Approval workflow works
+AP-101,Accounts Payable,Invoice Approval,Amount-Based Routing,Route by invoice amount thresholds,High,Medium,Not Started,AP-100,6,,Not Started,Not Started,Yes,Approval efficiency,Routing works
+AP-102,Accounts Payable,Invoice Approval,Department Approval,Department/cost center approval,High,Medium,Not Started,AP-100,6,,Not Started,Not Started,Yes,Budget owner approval,Department approval works
+AP-103,Accounts Payable,Invoice Approval,Non-PO Approval,Special approval for non-PO invoices,High,Medium,Not Started,AP-100,5,,Not Started,Not Started,Yes,Additional control,Non-PO approval works
+AP-104,Accounts Payable,Invoice Approval,Approval Delegation,Delegate approval authority,Medium,Medium,Not Started,AP-100 UR-120,6,,Not Started,Not Started,Yes,Workflow continuity,Delegation works
+AP-105,Accounts Payable,Invoice Approval,Approval Notifications,Email notifications for approvals,High,Low,Not Started,AP-100,4,,Not Started,Not Started,Yes,Timely approvals,Notifications sent
+AP-110,Accounts Payable,Payment Selection,Payment Batch Creation,Select invoices for payment,Critical,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Payment processing,Selection works
+AP-111,Accounts Payable,Payment Selection,Selection Criteria,Due date discount date supplier amount,High,Medium,Not Started,AP-110,6,,Not Started,Not Started,Yes,Flexible selection,Criteria work
+AP-112,Accounts Payable,Payment Selection,Automatic Selection,Auto-select invoices by rules,High,High,Not Started,AP-110,7,,Not Started,Not Started,Yes,Automation,Auto-selection works
+AP-113,Accounts Payable,Payment Selection,Manual Selection,User selects specific invoices,High,Low,Not Started,AP-110,4,,Not Started,Not Started,Yes,User control,Manual selection works
+AP-114,Accounts Payable,Payment Selection,Payment Grouping,Group payments by supplier currency,High,High,Not Started,AP-110,7,,Not Started,Not Started,Yes,Payment efficiency,Grouping works
+AP-115,Accounts Payable,Payment Selection,Partial Payments,Support partial invoice payments,Medium,Medium,Not Started,AP-110,6,,Not Started,Not Started,Yes,Payment flexibility,Partial payments work
+AP-120,Accounts Payable,Payment Methods,Check Payments,Print check payments,High,High,Not Started,AP-110,8,,Not Started,Not Started,Yes,Traditional payment,Check printing works
+AP-121,Accounts Payable,Payment Methods,ACH/EFT Payments,Electronic fund transfers,Critical,High,Not Started,AP-110,9,,Not Started,Not Started,Yes,Modern payment,ACH works
+AP-122,Accounts Payable,Payment Methods,Wire Transfers,Wire transfer payments,High,High,Not Started,AP-110,8,,Not Started,Not Started,Yes,Large payments,Wire transfers work
+AP-123,Accounts Payable,Payment Methods,Credit Card Payments,Corporate card payments,Medium,Medium,Not Started,AP-110,7,,Not Started,Not Started,Yes,Card programs,Card payments work
+AP-124,Accounts Payable,Payment Methods,Multi-Currency Payments,Foreign currency payments,High,High,Not Started,AP-121 GL-091,8,,Not Started,Not Started,Yes,Global payments,Multi-currency works
+AP-130,Accounts Payable,Check Processing,Check Printing,Print payment checks,High,High,Not Started,AP-120,8,,Not Started,Not Started,Yes,Check output,Printing works
+AP-131,Accounts Payable,Check Processing,Check Register,Maintain check register,High,Medium,Not Started,AP-120,5,,Not Started,Not Started,Yes,Payment tracking,Register maintained
+AP-132,Accounts Payable,Check Processing,Void Checks,Void issued checks,High,Medium,Not Started,AP-120,5,,Not Started,Not Started,Yes,Error correction,Void functional
+AP-133,Accounts Payable,Check Processing,Stop Payment,Stop payment on checks,High,Medium,Not Started,AP-120,5,,Not Started,Not Started,Yes,Payment control,Stop payment works
+AP-134,Accounts Payable,Check Processing,Positive Pay,Generate positive pay file,Medium,Medium,Not Started,AP-120,6,,Not Started,Not Started,Yes,Fraud prevention,Positive pay works
+AP-135,Accounts Payable,Check Processing,Check Reconciliation,Reconcile cleared checks,High,High,Not Started,AP-120,7,,Not Started,Not Started,Yes,Bank reconciliation,Reconciliation works
+AP-140,Accounts Payable,Electronic Payments,ACH File Generation,Generate ACH payment file,Critical,High,Not Started,AP-121,8,,Not Started,Not Started,Yes,Electronic payment,ACH file works
+AP-141,Accounts Payable,Electronic Payments,Wire Instructions,Generate wire transfer instructions,High,Medium,Not Started,AP-122,6,,Not Started,Not Started,Yes,Wire processing,Instructions generated
+AP-142,Accounts Payable,Electronic Payments,Payment File Formats,Support multiple payment formats,High,High,Not Started,AP-140,8,,Not Started,Not Started,Yes,Format flexibility,Formats supported
+AP-143,Accounts Payable,Electronic Payments,Payment Transmission,Transmit payment files to bank,High,High,Not Started,AP-140,7,,Not Started,Not Started,Yes,Payment execution,Transmission works
+AP-144,Accounts Payable,Electronic Payments,Payment Status Tracking,Track payment status and settlement,High,Medium,Not Started,AP-143,6,,Not Started,Not Started,Yes,Payment visibility,Tracking works
+AP-150,Accounts Payable,Payment Approval,Payment Batch Approval,Approve payment batches,High,High,Not Started,AP-110 UR-170,7,,Not Started,Not Started,Yes,Payment control,Approval works
+AP-151,Accounts Payable,Payment Approval,Dual Approval,Require two approvals for large payments,Medium,Medium,Not Started,AP-150,5,,Not Started,Not Started,Yes,High-value control,Dual approval works
+AP-152,Accounts Payable,Payment Approval,Wire Approval,Special approval for wire transfers,High,Medium,Not Started,AP-122,5,,Not Started,Not Started,Yes,Wire control,Wire approval works
+AP-160,Accounts Payable,Payment Accounting,Payment GL Posting,Post payments to GL,Critical,High,Not Started,AP-110 GL-180,8,,Not Started,Not Started,Yes,GL integration,Payment posting works
+AP-161,Accounts Payable,Payment Accounting,Payment Clearing,Payment clearing account processing,High,Medium,Not Started,AP-160,5,,Not Started,Not Started,Yes,Cash accounting,Clearing works
+AP-162,Accounts Payable,Payment Accounting,FX Gain/Loss,Foreign exchange gain/loss on payment,High,High,Not Started,AP-124,7,,Not Started,Not Started,Yes,Multi-currency accounting,FX accounting works
+AP-163,Accounts Payable,Payment Accounting,Discount Accounting,Account for discounts taken,High,Medium,Not Started,AP-041,5,,Not Started,Not Started,Yes,Discount tracking,Discount accounting works
+AP-164,Accounts Payable,Payment Accounting,Payment Reversal,Reverse payments and accounting,High,High,Not Started,AP-160,7,,Not Started,Not Started,Yes,Error correction,Reversal works
+AP-170,Accounts Payable,Expense Reports,Expense Report Entry,Employee expense report creation,High,High,Not Started,UR-001,8,,Not Started,Not Started,Yes,Employee reimbursement,Expense entry works
+AP-171,Accounts Payable,Expense Reports,Expense Categories,Categorize expenses (Travel Meals Lodging),High,Medium,Not Started,AP-170,5,,Not Started,Not Started,Yes,Expense classification,Categories work
+AP-172,Accounts Payable,Expense Reports,Receipt Attachments,Attach receipts to expense lines,High,Medium,Not Started,AP-170,5,,Not Started,Not Started,Yes,Supporting docs,Attachments work
+AP-173,Accounts Payable,Expense Reports,Expense Policies,Enforce expense policy rules,High,High,Not Started,AP-170,8,,Not Started,Not Started,Yes,Policy compliance,Policies enforced
+AP-174,Accounts Payable,Expense Reports,Mileage Calculation,Calculate mileage reimbursement,Medium,Low,Not Started,AP-170,4,,Not Started,Not Started,Yes,Auto calculation,Mileage calc works
+AP-175,Accounts Payable,Expense Reports,Per Diem Calculation,Calculate per diem allowances,Medium,Medium,Not Started,AP-170,5,,Not Started,Not Started,Yes,Policy automation,Per diem works
+AP-176,Accounts Payable,Expense Reports,Expense Approval,Multi-level expense approval workflow,High,High,Not Started,AP-170 UR-170,8,,Not Started,Not Started,Yes,Approval control,Workflow works
+AP-177,Accounts Payable,Expense Reports,Expense Reimbursement,Reimburse employees for expenses,High,High,Not Started,AP-176,7,,Not Started,Not Started,Yes,Payment processing,Reimbursement works
+AP-180,Accounts Payable,Credit Memos,Credit Memo Entry,Enter supplier credit memos,High,Medium,Not Started,AP-050,6,,Not Started,Not Started,Yes,Credit processing,Credit entry works
+AP-181,Accounts Payable,Credit Memos,Credit Application,Apply credits to invoices or balance,High,High,Not Started,AP-180,7,,Not Started,Not Started,Yes,Credit management,Application works
+AP-182,Accounts Payable,Credit Memos,Credit Refund,Process refunds for credits,Medium,Medium,Not Started,AP-180,6,,Not Started,Not Started,Yes,Refund processing,Refunds work
+AP-183,Accounts Payable,Credit Memos,Credit Matching,Match credits to original invoices,Medium,Medium,Not Started,AP-180,5,,Not Started,Not Started,Yes,Credit tracking,Matching works
+AP-190,Accounts Payable,Debit Memos,Debit Memo Creation,Create debit memos to suppliers,Medium,Medium,Not Started,AP-050,6,,Not Started,Not Started,Yes,Supplier charges,Debit creation works
+AP-191,Accounts Payable,Debit Memos,Debit Reason Codes,Categorize debit reasons,Medium,Low,Not Started,AP-190,3,,Not Started,Not Started,Yes,Debit classification,Codes work
+AP-192,Accounts Payable,Debit Memos,Debit Application,Apply debits to supplier balance,Medium,Medium,Not Started,AP-190,5,,Not Started,Not Started,Yes,Balance adjustment,Application works
+AP-200,Accounts Payable,Tax Management,Tax Code Setup,Define tax codes and rates,High,Medium,Not Started,,5,,Not Started,Not Started,Yes,Tax compliance,Tax codes configured
+AP-201,Accounts Payable,Tax Management,Tax Calculation,Automatic tax calculation on invoices,High,High,Not Started,AP-200,7,,Not Started,Not Started,Yes,Tax automation,Calculation works
+AP-202,Accounts Payable,Tax Management,VAT Processing,Value Added Tax processing,High,High,Not Started,AP-200,8,,Not Started,Not Started,Yes,VAT compliance,VAT works
+AP-203,Accounts Payable,Tax Management,Tax Exemptions,Handle tax-exempt transactions,Medium,Medium,Not Started,AP-200,5,,Not Started,Not Started,Yes,Exemption processing,Exemptions work
+AP-204,Accounts Payable,Tax Management,Reverse Charge VAT,Self-assessed reverse charge VAT,Medium,High,Not Started,AP-202,7,,Not Started,Not Started,Yes,VAT compliance,Reverse charge works
+AP-205,Accounts Payable,Tax Management,Tax Reporting,Tax liability and compliance reports,High,High,Not Started,AP-200,8,,Not Started,Not Started,Yes,Tax reporting,Reports functional
+AP-210,Accounts Payable,Withholding Tax,WHT Setup,Configure withholding tax codes and rates,High,Medium,Not Started,AP-200,6,,Not Started,Not Started,Yes,WHT compliance,WHT configured
+AP-211,Accounts Payable,Withholding Tax,WHT Calculation,Calculate withholding tax on payments,High,High,Not Started,AP-210,7,,Not Started,Not Started,Yes,WHT automation,Calculation works
+AP-212,Accounts Payable,Withholding Tax,WHT Certificates,Generate withholding tax certificates,Medium,Medium,Not Started,AP-211,6,,Not Started,Not Started,Yes,Supplier certificates,Certificates generated
+AP-213,Accounts Payable,Withholding Tax,WHT Reporting,Withholding tax reports and filing,High,High,Not Started,AP-211,7,,Not Started,Not Started,Yes,Tax compliance,WHT reporting works
+AP-220,Accounts Payable,Bank Accounts,Company Bank Setup,Maintain company bank accounts,High,Medium,Not Started,,5,,Not Started,Not Started,Yes,Payment processing,Bank accounts setup
+AP-221,Accounts Payable,Bank Accounts,Multi-Currency Accounts,Support multi-currency bank accounts,Medium,Medium,Not Started,AP-220,5,,Not Started,Not Started,Yes,Global operations,Multi-currency accounts work
+AP-222,Accounts Payable,Bank Accounts,Bank Account Assignment,Assign bank accounts by entity currency method,High,Medium,Not Started,AP-220,5,,Not Started,Not Started,Yes,Payment routing,Assignment works
+AP-230,Accounts Payable,Period Close,AP Period Close,Month-end close procedures for AP,Critical,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Financial close,Close process works
+AP-231,Accounts Payable,Period Close,Uninvoiced Receipts Accrual,Accrue for goods received not invoiced,Critical,High,Not Started,AP-230,8,,Not Started,Not Started,Yes,Accrual accounting,Accrual works
+AP-232,Accounts Payable,Period Close,Period Accruals,Period-end accrual processing,High,High,Not Started,AP-230,7,,Not Started,Not Started,Yes,Accurate financials,Accruals work
+AP-233,Accounts Payable,Period Close,AP to GL Reconciliation,Reconcile AP subledger to GL,Critical,High,Not Started,AP-230 GL-180,8,,Not Started,Not Started,Yes,Data integrity,Reconciliation works
+AP-234,Accounts Payable,Period Close,Supplier Statement Reconciliation,Reconcile to supplier statements,High,Medium,Not Started,AP-230,6,,Not Started,Not Started,Yes,Accuracy verification,Statement recon works
+AP-240,Accounts Payable,1099 Processing,1099 Setup,Configure 1099 reporting (US),Medium,Medium,Not Started,AP-006,6,,Not Started,Not Started,Yes,Tax compliance,1099 setup complete
+AP-241,Accounts Payable,1099 Processing,1099 Eligible Tracking,Track 1099 eligible suppliers and amounts,Medium,Medium,Not Started,AP-240,5,,Not Started,Not Started,Yes,1099 accumulation,Tracking works
+AP-242,Accounts Payable,1099 Processing,W-9 Collection,Collect and maintain W-9 forms,Medium,Low,Not Started,AP-240,4,,Not Started,Not Started,Yes,Tax documentation,W-9 management works
+AP-243,Accounts Payable,1099 Processing,1099 Form Generation,Generate 1099 forms year-end,Medium,High,Not Started,AP-241,8,,Not Started,Not Started,Yes,Tax reporting,Forms generated
+AP-244,Accounts Payable,1099 Processing,1099 Electronic Filing,Electronic filing of 1099s,Medium,High,Not Started,AP-243,7,,Not Started,Not Started,Yes,Compliance efficiency,E-filing works
+AP-250,Accounts Payable,Recurring Invoices,Recurring Setup,Setup recurring invoice templates,Medium,Medium,Not Started,AP-050,6,,Not Started,Not Started,Yes,Automation,Templates created
+AP-251,Accounts Payable,Recurring Invoices,Recurring Schedule,Define recurring invoice schedule,Medium,Low,Not Started,AP-250,4,,Not Started,Not Started,Yes,Automated processing,Schedule works
+AP-252,Accounts Payable,Recurring Invoices,Automatic Generation,Auto-generate recurring invoices,Medium,High,Not Started,AP-250,7,,Not Started,Not Started,Yes,Automation,Generation works
+AP-253,Accounts Payable,Recurring Invoices,Variance Handling,Handle amount variances in recurring,Medium,Medium,Not Started,AP-252,5,,Not Started,Not Started,Yes,Exception handling,Variance handling works
+AP-260,Accounts Payable,Prepayments,Prepayment Creation,Create prepayment invoices,Medium,Medium,Not Started,AP-050,6,,Not Started,Not Started,Yes,Advance payments,Prepayments created
+AP-261,Accounts Payable,Prepayments,Prepayment Application,Apply prepayments to final invoices,Medium,High,Not Started,AP-260,7,,Not Started,Not Started,Yes,Payment offset,Application works
+AP-262,Accounts Payable,Prepayments,Prepayment Tracking,Track unapplied prepayments,Medium,Medium,Not Started,AP-260,5,,Not Started,Not Started,Yes,Prepayment visibility,Tracking works
+AP-263,Accounts Payable,Prepayments,Prepayment Refund,Process prepayment refunds,Medium,Medium,Not Started,AP-260,5,,Not Started,Not Started,Yes,Refund processing,Refunds work
+AP-270,Accounts Payable,Reporting,Aging Report,AP aging by supplier (Current 30 60 90),Critical,Medium,Not Started,AP-050,6,,Not Started,Not Started,Yes,AP visibility,Aging report works
+AP-271,Accounts Payable,Reporting,Invoice Register,Detailed invoice listing report,High,Low,Not Started,AP-050,4,,Not Started,Not Started,Yes,Transaction detail,Register works
+AP-272,Accounts Payable,Reporting,Payment Register,Detailed payment listing report,High,Low,Not Started,AP-110,4,,Not Started,Not Started,Yes,Payment detail,Register works
+AP-273,Accounts Payable,Reporting,Unmatched Invoices,Report invoices pending PO match,High,Medium,Not Started,AP-080,5,,Not Started,Not Started,Yes,Exception management,Report works
+AP-274,Accounts Payable,Reporting,On-Hold Invoices,Report invoices on hold,High,Medium,Not Started,AP-090,5,,Not Started,Not Started,Yes,Hold management,Report works
+AP-275,Accounts Payable,Reporting,Discount Available,Report available payment discounts,High,Medium,Not Started,AP-041,5,,Not Started,Not Started,Yes,Discount optimization,Report works
+AP-276,Accounts Payable,Reporting,Discount Taken/Lost,Report discounts captured and missed,High,Medium,Not Started,AP-041,6,,Not Started,Not Started,Yes,Performance tracking,Report works
+AP-277,Accounts Payable,Reporting,Uninvoiced Receipts,Report goods received not invoiced,High,Medium,Not Started,AP-231,6,,Not Started,Not Started,Yes,Accrual visibility,Report works
+AP-278,Accounts Payable,Reporting,Supplier Balance,Current balance by supplier,High,Low,Not Started,AP-050,4,,Not Started,Not Started,Yes,Balance inquiry,Report works
+AP-280,Accounts Payable,Analytics,Spend Analysis,Analyze spend by supplier category,Medium,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Spend visibility,Analysis works
+AP-281,Accounts Payable,Analytics,DPO Calculation,Days Payable Outstanding metric,Medium,Medium,Not Started,AP-050,5,,Not Started,Not Started,Yes,Performance metric,DPO calculated
+AP-282,Accounts Payable,Analytics,Payment Performance,Analyze payment timing and trends,Medium,High,Not Started,AP-110,7,,Not Started,Not Started,Yes,Payment analysis,Analysis works
+AP-283,Accounts Payable,Analytics,Supplier Performance,Track supplier metrics and ratings,Medium,High,Not Started,AP-001,7,,Not Started,Not Started,Yes,Supplier management,Tracking works
+AP-284,Accounts Payable,Analytics,Cash Flow Forecast,Forecast AP cash requirements,Medium,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Cash planning,Forecast works
+AP-290,Accounts Payable,Supplier Portal,Portal Access,Supplier self-service portal,Medium,High,Not Started,AP-001,9,,Not Started,Not Started,Yes,Supplier self-service,Portal functional
+AP-291,Accounts Payable,Supplier Portal,Invoice Submission,Suppliers submit invoices online,Medium,High,Not Started,AP-290,8,,Not Started,Not Started,Yes,Invoice automation,Submission works
+AP-292,Accounts Payable,Supplier Portal,Status Inquiry,Suppliers view invoice and payment status,Medium,Medium,Not Started,AP-290,6,,Not Started,Not Started,Yes,Supplier visibility,Inquiry works
+AP-293,Accounts Payable,Supplier Portal,Remittance Download,Suppliers download remittance advice,Medium,Low,Not Started,AP-290,4,,Not Started,Not Started,Yes,Payment detail,Download works
+AP-294,Accounts Payable,Supplier Portal,Banking Update,Suppliers update bank information,Medium,Medium,Not Started,AP-290,6,,Not Started,Not Started,Yes,Data maintenance,Update works
+AP-300,Accounts Payable,Integration,GL Integration,Post AP transactions to GL,Critical,High,Not Started,GL-200,9,,Not Started,Not Started,Yes,Financial integration,GL posting works
+AP-301,Accounts Payable,Integration,PO Integration,Integrate with Purchase Order system,Critical,High,Not Started,AP-080,9,,Not Started,Not Started,Yes,PO matching,PO integration works
+AP-302,Accounts Payable,Integration,Receipt Integration,Integrate with inventory receipts,High,High,Not Started,AP-081,8,,Not Started,Not Started,Yes,3-way matching,Receipt integration works
+AP-303,Accounts Payable,Integration,Asset Integration,Create assets from invoices,Medium,High,Not Started,AP-050,8,,Not Started,Not Started,Yes,Asset capitalization,Asset integration works
+AP-304,Accounts Payable,Integration,Project Integration,Charge invoices to projects,Medium,High,Not Started,AP-053,7,,Not Started,Not Started,Yes,Project costing,Project integration works
+AP-310,Accounts Payable,Advanced Features,Duplicate Detection,AI-powered duplicate invoice detection,Medium,High,Not Started,AP-070,8,,Not Started,Not Started,Yes,Fraud prevention,Detection works
+AP-311,Accounts Payable,Advanced Features,OCR Processing,Optical character recognition for invoices,Medium,High,Not Started,AP-063,9,,Not Started,Not Started,Yes,Automation,OCR works
+AP-312,Accounts Payable,Advanced Features,Dynamic Discounting,Early payment discount optimization,Medium,High,Not Started,AP-041,8,,Not Started,Not Started,Yes,Working capital,Discounting works
+AP-313,Accounts Payable,Advanced Features,Payment Optimization,Optimize payment timing and cash,Medium,High,Not Started,AP-110,9,,Not Started,Not Started,Yes,Cash management,Optimization works
+AP-320,Accounts Payable,Security,AP Roles,Predefined AP roles (Manager Clerk Processor),Critical,Medium,Not Started,UR-025,5,,Not Started,Not Started,Yes,Access control,Roles configured
+AP-321,Accounts Payable,Security,Approval Limits,Invoice and payment approval limits,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Authorization control,Limits enforced
+AP-322,Accounts Payable,Security,Data Security,Business unit and supplier data access,High,High,Not Started,UR-040,7,,Not Started,Not Started,Yes,Data isolation,Security enforced
+AP-323,Accounts Payable,Security,Audit Trail,Complete AP activity audit trail,Critical,Medium,Not Started,UR-140,6,,Not Started,Not Started,Yes,Compliance,Audit trail complete
+AP-330,Accounts Payable,Technical,Performance,Support high-volume invoice processing,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Scalability,Performance requirements met
+AP-331,Accounts Payable,Technical,Batch Processing,Batch invoice and payment processing,High,High,Not Started,,7,,Not Started,Not Started,Yes,Efficiency,Batch processing works
+AP-332,Accounts Payable,Technical,API Integration,REST APIs for AP operations,High,High,Not Started,,9,,Not Started,Not Started,Yes,System integration,APIs functional
+AP-340,Accounts Payable,Compliance,SOX Compliance,SOX controls for AP,High,High,Not Started,UR-271,7,,Not Started,Not Started,Yes,Regulatory compliance,SOX compliant
+AP-341,Accounts Payable,Compliance,Segregation of Duties,SOD for AP functions,High,High,Not Started,UR-160,7,,Not Started,Not Started,Yes,Internal controls,SOD enforced
+AP-342,Accounts Payable,Compliance,Tax Compliance,Tax reporting and compliance,High,High,Not Started,AP-205,8,,Not Started,Not Started,Yes,Tax requirements,Compliance met

@@ -1,0 +1,148 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+AR-001,Accounts Receivable,Customer Management,Customer Registration,Create and maintain customer master records,Critical,Medium,Not Started,UR-001,5,,Not Started,Not Started,Yes,Foundation for AR,Customers can be created
+AR-002,Accounts Receivable,Customer Management,Customer Number Assignment,Manual or auto-generated customer numbers,High,Low,Not Started,AR-001,2,,Not Started,Not Started,Yes,Unique customer ID,Number assignment works
+AR-003,Accounts Receivable,Customer Management,Customer Types,Support different customer types (Individual Corp Govt),Medium,Low,Not Started,AR-001,3,,Not Started,Not Started,Yes,Customer categorization,Types can be assigned
+AR-004,Accounts Receivable,Customer Management,Customer Classification,Key Strategic Standard classifications,Medium,Low,Not Started,AR-001,3,,Not Started,Not Started,Yes,Customer segmentation,Classifications work
+AR-005,Accounts Receivable,Customer Management,Customer Status,Active Inactive On Hold status management,High,Medium,Not Started,AR-001,4,,Not Started,Not Started,Yes,Customer lifecycle,Status changes enforced
+AR-006,Accounts Receivable,Customer Management,Tax ID Management,Tax identification number tracking,Critical,Low,Not Started,AR-001,3,,Not Started,Not Started,Yes,Tax compliance,Tax IDs captured
+AR-007,Accounts Receivable,Customer Management,Parent-Child Customers,Hierarchical customer relationships,Medium,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Customer groups,Hierarchy functional
+AR-008,Accounts Receivable,Customer Management,Customer Merge,Merge duplicate customer records,Medium,High,Not Started,AR-001,7,,Not Started,Not Started,Yes,Data cleanup,Merge capability works
+AR-010,Accounts Receivable,Customer Sites,Customer Site Management,Multiple sites/locations per customer,Critical,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Multi-location customers,Sites can be created
+AR-011,Accounts Receivable,Customer Sites,Site Types,Bill-To Ship-To Both site types,High,Low,Not Started,AR-010,2,,Not Started,Not Started,Yes,Site categorization,Site types supported
+AR-012,Accounts Receivable,Customer Sites,Site Addresses,Billing and shipping addresses,High,Low,Not Started,AR-010,3,,Not Started,Not Started,Yes,Multiple address types,Addresses maintained
+AR-013,Accounts Receivable,Customer Sites,Primary Site,Designate primary site per customer,Medium,Low,Not Started,AR-010,2,,Not Started,Not Started,Yes,Default site,Primary site set
+AR-014,Accounts Receivable,Customer Sites,Site Payment Terms,Site-specific payment terms,High,Medium,Not Started,AR-010,4,,Not Started,Not Started,Yes,Flexible terms,Site terms work
+AR-015,Accounts Receivable,Customer Sites,Site Credit Limits,Site-level credit limits,High,Medium,Not Started,AR-010,4,,Not Started,Not Started,Yes,Credit control,Site limits work
+AR-020,Accounts Receivable,Customer Contacts,Contact Management,Maintain customer contact information,High,Low,Not Started,AR-001,3,,Not Started,Not Started,Yes,Communication,Contacts can be added
+AR-021,Accounts Receivable,Customer Contacts,Contact Roles,Billing AR Primary Sales contact roles,Medium,Low,Not Started,AR-020,2,,Not Started,Not Started,Yes,Role assignment,Roles functional
+AR-022,Accounts Receivable,Customer Contacts,Email Delivery,Email invoices and statements to contacts,High,Medium,Not Started,AR-020,4,,Not Started,Not Started,Yes,Electronic delivery,Email delivery works
+AR-030,Accounts Receivable,Customer Banking,Bank Account Setup,Maintain customer bank account information,Medium,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Direct debit,Bank accounts created
+AR-031,Accounts Receivable,Customer Banking,Direct Debit Authorization,Authorize automatic collections,Medium,Medium,Not Started,AR-030,5,,Not Started,Not Started,Yes,Auto-collections,Authorization works
+AR-032,Accounts Receivable,Customer Banking,Auto-Payment Setup,Configure automatic payment,Medium,High,Not Started,AR-031,6,,Not Started,Not Started,Yes,Payment automation,Auto-payment works
+AR-040,Accounts Receivable,Payment Terms,Payment Terms Setup,Define standard payment terms,Critical,Low,Not Started,,3,,Not Started,Not Started,Yes,Payment scheduling,Terms configured
+AR-041,Accounts Receivable,Payment Terms,Discount Terms,Early payment discount terms,High,Medium,Not Started,AR-040,4,,Not Started,Not Started,Yes,Discount offering,Discount calculation works
+AR-042,Accounts Receivable,Payment Terms,Due Date Calculation,Automatic due date calculation,Critical,Medium,Not Started,AR-040,4,,Not Started,Not Started,Yes,Payment scheduling,Due dates calculated
+AR-050,Accounts Receivable,Invoice Management,Manual Invoice Entry,User entry of customer invoices,Critical,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Core AR functionality,Manual entry works
+AR-051,Accounts Receivable,Invoice Management,Invoice Header,Invoice number date type amount tax,Critical,Medium,Not Started,AR-050,5,,Not Started,Not Started,Yes,Invoice identification,Header fields captured
+AR-052,Accounts Receivable,Invoice Management,Invoice Lines,Multiple line items per invoice,Critical,High,Not Started,AR-050,7,,Not Started,Not Started,Yes,Line detail,Lines can be entered
+AR-053,Accounts Receivable,Invoice Management,Invoice Distributions,GL account distributions for revenue,Critical,High,Not Started,AR-052 GL-040,7,,Not Started,Not Started,Yes,GL accounting,Distributions work
+AR-054,Accounts Receivable,Invoice Management,Multi-Currency Invoices,Foreign currency invoice entry,High,High,Not Started,AR-050 GL-091,7,,Not Started,Not Started,Yes,Global operations,Multi-currency works
+AR-055,Accounts Receivable,Invoice Management,Invoice Attachments,Attach supporting documents,Medium,Medium,Not Started,AR-050,5,,Not Started,Not Started,Yes,Supporting docs,Attachments functional
+AR-056,Accounts Receivable,Invoice Management,Invoice Templates,Reusable invoice templates,Medium,Medium,Not Started,AR-050,5,,Not Started,Not Started,Yes,Efficient entry,Templates work
+AR-060,Accounts Receivable,Invoice Creation,Auto-Invoice from Orders,Generate invoices from sales orders,Critical,High,Not Started,AR-050,9,,Not Started,Not Started,Yes,Order integration,Auto-invoice works
+AR-061,Accounts Receivable,Invoice Creation,Recurring Invoices,Template-based recurring billing,High,High,Not Started,AR-050,8,,Not Started,Not Started,Yes,Subscription billing,Recurring works
+AR-062,Accounts Receivable,Invoice Creation,Contract Billing,Milestone and time-based billing,Medium,High,Not Started,AR-050,9,,Not Started,Not Started,Yes,Project billing,Contract billing works
+AR-063,Accounts Receivable,Invoice Creation,Import Invoices,Import invoices from file,Medium,High,Not Started,AR-050,7,,Not Started,Not Started,Yes,Bulk processing,Import functional
+AR-070,Accounts Receivable,Invoice Printing,Invoice Template Configuration,Configure invoice templates,High,Medium,Not Started,AR-050,6,,Not Started,Not Started,Yes,Professional invoices,Templates configured
+AR-071,Accounts Receivable,Invoice Printing,Print Invoices,Print individual or batch invoices,High,Medium,Not Started,AR-070,5,,Not Started,Not Started,Yes,Invoice delivery,Printing works
+AR-072,Accounts Receivable,Invoice Printing,Email Invoices,Email invoice delivery to customers,Critical,Medium,Not Started,AR-070,6,,Not Started,Not Started,Yes,Electronic delivery,Email delivery works
+AR-073,Accounts Receivable,Invoice Printing,PDF Generation,Generate PDF invoices,High,Low,Not Started,AR-070,4,,Not Started,Not Started,Yes,Standard format,PDF generation works
+AR-074,Accounts Receivable,Invoice Printing,Multi-Language Invoices,Support multiple languages,Medium,Medium,Not Started,AR-070,6,,Not Started,Not Started,Yes,Global operations,Languages supported
+AR-080,Accounts Receivable,Invoice Approval,Approval Workflow,Multi-level invoice approval,High,High,Not Started,AR-050 UR-170,8,,Not Started,Not Started,Yes,Invoice control,Approval workflow works
+AR-081,Accounts Receivable,Invoice Approval,Amount-Based Routing,Route by invoice amount thresholds,Medium,Medium,Not Started,AR-080,5,,Not Started,Not Started,Yes,Approval efficiency,Routing works
+AR-090,Accounts Receivable,Invoice Holds,Credit Hold,Hold invoices for credit limit breach,Critical,High,Not Started,AR-050,7,,Not Started,Not Started,Yes,Credit control,Credit holds work
+AR-091,Accounts Receivable,Invoice Holds,Manual Hold,User-placed holds on invoices,High,Medium,Not Started,AR-050,5,,Not Started,Not Started,Yes,Invoice control,Manual holds work
+AR-092,Accounts Receivable,Invoice Holds,Collections Hold,Hold for delinquent accounts,High,Medium,Not Started,AR-050,5,,Not Started,Not Started,Yes,Collections control,Collections holds work
+AR-093,Accounts Receivable,Invoice Holds,Hold Release,Release holds when conditions met,High,Medium,Not Started,AR-090,6,,Not Started,Not Started,Yes,Invoice processing,Release functional
+AR-100,Accounts Receivable,Receipt Processing,Manual Receipt Entry,User entry of customer payments,Critical,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Cash collection,Receipt entry works
+AR-101,Accounts Receivable,Receipt Processing,Receipt Methods,Cash Check ACH Wire Credit Card,Critical,Low,Not Started,AR-100,4,,Not Started,Not Started,Yes,Payment types,Methods supported
+AR-102,Accounts Receivable,Receipt Processing,Multi-Currency Receipts,Foreign currency receipt processing,High,High,Not Started,AR-100 GL-091,7,,Not Started,Not Started,Yes,Global operations,Multi-currency works
+AR-103,Accounts Receivable,Receipt Processing,Receipt Accounting,GL posting for receipts,Critical,High,Not Started,AR-100 GL-180,8,,Not Started,Not Started,Yes,GL integration,Receipt posting works
+AR-110,Accounts Receivable,Receipt Application,Manual Application,User applies receipts to invoices,Critical,High,Not Started,AR-100,8,,Not Started,Not Started,Yes,Cash application,Manual application works
+AR-111,Accounts Receivable,Receipt Application,AutoCash,Automatic receipt matching and application,High,High,Not Started,AR-100,9,,Not Started,Not Started,Yes,Automation,AutoCash works
+AR-112,Accounts Receivable,Receipt Application,Apply to Oldest,Apply receipts to oldest invoices first,High,Low,Not Started,AR-110,4,,Not Started,Not Started,Yes,FIFO application,Oldest first works
+AR-113,Accounts Receivable,Receipt Application,Apply Discount,Apply early payment discounts,High,Medium,Not Started,AR-110,5,,Not Started,Not Started,Yes,Discount capture,Discount application works
+AR-114,Accounts Receivable,Receipt Application,Overpayment Handling,Handle overpayments (On-Account Refund),High,Medium,Not Started,AR-110,6,,Not Started,Not Started,Yes,Overpayment processing,Handling works
+AR-115,Accounts Receivable,Receipt Application,Partial Application,Apply partial payments,High,Low,Not Started,AR-110,4,,Not Started,Not Started,Yes,Payment flexibility,Partial application works
+AR-116,Accounts Receivable,Receipt Application,Cross-Currency Application,Apply foreign currency receipts,Medium,High,Not Started,AR-102,7,,Not Started,Not Started,Yes,Multi-currency,Cross-currency works
+AR-120,Accounts Receivable,Unidentified Receipts,On-Account Receipts,Handle unidentified receipts,High,Medium,Not Started,AR-100,6,,Not Started,Not Started,Yes,Receipt processing,On-account works
+AR-121,Accounts Receivable,Unidentified Receipts,Receipt Research,Research and identify receipts,Medium,Low,Not Started,AR-120,4,,Not Started,Not Started,Yes,Receipt identification,Research functional
+AR-122,Accounts Receivable,Unidentified Receipts,Reclassification,Reclassify to identified customer,Medium,Medium,Not Started,AR-120,5,,Not Started,Not Started,Yes,Correction capability,Reclassification works
+AR-130,Accounts Receivable,Receipt Reversals,Reverse Receipts,Reverse unapplied or applied receipts,High,High,Not Started,AR-100,7,,Not Started,Not Started,Yes,Error correction,Reversal works
+AR-131,Accounts Receivable,Receipt Reversals,NSF Processing,Handle non-sufficient funds,High,Medium,Not Started,AR-130,6,,Not Started,Not Started,Yes,NSF handling,NSF processing works
+AR-132,Accounts Receivable,Receipt Reversals,Reinstate Invoices,Reinstate invoice balances on reversal,High,Medium,Not Started,AR-130,5,,Not Started,Not Started,Yes,Balance restoration,Reinstatement works
+AR-140,Accounts Receivable,Credit Management,Credit Limit Setup,Define customer credit limits,Critical,Medium,Not Started,AR-001,6,,Not Started,Not Started,Yes,Credit control,Limits configured
+AR-141,Accounts Receivable,Credit Management,Credit Checking,Real-time credit check before transactions,Critical,High,Not Started,AR-140,8,,Not Started,Not Started,Yes,Credit enforcement,Checking works
+AR-142,Accounts Receivable,Credit Management,Credit Exposure Calculation,Calculate total credit exposure,Critical,High,Not Started,AR-141,7,,Not Started,Not Started,Yes,Accurate exposure,Calculation works
+AR-143,Accounts Receivable,Credit Management,Credit Hold Override,Override credit holds with authority,High,Medium,Not Started,AR-141,5,,Not Started,Not Started,Yes,Exception handling,Override works
+AR-144,Accounts Receivable,Credit Management,Credit Review,Periodic credit reviews and approvals,High,High,Not Started,AR-140,7,,Not Started,Not Started,Yes,Credit management,Review process works
+AR-145,Accounts Receivable,Credit Management,Risk Rating,Assign risk ratings to customers,Medium,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Risk management,Ratings assigned
+AR-150,Accounts Receivable,Collections,Collections Strategy,Define collections strategies,High,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Collections framework,Strategy defined
+AR-151,Accounts Receivable,Collections,Collector Assignment,Assign customers to collectors,High,Medium,Not Started,AR-150,6,,Not Started,Not Started,Yes,Workload distribution,Assignment works
+AR-152,Accounts Receivable,Collections,Collections Activities,Log and track collections activities,High,High,Not Started,AR-150,8,,Not Started,Not Started,Yes,Activity tracking,Logging works
+AR-153,Accounts Receivable,Collections,Promise to Pay,Track customer payment promises,High,Medium,Not Started,AR-152,6,,Not Started,Not Started,Yes,Commitment tracking,Promise tracking works
+AR-154,Accounts Receivable,Collections,Dispute Tracking,Track and resolve customer disputes,High,High,Not Started,AR-152,7,,Not Started,Not Started,Yes,Dispute resolution,Tracking works
+AR-155,Accounts Receivable,Collections,Collections Dashboard,Collections workbench and KPIs,Medium,High,Not Started,AR-150,8,,Not Started,Not Started,Yes,Collections visibility,Dashboard functional
+AR-156,Accounts Receivable,Collections,Payment Plans,Setup installment payment plans,Medium,High,Not Started,AR-001,7,,Not Started,Not Started,Yes,Payment flexibility,Plans work
+AR-160,Accounts Receivable,Adjustments,Account Adjustments,Adjust customer account balances,High,Medium,Not Started,AR-001,6,,Not Started,Not Started,Yes,Balance corrections,Adjustments work
+AR-161,Accounts Receivable,Adjustments,Adjustment Reasons,Categorize adjustment reasons,Medium,Low,Not Started,AR-160,3,,Not Started,Not Started,Yes,Adjustment classification,Reasons captured
+AR-162,Accounts Receivable,Adjustments,Adjustment Approval,Workflow for adjustment approvals,High,High,Not Started,AR-160 UR-170,7,,Not Started,Not Started,Yes,Controlled adjustments,Approval works
+AR-170,Accounts Receivable,Write-offs,Write-off Creation,Write off uncollectible balances,High,Medium,Not Started,AR-001,6,,Not Started,Not Started,Yes,Bad debt management,Write-offs work
+AR-171,Accounts Receivable,Write-offs,Write-off Approval,Approval workflow for write-offs,High,High,Not Started,AR-170 UR-170,7,,Not Started,Not Started,Yes,Authorization control,Approval works
+AR-172,Accounts Receivable,Write-offs,Small Balance Write-off,Automatic write-off of small balances,Medium,Medium,Not Started,AR-170,5,,Not Started,Not Started,Yes,Efficiency,Auto write-off works
+AR-173,Accounts Receivable,Write-offs,Write-off Recovery,Recover previously written-off amounts,Medium,Medium,Not Started,AR-170,6,,Not Started,Not Started,Yes,Recovery tracking,Recovery works
+AR-180,Accounts Receivable,Credit Memos,Credit Memo Creation,Issue credits to customers,Critical,High,Not Started,AR-050,8,,Not Started,Not Started,Yes,Credit processing,Credit memos created
+AR-181,Accounts Receivable,Credit Memos,Credit Application,Apply credits to invoices or balance,High,High,Not Started,AR-180,7,,Not Started,Not Started,Yes,Credit management,Application works
+AR-182,Accounts Receivable,Credit Memos,Credit Refund,Process refunds for credits,High,High,Not Started,AR-180,7,,Not Started,Not Started,Yes,Refund processing,Refunds work
+AR-183,Accounts Receivable,Credit Memos,Return Management,Link credits to return authorizations,Medium,Medium,Not Started,AR-180,6,,Not Started,Not Started,Yes,Return processing,RMA integration works
+AR-190,Accounts Receivable,Debit Memos,Debit Memo Creation,Issue additional charges to customers,Medium,Medium,Not Started,AR-050,6,,Not Started,Not Started,Yes,Additional billing,Debit memos created
+AR-191,Accounts Receivable,Debit Memos,Debit Reason Codes,Categorize debit reasons,Medium,Low,Not Started,AR-190,3,,Not Started,Not Started,Yes,Debit classification,Codes work
+AR-200,Accounts Receivable,Refunds,Refund Processing,Process refunds to customers,High,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Refund management,Refund processing works
+AR-201,Accounts Receivable,Refunds,Refund Approval,Approval workflow for refunds,High,High,Not Started,AR-200 UR-170,7,,Not Started,Not Started,Yes,Authorization control,Approval works
+AR-202,Accounts Receivable,Refunds,Refund Payment,Generate refund checks or transfers,High,Medium,Not Started,AR-200,6,,Not Started,Not Started,Yes,Payment execution,Refund payment works
+AR-210,Accounts Receivable,Aging Analysis,AR Aging Report,Age receivables by due date,Critical,Medium,Not Started,AR-050,6,,Not Started,Not Started,Yes,Collections tool,Aging report works
+AR-211,Accounts Receivable,Aging Analysis,Aging Buckets,Current 30 60 90 120+ day buckets,High,Low,Not Started,AR-210,3,,Not Started,Not Started,Yes,Standard aging,Buckets configured
+AR-212,Accounts Receivable,Aging Analysis,Forward Aging,Future-dated aging analysis,Medium,Medium,Not Started,AR-210,5,,Not Started,Not Started,Yes,Cash forecasting,Forward aging works
+AR-213,Accounts Receivable,Aging Analysis,Historical Snapshots,Store historical aging snapshots,Medium,Medium,Not Started,AR-210,6,,Not Started,Not Started,Yes,Trend analysis,Snapshots stored
+AR-220,Accounts Receivable,DSO Analysis,DSO Calculation,Calculate Days Sales Outstanding,High,Medium,Not Started,AR-050,6,,Not Started,Not Started,Yes,Performance metric,DSO calculated
+AR-221,Accounts Receivable,DSO Analysis,DSO Trending,Track DSO trends over time,Medium,Medium,Not Started,AR-220,5,,Not Started,Not Started,Yes,Performance tracking,Trending works
+AR-222,Accounts Receivable,DSO Analysis,DSO by Segment,Calculate DSO by customer segment,Medium,Medium,Not Started,AR-220,6,,Not Started,Not Started,Yes,Segment analysis,Segmentation works
+AR-230,Accounts Receivable,Dunning,Dunning Configuration,Setup dunning levels and templates,High,Medium,Not Started,AR-001,6,,Not Started,Not Started,Yes,Collections automation,Dunning configured
+AR-231,Accounts Receivable,Dunning,Dunning Execution,Generate and send dunning letters,High,High,Not Started,AR-230,7,,Not Started,Not Started,Yes,Automated dunning,Execution works
+AR-232,Accounts Receivable,Dunning,Dunning Email Delivery,Email dunning letters to customers,High,Medium,Not Started,AR-231,5,,Not Started,Not Started,Yes,Electronic delivery,Email delivery works
+AR-240,Accounts Receivable,Customer Statements,Statement Generation,Generate customer statements,High,Medium,Not Started,AR-001,6,,Not Started,Not Started,Yes,Customer communication,Statements generated
+AR-241,Accounts Receivable,Customer Statements,Statement Types,Open Item Balance Forward Consolidated,Medium,Medium,Not Started,AR-240,5,,Not Started,Not Started,Yes,Statement options,Types supported
+AR-242,Accounts Receivable,Customer Statements,Statement Delivery,Email or print delivery,High,Medium,Not Started,AR-240,5,,Not Started,Not Started,Yes,Statement distribution,Delivery works
+AR-250,Accounts Receivable,Tax Management,Tax Code Setup,Define tax codes and rates,High,Medium,Not Started,,5,,Not Started,Not Started,Yes,Tax compliance,Tax codes configured
+AR-251,Accounts Receivable,Tax Management,Tax Calculation,Automatic tax calculation on invoices,High,High,Not Started,AR-250,7,,Not Started,Not Started,Yes,Tax automation,Calculation works
+AR-252,Accounts Receivable,Tax Management,Tax Exemptions,Handle tax-exempt customers,Medium,Medium,Not Started,AR-250,5,,Not Started,Not Started,Yes,Exemption processing,Exemptions work
+AR-253,Accounts Receivable,Tax Management,Tax Reporting,Sales tax liability reports,High,High,Not Started,AR-250,7,,Not Started,Not Started,Yes,Tax compliance,Reporting works
+AR-260,Accounts Receivable,Revenue Recognition,Revenue Recognition Rules,Configure ASC 606 IFRS 15 rules,High,High,Not Started,AR-050,9,,Not Started,Not Started,Yes,Revenue compliance,Rules configured
+AR-261,Accounts Receivable,Revenue Recognition,Deferred Revenue,Calculate and track deferred revenue,High,High,Not Started,AR-260,8,,Not Started,Not Started,Yes,Revenue deferral,Deferral works
+AR-262,Accounts Receivable,Revenue Recognition,Revenue Recognition Processing,Automatic revenue recognition,High,High,Not Started,AR-260,8,,Not Started,Not Started,Yes,Automation,Processing works
+AR-263,Accounts Receivable,Revenue Recognition,Contract Management,Manage revenue contracts,Medium,High,Not Started,AR-260,9,,Not Started,Not Started,Yes,Contract tracking,Management works
+AR-270,Accounts Receivable,Lockbox,Lockbox Setup,Configure bank lockbox processing,Medium,High,Not Started,AR-100,8,,Not Started,Not Started,Yes,Automated receipts,Lockbox configured
+AR-271,Accounts Receivable,Lockbox,Lockbox Import,Import and process lockbox files,Medium,High,Not Started,AR-270,8,,Not Started,Not Started,Yes,File processing,Import works
+AR-272,Accounts Receivable,Lockbox,Lockbox Matching,Match lockbox receipts to invoices,Medium,High,Not Started,AR-271,8,,Not Started,Not Started,Yes,Auto-application,Matching works
+AR-280,Accounts Receivable,Period Close,AR Period Close,Month-end close procedures for AR,Critical,High,Not Started,AR-050,8,,Not Started,Not Started,Yes,Financial close,Close process works
+AR-281,Accounts Receivable,Period Close,Revenue Cutoff,Enforce revenue cutoff dates,Critical,Medium,Not Started,AR-280,6,,Not Started,Not Started,Yes,Accurate financials,Cutoff enforced
+AR-282,Accounts Receivable,Period Close,AR to GL Reconciliation,Reconcile AR subledger to GL,Critical,High,Not Started,AR-280 GL-180,8,,Not Started,Not Started,Yes,Data integrity,Reconciliation works
+AR-283,Accounts Receivable,Period Close,Deferred Revenue Calculation,Calculate period-end deferred revenue,High,High,Not Started,AR-280,7,,Not Started,Not Started,Yes,Revenue accuracy,Calculation works
+AR-290,Accounts Receivable,Reporting,Invoice Register,Detailed invoice listing report,High,Low,Not Started,AR-050,4,,Not Started,Not Started,Yes,Transaction detail,Register works
+AR-291,Accounts Receivable,Reporting,Receipt Register,Detailed receipt listing report,High,Low,Not Started,AR-100,4,,Not Started,Not Started,Yes,Cash detail,Register works
+AR-292,Accounts Receivable,Reporting,Customer Balance Report,Current balance by customer,High,Low,Not Started,AR-001,4,,Not Started,Not Started,Yes,Balance inquiry,Report works
+AR-293,Accounts Receivable,Reporting,Collections Activity Report,Collections activities and outcomes,High,Medium,Not Started,AR-152,5,,Not Started,Not Started,Yes,Activity tracking,Report works
+AR-294,Accounts Receivable,Reporting,Revenue Report,Revenue by customer product period,High,Medium,Not Started,AR-050,6,,Not Started,Not Started,Yes,Revenue analysis,Report works
+AR-300,Accounts Receivable,Analytics,Revenue Analytics,Analyze revenue trends and patterns,Medium,High,Not Started,AR-050,8,,Not Started,Not Started,Yes,Business intelligence,Analytics work
+AR-301,Accounts Receivable,Analytics,Customer Profitability,Analyze customer profitability,Medium,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Profitability analysis,Analysis works
+AR-302,Accounts Receivable,Analytics,Collections Effectiveness,Measure collections performance,Medium,High,Not Started,AR-150,7,,Not Started,Not Started,Yes,Performance metrics,Measurement works
+AR-303,Accounts Receivable,Analytics,Cash Forecast,Forecast cash collections,Medium,High,Not Started,AR-210,8,,Not Started,Not Started,Yes,Cash planning,Forecast works
+AR-310,Accounts Receivable,Customer Portal,Portal Access,Customer self-service portal,Medium,High,Not Started,AR-001,9,,Not Started,Not Started,Yes,Customer self-service,Portal functional
+AR-311,Accounts Receivable,Customer Portal,Invoice Inquiry,Customers view invoice status,Medium,Medium,Not Started,AR-310,6,,Not Started,Not Started,Yes,Customer visibility,Inquiry works
+AR-312,Accounts Receivable,Customer Portal,Online Payment,Process online customer payments,High,High,Not Started,AR-310,9,,Not Started,Not Started,Yes,Payment convenience,Online payment works
+AR-313,Accounts Receivable,Customer Portal,Statement Download,Customers download statements,Medium,Low,Not Started,AR-310,4,,Not Started,Not Started,Yes,Self-service,Download works
+AR-320,Accounts Receivable,Integration,GL Integration,Post AR transactions to GL,Critical,High,Not Started,GL-200,9,,Not Started,Not Started,Yes,Financial integration,GL posting works
+AR-321,Accounts Receivable,Integration,Order Management Integration,Integrate with sales orders,Critical,High,Not Started,AR-060,9,,Not Started,Not Started,Yes,Order to cash,OM integration works
+AR-322,Accounts Receivable,Integration,Cash Management Integration,Integrate with cash management,High,High,Not Started,AR-100,8,,Not Started,Not Started,Yes,Cash visibility,CM integration works
+AR-330,Accounts Receivable,Advanced Features,Credit Card Processing,Process credit card payments,High,High,Not Started,AR-100,9,,Not Started,Not Started,Yes,Payment option,CC processing works
+AR-331,Accounts Receivable,Advanced Features,Electronic Invoicing,EDI and XML invoice delivery,Medium,High,Not Started,AR-050,8,,Not Started,Not Started,Yes,Automation,E-invoicing works
+AR-332,Accounts Receivable,Advanced Features,Predictive Collections,AI-powered collections prioritization,Low,High,Not Started,AR-150,10,,Not Started,Not Started,No,Advanced analytics,Prediction works
+AR-340,Accounts Receivable,Security,AR Roles,Predefined AR roles (Manager Clerk Collector),Critical,Medium,Not Started,UR-025,5,,Not Started,Not Started,Yes,Access control,Roles configured
+AR-341,Accounts Receivable,Security,Approval Limits,Invoice adjustment write-off approval limits,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Authorization control,Limits enforced
+AR-342,Accounts Receivable,Security,Data Security,Business unit and customer data access,High,High,Not Started,UR-040,7,,Not Started,Not Started,Yes,Data isolation,Security enforced
+AR-343,Accounts Receivable,Security,Audit Trail,Complete AR activity audit trail,Critical,Medium,Not Started,UR-140,6,,Not Started,Not Started,Yes,Compliance,Audit trail complete
+AR-350,Accounts Receivable,Technical,Performance,Support high-volume invoice processing,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Scalability,Performance requirements met
+AR-351,Accounts Receivable,Technical,API Integration,REST APIs for AR operations,High,High,Not Started,,9,,Not Started,Not Started,Yes,System integration,APIs functional
+AR-360,Accounts Receivable,Compliance,Revenue Recognition Compliance,ASC 606 IFRS 15 compliance,High,High,Not Started,AR-260,8,,Not Started,Not Started,Yes,Revenue standards,Compliance met
+AR-361,Accounts Receivable,Compliance,SOX Compliance,SOX controls for AR,High,High,Not Started,UR-271,7,,Not Started,Not Started,Yes,Regulatory compliance,SOX compliant
+AR-362,Accounts Receivable,Compliance,Tax Compliance,Sales tax reporting and compliance,High,High,Not Started,AR-253,8,,Not Started,Not Started,Yes,Tax requirements,Compliance met

@@ -1,0 +1,84 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+REC-001,Recruitment,Requisitions,Job Requisitions,Create and manage job requisitions,Critical,High,Not Started,HCM-011,9,,,Yes,,Requisition from open positions
+REC-002,Recruitment,Requisitions,Position Details,Define position requirements,Critical,Medium,Not Started,REC-001,6,,,Yes,,Job specs and qualifications
+REC-003,Recruitment,Requisitions,Approval Workflow,Multi-level req approval,Critical,Medium,Not Started,UR-060,7,,,Yes,,Budget and hiring manager approval
+REC-010,Recruitment,Job Posting,Posting Creation,Create job postings,Critical,High,Not Started,REC-001,8,,,Yes,,Customizable job posts
+REC-011,Recruitment,Job Posting,Job Boards Integration,Post to multiple job boards,Critical,High,Not Started,REC-010,10,,,Yes,,Indeed LinkedIn Glassdoor integration
+REC-012,Recruitment,Job Posting,Internal Postings,Internal job posting before external,High,Medium,Not Started,REC-010,6,,,Yes,,Employee internal applications
+REC-020,Recruitment,Candidates,Applications,Online application forms,Critical,High,Not Started,REC-010,10,,,Yes,,Resume upload and custom questions
+REC-021,Recruitment,Candidates,Resume Parsing,Automatic resume parsing,High,High,Not Started,REC-020,11,,,Yes,,Extract contact work history education
+REC-022,Recruitment,Candidates,Screening,Candidate screening and knockout,Critical,High,Not Started,REC-020,9,,,Yes,,Automated screening scores
+REC-030,Recruitment,Pipeline,Pipeline Stages,Define recruitment pipeline stages,Critical,Medium,Not Started,REC-020,7,,,Yes,,Applied Phone Screen Interview Offer Hired
+REC-031,Recruitment,Pipeline,Candidate Status,Update candidate status,Critical,Medium,Not Started,REC-030,6,,,Yes,,Move through pipeline with history
+REC-032,Recruitment,Pipeline,Communication,Candidate email communications,Critical,High,Not Started,REC-031,9,,,Yes,,Templates and automated responses
+REC-040,Recruitment,Interviews,Interview Scheduling,Schedule candidate interviews,Critical,High,Not Started,REC-030,10,,,Yes,,Calendar integration and reminders
+REC-041,Recruitment,Interviews,Interview Guides,Create interview templates,High,Medium,Not Started,REC-040,7,,,Yes,,Competency and behavioral questions
+REC-042,Recruitment,Interviews,Interview Feedback,Collect interviewer feedback,Critical,Medium,Not Started,REC-040,8,,,Yes,,Scorecards and recommendations
+REC-050,Recruitment,Assessment,Skills Assessment,Administer skills tests,High,High,Not Started,REC-022,9,,,Yes,,Technical and cognitive assessments
+REC-051,Recruitment,Assessment,Background Checks,Initiate background screening,Critical,High,Not Started,REC-060,10,,,Yes,,Integration with screening providers
+REC-052,Recruitment,Assessment,Reference Checks,Conduct reference checks,High,Medium,Not Started,REC-051,6,,,Yes,,Reference questionnaires and tracking
+REC-060,Recruitment,Offers,Offer Creation,Generate offer letters,Critical,High,Not Started,REC-042,9,,,Yes,,Compensation details and e-signature
+REC-061,Recruitment,Offers,Offer Tracking,Track offer status,Critical,Medium,Not Started,REC-060,6,,,Yes,,Accepted declined withdrawn tracking
+REC-062,Recruitment,Offers,Onboarding Handoff,Transfer to HCM onboarding,Critical,High,Not Started,HCM-070,9,,,Yes,,Candidate to employee conversion
+REC-070,Recruitment,Experience,Careers Site,Branded careers website,High,High,Not Started,REC-011,11,,,Yes,,Mobile-optimized job search and apply
+REC-071,Recruitment,Experience,Candidate Portal,Candidate self-service portal,High,High,Not Started,REC-020,10,,,Yes,,Application status and profile updates
+REC-072,Recruitment,Experience,Talent Community,Talent network management,Medium,Medium,Not Started,REC-071,7,,,No,,Passive candidate engagement
+REC-080,Recruitment,Analytics,Standard Reports,Recruitment reports,Critical,Medium,Not Started,REC-061,7,,,Yes,,Time to fill cost per hire and pipeline
+REC-081,Recruitment,Analytics,Dashboards,Recruitment dashboards,High,Medium,Not Started,REC-080,8,,,No,,Real-time pipeline and metrics
+REC-090,Recruitment,Compliance,EEO Compliance,OFCCP and EEO compliance,Critical,High,Not Started,HCM-090,9,,,Yes,,Applicant flow logs and adverse impact
+REC-091,Recruitment,Compliance,Data Privacy,GDPR and data privacy,Critical,High,Not Started,HCM-100-1,8,,,Yes,,Candidate consent and right to erasure
+REC-100,Recruitment,Integration,HCM Integration,Integration with HCM module,Critical,High,Not Started,HCM-102,10,,,Yes,,Open positions and new hire sync
+REC-101,Recruitment,Integration,Payroll Integration,New hire payroll setup,High,High,Not Started,PAY-090,8,,,Yes,,Transfer compensation and tax data
+REC-102,Recruitment,Integration,Background Integration,Background check provider integration,High,High,Not Started,REC-051,9,,,Yes,,API integration for screening
+REC-103,Recruitment,Integration,Assessment Integration,Assessment platform integration,Medium,High,Not Started,REC-050,9,,,Yes,,Skills test integration
+REC-104,Recruitment,Integration,Job Board Integration,Job board API integration,High,High,Not Started,REC-011,10,,,Yes,,Automated posting and application import
+REC-004,Recruitment,Requisitions,Requisition Templates,Job req templates,Medium,Low,Not Started,REC-001,4,,,Yes,,Reusable requisition templates
+REC-013,Recruitment,Job Posting,Social Media Posting,Share to social media,Medium,Medium,Not Started,REC-011,6,,,Yes,,LinkedIn Twitter Facebook integration
+REC-023,Recruitment,Candidates,Duplicate Detection,Detect duplicate candidates,High,Medium,Not Started,REC-021,6,,,Yes,,Match by email phone resume
+REC-033,Recruitment,Pipeline,Bulk Actions,Bulk candidate actions,High,Medium,Not Started,REC-031,6,,,Yes,,Mass status updates and communications
+REC-043,Recruitment,Interviews,Panel Interviews,Multi-interviewer scheduling,High,High,Not Started,REC-040,8,,,Yes,,Coordinate multiple interviewers
+REC-053,Recruitment,Assessment,Drug Screening,Drug test integration,Medium,Medium,Not Started,REC-051,6,,,Yes,,Schedule and track drug tests
+REC-063,Recruitment,Offers,Offer Approval,Approve offers before sending,Critical,Medium,Not Started,REC-060,6,,,Yes,,Multi-level offer approval
+REC-073,Recruitment,Experience,Mobile Apply,Mobile application experience,High,High,Not Started,REC-020,9,,,Yes,,Mobile-optimized application forms
+REC-082,Recruitment,Analytics,Source Tracking,Track candidate sources,High,Medium,Not Started,REC-020,6,,,Yes,,Job board referral source effectiveness
+REC-092,Recruitment,Compliance,Applicant Data Retention,Manage data retention,High,Medium,Not Started,REC-091,6,,,Yes,,Automated purging per policy
+REC-005,Recruitment,Requisitions,Headcount Budget,Track headcount and budget,High,Medium,Not Started,REC-001,6,,,Yes,,Budget vs actual hiring
+REC-014,Recruitment,Job Posting,Posting Analytics,Job posting performance,Medium,Low,Not Started,REC-011,5,,,Yes,,Views clicks and applies by posting
+REC-024,Recruitment,Candidates,Talent Pools,Segment candidates into pools,Medium,Medium,Not Started,REC-020,6,,,Yes,,Passive candidates and silver medalists
+REC-034,Recruitment,Pipeline,Automated Nurture,Automated candidate nurture,Low,High,Not Started,REC-032,8,,,No,,Drip email campaigns
+REC-044,Recruitment,Interviews,Video Interviews,Video interview platform,Medium,High,Not Started,REC-040,10,,,Yes,,Integration with Zoom Teams
+REC-054,Recruitment,Assessment,Cultural Fit,Culture fit assessments,Low,Medium,Not Started,REC-050,6,,,No,,Values alignment testing
+REC-064,Recruitment,Offers,Offer Negotiation,Track offer negotiations,Medium,Low,Not Started,REC-061,4,,,Yes,,Counter-offer and revision history
+REC-074,Recruitment,Experience,Job Alerts,Job alert subscriptions,Medium,Medium,Not Started,REC-070,6,,,Yes,,Email alerts for matching jobs
+REC-083,Recruitment,Analytics,Quality of Hire,Track quality of hire metrics,Medium,High,Not Started,HCM-030,9,,,No,,Performance ratings of new hires
+REC-093,Recruitment,Compliance,Affirmative Action,Affirmative action planning,Medium,High,Not Started,REC-090,8,,,Yes,,OFCCP AAP support
+REC-006,Recruitment,Requisitions,Clone Requisitions,Clone from previous reqs,Low,Low,Not Started,REC-001,3,,,Yes,,Duplicate with edits
+REC-015,Recruitment,Job Posting,Posting Expiration,Auto-expire job postings,Medium,Low,Not Started,REC-010,4,,,Yes,,Auto-close after date or filled
+REC-025,Recruitment,Candidates,Resume Database Search,Search resume database,High,High,Not Started,REC-021,9,,,Yes,,Boolean search and filters
+REC-035,Recruitment,Pipeline,Pipeline Reports,Pipeline funnel reports,High,Medium,Not Started,REC-030,6,,,Yes,,Conversion rates by stage
+REC-045,Recruitment,Interviews,Interview Kits,Prepare interview kits,Low,Low,Not Started,REC-041,4,,,Yes,,Candidate packet for interviewers
+REC-055,Recruitment,Assessment,Assessment Vendors,Multi-vendor support,Low,High,Not Started,REC-103,8,,,Yes,,HireVue Criteria etc
+REC-065,Recruitment,Offers,Pre-Boarding,Pre-boarding communications,Medium,Medium,Not Started,REC-062,6,,,Yes,,Engage between accept and start
+REC-075,Recruitment,Experience,Candidate NPS,Candidate experience surveys,Low,Medium,Not Started,REC-071,5,,,No,,Post-process feedback and NPS
+REC-084,Recruitment,Analytics,Diversity Analytics,Diversity hiring metrics,High,Medium,Not Started,REC-090,7,,,No,,Pipeline diversity analysis
+REC-094,Recruitment,Compliance,Adverse Impact Analysis,Monitor adverse impact,High,High,Not Started,REC-090,9,,,No,,Four-fifths rule analysis
+REC-007,Recruitment,Requisitions,Evergreen Reqs,Continuous recruiting reqs,Low,Medium,Not Started,REC-001,5,,,Yes,,Always-on requisitions
+REC-016,Recruitment,Job Posting,SEO Optimization,Optimize job posts for search,Low,Medium,Not Started,REC-010,5,,,No,,Keywords and structured data
+REC-026,Recruitment,Candidates,Candidate Tags,Tag and categorize candidates,Medium,Low,Not Started,REC-020,4,,,Yes,,Custom tagging for segmentation
+REC-036,Recruitment,Pipeline,Disqualification Reasons,Track rejection reasons,High,Low,Not Started,REC-031,4,,,Yes,,Standardized disposition codes
+REC-046,Recruitment,Interviews,Interview Availability,Candidate availability matching,Medium,Medium,Not Started,REC-040,6,,,Yes,,Self-scheduling options
+REC-056,Recruitment,Assessment,Work Samples,Work sample assessments,Low,Medium,Not Started,REC-050,6,,,Yes,,Job-specific work tasks
+REC-066,Recruitment,Offers,Offer Templates,Offer letter templates,High,Low,Not Started,REC-060,4,,,Yes,,Customizable offer templates
+REC-076,Recruitment,Experience,Referral Program,Employee referral tracking,High,Medium,Not Started,REC-012,7,,,Yes,,Referral bonuses and tracking
+REC-085,Recruitment,Analytics,Recruiter Metrics,Recruiter performance metrics,Medium,Low,Not Started,REC-080,5,,,Yes,,Requisitions per recruiter time to fill
+REC-095,Recruitment,Compliance,Veteran Preference,Track veteran preference,Medium,Low,Not Started,REC-090,4,,,Yes,,VEVRAA compliance
+REC-008,Recruitment,Requisitions,Requisition History,Historical requisition data,Medium,Low,Not Started,REC-001,4,,,Yes,,Archive and reporting
+REC-017,Recruitment,Job Posting,Multi-Language Posts,Post in multiple languages,Low,High,Not Started,REC-010,8,,,Yes,,Localized job postings
+REC-027,Recruitment,Candidates,Candidate Notes,Recruiter notes and comments,High,Low,Not Started,REC-020,3,,,Yes,,Private and shared notes
+REC-037,Recruitment,Pipeline,Silver Medal Program,Track near-hire candidates,Medium,Medium,Not Started,REC-024,6,,,Yes,,Future opportunity pipeline
+REC-047,Recruitment,Interviews,Interview Scorecards,Standardized scorecards,High,Medium,Not Started,REC-042,6,,,Yes,,Weighted criteria and scoring
+REC-057,Recruitment,Assessment,Simulation Exercises,Job simulation assessments,Low,High,Not Started,REC-056,8,,,No,,Realistic job previews
+REC-067,Recruitment,Offers,Offer Decline Analysis,Analyze offer declines,Medium,Medium,Not Started,REC-061,5,,,No,,Reasons and trends
+REC-077,Recruitment,Experience,Campus Recruiting,Campus recruitment features,Medium,High,Not Started,REC-070,9,,,Yes,,University events and interns
+REC-086,Recruitment,Analytics,Hiring Velocity,Track hiring velocity,Medium,Low,Not Started,REC-080,5,,,Yes,,Time from req to start
+REC-096,Recruitment,Compliance,Ban the Box,Support ban the box laws,Low,Medium,Not Started,REC-020,5,,,Yes,,Delay criminal history questions
