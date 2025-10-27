@@ -166,10 +166,33 @@ const Utils = {
 
 // ===== Data Loading Functions =====
 const DataLoader = {
+    // Wait for C# data injection (with timeout)
+    async waitForCSharpData(maxWaitMs = 5000) {
+        const startTime = Date.now();
+        while (!window.CSHARP_DATA) {
+            if (Date.now() - startTime > maxWaitMs) {
+                console.warn('Timeout waiting for C# data injection');
+                return false;
+            }
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        console.log('C# data injection detected!');
+        return true;
+    },
+
     // Load all data
     async loadAllData() {
         try {
             console.log('Loading all data...');
+
+            // Wait for C# data injection if not already available
+            if (!window.CSHARP_DATA) {
+                console.log('Waiting for C# data injection...');
+                const dataAvailable = await this.waitForCSharpData();
+                if (!dataAvailable) {
+                    console.error('Failed to load C# data - will try CSV fallback');
+                }
+            }
 
             // Check if data was injected by C# application
             if (window.CSHARP_DATA) {
