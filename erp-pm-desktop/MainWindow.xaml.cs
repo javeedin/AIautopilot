@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V2.1";
+        private const string VERSION = "V2.2";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -122,7 +122,7 @@ namespace ERPProjectManager
                     return;
                 }
                 Log("Repository ready");
-                Log($"Expected JavaScript version in repository: V1.7 (should match {VERSION})");
+                Log($"Application version: {VERSION} | JavaScript version: V1.7");
 
                 // Setup module URLs
                 Log("Setting up module URLs");
@@ -378,9 +378,9 @@ namespace ERPProjectManager
                     Log("Navigation successful, injecting CSV data...");
                     await InjectCsvData(webView);
 
-                    // Open DevTools automatically to see console
-                    Log("Opening DevTools for debugging...");
-                    webView.CoreWebView2.OpenDevToolsWindow();
+                    // DevTools can be opened manually via the DevTools button
+                    // Auto-opening disabled to prevent window confusion
+                    Log("Page loaded successfully. Use DevTools button if debugging needed.");
                 }
             };
 
