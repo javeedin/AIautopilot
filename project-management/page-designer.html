@@ -545,7 +545,7 @@
                 <h1 class="logo">ERP PM</h1>
                 <p class="logo-subtitle">Project Manager v2.0</p>
                 <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
-                    ✅ DESIGNER v2.1.1
+                    ✅ DESIGNER v2.2 APEX
                 </div>
             </div>
 
@@ -699,39 +699,51 @@
                 <button class="modal-close" onclick="closeModal('addItemModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="property-field">
-                    <label class="property-label">Item Name</label>
-                    <input type="text" class="property-input" id="itemName" placeholder="e.g., P1_CUSTOMER_NAME">
-                    <div class="property-help">Use format: P{page}_{column_name}</div>
+                <!-- Table Info Banner -->
+                <div id="tableInfoBanner" style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 12px; margin-bottom: 16px; display: none;">
+                    <div style="font-size: 12px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">📊 Base Table</div>
+                    <div id="tableInfoText" style="font-size: 13px; color: #3b82f6;"></div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Columns from this table are available below</div>
                 </div>
+
                 <div class="property-field">
-                    <label class="property-label">Label</label>
-                    <input type="text" class="property-input" id="itemLabel" placeholder="e.g., Customer Name">
-                </div>
-                <div class="property-field">
-                    <label class="property-label">Item Type</label>
-                    <select class="property-select" id="itemType">
-                        <option value="text">Text Field</option>
-                        <option value="number">Number Field</option>
-                        <option value="date">Date Picker</option>
-                        <option value="textarea">Text Area</option>
-                        <option value="select">Select List</option>
-                        <option value="checkbox">Checkbox</option>
-                        <option value="radio">Radio Group</option>
+                    <label class="property-label">Database Column (Source) *</label>
+                    <select class="property-select" id="itemColumn" onchange="autoFillFromColumn()">
+                        <option value="">-- Select Column from Table --</option>
                     </select>
+                    <div class="property-help">⚡ Selecting a column will auto-fill the fields below</div>
                 </div>
-                <div class="property-field">
-                    <label class="property-label">Database Column</label>
-                    <select class="property-select" id="itemColumn">
-                        <option value="">-- Select Column --</option>
-                    </select>
-                    <div class="property-help">Bind this item to a database column</div>
-                </div>
-                <div class="property-field">
-                    <label>
-                        <input type="checkbox" class="property-checkbox" id="itemRequired">
-                        Required
-                    </label>
+
+                <div style="border-top: 1px solid #e2e8f0; margin: 16px 0; padding-top: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 12px;">ITEM PROPERTIES</div>
+
+                    <div class="property-field">
+                        <label class="property-label">Item Name</label>
+                        <input type="text" class="property-input" id="itemName" placeholder="e.g., P1_CUSTOMER_NAME">
+                        <div class="property-help">Format: P{page}_{column_name}</div>
+                    </div>
+                    <div class="property-field">
+                        <label class="property-label">Label</label>
+                        <input type="text" class="property-input" id="itemLabel" placeholder="e.g., Customer Name">
+                    </div>
+                    <div class="property-field">
+                        <label class="property-label">Item Type</label>
+                        <select class="property-select" id="itemType">
+                            <option value="text">Text Field</option>
+                            <option value="number">Number Field</option>
+                            <option value="date">Date Picker</option>
+                            <option value="textarea">Text Area</option>
+                            <option value="select">Select List</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="radio">Radio Group</option>
+                        </select>
+                    </div>
+                    <div class="property-field">
+                        <label>
+                            <input type="checkbox" class="property-checkbox" id="itemRequired">
+                            Required
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -789,12 +801,13 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=================================================');
-            console.log('🎨 PAGE DESIGNER v2.1.1 - LOADED AT:', new Date().toLocaleTimeString());
-            console.log('🔥 BUILD:', 'Nov-2025-FINAL');
+            console.log('🎨 PAGE DESIGNER v2.2 APEX-STYLE - LOADED AT:', new Date().toLocaleTimeString());
+            console.log('🔥 BUILD:', 'Nov-2025-APEX');
+            console.log('✨ Features: Auto-fill, Table-aware columns, APEX UX');
             console.log('=================================================');
 
             // Force clear any inline styles that might be cached
-            document.body.setAttribute('data-version', '2.1.1');
+            document.body.setAttribute('data-version', '2.2-apex');
 
             loadPageFromURL();
         });
@@ -955,12 +968,32 @@
             const canvas = document.getElementById('canvasContent');
 
             if (regions.length === 0) {
+                const baseTableInfo = pageDefinition.baseTable
+                    ? `<div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin: 20px auto; max-width: 400px;">
+                        <div style="font-size: 12px; color: #1e40af; font-weight: 600;">📊 Base Table Selected</div>
+                        <div style="font-size: 14px; color: #3b82f6; margin-top: 4px;">${pageDefinition.baseTable.tableName}</div>
+                        <div style="font-size: 11px; color: #64748b; margin-top: 4px;">You can now add items bound to columns from this table</div>
+                       </div>`
+                    : '<div style="color: #f59e0b; margin: 20px auto; max-width: 400px; text-align: center;">⚠️ No base table selected. You can still add items manually.</div>';
+
                 canvas.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">🎨</div>
-                        <h3 style="font-size: 18px; margin-bottom: 8px; color: #666;">Start Designing</h3>
-                        <p>Add regions and items to build your page</p>
-                        <button class="btn btn-primary" style="margin-top: 16px;" onclick="showAddRegionModal()">+ Add Region</button>
+                        <h3 style="font-size: 20px; margin-bottom: 12px; color: #1e293b;">Welcome to Page Designer</h3>
+                        <p style="color: #64748b; margin-bottom: 8px;">Build your page step by step, just like Oracle APEX</p>
+                        ${baseTableInfo}
+                        <div style="margin-top: 24px; padding: 20px; background: #f8f9fa; border-radius: 8px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            <div style="font-weight: 600; margin-bottom: 12px; color: #475569;">Quick Start Guide:</div>
+                            <ol style="text-align: left; color: #64748b; line-height: 1.8;">
+                                <li><strong>Add a Region</strong> - Container for your items (Form, Report, Tabs)</li>
+                                <li><strong>Add Items</strong> - Fields bound to database columns</li>
+                                <li><strong>Add Buttons</strong> - Actions like Save, Cancel, Delete</li>
+                                <li><strong>Save Your Design</strong> - Click the green Save button</li>
+                            </ol>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 24px; padding: 12px 32px; font-size: 15px;" onclick="showAddRegionModal()">
+                            + Add Your First Region
+                        </button>
                     </div>
                 `;
                 return;
@@ -1266,14 +1299,70 @@
             document.getElementById('itemType').value = 'text';
             document.getElementById('itemRequired').checked = false;
 
-            // Populate column dropdown
+            // Show table info banner if base table exists
+            const tableInfoBanner = document.getElementById('tableInfoBanner');
+            const tableInfoText = document.getElementById('tableInfoText');
+
+            if (pageDefinition.baseTable && pageDefinition.baseTable.tableName) {
+                tableInfoBanner.style.display = 'block';
+                tableInfoText.textContent = `${pageDefinition.baseTable.tableName} (${tableColumns.length} columns available)`;
+            } else {
+                tableInfoBanner.style.display = 'none';
+            }
+
+            // Populate column dropdown - ONLY from selected base table
             const columnSelect = document.getElementById('itemColumn');
-            columnSelect.innerHTML = '<option value="">-- Select Column --</option>';
-            tableColumns.forEach(col => {
-                columnSelect.innerHTML += `<option value="${col.name}">${col.name} (${col.type})</option>`;
-            });
+            columnSelect.innerHTML = '<option value="">-- Select Column from Table --</option>';
+
+            if (tableColumns.length === 0) {
+                columnSelect.innerHTML += '<option value="" disabled>⚠️ No base table selected or no columns found</option>';
+            } else {
+                tableColumns.forEach(col => {
+                    const dataType = col.type || col.data_type || 'VARCHAR2';
+                    columnSelect.innerHTML += `<option value="${col.name}">${col.name} (${dataType})</option>`;
+                });
+            }
 
             document.getElementById('addItemModal').classList.add('show');
+        }
+
+        // Auto-fill item properties from selected column
+        function autoFillFromColumn() {
+            const columnSelect = document.getElementById('itemColumn');
+            const selectedColumn = columnSelect.value;
+
+            if (!selectedColumn) return;
+
+            // Find the column object
+            const column = tableColumns.find(c => c.name === selectedColumn);
+            if (!column) return;
+
+            // Auto-fill Item Name: P1_COLUMN_NAME
+            const itemName = 'P1_' + selectedColumn;
+            document.getElementById('itemName').value = itemName;
+
+            // Auto-fill Label: Convert CUSTOMER_NAME to "Customer Name"
+            const label = selectedColumn
+                .split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+            document.getElementById('itemLabel').value = label;
+
+            // Auto-select item type based on data type
+            const dataType = (column.type || column.data_type || '').toUpperCase();
+            let itemType = 'text'; // default
+
+            if (dataType.includes('NUMBER') || dataType.includes('INT')) {
+                itemType = 'number';
+            } else if (dataType.includes('DATE') || dataType.includes('TIMESTAMP')) {
+                itemType = 'date';
+            } else if (dataType.includes('CLOB') || dataType.includes('TEXT')) {
+                itemType = 'textarea';
+            }
+
+            document.getElementById('itemType').value = itemType;
+
+            console.log('Auto-filled from column:', selectedColumn, '-> Item:', itemName, 'Label:', label, 'Type:', itemType);
         }
 
         function showAddButtonModal() {
