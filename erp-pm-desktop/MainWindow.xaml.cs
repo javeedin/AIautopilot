@@ -344,7 +344,7 @@ namespace ERPProjectManager
                 Log($"NavigationStarting: {e.Uri}");
             };
 
-            webView.CoreWebView2.NavigationCompleted += (s, e) =>
+            webView.CoreWebView2.NavigationCompleted += async (s, e) =>
             {
                 Log($"NavigationCompleted: Success={e.IsSuccess}, HttpStatus={e.HttpStatusCode}");
                 if (!e.IsSuccess)
@@ -353,6 +353,10 @@ namespace ERPProjectManager
                 }
                 else
                 {
+                    // Inject CSV data to avoid CORS issues
+                    Log("Navigation successful, injecting CSV data...");
+                    await InjectCsvData(webView);
+
                     // Open DevTools automatically to see console
                     Log("Opening DevTools for debugging...");
                     webView.CoreWebView2.OpenDevToolsWindow();
@@ -444,6 +448,141 @@ namespace ERPProjectManager
                 MessageBox.Show($"Git operation failed: {ex.Message}",
                     "Git Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        // ===== CSV Data Injection =====
+
+        private async Task InjectCsvData(WebView2 webView)
+        {
+            try
+            {
+                Log("Reading CSV files from disk...");
+
+                // Read validation summary
+                var validationSummary = await ReadCsvFile(Path.Combine(localRepoPath, "docs/tracking/Feature_Validation_Summary.csv"));
+                Log($"Loaded {validationSummary.Count} validation summary records");
+
+                // Read pages
+                var pages = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Application_Pages_Inventory.csv"));
+                Log($"Loaded {pages.Count} pages");
+
+                // Read tables
+                var tables = await ReadCsvFile(Path.Combine(localRepoPath, "docs/requirements/Database_Tables_Master.csv"));
+                Log($"Loaded {tables.Count} tables");
+
+                // Read validation details for each module
+                var validations = new Dictionary<string, List<Dictionary<string, string>>>();
+                string[] modules = { "GL", "UR", "AP", "AR", "PO", "INV", "OM", "CM", "LCM", "PDM", "CSH", "FA", "HCM", "PAY", "ABS", "REC" };
+
+                foreach (var module in modules)
+                {
+                    var modulePath = Path.Combine(localRepoPath, $"docs/tracking/feature_validation/{module}_Feature_Validation.csv");
+                    if (File.Exists(modulePath))
+                    {
+                        validations[module] = await ReadCsvFile(modulePath);
+                        Log($"Loaded {validations[module].Count} features for module {module}");
+                    }
+                    else
+                    {
+                        Log($"WARNING: Module validation file not found: {modulePath}");
+                        validations[module] = new List<Dictionary<string, string>>();
+                    }
+                }
+
+                // Build the data object
+                var data = new
+                {
+                    validationSummary,
+                    pages,
+                    tables,
+                    validations
+                };
+
+                // Serialize to JSON
+                string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                Log($"Serialized data to JSON ({jsonData.Length} characters)");
+
+                // Inject into WebView2
+                string script = $"window.CSHARP_DATA = {jsonData}; console.log('C# data injected successfully!');";
+                await webView.CoreWebView2.ExecuteScriptAsync(script);
+                Log("CSV data injected into WebView2 successfully!");
+            }
+            catch (Exception ex)
+            {
+                Log($"ERROR injecting CSV data: {ex.Message}");
+                MessageBox.Show($"Error loading CSV data:\n\n{ex.Message}\n\n{ex.StackTrace}",
+                    "Data Loading Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async Task<List<Dictionary<string, string>>> ReadCsvFile(string filePath)
+        {
+            var result = new List<Dictionary<string, string>>();
+
+            if (!File.Exists(filePath))
+            {
+                Log($"CSV file not found: {filePath}");
+                return result;
+            }
+
+            try
+            {
+                var lines = await File.ReadAllLinesAsync(filePath);
+                if (lines.Length == 0) return result;
+
+                // Parse header
+                var headers = ParseCsvLine(lines[0]);
+
+                // Parse data rows
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    var values = ParseCsvLine(lines[i]);
+                    if (values.Count == 0) continue; // Skip empty lines
+
+                    var row = new Dictionary<string, string>();
+                    for (int j = 0; j < headers.Count && j < values.Count; j++)
+                    {
+                        row[headers[j]] = values[j];
+                    }
+                    result.Add(row);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Log($"Error reading CSV file {filePath}: {ex.Message}");
+                return result;
+            }
+        }
+
+        private List<string> ParseCsvLine(string line)
+        {
+            var result = new List<string>();
+            var current = new System.Text.StringBuilder();
+            bool inQuotes = false;
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                char c = line[i];
+
+                if (c == '"')
+                {
+                    inQuotes = !inQuotes;
+                }
+                else if (c == ',' && !inQuotes)
+                {
+                    result.Add(current.ToString().Trim());
+                    current.Clear();
+                }
+                else
+                {
+                    current.Append(c);
+                }
+            }
+
+            result.Add(current.ToString().Trim());
+            return result;
         }
 
         // ===== Event Handlers =====
