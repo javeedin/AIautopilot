@@ -246,7 +246,17 @@ namespace ERPProjectManager
 
         private void SetupModuleUrls()
         {
+            // Project Management Dashboard
             moduleUrls["project-management"] = Path.Combine(projectManagementPath, "index.html");
+
+            // ERP Application paths
+            string erpAppPath = Path.Combine(localRepoPath, "erp-app");
+            moduleUrls["erp-login"] = Path.Combine(erpAppPath, "login.html");
+            moduleUrls["erp-dashboard"] = Path.Combine(erpAppPath, "main-dashboard.html");
+            moduleUrls["erp-gl-dashboard"] = Path.Combine(erpAppPath, "modules", "gl-dashboard.html");
+            moduleUrls["erp-gl-currencies"] = Path.Combine(erpAppPath, "modules", "gl-currencies.html");
+
+            // Legacy module URLs (for old PM dashboard)
             moduleUrls["GL"] = Path.Combine(projectManagementPath, "modules.html");
             moduleUrls["AP"] = Path.Combine(projectManagementPath, "modules.html");
             moduleUrls["AR"] = Path.Combine(projectManagementPath, "modules.html");
@@ -434,17 +444,60 @@ namespace ERPProjectManager
             webView.CoreWebView2.Settings.AreDevToolsEnabled = true;
             webView.CoreWebView2.Settings.IsWebMessageEnabled = true;
 
-            // Add console message handler to capture JavaScript errors
-            webView.CoreWebView2.WebMessageReceived += (s, e) =>
+            // Add console message handler to capture JavaScript errors and ERP navigation
+            webView.CoreWebView2.WebMessageReceived += async (s, e) =>
             {
                 try
                 {
                     var json = Newtonsoft.Json.Linq.JObject.Parse(e.WebMessageAsJson);
                     string type = json["type"]?.ToString() ?? "unknown";
+                    string action = json["action"]?.ToString() ?? "";
                     string message = json["message"]?.ToString() ?? "";
 
-                    string logPrefix = type.ToUpper();
-                    if (type == "error")
+                    // Handle ERP navigation actions
+                    if (!string.IsNullOrEmpty(action))
+                    {
+                        await Dispatcher.InvokeAsync(async () =>
+                        {
+                            Log($"ERP Action: {action}");
+
+                            switch (action)
+                            {
+                                case "login":
+                                    // Login successful, open main dashboard
+                                    string username = json["username"]?.ToString() ?? "User";
+                                    Log($"User logged in: {username}");
+                                    await CreateNewTab("🏢 ERP Dashboard", "erp-dashboard");
+                                    break;
+
+                                case "openModule":
+                                    string moduleId = json["moduleId"]?.ToString() ?? "";
+                                    Log($"Opening ERP module: {moduleId}");
+                                    if (moduleId == "GL")
+                                    {
+                                        await CreateNewTab("💰 GL Dashboard", "erp-gl-dashboard");
+                                    }
+                                    break;
+
+                                case "openProjectManagement":
+                                    Log("Opening Project Management from ERP");
+                                    await CreateNewTab("📊 Project Management", "project-management");
+                                    break;
+
+                                case "goBack":
+                                case "updateActivity":
+                                case "logout":
+                                    Log($"ERP {action} action received");
+                                    break;
+
+                                default:
+                                    Log($"Unknown ERP action: {action}");
+                                    break;
+                            }
+                        });
+                    }
+                    // Handle console messages
+                    else if (type == "error")
                     {
                         Log($"JS ERROR: {message}");
                     }
@@ -452,13 +505,14 @@ namespace ERPProjectManager
                     {
                         Log($"JS WARN: {message}");
                     }
-                    else
+                    else if (!string.IsNullOrEmpty(message))
                     {
                         Log($"JS LOG: {message}");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log($"WebMessage error: {ex.Message}");
                     Log($"WebMessage (raw): {e.WebMessageAsJson}");
                 }
             };
@@ -844,6 +898,13 @@ namespace ERPProjectManager
         {
             menuPopup.IsOpen = false;
             await CreateNewTab("📊 Project Management", "project-management");
+        }
+
+        private async void OpenERPApplication_Click(object sender, RoutedEventArgs e)
+        {
+            menuPopup.IsOpen = false;
+            Log("Opening ERP Application (Login)");
+            await CreateNewTab("🏢 ERP Login", "erp-login");
         }
 
         private async void OpenModule_Click(object sender, RoutedEventArgs e)

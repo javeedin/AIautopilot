@@ -190,6 +190,20 @@
                                 </StackPanel>
                             </Button>
 
+                            <!-- ERP Application -->
+                            <Button Click="OpenERPApplication_Click"
+                                   Style="{StaticResource MenuButtonStyle}"
+                                   HorizontalContentAlignment="Left"
+                                   Width="Auto"
+                                   Height="Auto"
+                                   Padding="12,10"
+                                   Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🏢" FontSize="16" Margin="0,0,10,0"/>
+                                    <TextBlock Text="ERP Application (Login)" FontSize="13"/>
+                                </StackPanel>
+                            </Button>
+
                             <Separator Background="#3C4043" Margin="8,4"/>
                             <TextBlock Text="ERP MODULES"
                                       Foreground="#9AA0A6"
