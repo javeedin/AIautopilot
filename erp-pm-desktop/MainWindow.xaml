@@ -173,8 +173,7 @@
                             BorderBrush="#3C4043"
                             BorderThickness="1"
                             CornerRadius="4"
-                            Padding="4"
-                            Effect="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
+                            Padding="4">
                         <StackPanel Width="250">
                             <!-- Project Management -->
                             <Button Click="OpenProjectManagement_Click"
