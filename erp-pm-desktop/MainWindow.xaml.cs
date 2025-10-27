@@ -17,7 +17,7 @@ namespace ERPProjectManager
         private string projectManagementPath;
         private const string REPO_URL = "https://github.com/javeedin/AIautopilot.git";
         private const string BRANCH_NAME = "claude/erp-requirements-doc-011CUVadTJwLEN4PTi77Yxsx";
-        private const string VERSION = "V3.0";
+        private const string VERSION = "V3.1";
 
         private Dictionary<string, string> moduleUrls = new Dictionary<string, string>();
         private List<string> logs = new List<string>();
@@ -939,20 +939,29 @@ namespace ERPProjectManager
                 report.AppendLine("END OF REPORT");
                 report.AppendLine("========================================");
 
+                // Save to file
                 await File.WriteAllTextAsync(reportPath, report.ToString());
-
                 Log($"Diagnostic report saved to: {reportPath}");
 
-                var openResult = MessageBox.Show(
-                    $"Diagnostic report saved successfully!\n\n" +
-                    $"Location: {reportPath}\n\n" +
-                    $"Please share this file with Claude Code for automatic fixing.\n\n" +
-                    "Would you like to open the file location?",
-                    "Report Saved",
+                // AUTO-COPY TO CLIPBOARD - Ready to paste directly to Claude!
+                string clipboardText = report.ToString();
+                Clipboard.SetText(clipboardText);
+                Log("Diagnostic report copied to clipboard automatically!");
+
+                var result = MessageBox.Show(
+                    "🤖 DIAGNOSTIC REPORT READY!\n\n" +
+                    "✅ Report saved to Desktop\n" +
+                    "✅ Report COPIED to clipboard\n\n" +
+                    "📋 NEXT STEP:\n" +
+                    "Just go to Claude Code chat and press Ctrl+V (paste)\n" +
+                    "Claude will receive the report and fix the issue automatically!\n\n" +
+                    $"File also saved at:\n{reportPath}\n\n" +
+                    "Open file location?",
+                    "Ready to Send to Claude Code",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Information);
 
-                if (openResult == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes)
                 {
                     System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{reportPath}\"");
                 }
