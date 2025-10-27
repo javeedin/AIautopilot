@@ -963,6 +963,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page Designer initialized');
+		    loadPageFromURL(); // Load from URL parameters first
             setupDragAndDrop();
             setupPropertyGroupToggles();
             loadPageFromLocalStorage();
@@ -1210,13 +1211,54 @@
             }
         }
 
-        function loadPageFromLocalStorage() {
-            const saved = localStorage.getItem('currentPage');
-            if (saved) {
-                pageDefinition = JSON.parse(saved);
-                document.getElementById('pageIdBadge').textContent = pageDefinition.pageId;
-            }
+function loadPageFromURL() {
+    // Read URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageId = urlParams.get('pageId');
+    const pageName = urlParams.get('pageName');
+    const pageType = urlParams.get('pageType');
+    const layoutType = urlParams.get('layoutType');
+    const module = urlParams.get('module');
+
+    if (pageId && pageName) {
+        // Initialize page definition from URL parameters
+        pageDefinition = {
+            pageId: pageId,
+            pageName: pageName,
+            pageType: pageType || 'free-form',
+            layoutType: layoutType || 'customer',
+            module: module || '',
+            regions: [],
+            items: [],
+            buttons: [],
+            validations: [],
+            processes: []
+        };
+
+        // Update UI
+        document.getElementById('pageIdBadge').textContent = pageId;
+        const titleEl = document.querySelector('.toolbar-title');
+        if (titleEl) {
+            titleEl.innerHTML = `<span>🎨</span> ${pageName}`;
         }
+
+        console.log('Page loaded from URL:', pageDefinition);
+    }
+}
+
+
+
+function loadPageFromLocalStorage() {
+    const saved = localStorage.getItem('currentPage');
+    if (saved) {
+        const savedDef = JSON.parse(saved);
+        // Only load from localStorage if it matches the current page ID
+        if (savedDef.pageId === pageDefinition.pageId) {
+            pageDefinition = savedDef;
+            console.log('Restored saved progress from localStorage');
+        }
+    }
+}
 
         // Real-time Property Updates
         document.querySelectorAll('.property-input, .property-select, .property-textarea').forEach(input => {
