@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Module - General Ledger</title>
+    <link rel="stylesheet" href="../css/erp-main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .kpi-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .kpi-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid #2563eb;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .feature-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        .feature-category {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #3730a3;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 32px 0 16px 0;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="hamburger-btn" id="hamburger-btn">☰</button>
+                <h1 class="top-bar-title">💰 General Ledger</h1>
+            </div>
+            <div class="top-bar-right">
+                <button class="btn" id="autopilot-btn" style="background: #8b5cf6; color: white;">
+                    🤖 Autopilot
+                </button>
+                <button class="btn" onclick="goBack()" style="background: #6b7280; color: white;">
+                    ← Back to Main
+                </button>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <div class="user-name" id="user-name">User</div>
+                        <div class="user-role" id="user-role">Role</div>
+                    </div>
+                </div>
+                <button class="btn btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Navigation</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="goBack()">
+                            <span class="sidebar-menu-icon">←</span>
+                            <span class="sidebar-menu-text">Main Dashboard</span>
+                        </li>
+                        <li class="sidebar-menu-item active">
+                            <span class="sidebar-menu-icon">💰</span>
+                            <span class="sidebar-menu-text">GL Dashboard</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Setup</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P008')">
+                            <span class="sidebar-menu-icon">📊</span>
+                            <span class="sidebar-menu-text">Chart of Accounts</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P013')">
+                            <span class="sidebar-menu-icon">📚</span>
+                            <span class="sidebar-menu-text">Ledgers</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P018')">
+                            <span class="sidebar-menu-icon">💱</span>
+                            <span class="sidebar-menu-text">Currencies</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P015')">
+                            <span class="sidebar-menu-icon">📅</span>
+                            <span class="sidebar-menu-text">Calendars</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Transactions</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P021')">
+                            <span class="sidebar-menu-icon">✏️</span>
+                            <span class="sidebar-menu-text">Journal Entry</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P022')">
+                            <span class="sidebar-menu-icon">📋</span>
+                            <span class="sidebar-menu-text">Journals List</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openPage('GL-P017')">
+                            <span class="sidebar-menu-icon">🔄</span>
+                            <span class="sidebar-menu-text">Period Management</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="main-content">
+            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">General Ledger Dashboard</h2>
+            <p style="color: #6b7280; margin-bottom: 32px;">Manage your financial accounting and reporting</p>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">38</div>
+                    <div class="kpi-label">Total Pages</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">125</div>
+                    <div class="kpi-label">Features</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">15</div>
+                    <div class="kpi-label">Database Tables</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">Oct 2025</div>
+                    <div class="kpi-label">Current Period</div>
+                </div>
+            </div>
+
+            <!-- Setup Features -->
+            <h3 class="section-title">⚙️ Setup & Configuration</h3>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="openPage('GL-P008')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">Chart of Accounts</div>
+                    <p style="font-size: 14px; color: #6b7280;">Define account structures and segments</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P013')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-name">Ledgers</div>
+                    <p style="font-size: 14px; color: #6b7280;">Manage general ledgers and accounting books</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P018')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">💱</div>
+                    <div class="feature-name">Currencies</div>
+                    <p style="font-size: 14px; color: #6b7280;">Define currencies and exchange rates</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P015')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">📅</div>
+                    <div class="feature-name">Accounting Calendars</div>
+                    <p style="font-size: 14px; color: #6b7280;">Set up fiscal years and periods</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P010')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-name">Value Sets</div>
+                    <p style="font-size: 14px; color: #6b7280;">Define validation lists and values</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P006')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">🌳</div>
+                    <div class="feature-name">Organization Hierarchy</div>
+                    <p style="font-size: 14px; color: #6b7280;">Define org structures and relationships</p>
+                </div>
+            </div>
+
+            <!-- Transaction Features -->
+            <h3 class="section-title">💼 Transactions</h3>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="openPage('GL-P021')">
+                    <div class="feature-category">Transaction</div>
+                    <div class="feature-icon">✏️</div>
+                    <div class="feature-name">Journal Entry</div>
+                    <p style="font-size: 14px; color: #6b7280;">Create manual journal entries</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P022')">
+                    <div class="feature-category">Transaction</div>
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-name">Journals List</div>
+                    <p style="font-size: 14px; color: #6b7280;">View and manage all journal entries</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P024')">
+                    <div class="feature-category">Transaction</div>
+                    <div class="feature-icon">📮</div>
+                    <div class="feature-name">Journal Posting</div>
+                    <p style="font-size: 14px; color: #6b7280;">Post journals to general ledger</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P025')">
+                    <div class="feature-category">Transaction</div>
+                    <div class="feature-icon">🔁</div>
+                    <div class="feature-name">Recurring Journals</div>
+                    <p style="font-size: 14px; color: #6b7280;">Manage recurring journal templates</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P017')">
+                    <div class="feature-category">Operations</div>
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-name">Period Management</div>
+                    <p style="font-size: 14px; color: #6b7280;">Open and close accounting periods</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P020')">
+                    <div class="feature-category">Setup</div>
+                    <div class="feature-icon">💹</div>
+                    <div class="feature-name">Exchange Rates</div>
+                    <p style="font-size: 14px; color: #6b7280;">Maintain daily currency rates</p>
+                </div>
+            </div>
+
+            <!-- Budget Features -->
+            <h3 class="section-title">📊 Budgets & Reports</h3>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="openPage('GL-P026')">
+                    <div class="feature-category">Budget</div>
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-name">Budget Entry</div>
+                    <p style="font-size: 14px; color: #6b7280;">Create and edit budget data</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P027')">
+                    <div class="feature-category">Budget</div>
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-name">Budgets List</div>
+                    <p style="font-size: 14px; color: #6b7280;">View all budget versions</p>
+                </div>
+
+                <div class="feature-card" onclick="openPage('GL-P029')">
+                    <div class="feature-category">Report</div>
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-name">Budget Inquiry</div>
+                    <p style="font-size: 14px; color: #6b7280;">Query budget vs actual</p>
+                </div>
+
+                <div class="feature-card" onclick="alert('Coming soon!')">
+                    <div class="feature-category">Report</div>
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">Trial Balance</div>
+                    <p style="font-size: 14px; color: #6b7280;">View trial balance report</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autopilot Panel -->
+        <div class="autopilot-panel" id="autopilot-panel">
+            <div class="autopilot-header">
+                <div class="autopilot-title">
+                    <span>🤖</span>
+                    <span>GL Autopilot</span>
+                </div>
+                <div class="autopilot-actions">
+                    <button class="icon-btn" id="fullscreen-btn">⛶</button>
+                    <button class="icon-btn" id="close-autopilot-btn">✕</button>
+                </div>
+            </div>
+            <div class="autopilot-messages" id="autopilot-messages">
+                <div class="chat-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">Autopilot</span>
+                            <span class="message-time">Just now</span>
+                        </div>
+                        <div class="message-text">
+                            Welcome to General Ledger! I can help you:<br>
+                            • Navigate to GL pages<br>
+                            • Create journal entries<br>
+                            • Find currencies and exchange rates<br>
+                            • Check period status<br>
+                            <br>What would you like to do?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="autopilot-input">
+                <div class="input-group">
+                    <input type="text" class="form-input" id="autopilot-input" placeholder="Type your message..." />
+                    <button class="btn btn-send" id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main-dashboard.js"></script>
+    <script src="../js/autopilot.js"></script>
+    <script>
+        // GL-specific functions
+        function openPage(pageId) {
+            console.log('Opening page:', pageId);
+
+            // Map page IDs to actual files
+            const pageMap = {
+                'GL-P018': 'gl-currencies.html',
+                'GL-P021': 'gl-journal-entry.html',
+                // Add more mappings as needed
+            };
+
+            const pagefile = pageMap[pageId];
+            if (pagefile) {
+                window.location.href = pagefile;
+            } else {
+                alert(`Page ${pageId} coming soon!`);
+            }
+        }
+
+        function goBack() {
+            if (window.chrome && window.chrome.webview) {
+                window.chrome.webview.postMessage({
+                    action: 'goBack'
+                });
+            } else {
+                window.location.href = '../main-dashboard.html';
+            }
+        }
+    </script>
+</body>
+</html>
