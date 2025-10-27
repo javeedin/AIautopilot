@@ -545,7 +545,7 @@
                 <h1 class="logo">ERP PM</h1>
                 <p class="logo-subtitle">Project Manager v2.0</p>
                 <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
-                    ✅ DESIGNER v2.1
+                    ✅ DESIGNER v2.1.1
                 </div>
             </div>
 
@@ -789,8 +789,13 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=================================================');
-            console.log('🎨 PAGE DESIGNER v2.1 - LOADED AT:', new Date().toLocaleTimeString());
+            console.log('🎨 PAGE DESIGNER v2.1.1 - LOADED AT:', new Date().toLocaleTimeString());
+            console.log('🔥 BUILD:', 'Nov-2025-FINAL');
             console.log('=================================================');
+
+            // Force clear any inline styles that might be cached
+            document.body.setAttribute('data-version', '2.1.1');
+
             loadPageFromURL();
         });
 
