@@ -990,7 +990,8 @@
 
             // Try to load from C# injected data first
             if (window.CSHARP_DATA && window.CSHARP_DATA.tablesDetailed) {
-                addDebugLog('Checking CSHARP_DATA.tablesDetailed...', 'info');
+                const totalRecords = window.CSHARP_DATA.tablesDetailed.length;
+                addDebugLog(`✓ CSHARP_DATA available with ${totalRecords} records`, 'info');
                 console.log('Loading from CSHARP_DATA.tablesDetailed');
 
                 // Try all possible property name variations
@@ -1002,7 +1003,7 @@
                     col.TableName === tableName
                 );
 
-                addDebugLog(`Found ${columns.length} columns with exact match for ${tableName}`, columns.length > 0 ? 'success' : 'warning');
+                addDebugLog(`Exact match: Found ${columns.length} columns`, columns.length > 0 ? 'success' : 'warning');
 
                 // If no exact match, try case-insensitive
                 if (columns.length === 0) {
@@ -1012,7 +1013,13 @@
                         const colTableName = (col.Table_Name || col.table_name || col.TABLE_NAME || col.tableName || col.TableName || '').toUpperCase();
                         return colTableName === tableNameUpper;
                     });
-                    addDebugLog(`Found ${columns.length} columns with case-insensitive match`, columns.length > 0 ? 'success' : 'warning');
+                    addDebugLog(`Case-insensitive: Found ${columns.length} columns`, columns.length > 0 ? 'success' : 'warning');
+
+                    // Debug: Show sample table names
+                    if (columns.length === 0) {
+                        const sampleTables = [...new Set(window.CSHARP_DATA.tablesDetailed.slice(0, 10).map(c => c.Table_Name))];
+                        addDebugLog(`Sample tables in data: ${sampleTables.join(', ')}`, 'info');
+                    }
                 }
 
                 if (columns.length > 0) {
@@ -1022,13 +1029,15 @@
                         nullable: col.Nullable || col.nullable || col.NULLABLE,
                         length: col.Data_Length || col.data_length || col.DATA_LENGTH
                     }));
-                    addDebugLog(`✅ Loaded ${tableColumns.length} columns from CSHARP_DATA`, 'success');
+                    addDebugLog(`✅ SUCCESS: Loaded ${tableColumns.length} columns`, 'success');
                     console.log('✅ Loaded', tableColumns.length, 'columns from CSHARP_DATA for table', tableName);
                     updateDebugPanel();
                     return;
+                } else {
+                    addDebugLog(`⚠️ No columns matched for table: ${tableName}`, 'warning');
                 }
             } else {
-                addDebugLog('❌ CSHARP_DATA not available', 'error');
+                addDebugLog('❌ CSHARP_DATA or tablesDetailed not available', 'error');
             }
 
             // Fallback: Try localStorage (databaseTables)
@@ -1052,7 +1061,7 @@
             }
 
             // If we get here, no columns were found
-            addDebugLog(`❌ No columns found for table: ${tableName}`, 'error');
+            addDebugLog(`❌ FINAL: No columns found for table: ${tableName}`, 'error');
             console.warn('⚠️ No columns found for table:', tableName);
 
             // Log available tables for debugging
@@ -1061,7 +1070,7 @@
                     c.Table_Name || c.table_name || c.TABLE_NAME || c.tableName || c.TableName
                 ))];
                 const matchingTables = uniqueTables.filter(t => t && t.includes(tableName.substring(0, 5)));
-                addDebugLog(`Similar tables found: ${matchingTables.join(', ') || 'none'}`, 'warning');
+                addDebugLog(`Similar tables: ${matchingTables.slice(0, 5).join(', ')}`, 'warning');
             }
 
             updateDebugPanel();
