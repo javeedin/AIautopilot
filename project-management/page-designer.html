@@ -870,16 +870,45 @@
         }
 
         function loadTableColumns(tableName) {
-            // Load columns from database-tables in localStorage
+            tableColumns = []; // Reset
+
+            console.log('Loading columns for table:', tableName);
+
+            // Try to load from C# injected data first
+            if (window.CSHARP_DATA && window.CSHARP_DATA.tablesDetailed) {
+                console.log('Loading from CSHARP_DATA.tablesDetailed');
+                const columns = window.CSHARP_DATA.tablesDetailed.filter(col => col.table_name === tableName || col.TABLE_NAME === tableName);
+                if (columns.length > 0) {
+                    tableColumns = columns.map(col => ({
+                        name: col.column_name || col.COLUMN_NAME,
+                        type: col.data_type || col.DATA_TYPE,
+                        nullable: col.nullable || col.NULLABLE,
+                        length: col.data_length || col.DATA_LENGTH
+                    }));
+                    console.log('✅ Loaded', tableColumns.length, 'columns from CSHARP_DATA for table', tableName);
+                    return;
+                }
+            }
+
+            // Fallback: Try localStorage (databaseTables)
             const storedTables = localStorage.getItem('databaseTables');
             if (storedTables) {
                 const tables = JSON.parse(storedTables);
-                const table = tables.find(t => t.name === tableName);
+                const table = tables.find(t => t.name === tableName || t.table_name === tableName || t.TABLE_NAME === tableName);
                 if (table && table.columns) {
                     tableColumns = table.columns;
-                    console.log('Loaded', tableColumns.length, 'columns from table', tableName);
+                    console.log('✅ Loaded', tableColumns.length, 'columns from localStorage for table', tableName);
+                    return;
                 }
             }
+
+            // If we get here, no columns were found
+            console.warn('⚠️ No columns found for table:', tableName);
+            console.log('Available data sources:', {
+                hasCSharpData: !!window.CSHARP_DATA,
+                hasLocalStorage: !!storedTables,
+                csharpTablesDetailedCount: window.CSHARP_DATA?.tablesDetailed?.length || 0
+            });
         }
 
         function updatePageUI() {
