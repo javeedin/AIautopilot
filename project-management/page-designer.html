@@ -993,9 +993,13 @@
                 addDebugLog('Checking CSHARP_DATA.tablesDetailed...', 'info');
                 console.log('Loading from CSHARP_DATA.tablesDetailed');
 
-                // Try exact match first
+                // Try all possible property name variations
                 let columns = window.CSHARP_DATA.tablesDetailed.filter(col =>
-                    col.table_name === tableName || col.TABLE_NAME === tableName
+                    col.Table_Name === tableName ||  // Capital T with underscore (CSV format)
+                    col.table_name === tableName ||
+                    col.TABLE_NAME === tableName ||
+                    col.tableName === tableName ||
+                    col.TableName === tableName
                 );
 
                 addDebugLog(`Found ${columns.length} columns with exact match for ${tableName}`, columns.length > 0 ? 'success' : 'warning');
@@ -1004,19 +1008,19 @@
                 if (columns.length === 0) {
                     addDebugLog(`Trying case-insensitive match...`, 'info');
                     const tableNameUpper = tableName.toUpperCase();
-                    columns = window.CSHARP_DATA.tablesDetailed.filter(col =>
-                        (col.table_name || '').toUpperCase() === tableNameUpper ||
-                        (col.TABLE_NAME || '').toUpperCase() === tableNameUpper
-                    );
+                    columns = window.CSHARP_DATA.tablesDetailed.filter(col => {
+                        const colTableName = (col.Table_Name || col.table_name || col.TABLE_NAME || col.tableName || col.TableName || '').toUpperCase();
+                        return colTableName === tableNameUpper;
+                    });
                     addDebugLog(`Found ${columns.length} columns with case-insensitive match`, columns.length > 0 ? 'success' : 'warning');
                 }
 
                 if (columns.length > 0) {
                     tableColumns = columns.map(col => ({
-                        name: col.column_name || col.COLUMN_NAME,
-                        type: col.data_type || col.DATA_TYPE,
-                        nullable: col.nullable || col.NULLABLE,
-                        length: col.data_length || col.DATA_LENGTH
+                        name: col.Column_Name || col.column_name || col.COLUMN_NAME || col.columnName,
+                        type: col.Data_Type || col.data_type || col.DATA_TYPE || col.dataType,
+                        nullable: col.Nullable || col.nullable || col.NULLABLE,
+                        length: col.Data_Length || col.data_length || col.DATA_LENGTH
                     }));
                     addDebugLog(`✅ Loaded ${tableColumns.length} columns from CSHARP_DATA`, 'success');
                     console.log('✅ Loaded', tableColumns.length, 'columns from CSHARP_DATA for table', tableName);
@@ -1053,7 +1057,9 @@
 
             // Log available tables for debugging
             if (window.CSHARP_DATA?.tablesDetailed) {
-                const uniqueTables = [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME))];
+                const uniqueTables = [...new Set(window.CSHARP_DATA.tablesDetailed.map(c =>
+                    c.Table_Name || c.table_name || c.TABLE_NAME || c.tableName || c.TableName
+                ))];
                 const matchingTables = uniqueTables.filter(t => t && t.includes(tableName.substring(0, 5)));
                 addDebugLog(`Similar tables found: ${matchingTables.join(', ') || 'none'}`, 'warning');
             }
@@ -1089,7 +1095,9 @@
             }
 
             const uniqueTables = window.CSHARP_DATA?.tablesDetailed
-                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME || c.Table || c.tableName))]
+                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c =>
+                    c.Table_Name || c.table_name || c.TABLE_NAME || c.tableName || c.TableName
+                ))]
                 : [];
 
             let html = `
