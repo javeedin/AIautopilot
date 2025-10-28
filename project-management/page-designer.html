@@ -92,6 +92,96 @@
             border-color: #10b981;
         }
 
+        .toolbar-btn.debug {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            position: relative;
+        }
+
+        .debug-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Debug Panel */
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 400px;
+            max-height: 500px;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .debug-panel.show {
+            display: flex;
+        }
+
+        .debug-header {
+            padding: 12px 16px;
+            background: #0f172a;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .debug-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #f59e0b;
+        }
+
+        .debug-body {
+            padding: 16px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+
+        .debug-section {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .debug-section:last-child {
+            border-bottom: none;
+        }
+
+        .debug-label {
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .debug-value {
+            color: #10b981;
+        }
+
+        .debug-error {
+            color: #ef4444;
+        }
+
+        .debug-warning {
+            color: #f59e0b;
+        }
+
         .designer-body {
             flex: 1;
             display: grid;
@@ -610,6 +700,11 @@
                     </div>
                 </div>
                 <div class="toolbar-actions">
+                    <button class="toolbar-btn debug" onclick="toggleDebugPanel()">
+                        <span>🔍</span>
+                        <span>Debug</span>
+                        <span class="debug-badge" id="debugBadge">0</span>
+                    </button>
                     <button class="toolbar-btn" onclick="goBack()">
                         <span>←</span>
                         <span>Back</span>
@@ -660,6 +755,17 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Debug Panel -->
+    <div class="debug-panel" id="debugPanel">
+        <div class="debug-header">
+            <div class="debug-title">🔍 Debug Information</div>
+            <button class="modal-close" onclick="toggleDebugPanel()" style="color: #94a3b8;">&times;</button>
+        </div>
+        <div class="debug-body" id="debugBody">
+            <!-- Debug info will be inserted here -->
+        </div>
     </div>
 
     <!-- Add Region Modal -->
@@ -869,15 +975,42 @@
             updatePageUI();
         }
 
+        let debugLogs = [];
+
+        function addDebugLog(message, type = 'info') {
+            debugLogs.push({ message, type, timestamp: new Date().toLocaleTimeString() });
+            updateDebugBadge();
+        }
+
         function loadTableColumns(tableName) {
             tableColumns = []; // Reset
 
+            addDebugLog(`🔍 Loading columns for table: ${tableName}`, 'info');
             console.log('Loading columns for table:', tableName);
 
             // Try to load from C# injected data first
             if (window.CSHARP_DATA && window.CSHARP_DATA.tablesDetailed) {
+                addDebugLog('Checking CSHARP_DATA.tablesDetailed...', 'info');
                 console.log('Loading from CSHARP_DATA.tablesDetailed');
-                const columns = window.CSHARP_DATA.tablesDetailed.filter(col => col.table_name === tableName || col.TABLE_NAME === tableName);
+
+                // Try exact match first
+                let columns = window.CSHARP_DATA.tablesDetailed.filter(col =>
+                    col.table_name === tableName || col.TABLE_NAME === tableName
+                );
+
+                addDebugLog(`Found ${columns.length} columns with exact match for ${tableName}`, columns.length > 0 ? 'success' : 'warning');
+
+                // If no exact match, try case-insensitive
+                if (columns.length === 0) {
+                    addDebugLog(`Trying case-insensitive match...`, 'info');
+                    const tableNameUpper = tableName.toUpperCase();
+                    columns = window.CSHARP_DATA.tablesDetailed.filter(col =>
+                        (col.table_name || '').toUpperCase() === tableNameUpper ||
+                        (col.TABLE_NAME || '').toUpperCase() === tableNameUpper
+                    );
+                    addDebugLog(`Found ${columns.length} columns with case-insensitive match`, columns.length > 0 ? 'success' : 'warning');
+                }
+
                 if (columns.length > 0) {
                     tableColumns = columns.map(col => ({
                         name: col.column_name || col.COLUMN_NAME,
@@ -885,30 +1018,123 @@
                         nullable: col.nullable || col.NULLABLE,
                         length: col.data_length || col.DATA_LENGTH
                     }));
+                    addDebugLog(`✅ Loaded ${tableColumns.length} columns from CSHARP_DATA`, 'success');
                     console.log('✅ Loaded', tableColumns.length, 'columns from CSHARP_DATA for table', tableName);
+                    updateDebugPanel();
                     return;
                 }
+            } else {
+                addDebugLog('❌ CSHARP_DATA not available', 'error');
             }
 
             // Fallback: Try localStorage (databaseTables)
+            addDebugLog('Trying localStorage fallback...', 'info');
             const storedTables = localStorage.getItem('databaseTables');
             if (storedTables) {
                 const tables = JSON.parse(storedTables);
-                const table = tables.find(t => t.name === tableName || t.table_name === tableName || t.TABLE_NAME === tableName);
+                const table = tables.find(t =>
+                    t.name === tableName ||
+                    t.table_name === tableName ||
+                    t.TABLE_NAME === tableName ||
+                    (t.name || '').toUpperCase() === tableName.toUpperCase()
+                );
                 if (table && table.columns) {
                     tableColumns = table.columns;
+                    addDebugLog(`✅ Loaded ${tableColumns.length} columns from localStorage`, 'success');
                     console.log('✅ Loaded', tableColumns.length, 'columns from localStorage for table', tableName);
+                    updateDebugPanel();
                     return;
                 }
             }
 
             // If we get here, no columns were found
+            addDebugLog(`❌ No columns found for table: ${tableName}`, 'error');
             console.warn('⚠️ No columns found for table:', tableName);
-            console.log('Available data sources:', {
-                hasCSharpData: !!window.CSHARP_DATA,
-                hasLocalStorage: !!storedTables,
-                csharpTablesDetailedCount: window.CSHARP_DATA?.tablesDetailed?.length || 0
-            });
+
+            // Log available tables for debugging
+            if (window.CSHARP_DATA?.tablesDetailed) {
+                const uniqueTables = [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME))];
+                const matchingTables = uniqueTables.filter(t => t && t.includes(tableName.substring(0, 5)));
+                addDebugLog(`Similar tables found: ${matchingTables.join(', ') || 'none'}`, 'warning');
+            }
+
+            updateDebugPanel();
+        }
+
+        function updateDebugBadge() {
+            const badge = document.getElementById('debugBadge');
+            const errorCount = debugLogs.filter(l => l.type === 'error' || l.type === 'warning').length;
+            if (badge) {
+                badge.textContent = errorCount;
+                badge.style.display = errorCount > 0 ? 'block' : 'none';
+            }
+        }
+
+        function toggleDebugPanel() {
+            const panel = document.getElementById('debugPanel');
+            panel.classList.toggle('show');
+            if (panel.classList.contains('show')) {
+                updateDebugPanel();
+            }
+        }
+
+        function updateDebugPanel() {
+            const debugBody = document.getElementById('debugBody');
+            if (!debugBody) return;
+
+            const uniqueTables = window.CSHARP_DATA?.tablesDetailed
+                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME))]
+                : [];
+
+            let html = `
+                <div class="debug-section">
+                    <div class="debug-label">📄 PAGE DEFINITION</div>
+                    <div>Page ID: <span class="debug-value">${pageDefinition?.pageId || 'N/A'}</span></div>
+                    <div>Page Name: <span class="debug-value">${pageDefinition?.pageName || 'N/A'}</span></div>
+                    <div>Module: <span class="debug-value">${pageDefinition?.module || 'N/A'}</span></div>
+                    <div>Base Table: <span class="debug-value">${pageDefinition?.baseTable?.tableName || 'NOT SET'}</span></div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">💾 DATA SOURCES</div>
+                    <div>CSHARP_DATA: <span class="${window.CSHARP_DATA ? 'debug-value' : 'debug-error'}">${window.CSHARP_DATA ? '✅ Available' : '❌ Not Available'}</span></div>
+                    <div>Tables Detailed: <span class="debug-value">${window.CSHARP_DATA?.tablesDetailed?.length || 0} records</span></div>
+                    <div>localStorage: <span class="${localStorage.getItem('databaseTables') ? 'debug-value' : 'debug-error'}">${localStorage.getItem('databaseTables') ? '✅ Available' : '❌ Not Available'}</span></div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">📊 LOADED COLUMNS</div>
+                    <div>Count: <span class="${tableColumns.length > 0 ? 'debug-value' : 'debug-error'}">${tableColumns.length}</span></div>
+                    ${tableColumns.length > 0 ? `
+                        <div style="margin-top: 8px;">
+                            <div style="color: #94a3b8;">Sample columns:</div>
+                            ${tableColumns.slice(0, 5).map(c => `<div style="color: #cbd5e1; margin-left: 8px;">• ${c.name} (${c.type})</div>`).join('')}
+                            ${tableColumns.length > 5 ? `<div style="color: #64748b; margin-left: 8px;">... and ${tableColumns.length - 5} more</div>` : ''}
+                        </div>
+                    ` : '<div class="debug-error">No columns loaded!</div>'}
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">📋 DEBUG LOGS</div>
+                    ${debugLogs.slice(-10).reverse().map(log => `
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #64748b;">[${log.timestamp}]</span>
+                            <span class="debug-${log.type === 'success' ? 'value' : log.type}">${log.message}</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${uniqueTables.length > 0 ? `
+                    <div class="debug-section">
+                        <div class="debug-label">📚 AVAILABLE TABLES (${uniqueTables.length})</div>
+                        <div style="max-height: 150px; overflow-y: auto; color: #cbd5e1; font-size: 11px;">
+                            ${uniqueTables.sort().map(t => `<div>• ${t}</div>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+
+            debugBody.innerHTML = html;
         }
 
         function updatePageUI() {
