@@ -1082,11 +1082,26 @@
             const debugBody = document.getElementById('debugBody');
             if (!debugBody) return;
 
+            // Debug: Check actual property names in the data
+            let sampleRecord = null;
+            if (window.CSHARP_DATA?.tablesDetailed && window.CSHARP_DATA.tablesDetailed.length > 0) {
+                sampleRecord = window.CSHARP_DATA.tablesDetailed[0];
+            }
+
             const uniqueTables = window.CSHARP_DATA?.tablesDetailed
-                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME))]
+                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c => c.table_name || c.TABLE_NAME || c.Table || c.tableName))]
                 : [];
 
             let html = `
+                ${sampleRecord ? `
+                    <div class="debug-section">
+                        <div class="debug-label">🔬 SAMPLE DATA RECORD</div>
+                        <div style="font-size: 11px; color: #cbd5e1; background: #0f172a; padding: 8px; border-radius: 4px; overflow-x: auto;">
+                            ${JSON.stringify(sampleRecord, null, 2).split('\n').map(line => `<div>${line}</div>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
                 <div class="debug-section">
                     <div class="debug-label">📄 PAGE DEFINITION</div>
                     <div>Page ID: <span class="debug-value">${pageDefinition?.pageId || 'N/A'}</span></div>
