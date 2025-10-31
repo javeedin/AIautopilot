@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currencies - General Ledger</title>
+    <link rel="stylesheet" href="../css/erp-main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .page-content {
+            background: #f3f4f6;
+            min-height: calc(100vh - 73px);
+            padding: 32px;
+        }
+        .page-header-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .page-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .filters-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .filter-row {
+            display: flex;
+            gap: 16px;
+            align-items: end;
+        }
+        .filter-group {
+            flex: 1;
+        }
+        .data-grid {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .grid-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .grid-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .record-count {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        th {
+            padding: 12px 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+            color: #1f2937;
+        }
+        tbody tr:hover {
+            background: #f9fafb;
+            cursor: pointer;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+        .btn-new {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-new:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="hamburger-btn" id="hamburger-btn">☰</button>
+                <h1 class="top-bar-title">💱 Currencies</h1>
+            </div>
+            <div class="top-bar-right">
+                <button class="btn" id="autopilot-btn" style="background: #8b5cf6; color: white;">
+                    🤖 Autopilot
+                </button>
+                <button class="btn" onclick="goBack()" style="background: #6b7280; color: white;">
+                    ← Back to GL
+                </button>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <div class="user-name" id="user-name">User</div>
+                        <div class="user-role" id="user-role">Role</div>
+                    </div>
+                </div>
+                <button class="btn btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Navigation</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="goToDashboard()">
+                            <span class="sidebar-menu-icon">🏠</span>
+                            <span class="sidebar-menu-text">Main Dashboard</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="goBack()">
+                            <span class="sidebar-menu-icon">💰</span>
+                            <span class="sidebar-menu-text">GL Dashboard</span>
+                        </li>
+                        <li class="sidebar-menu-item active">
+                            <span class="sidebar-menu-icon">💱</span>
+                            <span class="sidebar-menu-text">Currencies</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Related Pages</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="alert('Coming soon!')">
+                            <span class="sidebar-menu-icon">💹</span>
+                            <span class="sidebar-menu-text">Exchange Rates</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="alert('Coming soon!')">
+                            <span class="sidebar-menu-icon">📚</span>
+                            <span class="sidebar-menu-text">Ledgers</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="page-content">
+            <!-- Page Header -->
+            <div class="page-header-section">
+                <div class="breadcrumb">
+                    <a href="../main-dashboard.html">Home</a> /
+                    <a href="gl-dashboard.html">General Ledger</a> /
+                    <span>Currencies</span>
+                </div>
+                <div class="page-title-row">
+                    <div>
+                        <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 4px;">Currencies</h1>
+                        <p style="font-size: 14px; color: #6b7280;">Manage currency definitions and configurations</p>
+                    </div>
+                    <button class="btn-new" onclick="createNew()">
+                        ➕ New Currency
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Filters</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="form-label">Currency Code</label>
+                        <input type="text" class="form-input" id="filter-code" placeholder="e.g., USD" onkeyup="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Currency Name</label>
+                        <input type="text" class="form-input" id="filter-name" placeholder="e.g., US Dollar" onkeyup="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-input" id="filter-status" onchange="applyFilters()">
+                            <option value="">All</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn" onclick="clearFilters()" style="background: #6b7280; color: white; width: 100%;">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Grid -->
+            <div class="data-grid">
+                <div class="grid-header">
+                    <div class="grid-title">💱 Currencies List</div>
+                    <div class="record-count" id="record-count">10 records</div>
+                </div>
+                <table id="currencies-table">
+                    <thead>
+                        <tr>
+                            <th>Currency Code</th>
+                            <th>Currency Name</th>
+                            <th>Symbol</th>
+                            <th>Precision</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="currencies-tbody">
+                        <tr><td colspan="7" style="text-align: center; padding: 40px; color: #9ca3af;">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Autopilot Panel -->
+        <div class="autopilot-panel" id="autopilot-panel">
+            <div class="autopilot-header">
+                <div class="autopilot-title">
+                    <span>🤖</span>
+                    <span>Currencies Assistant</span>
+                </div>
+                <div class="autopilot-actions">
+                    <button class="icon-btn" id="fullscreen-btn">⛶</button>
+                    <button class="icon-btn" id="close-autopilot-btn">✕</button>
+                </div>
+            </div>
+            <div class="autopilot-messages" id="autopilot-messages">
+                <div class="chat-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">Autopilot</span>
+                            <span class="message-time">Just now</span>
+                        </div>
+                        <div class="message-text">
+                            I can help you with currencies:<br>
+                            • "Show active currencies"<br>
+                            • "Create new currency"<br>
+                            • "Show exchange rates"<br>
+                            • "Filter by USD"<br>
+                            <br>What would you like to do?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="autopilot-input">
+                <div class="input-group">
+                    <input type="text" class="form-input" id="autopilot-input" placeholder="Type your message..." />
+                    <button class="btn btn-send" id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main-dashboard.js"></script>
+    <script src="../js/autopilot.js"></script>
+    <script src="../js/api-client.js"></script>
+    <script>
+        // Sample currency data
+        let currenciesData = [
+            { code: 'USD', name: 'US Dollar', symbol: '$', precision: 2, status: 'Active', lastUpdated: '2025-10-15' },
+            { code: 'EUR', name: 'Euro', symbol: '€', precision: 2, status: 'Active', lastUpdated: '2025-10-15' },
+            { code: 'GBP', name: 'British Pound', symbol: '£', precision: 2, status: 'Active', lastUpdated: '2025-10-10' },
+            { code: 'JPY', name: 'Japanese Yen', symbol: '¥', precision: 0, status: 'Active', lastUpdated: '2025-10-12' },
+            { code: 'AUD', name: 'Australian Dollar', symbol: 'A$', precision: 2, status: 'Active', lastUpdated: '2025-10-14' },
+            { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$', precision: 2, status: 'Active', lastUpdated: '2025-10-13' },
+            { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF', precision: 2, status: 'Active', lastUpdated: '2025-10-11' },
+            { code: 'CNY', name: 'Chinese Yuan', symbol: '¥', precision: 2, status: 'Active', lastUpdated: '2025-10-16' },
+            { code: 'INR', name: 'Indian Rupee', symbol: '₹', precision: 2, status: 'Active', lastUpdated: '2025-10-17' },
+            { code: 'ZAR', name: 'South African Rand', symbol: 'R', precision: 2, status: 'Inactive', lastUpdated: '2025-09-20' },
+        ];
+
+        let filteredData = [...currenciesData];
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCurrencies();
+        });
+
+        // Load currencies from API or sample data
+        async function loadCurrencies() {
+            console.log('Loading currencies...');
+
+            // TODO: Replace with actual API call
+            // const data = await apiClient.get('/gl/currencies');
+
+            renderTable(currenciesData);
+        }
+
+        // Render table
+        function renderTable(data) {
+            const tbody = document.getElementById('currencies-tbody');
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #9ca3af;">No currencies found</td></tr>';
+                document.getElementById('record-count').textContent = '0 records';
+                return;
+            }
+
+            tbody.innerHTML = data.map(currency => `
+                <tr onclick="editCurrency('${currency.code}')">
+                    <td><strong>${currency.code}</strong></td>
+                    <td>${currency.name}</td>
+                    <td>${currency.symbol}</td>
+                    <td>${currency.precision}</td>
+                    <td><span class="badge badge-${currency.status.toLowerCase()}">${currency.status}</span></td>
+                    <td>${currency.lastUpdated}</td>
+                    <td>
+                        <button class="action-btn" onclick="event.stopPropagation(); editCurrency('${currency.code}')" title="Edit">✏️</button>
+                        <button class="action-btn" onclick="event.stopPropagation(); deleteCurrency('${currency.code}')" title="Delete">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('record-count').textContent = `${data.length} records`;
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const codeFilter = document.getElementById('filter-code').value.toLowerCase();
+            const nameFilter = document.getElementById('filter-name').value.toLowerCase();
+            const statusFilter = document.getElementById('filter-status').value;
+
+            filteredData = currenciesData.filter(currency => {
+                const matchesCode = !codeFilter || currency.code.toLowerCase().includes(codeFilter);
+                const matchesName = !nameFilter || currency.name.toLowerCase().includes(nameFilter);
+                const matchesStatus = !statusFilter || currency.status === statusFilter;
+
+                return matchesCode && matchesName && matchesStatus;
+            });
+
+            renderTable(filteredData);
+            console.log(`Filtered: ${filteredData.length} records`);
+        }
+
+        // Clear filters
+        function clearFilters() {
+            document.getElementById('filter-code').value = '';
+            document.getElementById('filter-name').value = '';
+            document.getElementById('filter-status').value = '';
+            filteredData = [...currenciesData];
+            renderTable(filteredData);
+        }
+
+        // Create new currency
+        function createNew() {
+            alert('Opening Currency Form...\n\n(GL-P019: Currency Form - Coming in next phase)');
+        }
+
+        // Edit currency
+        function editCurrency(code) {
+            console.log('Editing currency:', code);
+            alert(`Opening Currency Form for: ${code}\n\n(GL-P019: Currency Form - Coming in next phase)`);
+        }
+
+        // Delete currency
+        function deleteCurrency(code) {
+            if (confirm(`Are you sure you want to delete currency ${code}?`)) {
+                console.log('Deleting currency:', code);
+                alert('Delete functionality will be implemented with API integration');
+            }
+        }
+
+        // Navigation functions
+        function goBack() {
+            window.location.href = 'gl-dashboard.html';
+        }
+
+        function goToDashboard() {
+            window.location.href = '../main-dashboard.html';
+        }
+    </script>
+</body>
+</html>

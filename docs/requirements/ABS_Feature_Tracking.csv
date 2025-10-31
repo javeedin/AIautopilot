@@ -1,0 +1,57 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+ABS-001,Absence,Setup,Absence Types,Define absence types and categories,Critical,Medium,Not Started,None,5,,,Yes,,Vacation sick personal leave types
+ABS-002,Absence,Setup,Absence Plans,Create absence plans by employee group,Critical,High,Not Started,ABS-001,8,,,Yes,,Plan rules and eligibility
+ABS-003,Absence,Setup,Accrual Rules,Define accrual calculation rules,Critical,High,Not Started,ABS-002,9,,,Yes,,Multiple accrual methods supported
+ABS-010,Absence,Processing,Absence Requests,Submit and process absence requests,Critical,High,Not Started,HCM-060,10,,,Yes,,ESS absence request workflow
+ABS-011,Absence,Processing,Approval Workflow,Manage approval workflows,Critical,High,Not Started,ABS-010,9,,,Yes,,Multi-level approval routing
+ABS-012,Absence,Processing,Absence Calendar,Team absence calendar and scheduling,High,High,Not Started,ABS-010,10,,,Yes,,Visual calendar with conflicts
+ABS-020,Absence,Balances,Accrual Processing,Run periodic accrual batches,Critical,High,Not Started,ABS-003,9,,,Yes,,Automated accrual calculation
+ABS-021,Absence,Balances,Balance Tracking,Track leave balances,Critical,Medium,Not Started,ABS-020,7,,,Yes,,Current and projected balances
+ABS-022,Absence,Balances,Balance Adjustments,Manual balance adjustments,High,Medium,Not Started,ABS-021,6,,,Yes,,Approved adjustments with audit
+ABS-030,Absence,Compliance,FMLA Management,Manage FMLA leave compliance,Critical,High,Not Started,ABS-010,11,,,Yes,,12-week tracking and notices
+ABS-031,Absence,Compliance,State Leave Laws,Support state-specific leave laws,High,High,Not Started,ABS-030,10,,,Yes,,Paid family and sick leave
+ABS-032,Absence,Compliance,ADA Accommodations,Track reasonable accommodation leave,High,Medium,Not Started,ABS-030,8,,,No,,Interactive process documentation
+ABS-040,Absence,Payouts,PTO Payout,Calculate PTO payouts on termination,Critical,High,Not Started,PAY-047,8,,,Yes,,State-specific payout rules
+ABS-041,Absence,Payouts,Leave Cashout,PTO sell-back processing,Medium,Medium,Not Started,ABS-040,6,,,Yes,,Annual cashout windows
+ABS-050,Absence,Reporting,Absence Reports,Standard absence reports,Critical,Medium,Not Started,ABS-021,7,,,Yes,,Usage liability and trend reports
+ABS-051,Absence,Reporting,Absence Analytics,Analytics and dashboards,High,Medium,Not Started,ABS-050,8,,,No,,Absence rate and pattern analysis
+ABS-060,Absence,Integration,Payroll Integration,Integration with Payroll module,Critical,High,Not Started,PAY-094,10,,,Yes,,Absence hours and payouts to payroll
+ABS-061,Absence,Integration,Time Integration,Integration with Time & Attendance,High,High,Not Started,None,9,,,Yes,,Absence vs time worked
+ABS-062,Absence,Integration,HCM Integration,Integration with HCM module,Critical,High,Not Started,HCM-101,9,,,Yes,,Employee and manager data sync
+ABS-004,Absence,Setup,Carryover Rules,Define balance carryover rules,High,Medium,Not Started,ABS-003,6,,,Yes,,Annual carryover and use-it-or-lose-it
+ABS-005,Absence,Setup,Blackout Periods,Configure blackout periods,Medium,Low,Not Started,ABS-002,4,,,Yes,,Block absences during peak periods
+ABS-013,Absence,Processing,Partial Day Absence,Request partial day absences,High,Medium,Not Started,ABS-010,6,,,Yes,,Hours-based absence requests
+ABS-014,Absence,Processing,Recurring Absences,Schedule recurring time off,Medium,Medium,Not Started,ABS-010,7,,,Yes,,Patterns like every Friday
+ABS-023,Absence,Balances,Negative Balances,Handle negative balance scenarios,High,Medium,Not Started,ABS-021,6,,,Yes,,Advance time off with repayment
+ABS-024,Absence,Balances,Balance Caps,Enforce maximum balance caps,High,Low,Not Started,ABS-021,4,,,Yes,,Stop accruals at cap
+ABS-033,Absence,Compliance,Medical Certification,Track medical certifications,High,Medium,Not Started,ABS-030,6,,,Yes,,Certification documents and expiration
+ABS-034,Absence,Compliance,Return to Work,Manage return-to-work process,High,Medium,Not Started,ABS-032,7,,,Yes,,Fitness for duty and restrictions
+ABS-042,Absence,Payouts,Payout on Hire Anniversary,Anniversary-based payouts,Low,Medium,Not Started,ABS-040,5,,,Yes,,Service milestone payouts
+ABS-052,Absence,Reporting,Leave Liability,Calculate leave liability,High,Medium,Not Started,ABS-050,7,,,Yes,,Financial liability for accrued time
+ABS-063,Absence,Integration,Calendar Sync,Sync with Outlook/Google calendar,Medium,High,Not Started,ABS-012,8,,,Yes,,Two-way calendar synchronization
+ABS-006,Absence,Setup,Waiting Periods,Configure eligibility waiting periods,Medium,Low,Not Started,ABS-002,4,,,Yes,,90-day waiting before accrual
+ABS-015,Absence,Processing,Emergency Leave,Flag emergency/unscheduled leave,High,Low,Not Started,ABS-010,3,,,Yes,,Track planned vs unplanned
+ABS-025,Absence,Balances,Proration,Prorate accruals for part-time,High,High,Not Started,ABS-020,7,,,Yes,,FTE-based accrual calculation
+ABS-035,Absence,Compliance,Workers Comp Leave,Track workers comp absences,Medium,Medium,Not Started,ABS-010,6,,,Yes,,Occupational injury leave
+ABS-043,Absence,Payouts,Donation Programs,PTO donation to colleagues,Low,Medium,Not Started,ABS-041,6,,,Yes,,Catastrophic leave donation
+ABS-053,Absence,Reporting,Bradford Factor,Calculate Bradford Factor scores,Medium,Low,Not Started,ABS-051,5,,,Yes,,Absence frequency weighting
+ABS-007,Absence,Setup,Eligibility Rules,Define plan eligibility criteria,High,Medium,Not Started,ABS-002,6,,,Yes,,Job grade location tenure eligibility
+ABS-016,Absence,Processing,Absence Cancellation,Cancel approved absences,High,Medium,Not Started,ABS-011,5,,,Yes,,Restore balances on cancellation
+ABS-026,Absence,Balances,Front Loading,Front-load annual entitlement,Medium,Medium,Not Started,ABS-003,6,,,Yes,,Grant full year on hire date
+ABS-036,Absence,Compliance,Military Leave,Manage military leave (USERRA),Medium,Medium,Not Started,ABS-010,7,,,Yes,,Job protection and benefits continuation
+ABS-044,Absence,Payouts,Forfeiture Rules,Handle forfeiture on termination,High,Medium,Not Started,ABS-040,5,,,Yes,,Cause-based forfeiture rules
+ABS-054,Absence,Reporting,Compliance Reports,Generate compliance reports,High,Medium,Not Started,ABS-030,6,,,Yes,,FMLA DOL and state reporting
+ABS-064,Absence,Integration,Benefits Integration,Link to benefits continuation,Medium,Medium,Not Started,None,7,,,Yes,,FMLA benefits continuation
+ABS-008,Absence,Setup,Substitute Coverage,Track substitute/coverage,Low,Medium,Not Started,ABS-012,6,,,Yes,,Identify coverage during absence
+ABS-017,Absence,Processing,Bulk Approval,Approve multiple requests in bulk,Medium,Medium,Not Started,ABS-011,5,,,Yes,,Manager batch approvals
+ABS-027,Absence,Balances,Balance Inquiry,Employee balance self-service,Critical,Low,Not Started,HCM-060,4,,,Yes,,Real-time balance visibility
+ABS-037,Absence,Compliance,Parental Leave,Manage parental leave programs,High,High,Not Started,ABS-031,9,,,Yes,,Maternity paternity adoption leave
+ABS-045,Absence,Payouts,Payout Approval,Approve payout requests,High,Medium,Not Started,ABS-041,5,,,Yes,,Manager approval for cashouts
+ABS-055,Absence,Reporting,Absence Dashboards,Manager absence dashboards,High,Medium,Not Started,ABS-051,7,,,No,,Team absence visibility
+ABS-009,Absence,Setup,Service-Based Accruals,Accrual rates by tenure,High,Medium,Not Started,ABS-003,6,,,Yes,,Increasing rates with service years
+ABS-018,Absence,Processing,Delegation,Delegate approval authority,Medium,Low,Not Started,ABS-011,4,,,Yes,,Temporary approval delegation
+ABS-028,Absence,Balances,Year-End Processing,Year-end balance processing,Critical,High,Not Started,ABS-024,8,,,Yes,,Carryover and forfeitures
+ABS-038,Absence,Compliance,Bereavement Leave,Configure bereavement policies,Medium,Low,Not Started,ABS-001,4,,,Yes,,Relationship-based entitlement
+ABS-046,Absence,Payouts,Payout Calculations,Calculate payout amounts,Critical,High,Not Started,ABS-040,8,,,Yes,,Hourly vs salary payout logic
+ABS-056,Absence,Reporting,Audit Reports,Absence audit reports,Medium,Low,Not Started,ABS-022,5,,,Yes,,Change history and adjustments
+ABS-065,Absence,Integration,Mobile Access,Mobile absence management,High,High,Not Started,HCM-062,9,,,Yes,,Submit and approve via mobile

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Designer - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Override main.css for designer layout */
+        body {
+            overflow: hidden;
+        }
+
+        .main-content {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Designer Toolbar */
+        .designer-toolbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .toolbar-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-id-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-1px);
+        }
+
+        .toolbar-btn.primary {
+            background: white;
+            color: #667eea;
+            border-color: white;
+        }
+
+        .designer-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .designer-pane {
+            background: white;
+            overflow-y: auto;
+        }
+
+        .designer-pane.left {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .designer-pane.right {
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .pane-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8f9fa;
+            font-weight: 600;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .canvas-area {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .canvas-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 600px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .region-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e7ff;
+            color: #1e293b;
+        }
+
+        .form-field {
+            margin-bottom: 20px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #f8f9fa;
+        }
+
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-group-header {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+            padding: 8px 0;
+            border-bottom: 2px solid #e0e7ff;
+            margin-bottom: 12px;
+        }
+
+        .property-field {
+            margin-bottom: 16px;
+        }
+
+        .property-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .property-input, .property-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager v2.0</p>
+                <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
+                    ✅ DESIGNER
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tools
+                    </p>
+                </div>
+
+                <a href="page-composer.html" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v2.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Designer Toolbar -->
+            <div class="designer-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-title">
+                        <span>🎨</span>
+                        <span id="pageTitle">Page Designer</span>
+                        <span class="page-id-badge" id="pageIdBadge">Loading...</span>
+                    </div>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="toolbar-btn" onclick="goBack()">
+                        <span>←</span>
+                        <span>Back</span>
+                    </button>
+                    <button class="toolbar-btn" onclick="savePage()">
+                        <span>💾</span>
+                        <span>Save</span>
+                    </button>
+                    <button class="toolbar-btn primary" onclick="exportPage()">
+                        <span>📥</span>
+                        <span>Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Three-Pane Layout -->
+            <div class="designer-body">
+                <!-- Left Pane: Component Tree -->
+                <div class="designer-pane left">
+                    <div class="pane-header">PAGE STRUCTURE</div>
+                    <div style="padding: 16px;">
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div style="margin-bottom: 8px;">
+                                <strong>Page ID:</strong> <span id="treePageId">-</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Module:</strong> <span id="treeModule">-</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Type:</strong> <span id="treeType">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Pane: Canvas -->
+                <div class="designer-pane center">
+                    <div class="canvas-area" id="canvasArea">
+                        <div class="canvas-content" id="canvasContent">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📐</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: #666;">Loading Page...</h3>
+                                <p id="loadingMessage">Please wait while we load your page design.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Pane: Properties -->
+                <div class="designer-pane right">
+                    <div class="pane-header">PROPERTIES</div>
+                    <div style="padding: 16px;" id="propertiesPanel">
+                        <div class="property-group">
+                            <div class="property-group-header">Page Information</div>
+                            <div class="property-field">
+                                <label class="property-label">Page Name</label>
+                                <input type="text" class="property-input" id="propPageName" readonly>
+                            </div>
+                            <div class="property-field">
+                                <label class="property-label">Page ID</label>
+                                <input type="text" class="property-input" id="propPageId" readonly>
+                            </div>
+                            <div class="property-field">
+                                <label class="property-label">Module</label>
+                                <input type="text" class="property-input" id="propModule" readonly>
+                            </div>
+                            <div class="property-field">
+                                <label class="property-label">Template</label>
+                                <input type="text" class="property-input" id="propTemplate" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let pageDefinition = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page Designer v2.0 initialized');
+            loadPageFromURL();
+        });
+
+        function loadPageFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const template = urlParams.get('template');
+            const module = urlParams.get('module');
+
+            console.log('URL Parameters - id:', id, 'template:', template, 'module:', module);
+
+            if (!id) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    '❌ No page ID provided.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
+            }
+
+            // Load page from localStorage
+            const stored = localStorage.getItem('composerPages');
+            if (!stored) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    '❌ No pages found.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
+            }
+
+            const pages = JSON.parse(stored);
+            const page = pages.find(p => p.id === id);
+
+            if (!page) {
+                document.getElementById('loadingMessage').innerHTML = 
+                    `❌ Page "${id}" not found.<br><a href="page-composer.html">Go back to Page Composer</a>`;
+                return;
+            }
+
+            // Store page definition
+            pageDefinition = {
+                pageId: page.id,
+                pageName: page.name,
+                pageType: template || page.type || 'free-form',
+                module: module || page.module || '',
+                definition: page.definition || {},
+                baseTable: page.definition?.baseTable || null
+            };
+
+            console.log('Page loaded - ID:', pageDefinition.pageId, 'Name:', pageDefinition.pageName, 'Module:', pageDefinition.module);
+
+            // Update UI
+            updatePageUI();
+        }
+
+        function updatePageUI() {
+            if (!pageDefinition) return;
+
+            // Update toolbar
+            document.getElementById('pageTitle').textContent = pageDefinition.pageName;
+            document.getElementById('pageIdBadge').textContent = pageDefinition.pageId;
+
+            // Update tree panel
+            document.getElementById('treePageId').textContent = pageDefinition.pageId;
+            document.getElementById('treeModule').textContent = pageDefinition.module || 'N/A';
+            document.getElementById('treeType').textContent = pageDefinition.pageType || 'free-form';
+
+            // Update properties panel
+            document.getElementById('propPageName').value = pageDefinition.pageName;
+            document.getElementById('propPageId').value = pageDefinition.pageId;
+            document.getElementById('propModule').value = pageDefinition.module || 'N/A';
+            document.getElementById('propTemplate').value = pageDefinition.pageType || 'free-form';
+
+            // Render canvas
+            renderCanvas();
+        }
+
+        function renderCanvas() {
+            const canvas = document.getElementById('canvasContent');
+            
+            const baseTable = pageDefinition.baseTable;
+            const tableName = baseTable ? baseTable.tableName : 'Not specified';
+
+            canvas.innerHTML = `
+                <div class="region-header">
+                    📋 ${pageDefinition.pageName}
+                </div>
+
+                <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="font-size: 13px; color: #64748b;">
+                        <div style="margin-bottom: 8px;"><strong>Page ID:</strong> ${pageDefinition.pageId}</div>
+                        <div style="margin-bottom: 8px;"><strong>Module:</strong> ${pageDefinition.module}</div>
+                        <div style="margin-bottom: 8px;"><strong>Type:</strong> ${pageDefinition.pageType}</div>
+                        <div><strong>Base Table:</strong> ${tableName}</div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 1</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 2</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div class="form-field">
+                    <label class="field-label">Field 3</label>
+                    <input type="text" class="field-input" placeholder="Enter value...">
+                </div>
+
+                <div style="margin-top: 24px; display: flex; gap: 12px;">
+                    <button class="toolbar-btn primary" style="flex: none;">💾 Save</button>
+                    <button class="toolbar-btn" style="flex: none; background: #e2e8f0; color: #475569;">❌ Cancel</button>
+                </div>
+            `;
+        }
+
+        function goBack() {
+            window.location.href = 'page-composer.html';
+        }
+
+        function savePage() {
+            alert('✅ Page saved successfully!\n\nPage: ' + pageDefinition.pageName);
+        }
+
+        function exportPage() {
+            const json = JSON.stringify(pageDefinition, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${pageDefinition.pageId}_definition.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

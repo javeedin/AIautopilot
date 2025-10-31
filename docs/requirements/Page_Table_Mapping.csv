@@ -1,0 +1,72 @@
+Page_ID,Table_ID,Relationship_Type,CRUD_Operations,Notes
+GL-P001,GL-T001,Primary,CRU,Enterprise configuration stored in GL_LEDGERS table
+GL-P002,GL-T002,Primary,R,Browse legal entities
+GL-P003,GL-T002,Primary,CRUD,Create/edit legal entity
+GL-P004,GL-T003,Primary,R,Browse business units
+GL-P005,GL-T003,Primary,CRUD,Create/edit business unit
+GL-P005,GL-T002,Related,R,Select legal entity for BU
+GL-P006,GL-T004,Primary,CRUD,Organization hierarchies
+GL-P007,GL-T005,Primary,CRUD,User-BU assignments
+GL-P008,GL-T006,Primary,R,Browse COA
+GL-P009,GL-T006,Primary,CRUD,COA designer - Create/edit COA
+GL-P009,GL-T007,Primary,CRUD,COA segments definition
+GL-P010,GL-T008,Primary,R,Browse value sets
+GL-P011,GL-T008,Primary,CRUD,Create/edit value set
+GL-P012,GL-T009,Primary,CRUD,Maintain value set values
+GL-P013,GL-T001,Primary,R,Browse ledgers
+GL-P014,GL-T001,Primary,CRUD,Create/edit ledger
+GL-P014,GL-T006,Related,R,Select COA for ledger
+GL-P014,GL-T010,Related,R,Select calendar for ledger
+GL-P014,GL-T011,Related,R,Select currency for ledger
+GL-P015,GL-T010,Primary,R,Browse calendars
+GL-P016,GL-T010,Primary,CRUD,Create/edit calendar
+GL-P016,GL-T012,Primary,CRUD,Define calendar periods
+GL-P017,GL-T012,Primary,U,Open/close periods
+GL-P018,GL-T011,Primary,R,Browse currencies
+GL-P019,GL-T011,Primary,CRUD,Create/edit currency
+GL-P020,GL-T013,Primary,R,Browse exchange rates
+GL-P021,GL-T013,Primary,CRUD,Create/edit exchange rates
+GL-P022,GL-T014,Primary,R,Browse journals
+GL-P023,GL-T014,Primary,CRUD,Create/edit journal header
+GL-P023,GL-T015,Primary,CRUD,Create/edit journal lines (master-detail)
+GL-P024,GL-T016,Primary,R,View account balances
+GL-P025,GL-T017,Primary,R,Browse budgets
+GL-P026,GL-T017,Primary,CRUD,Create/edit budget header
+GL-P026,GL-T018,Primary,CRUD,Create/edit budget lines (master-detail)
+AP-P001,AP-T001,Primary,R,Browse suppliers
+AP-P002,AP-T001,Primary,CRUD,Create/edit supplier
+AP-P002,AP-T002,Primary,CRUD,Manage supplier sites
+AP-P003,AP-T003,Primary,CRUD,Create/edit AP invoice header
+AP-P003,AP-T004,Primary,CRUD,Create/edit AP invoice lines (master-detail)
+AP-P003,AP-T001,Related,R,Select supplier
+AP-P004,AP-T005,Primary,R,Browse payments
+AP-P005,AP-T005,Primary,CRUD,Create/edit payment
+AP-P005,AP-T003,Related,R,Select invoices to pay
+AR-P001,AR-T001,Primary,R,Browse customers
+AR-P002,AR-T001,Primary,CRUD,Create/edit customer
+AR-P002,AR-T002,Primary,CRUD,Manage customer sites
+AR-P003,AR-T003,Primary,CRUD,Create/edit AR invoice header
+AR-P003,AR-T004,Primary,CRUD,Create/edit AR invoice lines (master-detail)
+AR-P003,AR-T001,Related,R,Select customer
+AR-P004,AR-T005,Primary,R,Browse receipts
+AR-P005,AR-T005,Primary,CRUD,Create/edit receipt
+AR-P005,AR-T003,Related,R,Select invoices to apply receipt
+PO-P001,PO-T001,Primary,R,Browse purchase orders
+PO-P002,PO-T001,Primary,CRUD,Create/edit PO header
+PO-P002,PO-T002,Primary,CRUD,Create/edit PO lines (master-detail)
+PO-P002,AP-T001,Related,R,Select supplier for PO
+INV-P001,INV-T001,Primary,R,Browse items
+INV-P002,INV-T001,Primary,CRUD,Create/edit item master
+INV-P003,INV-T002,Primary,R,View inventory balances
+INV-P004,INV-T003,Primary,CRUD,Create inventory transaction
+OM-P001,OM-T001,Primary,R,Browse sales orders
+OM-P002,OM-T001,Primary,CRUD,Create/edit sales order header
+OM-P002,OM-T002,Primary,CRUD,Create/edit sales order lines (master-detail)
+OM-P002,AR-T001,Related,R,Select customer for order
+HCM-P001,HCM-T001,Primary,R,Browse employees
+HCM-P002,HCM-T001,Primary,CRUD,Create/edit employee
+HCM-P003,HCM-T002,Primary,CRUD,Manage employee assignments
+PAY-P001,PAY-T001,Primary,R,Browse payroll elements
+PAY-P002,PAY-T001,Primary,CRUD,Create/edit payroll element
+PAY-P003,PAY-T002,Primary,CRUD,Process payroll run
+PAY-P003,HCM-T001,Related,R,Load employees for payroll

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Composer - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .composer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .btn-new-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-new-page:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .page-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid #667eea;
+        }
+
+        .page-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .page-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .page-id {
+            font-size: 12px;
+            color: #64748b;
+            font-family: 'Courier New', monospace;
+        }
+
+        .page-module {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .page-type {
+            font-size: 14px;
+            color: #64748b;
+            margin: 8px 0;
+        }
+
+        .page-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .page-stat {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-edit, .btn-export, .btn-delete {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-edit:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn-export:hover {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .template-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .template-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .template-card.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+
+        .template-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .template-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .template-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-next {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager v2.0</p>
+                <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
+                    ✅ LATEST VERSION
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tools
+                    </p>
+                </div>
+
+                <a href="page-composer.html" class="nav-item active">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tracking
+                    </p>
+                </div>
+
+                <a href="development-readiness.html" class="nav-item">
+                    <span class="nav-icon">🚦</span>
+                    <span class="nav-text">Readiness</span>
+                </a>
+                <a href="phased-approach.html" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Phased Approach</span>
+                </a>
+                <a href="tech-decisions.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">Tech Decisions</span>
+                </a>
+                <a href="dev-activity-log.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Activity Log</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v1.1.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>🎨 Page Composer</h2>
+                    <p class="subtitle">Visual page designer for rapid development</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-new-page" onclick="openNewPageModal()">
+                        <span>➕</span> New Page
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <select class="filter-select" id="moduleFilter" onchange="filterPages()">
+                    <option value="">All Modules</option>
+                    <option value="GL">GL - General Ledger</option>
+                    <option value="AP">AP - Accounts Payable</option>
+                    <option value="AR">AR - Accounts Receivable</option>
+                    <option value="PO">PO - Purchase Orders</option>
+                    <option value="INV">INV - Inventory</option>
+                    <option value="HCM">HCM - Human Capital</option>
+                    <option value="PAY">PAY - Payroll</option>
+                    <option value="CSH">CSH - Cash Management</option>
+                    <option value="FA">FA - Fixed Assets</option>
+                    <option value="OM">OM - Order Management</option>
+                    <option value="ABS">ABS - Absence Management</option>
+                    <option value="REC">REC - Recruitment</option>
+                    <option value="CM">CM - Contract Management</option>
+                    <option value="PDM">PDM - Product Data</option>
+                    <option value="LCM">LCM - Lifecycle Management</option>
+                    <option value="UR">UR - User Roles</option>
+                </select>
+
+                <select class="filter-select" id="typeFilter" onchange="filterPages()">
+                    <option value="">All Types</option>
+                    <option value="free-form">Free-form Page</option>
+                    <option value="master-detail">Master-Detail Page</option>
+                    <option value="list">List Page</option>
+                    <option value="report">Report Page</option>
+                </select>
+
+                <select class="filter-select" id="statusFilter" onchange="filterPages()">
+                    <option value="">All Status</option>
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="archived">Archived</option>
+                </select>
+            </div>
+
+            <!-- Pages Grid -->
+            <div class="pages-grid" id="pagesGrid">
+                <!-- Pages will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">🎨</div>
+                <div class="empty-title">No Pages Yet</div>
+                <div class="empty-desc">Create your first page using the visual page composer</div>
+                <button class="btn-new-page" onclick="openNewPageModal()" style="margin-top: 20px;">
+                    <span>➕</span> Create First Page
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Page Modal -->
+    <div class="modal" id="newPageModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Page</h3>
+                <button class="modal-close" onclick="closeNewPageModal()">&times;</button>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div style="display: flex; gap: 8px; padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px;">
+                <div id="step-indicator-1" class="step-indicator active">1. Basic Info</div>
+                <div id="step-indicator-2" class="step-indicator">2. Data Source</div>
+                <div id="step-indicator-3" class="step-indicator" style="display: none;">3. Detail Tables</div>
+            </div>
+
+            <!-- Step 1: Basic Info -->
+            <div id="wizard-step-1" class="wizard-step">
+                <div class="form-group">
+                    <label class="form-label">Module</label>
+                    <select class="form-select" id="newPageModule">
+                        <option value="">Select Module...</option>
+                        <option value="GL">GL - General Ledger</option>
+                        <option value="AP">AP - Accounts Payable</option>
+                        <option value="AR">AR - Accounts Receivable</option>
+                        <option value="PO">PO - Purchase Orders</option>
+                        <option value="INV">INV - Inventory</option>
+                        <option value="HCM">HCM - Human Capital Management</option>
+                        <option value="PAY">PAY - Payroll</option>
+                        <option value="CSH">CSH - Cash Management</option>
+                        <option value="FA">FA - Fixed Assets</option>
+                        <option value="OM">OM - Order Management</option>
+                        <option value="ABS">ABS - Absence Management</option>
+                        <option value="REC">REC - Recruitment</option>
+                        <option value="CM">CM - Contract Management</option>
+                        <option value="PDM">PDM - Product Data Management</option>
+                        <option value="LCM">LCM - Lifecycle Management</option>
+                        <option value="UR">UR - User Roles</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Page Name</label>
+                    <input type="text" class="form-input" id="newPageName" placeholder="e.g., Invoice Entry Form">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Page ID</label>
+                    <input type="text" class="form-input" id="newPageId" placeholder="e.g., GL-P050" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Page Template</label>
+                    <div class="template-grid">
+                        <div class="template-card" onclick="selectTemplate('free-form')">
+                            <div class="template-icon">📝</div>
+                            <div class="template-name">Free-form Page</div>
+                            <div class="template-desc">Single record form with custom fields</div>
+                        </div>
+                        <div class="template-card" onclick="selectTemplate('master-detail')">
+                            <div class="template-icon">📋</div>
+                            <div class="template-name">Master-Detail</div>
+                            <div class="template-desc">Header form with detail grids</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeNewPageModal()">Cancel</button>
+                    <button class="btn-next" onclick="wizardNext(1)">Next: Select Table</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Table Selection -->
+            <div id="wizard-step-2" class="wizard-step" style="display: none;">
+                <!-- For Free-form -->
+                <div id="freeform-table-selection">
+                    <div class="form-group">
+                        <label class="form-label">Base Table</label>
+                        <div style="display: flex; gap: 8px;">
+                            <select class="form-select" id="baseTable" style="flex: 1;">
+                                <option value="">-- Select Table --</option>
+                            </select>
+                            <button class="btn-next" onclick="refreshTableList()" style="padding: 8px 16px;">🔄</button>
+                        </div>
+                        <div class="property-help" style="margin-top: 8px;">Table containing the main data for this form</div>
+                    </div>
+
+                    <div id="tableInfo" style="display: none; background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600;">Table Information</h4>
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div><strong>Table:</strong> <span id="infoTableName"></span></div>
+                            <div><strong>Primary Key:</strong> <span id="infoPrimaryKey"></span></div>
+                            <div><strong>Description:</strong> <span id="infoDescription"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For Master-Detail -->
+                <div id="masterdetail-table-selection" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Header Table (Master)</label>
+                        <select class="form-select" id="headerTable">
+                            <option value="">-- Select Header Table --</option>
+                        </select>
+                        <div class="property-help">Main table for the header form (e.g., PO_HEADERS, AP_INVOICES)</div>
+                    </div>
+
+                    <div id="headerTableInfo" style="display: none; background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600;">Header Table Information</h4>
+                        <div style="font-size: 13px; color: #64748b;">
+                            <div><strong>Table:</strong> <span id="infoHeaderTableName"></span></div>
+                            <div><strong>Primary Key:</strong> <span id="infoHeaderPrimaryKey"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 24px;">
+                    <button class="btn-cancel" onclick="wizardPrevious(2)">← Previous</button>
+                    <button class="btn-next" id="step2NextBtn">Next: Configure Details</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Detail Tables (Master-Detail only) -->
+            <div id="wizard-step-3" class="wizard-step" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Detail Tab Pages</label>
+                    <div class="property-help">Add one or more tab pages with detail tables (e.g., Line Items, Distributions)</div>
+                </div>
+
+                <div id="detailTabsList" style="margin: 16px 0;">
+                    <!-- Detail tabs will be added here -->
+                </div>
+
+                <button onclick="addDetailTab()" style="width: 100%; padding: 12px; border: 2px dashed #cbd5e1; background: #f8f9fa; border-radius: 8px; cursor: pointer; color: #475569; font-weight: 500;">
+                    ➕ Add Detail Tab
+                </button>
+
+                <div class="modal-actions" style="margin-top: 24px;">
+                    <button class="btn-cancel" onclick="wizardPrevious(3)">← Previous</button>
+                    <button class="btn-next" onclick="createPageFromWizard()">Create & Design</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .step-indicator {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            background: #e2e8f0;
+            color: #64748b;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        .wizard-step {
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .detail-tab-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .detail-tab-item .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .detail-tab-item .tab-number {
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .detail-tab-item .tab-delete {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .detail-tab-item .tab-delete:hover {
+            background: #fee2e2;
+        }
+    </style>
+
+    <script src="js/table-data-loader.js"></script>
+    <script>
+        // Sample data storage (in real app, this would be in a database)
+        let pages = [];
+        let selectedTemplate = null;
+
+        // Load pages from localStorage
+        function loadPages() {
+            const stored = localStorage.getItem('composerPages');
+            if (stored) {
+                pages = JSON.parse(stored);
+            }
+            renderPages();
+        }
+
+        // Save pages to localStorage
+        function savePages() {
+            localStorage.setItem('composerPages', JSON.stringify(pages));
+        }
+
+        // Render pages grid
+        function renderPages() {
+            const grid = document.getElementById('pagesGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (pages.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = pages.map(page => `
+                <div class="page-card" onclick="editPage('${page.id}')">
+                    <div class="page-card-header">
+                        <div>
+                            <div class="page-icon">${page.icon}</div>
+                            <div class="page-title">${page.name}</div>
+                            <div class="page-id">${page.id}</div>
+                        </div>
+                        <span class="page-module">${page.module}</span>
+                    </div>
+                    <div class="page-type">📄 ${page.type === 'free-form' ? 'Free-form Page' : 'Master-Detail Page'}</div>
+                    <div class="page-stats">
+                        <span class="page-stat">📊 ${page.fields || 0} fields</span>
+                        <span class="page-stat">⏱️ ${page.created}</span>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn-edit" onclick="event.stopPropagation(); editPage('${page.id}')">✏️ Edit</button>
+                        <button class="btn-export" onclick="event.stopPropagation(); exportPage('${page.id}')">📤 Export</button>
+                        <button class="btn-delete" onclick="event.stopPropagation(); deletePage('${page.id}')">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter pages
+        function filterPages() {
+            const moduleFilter = document.getElementById('moduleFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            // Implement filtering logic here
+            renderPages();
+        }
+
+        // Open new page modal
+        function openNewPageModal() {
+            document.getElementById('newPageModal').classList.add('active');
+        }
+
+        // Close new page modal
+        function closeNewPageModal() {
+            document.getElementById('newPageModal').classList.remove('active');
+            document.getElementById('newPageModule').value = '';
+            document.getElementById('newPageName').value = '';
+            document.getElementById('newPageId').value = '';
+            selectedTemplate = null;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+        }
+
+        // Select template
+        function selectTemplate(type) {
+            selectedTemplate = type;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Generate page ID
+        document.getElementById('newPageModule').addEventListener('change', function() {
+            const module = this.value;
+            if (module) {
+                const count = pages.filter(p => p.module === module).length + 1;
+                document.getElementById('newPageId').value = `${module}-P${String(count).padStart(3, '0')}`;
+            }
+        });
+
+        // Create page
+        function createPage() {
+            const module = document.getElementById('newPageModule').value;
+            const name = document.getElementById('newPageName').value;
+            const id = document.getElementById('newPageId').value;
+
+            if (!module || !name || !selectedTemplate) {
+                alert('Please fill all fields and select a template');
+                return;
+            }
+
+            const newPage = {
+                id: id,
+                module: module,
+                name: name,
+                type: selectedTemplate,
+                icon: selectedTemplate === 'free-form' ? '📝' : '📋',
+                fields: 0,
+                created: new Date().toLocaleDateString(),
+                status: 'draft',
+                definition: {}
+            };
+
+            pages.push(newPage);
+            savePages();
+            closeNewPageModal();
+            renderPages();
+
+            // Redirect to designer
+            window.location.href = `page-designer.html?id=${id}`;
+        }
+
+        // Edit page
+        function editPage(id) {
+            window.location.href = `page-designer.html?id=${id}`;
+        }
+
+        // Export page
+        function exportPage(id) {
+            const page = pages.find(p => p.id === id);
+            if (!page) return;
+
+            const json = JSON.stringify(page, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${page.id}_definition.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Delete page
+        function deletePage(id) {
+            if (confirm(`Are you sure you want to delete page ${id}?`)) {
+                pages = pages.filter(p => p.id !== id);
+                savePages();
+                renderPages();
+            }
+        }
+
+        // ==================== WIZARD FUNCTIONS ====================
+
+        // Wizard state
+        let currentWizardStep = 1;
+        let wizardData = {
+            module: '',
+            pageName: '',
+            pageId: '',
+            template: '',
+            baseTable: null,
+            headerTable: null,
+            detailTabs: []
+        };
+        let detailTabCounter = 0;
+
+        // Navigate to next wizard step
+        function wizardNext(currentStep) {
+            // Validate current step
+            if (currentStep === 1) {
+                const module = document.getElementById('newPageModule').value;
+                const pageName = document.getElementById('newPageName').value;
+
+                if (!module || !pageName || !selectedTemplate) {
+                    alert('Please fill in Module, Page Name, and select a Template');
+                    return;
+                }
+
+                // Store wizard data
+                wizardData.module = module;
+                wizardData.pageName = pageName;
+                wizardData.pageId = document.getElementById('newPageId').value;
+                wizardData.template = selectedTemplate;
+
+                // Refresh table list based on module
+                refreshTableList();
+
+                // Show/hide appropriate sections based on template
+                if (selectedTemplate === 'free-form') {
+                    document.getElementById('freeform-table-selection').style.display = 'block';
+                    document.getElementById('masterdetail-table-selection').style.display = 'none';
+                    document.getElementById('step-indicator-3').style.display = 'none';
+                    // Change Step 2 button for free-form
+                    document.getElementById('step2NextBtn').textContent = 'Create & Design';
+                    document.getElementById('step2NextBtn').onclick = function() { createPageFromWizard(); };
+                } else if (selectedTemplate === 'master-detail') {
+                    document.getElementById('freeform-table-selection').style.display = 'none';
+                    document.getElementById('masterdetail-table-selection').style.display = 'block';
+                    document.getElementById('step-indicator-3').style.display = 'flex';
+                    // Change Step 2 button for master-detail
+                    document.getElementById('step2NextBtn').textContent = 'Next: Configure Details';
+                    document.getElementById('step2NextBtn').onclick = function() { wizardNext(2); };
+                }
+
+                // Move to step 2
+                document.getElementById('wizard-step-1').style.display = 'none';
+                document.getElementById('wizard-step-2').style.display = 'block';
+                document.getElementById('step-indicator-1').classList.remove('active');
+                document.getElementById('step-indicator-1').classList.add('completed');
+                document.getElementById('step-indicator-2').classList.add('active');
+                currentWizardStep = 2;
+            }
+            else if (currentStep === 2 && selectedTemplate === 'master-detail') {
+                // Validate table selection
+                const headerTable = document.getElementById('headerTable').value;
+                if (!headerTable) {
+                    alert('Please select a Header Table');
+                    return;
+                }
+
+                // Store header table
+                const selectedTableData = tablesData.find(t => t.tableName === headerTable);
+                wizardData.headerTable = selectedTableData;
+
+                // Move to step 3 (detail tables)
+                document.getElementById('wizard-step-2').style.display = 'none';
+                document.getElementById('wizard-step-3').style.display = 'block';
+                document.getElementById('step-indicator-2').classList.remove('active');
+                document.getElementById('step-indicator-2').classList.add('completed');
+                document.getElementById('step-indicator-3').classList.add('active');
+                currentWizardStep = 3;
+            }
+        }
+
+        // Navigate to previous wizard step
+        function wizardPrevious(currentStep) {
+            if (currentStep === 2) {
+                document.getElementById('wizard-step-2').style.display = 'none';
+                document.getElementById('wizard-step-1').style.display = 'block';
+                document.getElementById('step-indicator-2').classList.remove('active');
+                document.getElementById('step-indicator-2').classList.remove('completed');
+                document.getElementById('step-indicator-1').classList.add('active');
+                document.getElementById('step-indicator-1').classList.remove('completed');
+                currentWizardStep = 1;
+            }
+            else if (currentStep === 3) {
+                document.getElementById('wizard-step-3').style.display = 'none';
+                document.getElementById('wizard-step-2').style.display = 'block';
+                document.getElementById('step-indicator-3').classList.remove('active');
+                document.getElementById('step-indicator-3').classList.remove('completed');
+                document.getElementById('step-indicator-2').classList.add('active');
+                document.getElementById('step-indicator-2').classList.remove('completed');
+                currentWizardStep = 2;
+            }
+        }
+
+        // Refresh table list based on selected module
+        function refreshTableList() {
+            const module = wizardData.module;
+
+            // Filter tables by module
+            const moduleTables = tablesData.filter(t => t.moduleId === module);
+
+            // Populate baseTable dropdown (for free-form)
+            const baseTableSelect = document.getElementById('baseTable');
+            baseTableSelect.innerHTML = '<option value="">-- Select Table --</option>';
+            moduleTables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.tableName;
+                option.textContent = `${table.tableName} - ${table.description}`;
+                option.dataset.tableId = table.tableId;
+                option.dataset.primaryKey = table.primaryKey;
+                baseTableSelect.appendChild(option);
+            });
+
+            // Populate headerTable dropdown (for master-detail)
+            const headerTableSelect = document.getElementById('headerTable');
+            headerTableSelect.innerHTML = '<option value="">-- Select Header Table --</option>';
+            moduleTables.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.tableName;
+                option.textContent = `${table.tableName} - ${table.description}`;
+                option.dataset.tableId = table.tableId;
+                option.dataset.primaryKey = table.primaryKey;
+                headerTableSelect.appendChild(option);
+            });
+
+            console.log(`Loaded ${moduleTables.length} tables for module ${module}`);
+        }
+
+        // Add detail tab for master-detail
+        function addDetailTab() {
+            detailTabCounter++;
+            const tabsList = document.getElementById('detailTabsList');
+
+            // Filter tables by current module
+            const moduleTables = tablesData.filter(t => t.moduleId === wizardData.module);
+
+            const detailTabHtml = `
+                <div class="detail-tab-item" id="detail-tab-${detailTabCounter}">
+                    <div class="tab-header">
+                        <span class="tab-number">Detail Tab ${detailTabCounter}</span>
+                        <button class="tab-delete" onclick="removeDetailTab(${detailTabCounter})" title="Delete">🗑️</button>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 13px;">
+                            Tab Name
+                        </label>
+                        <input type="text" id="detail-tab-name-${detailTabCounter}"
+                               placeholder="e.g., Line Items"
+                               style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 13px;">
+                            Detail Table
+                        </label>
+                        <select id="detail-tab-table-${detailTabCounter}"
+                                style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                            <option value="">-- Select Detail Table --</option>
+                            ${moduleTables.map(table =>
+                                `<option value="${table.tableName}" data-table-id="${table.tableId}" data-primary-key="${table.primaryKey}">
+                                    ${table.tableName} - ${table.description}
+                                </option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                </div>
+            `;
+
+            tabsList.insertAdjacentHTML('beforeend', detailTabHtml);
+        }
+
+        // Remove detail tab
+        function removeDetailTab(tabId) {
+            const tabElement = document.getElementById(`detail-tab-${tabId}`);
+            if (tabElement && confirm('Remove this detail tab?')) {
+                tabElement.remove();
+            }
+        }
+
+        // Create page from wizard data
+        function createPageFromWizard() {
+            // Collect all wizard data
+            if (wizardData.template === 'free-form') {
+                const baseTable = document.getElementById('baseTable').value;
+                if (!baseTable) {
+                    alert('Please select a Base Table');
+                    return;
+                }
+
+                const selectedOption = document.getElementById('baseTable').selectedOptions[0];
+                wizardData.baseTable = {
+                    tableName: baseTable,
+                    tableId: selectedOption.dataset.tableId,
+                    primaryKey: selectedOption.dataset.primaryKey
+                };
+            }
+            else if (wizardData.template === 'master-detail') {
+                // Collect detail tabs
+                wizardData.detailTabs = [];
+                for (let i = 1; i <= detailTabCounter; i++) {
+                    const tabElement = document.getElementById(`detail-tab-${i}`);
+                    if (!tabElement) continue; // Skip deleted tabs
+
+                    const tabName = document.getElementById(`detail-tab-name-${i}`).value;
+                    const tabTable = document.getElementById(`detail-tab-table-${i}`).value;
+
+                    if (tabName && tabTable) {
+                        const selectedOption = document.getElementById(`detail-tab-table-${i}`).selectedOptions[0];
+                        wizardData.detailTabs.push({
+                            name: tabName,
+                            tableName: tabTable,
+                            tableId: selectedOption.dataset.tableId,
+                            primaryKey: selectedOption.dataset.primaryKey
+                        });
+                    }
+                }
+
+                if (wizardData.detailTabs.length === 0) {
+                    alert('Please add at least one detail tab');
+                    return;
+                }
+            }
+
+            // Create page object
+            const newPage = {
+                id: wizardData.pageId,
+                module: wizardData.module,
+                name: wizardData.pageName,
+                type: wizardData.template,
+                icon: wizardData.template === 'free-form' ? '📝' : '📋',
+                fields: 0,
+                created: new Date().toLocaleDateString(),
+                status: 'draft',
+                definition: {
+                    baseTable: wizardData.baseTable,
+                    headerTable: wizardData.headerTable,
+                    detailTabs: wizardData.detailTabs
+                }
+            };
+
+            // Save page
+            pages.push(newPage);
+            savePages();
+
+            // Close modal and reset
+            closeNewPageModal();
+            resetWizard();
+            renderPages();
+
+            // Redirect to designer with table configuration
+            const params = new URLSearchParams({
+                id: newPage.id,
+                template: wizardData.template,
+                module: wizardData.module
+            });
+
+            if (wizardData.template === 'free-form' && wizardData.baseTable) {
+                params.append('baseTable', wizardData.baseTable.tableName);
+                params.append('baseTableId', wizardData.baseTable.tableId);
+            } else if (wizardData.template === 'master-detail' && wizardData.headerTable) {
+                params.append('headerTable', wizardData.headerTable.tableName);
+                params.append('headerTableId', wizardData.headerTable.tableId);
+                params.append('detailTabs', JSON.stringify(wizardData.detailTabs));
+            }
+
+            window.location.href = `page-designer.html?${params.toString()}`;
+        }
+
+        // Reset wizard to initial state
+        function resetWizard() {
+            currentWizardStep = 1;
+            wizardData = {
+                module: '',
+                pageName: '',
+                pageId: '',
+                template: '',
+                baseTable: null,
+                headerTable: null,
+                detailTabs: []
+            };
+            detailTabCounter = 0;
+
+            // Reset UI
+            document.getElementById('wizard-step-1').style.display = 'block';
+            document.getElementById('wizard-step-2').style.display = 'none';
+            document.getElementById('wizard-step-3').style.display = 'none';
+
+            document.getElementById('step-indicator-1').classList.add('active');
+            document.getElementById('step-indicator-1').classList.remove('completed');
+            document.getElementById('step-indicator-2').classList.remove('active', 'completed');
+            document.getElementById('step-indicator-3').classList.remove('active', 'completed');
+
+            document.getElementById('detailTabsList').innerHTML = '';
+        }
+
+        // Event listeners for table selection to show info
+        document.addEventListener('DOMContentLoaded', function() {
+            // Base table selection (free-form)
+            document.getElementById('baseTable').addEventListener('change', function() {
+                const tableName = this.value;
+                const selectedOption = this.selectedOptions[0];
+
+                if (tableName) {
+                    document.getElementById('infoTableName').textContent = tableName;
+                    document.getElementById('infoPrimaryKey').textContent = 'Primary Key: ' + selectedOption.dataset.primaryKey;
+                    document.getElementById('tableInfo').style.display = 'flex';
+                } else {
+                    document.getElementById('tableInfo').style.display = 'none';
+                }
+            });
+
+            // Header table selection (master-detail)
+            document.getElementById('headerTable').addEventListener('change', function() {
+                const tableName = this.value;
+                const selectedOption = this.selectedOptions[0];
+
+                if (tableName) {
+                    document.getElementById('infoHeaderTableName').textContent = tableName;
+                    document.getElementById('infoHeaderPrimaryKey').textContent = 'Primary Key: ' + selectedOption.dataset.primaryKey;
+                    document.getElementById('headerTableInfo').style.display = 'flex';
+                } else {
+                    document.getElementById('headerTableInfo').style.display = 'none';
+                }
+            });
+        });
+
+        // Update selectTemplate to reset wizard when template changes
+        function selectTemplate(type) {
+            selectedTemplate = type;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Override closeNewPageModal to reset wizard
+        function closeNewPageModal() {
+            document.getElementById('newPageModal').classList.remove('active');
+            document.getElementById('newPageModule').value = '';
+            document.getElementById('newPageName').value = '';
+            document.getElementById('newPageId').value = '';
+            selectedTemplate = null;
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('selected'));
+            resetWizard();
+        }
+
+        // ==================== END WIZARD FUNCTIONS ====================
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPages();
+        });
+    </script>
+</body>
+</html>
