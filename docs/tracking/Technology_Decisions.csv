@@ -1,0 +1,21 @@
+Decision_ID,Category,Decision_Item,Status,Selected_Option,Alternative_Options,Decision_Maker,Decision_Date,Priority,Rationale,Impact,Blocker_For
+TECH-001,Backend,Backend Framework,Pending,,[Node.js/Express | .NET Core | Java/Spring Boot | Python/Django | PHP/Laravel],User,TBD,Critical,Need to choose backend technology stack,Blocks all API development,PHASE-1
+TECH-002,Frontend,Frontend Framework,Pending,,[React | Angular | Vue.js | Svelte | Plain HTML/JS],User,TBD,Critical,Need to choose frontend framework for consistency,Blocks all page development,PHASE-1
+TECH-003,Database,Database Server,Confirmed,Oracle,[Oracle | PostgreSQL | MySQL | SQL Server],User,2025-10-27,Critical,Oracle chosen based on DDL scripts in requirements,Database structure already designed for Oracle,None
+TECH-004,API,API Architecture Style,Pending,,[REST | GraphQL | gRPC | tRPC],User,TBD,High,Need to decide on API communication pattern,Affects API design and client implementation,PHASE-1
+TECH-005,API,API Authentication,Pending,,[JWT Tokens | OAuth 2.0 | Session Cookies | API Keys | SAML],User,TBD,Critical,Need to secure API endpoints,Affects all API and page implementations,PHASE-1
+TECH-006,Frontend,State Management,Pending,,[Redux | MobX | Zustand | React Context | Vuex | NgRx | None],User,TBD,High,Need consistent state management approach,Depends on frontend framework choice,PHASE-1
+TECH-007,Frontend,UI Component Library,Pending,,[Material-UI | Ant Design | Bootstrap | Tailwind CSS | Chakra UI | Custom],User,TBD,Medium,Choose component library for consistent UI,Speeds up development with pre-built components,PHASE-0
+TECH-008,Backend,ORM/Data Access,Pending,,[Sequelize | TypeORM | Entity Framework | Hibernate | Django ORM | Dapper | Raw SQL],User,TBD,High,Need data access layer for Oracle,Affects database query patterns,PHASE-1
+TECH-009,DevOps,Deployment Platform,Pending,,[Docker/Kubernetes | AWS | Azure | Google Cloud | On-Premise | Heroku],User,TBD,Medium,Where will application be deployed,Affects architecture and scaling,PHASE-2
+TECH-010,DevOps,CI/CD Pipeline,Pending,,[GitHub Actions | GitLab CI | Jenkins | Azure DevOps | CircleCI | Travis CI],User,TBD,Low,Automated build and deployment,Speeds up development workflow,PHASE-2
+TECH-011,Testing,Testing Framework,Pending,,[Jest | Mocha/Chai | Jasmine | Pytest | JUnit | NUnit | xUnit],User,TBD,High,Need consistent testing approach,Depends on backend/frontend choices,PHASE-1
+TECH-012,Frontend,Form Validation,Pending,,[Formik | React Hook Form | Yup | Joi | class-validator | VeeValidate],User,TBD,High,Need form validation library,Affects all form pages,PHASE-1
+TECH-013,Infrastructure,Logging Solution,Pending,,[Winston | Pino | Log4j | Serilog | Python logging | ELK Stack],User,TBD,High,Need centralized logging,Critical for debugging and monitoring,PHASE-0
+TECH-014,Infrastructure,Error Tracking,Pending,,[Sentry | Rollbar | Bugsnag | New Relic | Custom Solution],User,TBD,Medium,Need error monitoring in production,Helps catch and fix bugs quickly,PHASE-2
+TECH-015,AI,Chatbot Service,Pending,,[OpenAI GPT-4 | Azure OpenAI | Google Gemini | Anthropic Claude | AWS Bedrock | Custom],User,TBD,Medium,Autopilot feature needs chatbot backend,Required for AI assistance feature,PHASE-3
+TECH-016,Database,Migration Tool,Pending,,[Flyway | Liquibase | Alembic | Entity Framework Migrations | Custom Scripts],User,TBD,Medium,Need database version control,Helps manage schema changes,PHASE-1
+TECH-017,Backend,API Documentation,Pending,,[Swagger/OpenAPI | Postman | API Blueprint | RAML | Custom Docs],User,TBD,Medium,Need API documentation for team,Helps frontend developers use APIs,PHASE-1
+TECH-018,Development,Code Editor/IDE,Pending,,[VS Code | WebStorm | IntelliJ IDEA | Visual Studio | PyCharm | Eclipse],User,TBD,Low,Standardize development environment,Personal preference affects productivity,None
+TECH-019,Frontend,Date/Time Handling,Pending,,[date-fns | Moment.js | Day.js | Luxon | Native Date],User,TBD,Medium,Need consistent date handling,Many ERP pages use dates extensively,PHASE-1
+TECH-020,Frontend,Charts/Visualizations,Confirmed,Chart.js,[Chart.js | D3.js | Recharts | ApexCharts | Highcharts],Claude,2025-10-27,Medium,Chart.js already used in Reports page,Already integrated in dashboard,None

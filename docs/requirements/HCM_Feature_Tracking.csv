@@ -1,0 +1,128 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+HCM-001,HCM,Employee Master,Employee Records,Create and maintain employee master records,Critical,High,Not Started,UR-001,10,,,Yes,,Comprehensive employee data with effective dating
+HCM-002,HCM,Employee Master,Demographic Info,Capture demographic data for compliance,High,Medium,Not Started,HCM-001,6,,,Yes,,EEO and diversity reporting data
+HCM-003,HCM,Employee Master,Document Management,Attach and manage employee documents,Critical,High,Not Started,HCM-001,9,,,Yes,,Secure document storage with expiration tracking
+HCM-010,HCM,Organization,Org Hierarchy,Define organizational structure and hierarchy,Critical,High,Not Started,GL-001,10,,,Yes,,Multi-level org structure with effective dating
+HCM-011,HCM,Organization,Position Management,Manage positions as org building blocks,Critical,High,Not Started,HCM-010,11,,,Yes,,Position records with budgets and reporting
+HCM-012,HCM,Organization,Job Management,Define jobs with competencies,Critical,High,Not Started,HCM-011,9,,,Yes,,Standardized job library with requirements
+HCM-020,HCM,Compensation,Salary Administration,Manage employee compensation,Critical,High,Not Started,HCM-001,10,,,Yes,,Base salary and compensation changes
+HCM-021,HCM,Compensation,Grade and Step,Define salary grades and steps,Critical,Medium,Not Started,HCM-020,7,,,Yes,,Structured grade table with ranges
+HCM-022,HCM,Compensation,Bonus Incentive,Manage bonuses and incentives,High,High,Not Started,HCM-020,9,,,Yes,,Variable comp with performance linkage
+HCM-030,HCM,Performance,Performance Reviews,Conduct employee evaluations,Critical,High,Not Started,HCM-001,11,,,Yes,,Review cycles with rating scales
+HCM-031,HCM,Performance,Goal Management,Set and track employee goals,Critical,High,Not Started,HCM-030,10,,,Yes,,SMART goals aligned to objectives
+HCM-032,HCM,Performance,Competency Assessment,Assess employee competencies,High,Medium,Not Started,HCM-012,8,,,Yes,,Competency gap analysis
+HCM-040,HCM,Talent,Succession Planning,Identify and develop successors,High,High,Not Started,HCM-011,10,,,No,,Succession pipeline for key positions
+HCM-041,HCM,Talent,Career Development,Support career planning,High,High,Not Started,HCM-012,9,,,No,,Career paths and development plans
+HCM-042,HCM,Talent,Talent Review,Conduct talent assessments,High,Medium,Not Started,HCM-030,8,,,No,,9-box grid and calibration
+HCM-050,HCM,Learning,Training Management,Manage training programs,High,High,Not Started,HCM-001,10,,,Yes,,Training catalog and enrollment
+HCM-051,HCM,Learning,Certification Mgmt,Track certifications and licenses,High,Medium,Not Started,HCM-050,7,,,Yes,,Certification tracking with expiration alerts
+HCM-060,HCM,Self-Service,Employee Portal,Employee self-service access,Critical,High,Not Started,HCM-001,12,,,Yes,,ESS for personal data and requests
+HCM-061,HCM,Self-Service,Manager Portal,Manager self-service functions,Critical,High,Not Started,HCM-060,11,,,Yes,,MSS for team management
+HCM-070,HCM,Workforce Admin,Hire Processing,Process new hire onboarding,Critical,High,Not Started,HCM-001,10,,,Yes,,Onboarding checklist and setup
+HCM-071,HCM,Workforce Admin,Transfers Promotions,Process job changes,Critical,High,Not Started,HCM-011,9,,,Yes,,Effective dated transfers and promotions
+HCM-072,HCM,Workforce Admin,Termination Processing,Process terminations and offboarding,Critical,High,Not Started,HCM-001,10,,,Yes,,Offboarding checklist and data archival
+HCM-080,HCM,Analytics,Standard Reports,HR operational reports,Critical,Medium,Not Started,HCM-001,8,,,Yes,,Headcount turnover and compliance reports
+HCM-081,HCM,Analytics,HR Analytics,Advanced workforce analytics,High,High,Not Started,HCM-080,10,,,No,,Dashboards with predictive metrics
+HCM-090,HCM,Compliance,EEO Reporting,Equal employment opportunity compliance,Critical,Medium,Not Started,HCM-002,7,,,Yes,,EEO-1 and affirmative action reporting
+HCM-091,HCM,Compliance,Labor Relations,Manage union relations,Medium,Medium,Not Started,HCM-001,7,,,Yes,,Bargaining units and grievances
+HCM-100,HCM,Integration,Payroll Integration,Integration with Payroll module,Critical,High,Not Started,None,10,,,Yes,,Seamless data sync to payroll
+HCM-101,HCM,Integration,Absence Integration,Integration with Absence module,Critical,High,Not Started,None,9,,,Yes,,Leave entitlements and balances
+HCM-102,HCM,Integration,Recruitment Integration,Integration with Recruitment module,Critical,High,Not Started,None,9,,,Yes,,Open positions and new hire data
+HCM-110,HCM,Security,HCM Security,Comprehensive HR data security,Critical,High,Not Started,UR-001,8,,,Yes,,Role-based access and data encryption
+HCM-111,HCM,Security,Audit Trail,Audit trail for HR transactions,Critical,Medium,Not Started,HCM-110,6,,,Yes,,Complete change history logging
+HCM-004,HCM,Employee Master,Contact Information,Manage employee contact details,Critical,Medium,Not Started,HCM-001,5,,,Yes,,Addresses phone email with effective dates
+HCM-005,HCM,Employee Master,Emergency Contacts,Capture emergency contact info,High,Low,Not Started,HCM-001,3,,,Yes,,Emergency contacts with relationships
+HCM-006,HCM,Employee Master,Work Authorization,Track work authorization and visas,High,Medium,Not Started,HCM-002,6,,,Yes,,I-9 visa and work permit tracking
+HCM-013,HCM,Organization,Department Structure,Define department hierarchy,Critical,Medium,Not Started,HCM-010,6,,,Yes,,Multi-level department structure
+HCM-014,HCM,Organization,Cost Center Assignment,Assign employees to cost centers,High,Medium,Not Started,GL-120,6,,,Yes,,Link to GL cost center structure
+HCM-023,HCM,Compensation,Comp Planning,Annual compensation planning,High,High,Not Started,HCM-020,10,,,No,,Budget allocation and merit planning
+HCM-024,HCM,Compensation,Equity Compensation,Manage stock options and RSUs,Medium,High,Not Started,HCM-020,9,,,No,,Stock grants vesting and exercise
+HCM-033,HCM,Performance,360 Feedback,Multi-rater feedback process,Medium,High,Not Started,HCM-030,9,,,No,,Peer upward and stakeholder feedback
+HCM-034,HCM,Performance,Calibration,Performance rating calibration,High,Medium,Not Started,HCM-030,7,,,No,,Cross-functional rating consistency
+HCM-043,HCM,Talent,High Potential Program,Identify and develop high potentials,Medium,Medium,Not Started,HCM-042,7,,,No,,HiPo identification and development
+HCM-044,HCM,Talent,Mentoring Program,Manage mentoring relationships,Low,Medium,Not Started,HCM-041,6,,,Yes,,Mentor-mentee matching and tracking
+HCM-052,HCM,Learning,Learning Paths,Define structured learning paths,Medium,Medium,Not Started,HCM-050,7,,,Yes,,Curriculum design by role
+HCM-053,HCM,Learning,External Training,Track external training,Medium,Low,Not Started,HCM-050,4,,,Yes,,Conferences and external courses
+HCM-062,HCM,Self-Service,Mobile Access,Mobile app for ESS/MSS,High,High,Not Started,HCM-060,11,,,Yes,,Native mobile apps for employees
+HCM-063,HCM,Self-Service,Personal Info Update,Employee updates own info,High,Medium,Not Started,HCM-060,6,,,Yes,,Self-service data changes with approval
+HCM-073,HCM,Workforce Admin,Rehire Processing,Process employee rehires,High,Medium,Not Started,HCM-070,7,,,Yes,,Restore former employee data
+HCM-074,HCM,Workforce Admin,Leave of Absence,Manage leave of absence,High,High,Not Started,HCM-101,8,,,Yes,,LOA types and return to work
+HCM-082,HCM,Analytics,Turnover Analysis,Analyze employee turnover,High,Medium,Not Started,HCM-080,7,,,No,,Voluntary vs involuntary by demographics
+HCM-083,HCM,Analytics,Headcount Planning,Workforce planning and forecasting,High,High,Not Started,HCM-081,9,,,No,,Predictive headcount models
+HCM-092,HCM,Compliance,FMLA Tracking,Track FMLA leave,High,Medium,Not Started,HCM-074,7,,,Yes,,Federal and state family leave tracking
+HCM-093,HCM,Compliance,ADA Accommodation,Track disability accommodations,Medium,Medium,Not Started,HCM-002,6,,,Yes,,Reasonable accommodation requests
+HCM-007,HCM,Employee Master,Employee Photos,Upload and display employee photos,Low,Low,Not Started,HCM-001,3,,,Yes,,Photo upload for directory
+HCM-015,HCM,Organization,Location Management,Manage work locations,High,Medium,Not Started,HCM-010,6,,,Yes,,Office locations and remote work
+HCM-025,HCM,Compensation,Comp Statements,Generate total compensation statements,Medium,Medium,Not Started,HCM-020,6,,,Yes,,Annual statements showing total rewards
+HCM-035,HCM,Performance,Probation Reviews,Manage probationary period reviews,High,Medium,Not Started,HCM-030,6,,,Yes,,30/60/90 day new hire evaluations
+HCM-045,HCM,Talent,Talent Pools,Create and manage talent pools,Medium,Medium,Not Started,HCM-042,6,,,No,,Segment employees for programs
+HCM-054,HCM,Learning,Training Budget,Track training budget and costs,Medium,Medium,Not Started,HCM-050,5,,,Yes,,Budget allocation and spend tracking
+HCM-064,HCM,Self-Service,Time Off Requests,Request time off through ESS,Critical,Medium,Not Started,HCM-101,7,,,Yes,,Integration with absence management
+HCM-075,HCM,Workforce Admin,Contingent Workers,Manage contractors and temps,High,High,Not Started,HCM-001,8,,,Yes,,Non-employee worker tracking
+HCM-084,HCM,Analytics,Diversity Metrics,Diversity and inclusion analytics,High,Medium,Not Started,HCM-002,7,,,No,,D&I dashboards and scorecards
+HCM-094,HCM,Compliance,I-9 Management,Electronic I-9 verification,Critical,High,Not Started,HCM-006,9,,,Yes,,E-Verify integration and compliance
+HCM-008,HCM,Employee Master,Dependent Information,Capture dependent data,High,Medium,Not Started,HCM-001,5,,,Yes,,Dependents for benefits eligibility
+HCM-016,HCM,Organization,Reporting Relationships,Define reporting structure,Critical,Medium,Not Started,HCM-011,6,,,Yes,,Direct and dotted line reporting
+HCM-026,HCM,Compensation,Allowances,Manage employee allowances,Medium,Medium,Not Started,HCM-020,5,,,Yes,,Car phone and other allowances
+HCM-036,HCM,Performance,Rating Scales,Configure performance rating scales,High,Low,Not Started,HCM-030,4,,,Yes,,Customizable rating scales
+HCM-046,HCM,Talent,Job Rotation,Manage job rotation programs,Low,Medium,Not Started,HCM-041,6,,,Yes,,Temporary assignments for development
+HCM-055,HCM,Learning,Skills Assessment,Assess employee skills,Medium,Medium,Not Started,HCM-032,6,,,Yes,,Skills inventory and gap analysis
+HCM-065,HCM,Self-Service,Pay Stub Access,View pay stubs in ESS,Critical,Medium,Not Started,HCM-100,5,,,Yes,,Secure payslip access
+HCM-076,HCM,Workforce Admin,Mass Updates,Bulk employee data updates,High,Medium,Not Started,HCM-001,7,,,Yes,,Mass change processing
+HCM-085,HCM,Analytics,Compensation Analytics,Analyze compensation equity,High,High,Not Started,HCM-020,8,,,No,,Pay equity and market comparison
+HCM-095,HCM,Compliance,Wage Hour Compliance,Track FLSA compliance,High,Medium,Not Started,HCM-012,6,,,Yes,,Exempt vs non-exempt classification
+HCM-009,HCM,Employee Master,Previous Employment,Track employment history,Medium,Low,Not Started,HCM-001,4,,,Yes,,Prior employers for verification
+HCM-017,HCM,Organization,Matrix Organization,Support matrix reporting,Medium,High,Not Started,HCM-016,8,,,Yes,,Multiple reporting relationships
+HCM-027,HCM,Compensation,Long-Term Incentives,Manage LTI programs,Low,High,Not Started,HCM-024,9,,,No,,Multi-year incentive plans
+HCM-037,HCM,Performance,Continuous Feedback,Enable ongoing feedback,Medium,Medium,Not Started,HCM-030,7,,,Yes,,Real-time recognition and feedback
+HCM-047,HCM,Talent,Leadership Development,Leadership development programs,Medium,High,Not Started,HCM-050,8,,,No,,Emerging and executive leader programs
+HCM-056,HCM,Learning,Compliance Training,Mandatory compliance training,High,Medium,Not Started,HCM-050,6,,,Yes,,Required training with tracking
+HCM-066,HCM,Self-Service,Benefits Enrollment,Enroll in benefits through ESS,Critical,High,Not Started,HCM-060,9,,,Yes,,Open enrollment and life events
+HCM-077,HCM,Workforce Admin,Employee Actions,Process personnel actions,High,High,Not Started,HCM-001,8,,,Yes,,Standardized employee change process
+HCM-086,HCM,Analytics,Retention Analytics,Analyze retention and attrition,High,Medium,Not Started,HCM-082,7,,,No,,Predictive turnover modeling
+HCM-096,HCM,Compliance,Background Checks,Track background screening,High,Medium,Not Started,HCM-070,6,,,Yes,,Pre-employment screening integration
+HCM-018,HCM,Organization,Span of Control,Monitor manager span of control,Medium,Low,Not Started,HCM-016,4,,,Yes,,Track direct reports per manager
+HCM-028,HCM,Compensation,Pay Transparency,Support pay transparency,Medium,Medium,Not Started,HCM-020,6,,,Yes,,Salary range disclosure
+HCM-038,HCM,Performance,Performance Improvement,Manage performance improvement plans,High,Medium,Not Started,HCM-030,7,,,Yes,,PIP process and tracking
+HCM-048,HCM,Talent,Critical Roles,Identify critical positions,Medium,Medium,Not Started,HCM-040,5,,,Yes,,Flag mission-critical roles
+HCM-057,HCM,Learning,Training Evaluation,Evaluate training effectiveness,Medium,Medium,Not Started,HCM-050,5,,,No,,Kirkpatrick model evaluation
+HCM-067,HCM,Self-Service,Company Directory,Searchable employee directory,High,Medium,Not Started,HCM-060,6,,,Yes,,Org chart and contact lookup
+HCM-078,HCM,Workforce Admin,Position Control,Control headcount by position,High,High,Not Started,HCM-011,8,,,Yes,,Budget vs actual position tracking
+HCM-087,HCM,Analytics,Time to Fill,Track recruitment time to fill,High,Medium,Not Started,HCM-102,5,,,Yes,,Days from req to start
+HCM-097,HCM,Compliance,Drug Testing,Track drug screening,Medium,Medium,Not Started,HCM-070,5,,,Yes,,Pre-employment and random testing
+HCM-019,HCM,Organization,Shared Services,Manage shared service centers,Low,Medium,Not Started,HCM-010,6,,,Yes,,Centralized HR service delivery
+HCM-029,HCM,Compensation,Commission Plans,Manage sales commission plans,Medium,High,Not Started,HCM-022,10,,,No,,Complex commission calculations
+HCM-039,HCM,Performance,Forced Distribution,Enforce rating distribution,Low,Medium,Not Started,HCM-034,6,,,Yes,,Forced ranking if required
+HCM-049,HCM,Talent,Bench Strength,Measure succession bench strength,Medium,Low,Not Started,HCM-040,5,,,No,,Ready now coverage percentage
+HCM-058,HCM,Learning,Learning Credits,Track learning hours/credits,Low,Low,Not Started,HCM-050,4,,,Yes,,Professional development hours
+HCM-068,HCM,Self-Service,Document Access,Access HR documents in ESS,High,Medium,Not Started,HCM-060,5,,,Yes,,Handbook policies and forms
+HCM-079,HCM,Workforce Admin,Global Assignment,Manage expatriates and global assignments,Medium,High,Not Started,HCM-001,10,,,No,,International assignees and localization
+HCM-088,HCM,Analytics,Exit Interview Analytics,Analyze exit interview data,Medium,Medium,Not Started,HCM-072,6,,,No,,Reasons for leaving and trends
+HCM-098,HCM,Compliance,Record Retention,Manage HR record retention,High,Medium,Not Started,HCM-111,6,,,Yes,,Automated retention and purging
+HCM-020-1,HCM,Organization,Business Units,Link to business unit structure,Critical,Medium,Not Started,UR-041,6,,,Yes,,BU-based org and security
+HCM-030-1,HCM,Compensation,Market Pricing,Benchmark salaries to market,Medium,High,Not Started,HCM-021,8,,,No,,Salary survey integration
+HCM-040-1,HCM,Performance,OKR Management,Manage Objectives and Key Results,Medium,High,Not Started,HCM-031,8,,,Yes,,OKR framework and tracking
+HCM-050-1,HCM,Talent,Internal Job Postings,Post jobs internally,High,Medium,Not Started,HCM-102,7,,,Yes,,Employee job applications
+HCM-059,HCM,Learning,E-Learning Platform,Integrate with LMS,Medium,High,Not Started,HCM-050,10,,,Yes,,LMS integration for online training
+HCM-069,HCM,Self-Service,Expense Reports,Submit expense reports in ESS,High,High,Not Started,AP-140,8,,,Yes,,Employee expense submission
+HCM-080-1,HCM,Workforce Admin,Seasonal Workers,Manage seasonal workforce,Medium,Medium,Not Started,HCM-075,6,,,Yes,,Recurring seasonal hiring
+HCM-089,HCM,Analytics,HR Scorecard,Executive HR scorecard,High,Medium,Not Started,HCM-081,7,,,No,,KPIs for leadership
+HCM-099,HCM,Compliance,Whistleblower,Anonymous reporting mechanism,Medium,Medium,Not Started,HCM-003,6,,,Yes,,Ethics hotline and case management
+HCM-021-1,HCM,Organization,Remote Work,Manage remote work arrangements,High,Medium,Not Started,HCM-015,6,,,Yes,,Remote hybrid and in-office tracking
+HCM-031-1,HCM,Compensation,Spot Bonuses,Ad-hoc recognition bonuses,Medium,Low,Not Started,HCM-022,4,,,Yes,,Manager-initiated spot awards
+HCM-041-1,HCM,Performance,Check-Ins,Regular manager-employee check-ins,Medium,Medium,Not Started,HCM-037,6,,,Yes,,1-on-1 meeting tracking
+HCM-051-1,HCM,Talent,Talent Marketplace,Internal talent marketplace,Low,High,Not Started,HCM-050-1,10,,,No,,Gig-style internal projects
+HCM-060-1,HCM,Learning,Micro-Learning,Support micro-learning modules,Low,Medium,Not Started,HCM-059,6,,,Yes,,Bite-sized learning content
+HCM-070-1,HCM,Self-Service,Chatbot,HR chatbot for common questions,Low,High,Not Started,HCM-060,10,,,No,,AI-powered HR assistant
+HCM-081-1,HCM,Workforce Admin,Workforce Segmentation,Segment workforce by attributes,Medium,Medium,Not Started,HCM-001,6,,,Yes,,Employee groups for analytics
+HCM-090-1,HCM,Analytics,People Analytics,Advanced people analytics,Medium,High,Not Started,HCM-081,10,,,No,,ML-based workforce insights
+HCM-100-1,HCM,Compliance,Data Privacy,GDPR and data privacy compliance,Critical,High,Not Started,HCM-110,9,,,Yes,,Right to access and erasure
+HCM-022-1,HCM,Organization,Workforce Planning,Strategic workforce planning,Medium,High,Not Started,HCM-083,10,,,No,,Supply demand and gap analysis
+HCM-032-1,HCM,Compensation,Profit Sharing,Manage profit sharing plans,Low,Medium,Not Started,HCM-022,6,,,Yes,,Annual profit distribution
+HCM-042-1,HCM,Performance,Peer Recognition,Peer-to-peer recognition program,Medium,Medium,Not Started,HCM-037,6,,,Yes,,Social recognition platform
+HCM-052-1,HCM,Talent,Talent Acquisition Marketing,Employer branding and talent marketing,Low,Medium,Not Started,HCM-102,6,,,No,,Careers site and content
+HCM-061-1,HCM,Learning,Career Advisor,AI career development recommendations,Low,High,Not Started,HCM-041,9,,,No,,ML-based career guidance
+HCM-071-1,HCM,Self-Service,Life Events,Process life event changes,High,Medium,Not Started,HCM-066,7,,,Yes,,Marriage birth divorce etc
+HCM-082-1,HCM,Workforce Admin,Boomerang Employees,Manage returning employees,Low,Low,Not Started,HCM-073,4,,,Yes,,Alumni rehire program
+HCM-091-1,HCM,Analytics,Flight Risk,Predict employee flight risk,Medium,High,Not Started,HCM-086,9,,,No,,Turnover prediction model
+HCM-101-1,HCM,Compliance,SOX Compliance,SOX compliance for HR,Critical,Medium,Not Started,GL-280,6,,,Yes,,HR controls and segregation

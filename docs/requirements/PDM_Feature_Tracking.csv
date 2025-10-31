@@ -1,0 +1,130 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+PDM-001,Product Management,Product Master,Product Creation,Create and maintain product master records,Critical,High,Not Started,None,8,,,Yes,,Create products with unique IDs and core attributes
+PDM-002,Product Management,Product Master,Product Attributes,Define and manage flexible product attributes,Critical,High,Not Started,PDM-001,10,,,Yes,,Support multiple attribute types with validation
+PDM-003,Product Management,Product Master,Product Classifications,Classify products using standard taxonomies,High,Medium,Not Started,PDM-001,7,,,Yes,,Support UNSPSC eCl@ss and custom classifications
+PDM-010,Product Management,Hierarchies,Product Hierarchies,Create multi-level product hierarchies,High,High,Not Started,PDM-001,9,,,Yes,,Support multiple hierarchy types for different purposes
+PDM-011,Product Management,Hierarchies,Product Families Groups,Group related products into families,High,Medium,Not Started,PDM-010,6,,,Yes,,Create product families with inherited attributes
+PDM-020,Product Management,Lifecycle,Lifecycle Stages,Manage products through lifecycle stages,Critical,Medium,Not Started,PDM-001,7,,,Yes,,Define stages from introduction to obsolescence
+PDM-021,Product Management,Lifecycle,New Product Introduction,Structured NPI process with approvals,High,High,Not Started,PDM-020,10,,,Yes,,NPI workflow with readiness checklist
+PDM-022,Product Management,Lifecycle,Product Discontinuation,Managed phase-out and discontinuation process,High,Medium,Not Started,PDM-020,7,,,Yes,,Phase-out plan with last-time-buy dates
+PDM-030,Product Management,Relationships,Cross-References,Maintain cross-references to external IDs,Critical,Medium,Not Started,PDM-001,6,,,Yes,,Support customer supplier manufacturer part numbers
+PDM-031,Product Management,Relationships,Substitutes Alternatives,Define substitute and alternative products,High,Medium,Not Started,PDM-001,6,,,Yes,,Configure automatic and suggested substitutions
+PDM-032,Product Management,Relationships,Complementary Products,Link complementary and accessory products,Medium,Medium,Not Started,PDM-001,5,,,Yes,,Cross-sell and upsell recommendations
+PDM-040,Product Management,Kits Bundles,Kit Management,Create and manage product kits,High,High,Not Started,PDM-001,9,,,Yes,,Define kits with components and pricing rules
+PDM-041,Product Management,Kits Bundles,Bundle Management,Create product bundles for promotions,High,Medium,Not Started,PDM-040,7,,,Yes,,Configure fixed and flexible bundle rules
+PDM-050,Product Management,Digital Assets,Product Images,Manage product images for catalogs,Critical,High,Not Started,PDM-001,8,,,Yes,,Upload multiple images with metadata
+PDM-051,Product Management,Digital Assets,Product Documents,Attach product documents and specs,High,Medium,Not Started,PDM-001,6,,,Yes,,Manage spec sheets manuals certifications
+PDM-052,Product Management,Digital Assets,Rich Media,Manage videos 3D models and rich media,Medium,High,Not Started,PDM-050,8,,,Yes,,Support video 3D AR/VR content
+PDM-060,Product Management,Catalogs,Multi-Channel Catalogs,Create catalogs for different channels,High,High,Not Started,PDM-001,10,,,Yes,,Configure catalogs for e-commerce B2B print
+PDM-061,Product Management,Catalogs,Catalog Publishing,Publish catalogs to channels and formats,Critical,High,Not Started,PDM-060,10,,,Yes,,Export and syndicate catalog data
+PDM-070,Product Management,Versioning,Product Revisions,Manage product revisions and changes,High,High,Not Started,PDM-001,9,,,Yes,,Track revision history with effectivity
+PDM-071,Product Management,Versioning,Change Management,Structured change management process,Critical,High,Not Started,PDM-070,10,,,Yes,,Change workflow with impact analysis
+PDM-080,Product Management,Data Quality,Quality Rules,Enforce data quality rules,Critical,Medium,Not Started,PDM-002,7,,,Yes,,Validate completeness accuracy consistency
+PDM-081,Product Management,Data Quality,Data Stewardship,Assign stewards for data governance,High,Medium,Not Started,PDM-080,6,,,Yes,,Define steward responsibilities and workflows
+PDM-090,Product Management,Localization,Multi-Language Support,Support multiple languages,High,High,Not Started,PDM-001,9,,,Yes,,Translate descriptions and attributes
+PDM-091,Product Management,Localization,Locale-Specific Content,Customize content for regions,High,High,Not Started,PDM-090,8,,,Yes,,Regional units compliance and formatting
+PDM-100,Product Management,Search Discovery,Advanced Search,Powerful search across all attributes,Critical,High,Not Started,PDM-001,10,,,Yes,,Full-text faceted search with autocomplete
+PDM-101,Product Management,Search Discovery,Browse Navigate,Navigate hierarchies and categories,High,Medium,Not Started,PDM-010,6,,,Yes,,Tree navigation with filtering
+PDM-110,Product Management,Templates,Product Templates,Create templates for similar products,High,Medium,Not Started,PDM-001,6,,,Yes,,Define templates with default values
+PDM-111,Product Management,Templates,Product Cloning,Clone existing products,High,Medium,Not Started,PDM-001,5,,,Yes,,Copy product data to create variants
+PDM-120,Product Management,Integration,Inventory Integration,Sync product data to Inventory,Critical,High,Not Started,INV-001,10,,,Yes,,Real-time sync of product master data
+PDM-121,Product Management,Integration,Purchasing Integration,Provide data for purchasing,Critical,High,Not Started,PO-001,9,,,Yes,,Feed purchasable products and specs
+PDM-122,Product Management,Integration,Order Mgmt Integration,Supply data for sales orders,Critical,High,Not Started,OM-001,9,,,Yes,,Sync sellable products and attributes
+PDM-123,Product Management,Integration,Pricing Integration,Foundation for pricing management,Critical,High,Not Started,PDM-010,8,,,Yes,,Provide hierarchy and attributes for pricing
+PDM-124,Product Management,Integration,E-Commerce Integration,Syndicate to e-commerce platforms,High,High,Not Started,PDM-061,11,,,Yes,,Real-time catalog sync to web stores
+PDM-130,Product Management,Reporting,Product Reports,Comprehensive product reporting,Critical,Medium,Not Started,PDM-001,7,,,Yes,,Generate master list lifecycle and quality reports
+PDM-131,Product Management,Reporting,Product Analytics,Analytics dashboards for products,High,Medium,Not Started,PDM-130,8,,,No,,Portfolio lifecycle and quality dashboards
+PDM-140,Product Management,Security,Product Security,Role-based access controls,Critical,Medium,Not Started,UR-001,6,,,Yes,,Field and category level security
+PDM-141,Product Management,Security,Audit Compliance,Comprehensive audit trail,Critical,Medium,Not Started,PDM-140,5,,,Yes,,Log all changes with user and timestamp
+PDM-004,Product Management,Product Master,Product Types,Support multiple product types,Critical,Medium,Not Started,PDM-001,6,,,Yes,,Finished goods raw materials services digital
+PDM-005,Product Management,Product Master,Product Status,Manage product status lifecycle,Critical,Low,Not Started,PDM-001,4,,,Yes,,Active inactive obsolete pending
+PDM-012,Product Management,Hierarchies,Hierarchy Security,Security by hierarchy node,High,Medium,Not Started,PDM-010,5,,,Yes,,Restrict access by category or hierarchy
+PDM-023,Product Management,Lifecycle,Lifecycle Automation,Automate lifecycle stage transitions,Medium,High,Not Started,PDM-020,7,,,Yes,,Auto-transition based on rules and dates
+PDM-033,Product Management,Relationships,Product Affinity,Track product affinities for recommendations,Medium,Medium,Not Started,PDM-032,6,,,No,,Frequently bought together analysis
+PDM-042,Product Management,Kits Bundles,Nested Kits,Support kits containing other kits,Medium,High,Not Started,PDM-040,6,,,Yes,,Multi-level kit structures
+PDM-053,Product Management,Digital Assets,Asset Management,Centralized digital asset repository,High,High,Not Started,PDM-050,10,,,Yes,,DAM system for all product assets
+PDM-054,Product Management,Digital Assets,Image Processing,Automatic image processing and optimization,Medium,High,Not Started,PDM-050,8,,,Yes,,Resize crop and optimize images
+PDM-062,Product Management,Catalogs,Catalog Versioning,Version and archive catalog releases,High,Medium,Not Started,PDM-061,5,,,Yes,,Maintain catalog version history
+PDM-072,Product Management,Versioning,Revision Comparison,Compare product revisions,Medium,Medium,Not Started,PDM-070,5,,,Yes,,Side-by-side revision comparison
+PDM-082,Product Management,Data Quality,Completeness Scoring,Calculate data completeness scores,High,Medium,Not Started,PDM-080,6,,,Yes,,Score products by attribute population
+PDM-092,Product Management,Localization,Translation Workflow,Workflow for content translation,Medium,High,Not Started,PDM-090,7,,,Yes,,Manage translation requests and status
+PDM-102,Product Management,Search Discovery,Saved Searches,Save and reuse search criteria,Medium,Low,Not Started,PDM-100,3,,,Yes,,Save frequent searches for quick access
+PDM-112,Product Management,Templates,Template Library,Maintain library of product templates,Medium,Medium,Not Started,PDM-110,4,,,Yes,,Organize templates by category
+PDM-125,Product Management,Integration,PLM Integration,Integration with PLM systems,Medium,High,Not Started,PDM-070,10,,,No,,Sync with Product Lifecycle Management
+PDM-132,Product Management,Reporting,Quality Dashboard,Data quality monitoring dashboard,High,Medium,Not Started,PDM-082,6,,,Yes,,Visual quality metrics and trends
+PDM-006,Product Management,Product Master,Multi-UOM,Support multiple units of measure,High,High,Not Started,PDM-001,7,,,Yes,,Primary and alternate UOMs with conversions
+PDM-013,Product Management,Hierarchies,Dynamic Hierarchies,Create dynamic hierarchies by rules,Medium,High,Not Started,PDM-010,8,,,No,,Auto-assign products based on attributes
+PDM-024,Product Management,Lifecycle,Phase-Out Planning,Plan and track product phase-outs,High,Medium,Not Started,PDM-022,6,,,Yes,,Inventory liquidation and replacement planning
+PDM-034,Product Management,Relationships,Supersession,Track product supersession chains,Medium,Medium,Not Started,PDM-031,5,,,Yes,,Replacement product history
+PDM-043,Product Management,Kits Bundles,Kit Pricing Rules,Flexible kit pricing strategies,High,Medium,Not Started,PDM-040,6,,,Yes,,Sum component discounted or fixed pricing
+PDM-055,Product Management,Digital Assets,Bulk Upload,Bulk upload images and documents,High,Medium,Not Started,PDM-050,6,,,Yes,,Upload multiple assets at once
+PDM-063,Product Management,Catalogs,Channel-Specific Content,Customize content by channel,High,High,Not Started,PDM-060,8,,,Yes,,Different content for B2B vs B2C
+PDM-073,Product Management,Versioning,ECO Integration,Link to Engineering Change Orders,Medium,High,Not Started,PDM-070,7,,,No,,Connect revisions to ECO system
+PDM-083,Product Management,Data Quality,Validation Rules,Configure custom validation rules,High,Medium,Not Started,PDM-080,7,,,Yes,,Define business rules for attributes
+PDM-093,Product Management,Localization,Currency Conversion,Support multiple currencies,High,Medium,Not Started,GL-060,5,,,Yes,,Display prices in local currencies
+PDM-103,Product Management,Search Discovery,Fuzzy Search,Fuzzy matching for typos,Medium,Medium,Not Started,PDM-100,5,,,Yes,,Find products despite spelling errors
+PDM-113,Product Management,Templates,Bulk Product Creation,Create multiple products from template,High,High,Not Started,PDM-110,8,,,Yes,,Mass product creation with variations
+PDM-126,Product Management,Integration,MDM Integration,Integration with Master Data Management,Medium,High,Not Started,PDM-001,10,,,No,,Sync with enterprise MDM system
+PDM-133,Product Management,Reporting,NPI Dashboard,New product introduction tracking,High,Medium,Not Started,PDM-021,6,,,Yes,,Monitor NPI pipeline and status
+PDM-007,Product Management,Product Master,Custom Attributes,User-defined custom attributes,High,Medium,Not Started,PDM-002,6,,,Yes,,Extend product model with UDAs
+PDM-014,Product Management,Hierarchies,Hierarchy Rollups,Aggregate reporting up hierarchies,High,Medium,Not Started,PDM-010,6,,,Yes,,Sum quantities and values by level
+PDM-025,Product Management,Lifecycle,Lifecycle Reports,Generate lifecycle status reports,High,Low,Not Started,PDM-020,4,,,Yes,,Report products by stage
+PDM-035,Product Management,Relationships,Component Where-Used,Track where components used,Medium,Medium,Not Started,PDM-040,5,,,Yes,,Identify all kits using a component
+PDM-044,Product Management,Kits Bundles,Kit Availability,Calculate kit availability from components,High,High,Not Started,PDM-040,7,,,Yes,,ATP for kits based on component stock
+PDM-056,Product Management,Digital Assets,Asset Versioning,Version control for digital assets,Medium,Medium,Not Started,PDM-053,5,,,Yes,,Track changes to images and documents
+PDM-064,Product Management,Catalogs,Catalog Scheduling,Schedule catalog publications,Medium,Medium,Not Started,PDM-061,4,,,Yes,,Automated catalog publishing on schedule
+PDM-074,Product Management,Versioning,Mass Revision Updates,Bulk revision updates,Medium,Medium,Not Started,PDM-070,6,,,Yes,,Update revisions for multiple products
+PDM-084,Product Management,Data Quality,Quality Workflows,Workflow to resolve quality issues,High,High,Not Started,PDM-080,8,,,Yes,,Route quality problems to stewards
+PDM-094,Product Management,Localization,Regional Compliance,Manage regional compliance data,High,High,Not Started,PDM-091,7,,,No,,Country-specific certifications and labels
+PDM-104,Product Management,Search Discovery,Search Ranking,Configurable search result ranking,Medium,Medium,Not Started,PDM-100,5,,,Yes,,Boost results by relevance rules
+PDM-114,Product Management,Templates,Template Inheritance,Hierarchical template inheritance,Medium,High,Not Started,PDM-110,6,,,Yes,,Inherit and override template values
+PDM-127,Product Management,Integration,Marketplace Integration,Integrate with online marketplaces,High,High,Not Started,PDM-124,11,,,Yes,,Syndicate to Amazon eBay Walmart etc
+PDM-134,Product Management,Reporting,Catalog Coverage,Report catalog completeness,Medium,Low,Not Started,PDM-060,4,,,Yes,,Measure % products in each catalog
+PDM-008,Product Management,Product Master,Product Approval,Approval workflow for new products,High,Medium,Not Started,UR-060,6,,,Yes,,Require approval before activation
+PDM-015,Product Management,Hierarchies,Hierarchy Changes,Track hierarchy changes over time,Medium,Medium,Not Started,PDM-010,5,,,Yes,,Historical hierarchy for trending
+PDM-026,Product Management,Lifecycle,Lifecycle Alerts,Automated lifecycle alerts,Medium,Low,Not Started,PDM-020,4,,,Yes,,Notify stakeholders of stage changes
+PDM-036,Product Management,Relationships,Relationship Types,Extensible relationship types,Medium,Medium,Not Started,PDM-030,5,,,Yes,,Define custom product relationships
+PDM-045,Product Management,Kits Bundles,Flexible Bundles,Choose X of Y bundle configuration,Medium,High,Not Started,PDM-041,7,,,Yes,,Customer selects from bundle options
+PDM-057,Product Management,Digital Assets,Asset Rights Management,Manage usage rights for assets,Low,Medium,Not Started,PDM-053,5,,,Yes,,Track licenses and permissions
+PDM-065,Product Management,Catalogs,Catalog Validation,Validate catalog data before publishing,Critical,Medium,Not Started,PDM-061,6,,,Yes,,Quality checks before catalog release
+PDM-075,Product Management,Versioning,Effectivity Dates,Manage revision effectivity dates,High,Medium,Not Started,PDM-070,5,,,Yes,,Control when revisions become active
+PDM-085,Product Management,Data Quality,Duplicate Detection,Detect duplicate products,High,High,Not Started,PDM-080,8,,,Yes,,Identify potential duplicate entries
+PDM-095,Product Management,Localization,Date Time Formats,Regional date and time formatting,Medium,Low,Not Started,PDM-091,3,,,Yes,,Display dates per locale conventions
+PDM-105,Product Management,Search Discovery,Faceted Navigation,Faceted search and filtering,High,High,Not Started,PDM-100,8,,,Yes,,Filter by multiple attribute dimensions
+PDM-115,Product Management,Templates,Template Validation,Validate products against templates,Medium,Medium,Not Started,PDM-110,5,,,Yes,,Ensure template compliance
+PDM-128,Product Management,Integration,PIM Export,Export to external PIM systems,Medium,High,Not Started,PDM-001,9,,,Yes,,Standard format exports (GS1 GDSN)
+PDM-135,Product Management,Reporting,Portfolio Analysis,Analyze product portfolio health,High,Medium,Not Started,PDM-131,7,,,No,,Visualize portfolio by dimensions
+PDM-009,Product Management,Product Master,Product Tags,Tag products for grouping,Medium,Low,Not Started,PDM-001,3,,,Yes,,Free-form tags for flexible grouping
+PDM-016,Product Management,Hierarchies,Hierarchy Export,Export hierarchies to external systems,Medium,Medium,Not Started,PDM-010,4,,,Yes,,Sync hierarchies to other systems
+PDM-027,Product Management,Lifecycle,Launch Coordination,Coordinate product launches,Medium,High,Not Started,PDM-021,7,,,No,,Cross-functional launch planning
+PDM-037,Product Management,Relationships,Auto Cross-Reference,Auto-populate cross-references,Medium,Medium,Not Started,PDM-030,5,,,Yes,,Import cross-refs from suppliers
+PDM-046,Product Management,Kits Bundles,Kit Substitution,Substitute components in kits,Medium,Medium,Not Started,PDM-031,5,,,Yes,,Allow alternative components
+PDM-058,Product Management,Digital Assets,Video Encoding,Encode videos for multiple formats,Low,High,Not Started,PDM-052,8,,,Yes,,Convert to web mobile and HD
+PDM-066,Product Management,Catalogs,Print Catalog Layout,Layout tools for print catalogs,Low,High,Not Started,PDM-061,10,,,No,,Design page layouts for print
+PDM-076,Product Management,Versioning,Revision Approval,Approval workflow for revisions,High,Medium,Not Started,PDM-070,6,,,Yes,,Require approval for major revisions
+PDM-086,Product Management,Data Quality,Quality Reports,Generate data quality reports,High,Low,Not Started,PDM-082,4,,,Yes,,Report on quality scores and issues
+PDM-096,Product Management,Localization,Machine Translation,Automated machine translation,Low,High,Not Started,PDM-090,7,,,No,,Integrate with translation services
+PDM-106,Product Management,Search Discovery,Recent Searches,Display recent search history,Low,Low,Not Started,PDM-100,2,,,Yes,,Quick access to recent queries
+PDM-116,Product Management,Templates,Category Templates,Templates specific to categories,High,Medium,Not Started,PDM-110,5,,,Yes,,Default templates per product category
+PDM-129,Product Management,Integration,Social Media Sync,Sync products to social platforms,Low,Medium,Not Started,PDM-124,8,,,Yes,,Publish to Facebook Instagram Pinterest
+PDM-136,Product Management,Reporting,Change History Report,Report on product changes,Medium,Low,Not Started,PDM-141,4,,,Yes,,Audit trail of modifications
+PDM-017,Product Management,Hierarchies,Multi-Hierarchy Assignment,Assign products to multiple hierarchies,High,Medium,Not Started,PDM-010,5,,,Yes,,Product in sales and purchasing hierarchies
+PDM-038,Product Management,Relationships,Relationship Effectivity,Set effective dates for relationships,Medium,Medium,Not Started,PDM-030,4,,,Yes,,Time-bound cross-refs and substitutes
+PDM-047,Product Management,Kits Bundles,Kit Explode,Explode kits to components on order,Medium,Medium,Not Started,PDM-040,5,,,Yes,,Order kit but ship components
+PDM-059,Product Management,Digital Assets,3D Model Viewer,Viewer for 3D product models,Low,High,Not Started,PDM-052,9,,,No,,Interactive 3D visualization
+PDM-067,Product Management,Catalogs,Catalog Rollback,Rollback published catalogs,Medium,Medium,Not Started,PDM-061,5,,,Yes,,Revert to previous catalog version
+PDM-077,Product Management,Versioning,Change Impact Analysis,Analyze impact of product changes,High,High,Not Started,PDM-071,8,,,No,,Assess downstream impact of changes
+PDM-087,Product Management,Data Quality,Enrichment Progress,Track data enrichment progress,Medium,Low,Not Started,PDM-082,4,,,Yes,,Monitor attribute population over time
+PDM-097,Product Management,Localization,UOM Conversion,Automatic UOM conversion by locale,Medium,Medium,Not Started,PDM-006,5,,,Yes,,Convert to regional measurement units
+PDM-107,Product Management,Search Discovery,Product Suggestions,Suggest products based on context,Low,High,Not Started,PDM-100,7,,,No,,Personalized product recommendations
+PDM-117,Product Management,Templates,Template Sharing,Share templates across organizations,Low,Medium,Not Started,PDM-110,4,,,Yes,,Multi-org template library
+PDM-137,Product Management,Reporting,Obsolescence Report,Report on obsolescence risk,Medium,Medium,Not Started,PDM-022,5,,,Yes,,Identify slow-moving products at risk
+PDM-018,Product Management,Hierarchies,Hierarchy Comparison,Compare product hierarchies,Low,Medium,Not Started,PDM-010,5,,,Yes,,Side-by-side hierarchy comparison
+PDM-048,Product Management,Kits Bundles,Bundle Performance,Track bundle sales performance,Medium,Medium,Not Started,PDM-041,5,,,No,,Analyze bundle effectiveness
+PDM-068,Product Management,Catalogs,Catalog Notifications,Notify on catalog updates,Low,Low,Not Started,PDM-061,3,,,Yes,,Alert stakeholders of publications
+PDM-078,Product Management,Versioning,Superseded Products,Track superseded product chain,Medium,Medium,Not Started,PDM-070,4,,,Yes,,Historical supersession tracking
+PDM-088,Product Management,Data Quality,Quality Trends,Analyze quality improvement trends,Medium,Medium,Not Started,PDM-082,5,,,No,,Track quality score changes over time
+PDM-098,Product Management,Localization,Right-to-Left Support,Support RTL languages,Low,Medium,Not Started,PDM-090,6,,,Yes,,Arabic Hebrew proper rendering
+PDM-108,Product Management,Search Discovery,Search Analytics,Analyze search behavior,Low,Medium,Not Started,PDM-100,5,,,No,,Track what users search for
+PDM-118,Product Management,Templates,Conditional Templates,Templates with conditional logic,Low,High,Not Started,PDM-110,7,,,Yes,,Show/hide fields based on values
+PDM-138,Product Management,Reporting,SOX Compliance,SOX compliance for product data,Critical,Medium,Not Started,GL-280,5,,,Yes,,Controls for product master data

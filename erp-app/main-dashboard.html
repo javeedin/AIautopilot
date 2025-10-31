@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Main Dashboard - Oracle Fusion ERP</title>
+    <link rel="stylesheet" href="css/erp-main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="hamburger-btn" id="hamburger-btn">☰</button>
+                <h1 class="top-bar-title">Oracle Fusion ERP</h1>
+            </div>
+            <div class="top-bar-right">
+                <button class="btn" id="autopilot-btn" style="background: #8b5cf6; color: white;">
+                    🤖 Autopilot
+                </button>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <div class="user-name" id="user-name">User</div>
+                        <div class="user-role" id="user-role">Role</div>
+                    </div>
+                </div>
+                <button class="btn btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Quick Access</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item active">
+                            <span class="sidebar-menu-icon">🏠</span>
+                            <span class="sidebar-menu-text">Dashboard Home</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openProjectManagement()">
+                            <span class="sidebar-menu-icon">📊</span>
+                            <span class="sidebar-menu-text">Project Management</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openChatbotAdmin()">
+                            <span class="sidebar-menu-icon">🤖</span>
+                            <span class="sidebar-menu-text">Chatbot Admin</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Financial Modules</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="openModule('GL')">
+                            <span class="sidebar-menu-icon">💰</span>
+                            <span class="sidebar-menu-text">General Ledger</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('AP')">
+                            <span class="sidebar-menu-icon">💸</span>
+                            <span class="sidebar-menu-text">Accounts Payable</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('AR')">
+                            <span class="sidebar-menu-icon">💵</span>
+                            <span class="sidebar-menu-text">Accounts Receivable</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('CSH')">
+                            <span class="sidebar-menu-icon">💳</span>
+                            <span class="sidebar-menu-text">Cash Management</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('FA')">
+                            <span class="sidebar-menu-icon">🏢</span>
+                            <span class="sidebar-menu-text">Fixed Assets</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Supply Chain</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="openModule('PO')">
+                            <span class="sidebar-menu-icon">🛒</span>
+                            <span class="sidebar-menu-text">Purchasing</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('INV')">
+                            <span class="sidebar-menu-icon">📦</span>
+                            <span class="sidebar-menu-text">Inventory</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('OM')">
+                            <span class="sidebar-menu-icon">📋</span>
+                            <span class="sidebar-menu-text">Order Management</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">Other Modules</div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item" onclick="openModule('HCM')">
+                            <span class="sidebar-menu-icon">👥</span>
+                            <span class="sidebar-menu-text">Human Capital</span>
+                        </li>
+                        <li class="sidebar-menu-item" onclick="openModule('PAY')">
+                            <span class="sidebar-menu-icon">💼</span>
+                            <span class="sidebar-menu-text">Payroll</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="main-content">
+            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Welcome back!</h2>
+            <p style="color: #6b7280; margin-bottom: 32px;">Select a module to get started</p>
+
+            <!-- Module Grid -->
+            <div class="module-grid">
+                <!-- Financial Modules -->
+                <div class="module-card" onclick="openModule('GL')">
+                    <div class="module-icon">💰</div>
+                    <div class="module-name">General Ledger</div>
+                    <div class="module-description">Manage chart of accounts, journals, and financial reporting</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">38</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">125</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('AP')">
+                    <div class="module-icon">💸</div>
+                    <div class="module-name">Accounts Payable</div>
+                    <div class="module-description">Invoice processing, payments, and vendor management</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">28</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">85</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('AR')">
+                    <div class="module-icon">💵</div>
+                    <div class="module-name">Accounts Receivable</div>
+                    <div class="module-description">Invoice generation, receipts, and customer billing</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">25</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">72</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('CSH')">
+                    <div class="module-icon">💳</div>
+                    <div class="module-name">Cash Management</div>
+                    <div class="module-description">Bank accounts, reconciliation, and cash forecasting</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">18</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">42</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('FA')">
+                    <div class="module-icon">🏢</div>
+                    <div class="module-name">Fixed Assets</div>
+                    <div class="module-description">Asset tracking, depreciation, and lifecycle management</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">22</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">58</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supply Chain -->
+                <div class="module-card" onclick="openModule('PO')">
+                    <div class="module-icon">🛒</div>
+                    <div class="module-name">Purchasing</div>
+                    <div class="module-description">Purchase orders, requisitions, and supplier management</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">30</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">95</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('INV')">
+                    <div class="module-icon">📦</div>
+                    <div class="module-name">Inventory</div>
+                    <div class="module-description">Stock management, transactions, and warehouse operations</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">35</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">110</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('OM')">
+                    <div class="module-icon">📋</div>
+                    <div class="module-name">Order Management</div>
+                    <div class="module-description">Sales orders, fulfillment, and shipping</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">28</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">80</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HCM -->
+                <div class="module-card" onclick="openModule('HCM')">
+                    <div class="module-icon">👥</div>
+                    <div class="module-name">Human Capital</div>
+                    <div class="module-description">Employee records, benefits, and performance</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">42</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">135</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card" onclick="openModule('PAY')">
+                    <div class="module-icon">💼</div>
+                    <div class="module-name">Payroll</div>
+                    <div class="module-description">Salary processing, deductions, and tax compliance</div>
+                    <div class="module-stats">
+                        <div class="module-stat">
+                            <div class="module-stat-value">25</div>
+                            <div class="module-stat-label">Pages</div>
+                        </div>
+                        <div class="module-stat">
+                            <div class="module-stat-value">68</div>
+                            <div class="module-stat-label">Features</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Modules -->
+                <div class="module-card" onclick="openModule('ABS')">
+                    <div class="module-icon">📅</div>
+                    <div class="module-name">Absence</div>
+                    <div class="module-description">Leave management and absence tracking</div>
+                </div>
+
+                <div class="module-card" onclick="openModule('REC')">
+                    <div class="module-icon">🎯</div>
+                    <div class="module-name">Recruitment</div>
+                    <div class="module-description">Job postings, candidates, and hiring process</div>
+                </div>
+
+                <div class="module-card" onclick="openModule('CM')">
+                    <div class="module-icon">💹</div>
+                    <div class="module-name">Cost Management</div>
+                    <div class="module-description">Cost tracking and project accounting</div>
+                </div>
+
+                <div class="module-card" onclick="openModule('PDM')">
+                    <div class="module-icon">🏭</div>
+                    <div class="module-name">Product Management</div>
+                    <div class="module-description">Product catalog and lifecycle</div>
+                </div>
+
+                <div class="module-card" onclick="openModule('LCM')">
+                    <div class="module-icon">🚢</div>
+                    <div class="module-name">Landed Cost</div>
+                    <div class="module-description">Import costing and duty management</div>
+                </div>
+
+                <div class="module-card" onclick="openModule('UR')">
+                    <div class="module-icon">⚙️</div>
+                    <div class="module-name">User Management</div>
+                    <div class="module-description">Users, roles, and permissions</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autopilot Panel (Initially hidden) -->
+        <div class="autopilot-panel" id="autopilot-panel">
+            <div class="autopilot-header">
+                <div class="autopilot-title">
+                    <span>🤖</span>
+                    <span>Autopilot Assistant</span>
+                </div>
+                <div class="autopilot-actions">
+                    <button class="icon-btn" id="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
+                    <button class="icon-btn" id="close-autopilot-btn" title="Close">✕</button>
+                </div>
+            </div>
+            <div class="autopilot-messages" id="autopilot-messages">
+                <div class="chat-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">Autopilot</span>
+                            <span class="message-time">Just now</span>
+                        </div>
+                        <div class="message-text">
+                            Hello! I'm your ERP Autopilot assistant. I can help you navigate, find information, and perform actions. What would you like to do?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="autopilot-input">
+                <div class="input-group">
+                    <input type="text" class="form-input" id="autopilot-input" placeholder="Type your message..." />
+                    <button class="btn btn-send" id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main-dashboard.js"></script>
+    <script src="js/autopilot.js"></script>
+</body>
+</html>

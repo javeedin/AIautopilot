@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Page Designer v2.1 - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Override main.css for designer layout */
+        body {
+            overflow: hidden;
+        }
+
+        .main-content {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Designer Toolbar */
+        .designer-toolbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .toolbar-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-id-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-1px);
+        }
+
+        .toolbar-btn.primary {
+            background: white;
+            color: #667eea;
+            border-color: white;
+        }
+
+        .toolbar-btn.success {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .toolbar-btn.debug {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            position: relative;
+        }
+
+        .debug-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Debug Panel */
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 400px;
+            max-height: 500px;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .debug-panel.show {
+            display: flex;
+        }
+
+        .debug-header {
+            padding: 12px 16px;
+            background: #0f172a;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .debug-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #f59e0b;
+        }
+
+        .debug-body {
+            padding: 16px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+
+        .debug-section {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .debug-section:last-child {
+            border-bottom: none;
+        }
+
+        .debug-label {
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .debug-value {
+            color: #10b981;
+        }
+
+        .debug-error {
+            color: #ef4444;
+        }
+
+        .debug-warning {
+            color: #f59e0b;
+        }
+
+        .designer-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .designer-pane {
+            background: white;
+            overflow-y: auto;
+        }
+
+        .designer-pane.left {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .designer-pane.right {
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .pane-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8f9fa;
+            font-weight: 600;
+            font-size: 13px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .add-btn:hover {
+            background: #5568d3;
+        }
+
+        .canvas-area {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .canvas-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 600px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Page Region Styles */
+        .page-region {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 16px;
+            position: relative;
+            background: #ffffff;
+            transition: all 0.2s;
+        }
+
+        .page-region:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .page-region.selected {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .region-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e7ff;
+            color: #1e293b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .region-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .region-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .region-action-btn:hover {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        /* Form Fields */
+        .form-field {
+            margin-bottom: 16px;
+            position: relative;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .form-field:hover {
+            background: #f8fafc;
+        }
+
+        .form-field.selected {
+            background: #eff6ff;
+            border: 1px dashed #667eea;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .field-required {
+            color: #ef4444;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #ffffff;
+        }
+
+        .field-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: none;
+            gap: 4px;
+        }
+
+        .form-field:hover .field-actions {
+            display: flex;
+        }
+
+        /* Tree View */
+        .tree-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            font-size: 13px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tree-item:hover {
+            background: #f1f5f9;
+        }
+
+        .tree-item.selected {
+            background: #eff6ff;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .tree-item-icon {
+            margin-right: 6px;
+        }
+
+        .tree-children {
+            padding-left: 20px;
+        }
+
+        /* Property Panel */
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-group-header {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+            padding: 8px 0;
+            border-bottom: 2px solid #e0e7ff;
+            margin-bottom: 12px;
+        }
+
+        .property-field {
+            margin-bottom: 16px;
+        }
+
+        .property-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .property-input, .property-select, .property-textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .property-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .property-checkbox {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .property-help {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Tabs */
+        .tab-container {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-header {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            color: #475569;
+            background: rgba(100, 116, 139, 0.05);
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .page-button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .page-button:hover {
+            background: #f8fafc;
+            border-color: #667eea;
+        }
+
+        .page-button.primary {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .page-button.primary:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager v2.0</p>
+                <div style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-align: center; margin-top: 8px;">
+                    ✅ DESIGNER v2.2 APEX
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Features</span>
+                </a>
+                <a href="feature-validations.html" class="nav-item">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Validations</span>
+                </a>
+                <a href="database-tables.html" class="nav-item">
+                    <span class="nav-icon">🗄️</span>
+                    <span class="nav-text">Database</span>
+                </a>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <a href="modules.html" class="nav-item">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tools
+                    </p>
+                </div>
+
+                <a href="page-composer.html" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">Page Composer</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="project-info">
+                    <p class="project-name">Oracle Fusion ERP</p>
+                    <p class="project-version">v2.0</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Designer Toolbar -->
+            <div class="designer-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-title">
+                        <span>🎨</span>
+                        <span id="pageTitle">Page Designer</span>
+                        <span class="page-id-badge" id="pageIdBadge">Loading...</span>
+                    </div>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="toolbar-btn debug" onclick="toggleDebugPanel()">
+                        <span>🔍</span>
+                        <span>Debug</span>
+                        <span class="debug-badge" id="debugBadge">0</span>
+                    </button>
+                    <button class="toolbar-btn" onclick="goBack()">
+                        <span>←</span>
+                        <span>Back</span>
+                    </button>
+                    <button class="toolbar-btn success" onclick="savePage()">
+                        <span>💾</span>
+                        <span>Save</span>
+                    </button>
+                    <button class="toolbar-btn primary" onclick="runPage()">
+                        <span>▶️</span>
+                        <span>Run</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Three-Pane Layout -->
+            <div class="designer-body">
+                <!-- Left Pane: Component Tree -->
+                <div class="designer-pane left">
+                    <div class="pane-header">
+                        <span>STRUCTURE</span>
+                        <button class="add-btn" onclick="showAddRegionModal()">+ Region</button>
+                    </div>
+                    <div style="padding: 12px;" id="treeView">
+                        <!-- Tree will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Center Pane: Canvas -->
+                <div class="designer-pane center">
+                    <div class="canvas-area" id="canvasArea">
+                        <div class="canvas-content" id="canvasContent">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📐</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: #666;">Loading Page...</h3>
+                                <p id="loadingMessage">Please wait while we load your page design.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Pane: Properties -->
+                <div class="designer-pane right">
+                    <div class="pane-header">PROPERTIES</div>
+                    <div style="padding: 16px;" id="propertiesPanel">
+                        <!-- Properties will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Debug Panel -->
+    <div class="debug-panel" id="debugPanel">
+        <div class="debug-header">
+            <div class="debug-title">🔍 Debug Information</div>
+            <button class="modal-close" onclick="toggleDebugPanel()" style="color: #94a3b8;">&times;</button>
+        </div>
+        <div class="debug-body" id="debugBody">
+            <!-- Debug info will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Add Region Modal -->
+    <div class="modal" id="addRegionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Region</h2>
+                <button class="modal-close" onclick="closeModal('addRegionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-field">
+                    <label class="property-label">Region Type</label>
+                    <select class="property-select" id="regionType">
+                        <option value="form">Form</option>
+                        <option value="report">Report / List</option>
+                        <option value="tabs">Tabs</option>
+                        <option value="static">Static Content</option>
+                    </select>
+                </div>
+                <div class="property-field">
+                    <label class="property-label">Region Title</label>
+                    <input type="text" class="property-input" id="regionTitle" placeholder="Enter region title...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addRegionModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addRegion()">Add Region</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Page Item</h2>
+                <button class="modal-close" onclick="closeModal('addItemModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Table Info Banner -->
+                <div id="tableInfoBanner" style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 12px; margin-bottom: 16px; display: none;">
+                    <div style="font-size: 12px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">📊 Base Table</div>
+                    <div id="tableInfoText" style="font-size: 13px; color: #3b82f6;"></div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Columns from this table are available below</div>
+                </div>
+
+                <div class="property-field">
+                    <label class="property-label">Database Column (Source) *</label>
+                    <select class="property-select" id="itemColumn" onchange="autoFillFromColumn()">
+                        <option value="">-- Select Column from Table --</option>
+                    </select>
+                    <div class="property-help">⚡ Selecting a column will auto-fill the fields below</div>
+                </div>
+
+                <div style="border-top: 1px solid #e2e8f0; margin: 16px 0; padding-top: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 12px;">ITEM PROPERTIES</div>
+
+                    <div class="property-field">
+                        <label class="property-label">Item Name</label>
+                        <input type="text" class="property-input" id="itemName" placeholder="e.g., P1_CUSTOMER_NAME">
+                        <div class="property-help">Format: P{page}_{column_name}</div>
+                    </div>
+                    <div class="property-field">
+                        <label class="property-label">Label</label>
+                        <input type="text" class="property-input" id="itemLabel" placeholder="e.g., Customer Name">
+                    </div>
+                    <div class="property-field">
+                        <label class="property-label">Item Type</label>
+                        <select class="property-select" id="itemType">
+                            <option value="text">Text Field</option>
+                            <option value="number">Number Field</option>
+                            <option value="date">Date Picker</option>
+                            <option value="textarea">Text Area</option>
+                            <option value="select">Select List</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="radio">Radio Group</option>
+                        </select>
+                    </div>
+                    <div class="property-field">
+                        <label>
+                            <input type="checkbox" class="property-checkbox" id="itemRequired">
+                            Required
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addItemModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addItem()">Add Item</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Button Modal -->
+    <div class="modal" id="addButtonModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Button</h2>
+                <button class="modal-close" onclick="closeModal('addButtonModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-field">
+                    <label class="property-label">Button Label</label>
+                    <input type="text" class="property-input" id="buttonLabel" placeholder="e.g., Save, Cancel, Delete">
+                </div>
+                <div class="property-field">
+                    <label class="property-label">Button Action</label>
+                    <select class="property-select" id="buttonAction">
+                        <option value="submit">Submit Page</option>
+                        <option value="cancel">Cancel</option>
+                        <option value="delete">Delete</option>
+                        <option value="custom">Custom Action</option>
+                    </select>
+                </div>
+                <div class="property-field">
+                    <label class="property-label">Button Style</label>
+                    <select class="property-select" id="buttonStyle">
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="danger">Danger</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addButtonModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addButton()">Add Button</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pageDefinition = null;
+        let selectedElement = null;
+        let regions = [];
+        let pageItems = [];
+        let pageButtons = [];
+        let tableColumns = [];
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=================================================');
+            console.log('🎨 PAGE DESIGNER v2.2 APEX-STYLE - LOADED AT:', new Date().toLocaleTimeString());
+            console.log('🔥 BUILD:', 'Nov-2025-APEX');
+            console.log('✨ Features: Auto-fill, Table-aware columns, APEX UX');
+            console.log('=================================================');
+
+            // Force clear any inline styles that might be cached
+            document.body.setAttribute('data-version', '2.2-apex');
+
+            loadPageFromURL();
+        });
+
+        function loadPageFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const template = urlParams.get('template');
+            const module = urlParams.get('module');
+
+            console.log('URL Parameters - id:', id, 'template:', template, 'module:', module);
+
+            if (!id) {
+                document.getElementById('loadingMessage').innerHTML =
+                    '❌ No page ID provided.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
+            }
+
+            // Load page from localStorage
+            const stored = localStorage.getItem('composerPages');
+            if (!stored) {
+                document.getElementById('loadingMessage').innerHTML =
+                    '❌ No pages found.<br><a href="page-composer.html">Go back to Page Composer</a>';
+                return;
+            }
+
+            const pages = JSON.parse(stored);
+            const page = pages.find(p => p.id === id);
+
+            if (!page) {
+                document.getElementById('loadingMessage').innerHTML =
+                    `❌ Page "${id}" not found.<br><a href="page-composer.html">Go back to Page Composer</a>`;
+                return;
+            }
+
+            // Store page definition
+            pageDefinition = {
+                pageId: page.id,
+                pageName: page.name,
+                pageType: template || page.type || 'free-form',
+                module: module || page.module || '',
+                definition: page.definition || {},
+                baseTable: page.definition?.baseTable || null
+            };
+
+            // Load existing regions, items, buttons from definition
+            regions = page.definition?.regions || [];
+            pageItems = page.definition?.items || [];
+            pageButtons = page.definition?.buttons || [];
+
+            console.log('Page loaded - ID:', pageDefinition.pageId, 'Name:', pageDefinition.pageName, 'Module:', pageDefinition.module);
+
+            // Load table columns if base table is set
+            if (pageDefinition.baseTable) {
+                loadTableColumns(pageDefinition.baseTable.tableName);
+            }
+
+            // Update UI
+            updatePageUI();
+        }
+
+        let debugLogs = [];
+
+        function addDebugLog(message, type = 'info') {
+            debugLogs.push({ message, type, timestamp: new Date().toLocaleTimeString() });
+            updateDebugBadge();
+        }
+
+        function loadTableColumns(tableName) {
+            tableColumns = []; // Reset
+
+            addDebugLog(`🔍 Loading columns for table: ${tableName}`, 'info');
+            console.log('Loading columns for table:', tableName);
+
+            // Try to load from C# injected data first
+            if (window.CSHARP_DATA && window.CSHARP_DATA.tablesDetailed) {
+                const totalRecords = window.CSHARP_DATA.tablesDetailed.length;
+                addDebugLog(`✓ CSHARP_DATA available with ${totalRecords} records`, 'info');
+                console.log('Loading from CSHARP_DATA.tablesDetailed');
+
+                // Try all possible property name variations
+                let columns = window.CSHARP_DATA.tablesDetailed.filter(col =>
+                    col.Table_Name === tableName ||  // Capital T with underscore (CSV format)
+                    col.table_name === tableName ||
+                    col.TABLE_NAME === tableName ||
+                    col.tableName === tableName ||
+                    col.TableName === tableName
+                );
+
+                addDebugLog(`Exact match: Found ${columns.length} columns`, columns.length > 0 ? 'success' : 'warning');
+
+                // If no exact match, try case-insensitive
+                if (columns.length === 0) {
+                    addDebugLog(`Trying case-insensitive match...`, 'info');
+                    const tableNameUpper = tableName.toUpperCase();
+                    columns = window.CSHARP_DATA.tablesDetailed.filter(col => {
+                        const colTableName = (col.Table_Name || col.table_name || col.TABLE_NAME || col.tableName || col.TableName || '').toUpperCase();
+                        return colTableName === tableNameUpper;
+                    });
+                    addDebugLog(`Case-insensitive: Found ${columns.length} columns`, columns.length > 0 ? 'success' : 'warning');
+
+                    // Debug: Show sample table names
+                    if (columns.length === 0) {
+                        const sampleTables = [...new Set(window.CSHARP_DATA.tablesDetailed.slice(0, 10).map(c => c.Table_Name))];
+                        addDebugLog(`Sample tables in data: ${sampleTables.join(', ')}`, 'info');
+                    }
+                }
+
+                if (columns.length > 0) {
+                    tableColumns = columns.map(col => ({
+                        name: col.Column_Name || col.column_name || col.COLUMN_NAME || col.columnName,
+                        type: col.Data_Type || col.data_type || col.DATA_TYPE || col.dataType,
+                        nullable: col.Nullable || col.nullable || col.NULLABLE,
+                        length: col.Data_Length || col.data_length || col.DATA_LENGTH
+                    }));
+                    addDebugLog(`✅ SUCCESS: Loaded ${tableColumns.length} columns`, 'success');
+                    console.log('✅ Loaded', tableColumns.length, 'columns from CSHARP_DATA for table', tableName);
+                    updateDebugPanel();
+                    return;
+                } else {
+                    addDebugLog(`⚠️ No columns matched for table: ${tableName}`, 'warning');
+                }
+            } else {
+                addDebugLog('❌ CSHARP_DATA or tablesDetailed not available', 'error');
+            }
+
+            // Fallback: Try localStorage (databaseTables)
+            addDebugLog('Trying localStorage fallback...', 'info');
+            const storedTables = localStorage.getItem('databaseTables');
+            if (storedTables) {
+                const tables = JSON.parse(storedTables);
+                const table = tables.find(t =>
+                    t.name === tableName ||
+                    t.table_name === tableName ||
+                    t.TABLE_NAME === tableName ||
+                    (t.name || '').toUpperCase() === tableName.toUpperCase()
+                );
+                if (table && table.columns) {
+                    tableColumns = table.columns;
+                    addDebugLog(`✅ Loaded ${tableColumns.length} columns from localStorage`, 'success');
+                    console.log('✅ Loaded', tableColumns.length, 'columns from localStorage for table', tableName);
+                    updateDebugPanel();
+                    return;
+                }
+            }
+
+            // If we get here, no columns were found
+            addDebugLog(`❌ FINAL: No columns found for table: ${tableName}`, 'error');
+            console.warn('⚠️ No columns found for table:', tableName);
+
+            // Log available tables for debugging
+            if (window.CSHARP_DATA?.tablesDetailed) {
+                const uniqueTables = [...new Set(window.CSHARP_DATA.tablesDetailed.map(c =>
+                    c.Table_Name || c.table_name || c.TABLE_NAME || c.tableName || c.TableName
+                ))];
+                const matchingTables = uniqueTables.filter(t => t && t.includes(tableName.substring(0, 5)));
+                addDebugLog(`Similar tables: ${matchingTables.slice(0, 5).join(', ')}`, 'warning');
+            }
+
+            updateDebugPanel();
+        }
+
+        function updateDebugBadge() {
+            const badge = document.getElementById('debugBadge');
+            const errorCount = debugLogs.filter(l => l.type === 'error' || l.type === 'warning').length;
+            if (badge) {
+                badge.textContent = errorCount;
+                badge.style.display = errorCount > 0 ? 'block' : 'none';
+            }
+        }
+
+        function toggleDebugPanel() {
+            const panel = document.getElementById('debugPanel');
+            panel.classList.toggle('show');
+            if (panel.classList.contains('show')) {
+                updateDebugPanel();
+            }
+        }
+
+        function updateDebugPanel() {
+            const debugBody = document.getElementById('debugBody');
+            if (!debugBody) return;
+
+            // Debug: Check actual property names in the data
+            let sampleRecord = null;
+            if (window.CSHARP_DATA?.tablesDetailed && window.CSHARP_DATA.tablesDetailed.length > 0) {
+                sampleRecord = window.CSHARP_DATA.tablesDetailed[0];
+            }
+
+            const uniqueTables = window.CSHARP_DATA?.tablesDetailed
+                ? [...new Set(window.CSHARP_DATA.tablesDetailed.map(c =>
+                    c.Table_Name || c.table_name || c.TABLE_NAME || c.tableName || c.TableName
+                ))]
+                : [];
+
+            let html = `
+                ${sampleRecord ? `
+                    <div class="debug-section">
+                        <div class="debug-label">🔬 SAMPLE DATA RECORD</div>
+                        <div style="font-size: 11px; color: #cbd5e1; background: #0f172a; padding: 8px; border-radius: 4px; overflow-x: auto;">
+                            ${JSON.stringify(sampleRecord, null, 2).split('\n').map(line => `<div>${line}</div>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div class="debug-section">
+                    <div class="debug-label">📄 PAGE DEFINITION</div>
+                    <div>Page ID: <span class="debug-value">${pageDefinition?.pageId || 'N/A'}</span></div>
+                    <div>Page Name: <span class="debug-value">${pageDefinition?.pageName || 'N/A'}</span></div>
+                    <div>Module: <span class="debug-value">${pageDefinition?.module || 'N/A'}</span></div>
+                    <div>Base Table: <span class="debug-value">${pageDefinition?.baseTable?.tableName || 'NOT SET'}</span></div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">💾 DATA SOURCES</div>
+                    <div>CSHARP_DATA: <span class="${window.CSHARP_DATA ? 'debug-value' : 'debug-error'}">${window.CSHARP_DATA ? '✅ Available' : '❌ Not Available'}</span></div>
+                    <div>Tables Detailed: <span class="debug-value">${window.CSHARP_DATA?.tablesDetailed?.length || 0} records</span></div>
+                    <div>localStorage: <span class="${localStorage.getItem('databaseTables') ? 'debug-value' : 'debug-error'}">${localStorage.getItem('databaseTables') ? '✅ Available' : '❌ Not Available'}</span></div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">📊 LOADED COLUMNS</div>
+                    <div>Count: <span class="${tableColumns.length > 0 ? 'debug-value' : 'debug-error'}">${tableColumns.length}</span></div>
+                    ${tableColumns.length > 0 ? `
+                        <div style="margin-top: 8px;">
+                            <div style="color: #94a3b8;">Sample columns:</div>
+                            ${tableColumns.slice(0, 5).map(c => `<div style="color: #cbd5e1; margin-left: 8px;">• ${c.name} (${c.type})</div>`).join('')}
+                            ${tableColumns.length > 5 ? `<div style="color: #64748b; margin-left: 8px;">... and ${tableColumns.length - 5} more</div>` : ''}
+                        </div>
+                    ` : '<div class="debug-error">No columns loaded!</div>'}
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-label">📋 DEBUG LOGS</div>
+                    ${debugLogs.slice(-10).reverse().map(log => `
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #64748b;">[${log.timestamp}]</span>
+                            <span class="debug-${log.type === 'success' ? 'value' : log.type}">${log.message}</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${uniqueTables.length > 0 ? `
+                    <div class="debug-section">
+                        <div class="debug-label">📚 AVAILABLE TABLES (${uniqueTables.length})</div>
+                        <div style="max-height: 150px; overflow-y: auto; color: #cbd5e1; font-size: 11px;">
+                            ${uniqueTables.sort().map(t => `<div>• ${t}</div>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+
+            debugBody.innerHTML = html;
+        }
+
+        function updatePageUI() {
+            if (!pageDefinition) return;
+
+            // Update toolbar
+            document.getElementById('pageTitle').textContent = pageDefinition.pageName;
+            document.getElementById('pageIdBadge').textContent = pageDefinition.pageId;
+
+            // Render all panels
+            renderTreeView();
+            renderCanvas();
+            renderPropertiesPanel();
+        }
+
+        function renderTreeView() {
+            const tree = document.getElementById('treeView');
+
+            let html = `
+                <div class="tree-item ${selectedElement?.type === 'page' ? 'selected' : ''}" onclick="selectElement({type: 'page'})">
+                    <span><span class="tree-item-icon">📄</span> ${pageDefinition.pageName}</span>
+                </div>
+                <div class="tree-children">
+            `;
+
+            // Add regions
+            regions.forEach((region, index) => {
+                const isSelected = selectedElement?.type === 'region' && selectedElement?.index === index;
+                html += `
+                    <div class="tree-item ${isSelected ? 'selected' : ''}" onclick="selectElement({type: 'region', index: ${index}})">
+                        <span><span class="tree-item-icon">${getRegionIcon(region.type)}</span> ${region.title}</span>
+                    </div>
+                `;
+
+                // Add items in this region
+                const regionItems = pageItems.filter(item => item.regionIndex === index);
+                if (regionItems.length > 0) {
+                    html += `<div class="tree-children">`;
+                    regionItems.forEach((item, itemIndex) => {
+                        const actualIndex = pageItems.indexOf(item);
+                        const isItemSelected = selectedElement?.type === 'item' && selectedElement?.index === actualIndex;
+                        html += `
+                            <div class="tree-item ${isItemSelected ? 'selected' : ''}" onclick="selectElement({type: 'item', index: ${actualIndex}})">
+                                <span><span class="tree-item-icon">📝</span> ${item.label || item.name}</span>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+            });
+
+            // Add buttons
+            if (pageButtons.length > 0) {
+                html += `
+                    <div class="tree-item">
+                        <span><span class="tree-item-icon">🔘</span> Buttons</span>
+                    </div>
+                    <div class="tree-children">
+                `;
+                pageButtons.forEach((button, index) => {
+                    const isSelected = selectedElement?.type === 'button' && selectedElement?.index === index;
+                    html += `
+                        <div class="tree-item ${isSelected ? 'selected' : ''}" onclick="selectElement({type: 'button', index: ${index}})">
+                            <span><span class="tree-item-icon">🔘</span> ${button.label}</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            html += `</div>`;
+            tree.innerHTML = html;
+        }
+
+        function getRegionIcon(type) {
+            const icons = {
+                'form': '📝',
+                'report': '📊',
+                'tabs': '📑',
+                'static': '📄'
+            };
+            return icons[type] || '📦';
+        }
+
+        function renderCanvas() {
+            const canvas = document.getElementById('canvasContent');
+
+            if (regions.length === 0) {
+                const baseTableInfo = pageDefinition.baseTable
+                    ? `<div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin: 20px auto; max-width: 400px;">
+                        <div style="font-size: 12px; color: #1e40af; font-weight: 600;">📊 Base Table Selected</div>
+                        <div style="font-size: 14px; color: #3b82f6; margin-top: 4px;">${pageDefinition.baseTable.tableName}</div>
+                        <div style="font-size: 11px; color: #64748b; margin-top: 4px;">You can now add items bound to columns from this table</div>
+                       </div>`
+                    : '<div style="color: #f59e0b; margin: 20px auto; max-width: 400px; text-align: center;">⚠️ No base table selected. You can still add items manually.</div>';
+
+                canvas.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎨</div>
+                        <h3 style="font-size: 20px; margin-bottom: 12px; color: #1e293b;">Welcome to Page Designer</h3>
+                        <p style="color: #64748b; margin-bottom: 8px;">Build your page step by step, just like Oracle APEX</p>
+                        ${baseTableInfo}
+                        <div style="margin-top: 24px; padding: 20px; background: #f8f9fa; border-radius: 8px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            <div style="font-weight: 600; margin-bottom: 12px; color: #475569;">Quick Start Guide:</div>
+                            <ol style="text-align: left; color: #64748b; line-height: 1.8;">
+                                <li><strong>Add a Region</strong> - Container for your items (Form, Report, Tabs)</li>
+                                <li><strong>Add Items</strong> - Fields bound to database columns</li>
+                                <li><strong>Add Buttons</strong> - Actions like Save, Cancel, Delete</li>
+                                <li><strong>Save Your Design</strong> - Click the green Save button</li>
+                            </ol>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 24px; padding: 12px 32px; font-size: 15px;" onclick="showAddRegionModal()">
+                            + Add Your First Region
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `<h1 style="font-size: 24px; margin-bottom: 24px; color: #1e293b;">📋 ${pageDefinition.pageName}</h1>`;
+
+            regions.forEach((region, regionIndex) => {
+                const isSelected = selectedElement?.type === 'region' && selectedElement?.index === regionIndex;
+                html += `
+                    <div class="page-region ${isSelected ? 'selected' : ''}" onclick="selectElement({type: 'region', index: ${regionIndex}}); event.stopPropagation();">
+                        <div class="region-header">
+                            <span>${getRegionIcon(region.type)} ${region.title}</span>
+                            <div class="region-actions">
+                                <button class="region-action-btn" onclick="showAddItemModal(${regionIndex}); event.stopPropagation();" title="Add Item">+ Item</button>
+                                <button class="region-action-btn" onclick="deleteRegion(${regionIndex}); event.stopPropagation();" title="Delete Region">🗑️</button>
+                            </div>
+                        </div>
+                `;
+
+                // Render items in region
+                const regionItems = pageItems.filter(item => item.regionIndex === regionIndex);
+
+                if (region.type === 'tabs') {
+                    html += renderTabRegion(regionIndex, regionItems);
+                } else if (region.type === 'form') {
+                    html += renderFormRegion(regionIndex, regionItems);
+                } else if (region.type === 'report') {
+                    html += renderReportRegion(regionIndex, regionItems);
+                } else {
+                    html += `<div style="color: #94a3b8; padding: 20px; text-align: center;">Static Content Region</div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            // Add buttons section
+            if (pageButtons.length > 0 || regions.length > 0) {
+                html += `
+                    <div class="button-group">
+                        ${pageButtons.map((button, index) => {
+                            const isSelected = selectedElement?.type === 'button' && selectedElement?.index === index;
+                            return `
+                                <button class="page-button ${button.style}"
+                                        onclick="selectElement({type: 'button', index: ${index}}); event.stopPropagation();"
+                                        style="${isSelected ? 'outline: 2px solid #667eea; outline-offset: 2px;' : ''}">
+                                    ${button.label}
+                                </button>
+                            `;
+                        }).join('')}
+                        <button class="page-button" onclick="showAddButtonModal(); event.stopPropagation();" style="border-style: dashed;">
+                            + Add Button
+                        </button>
+                    </div>
+                `;
+            }
+
+            canvas.innerHTML = html;
+        }
+
+        function renderFormRegion(regionIndex, items) {
+            if (items.length === 0) {
+                return `<div style="color: #94a3b8; text-align: center; padding: 20px;">Click "+ Item" to add fields</div>`;
+            }
+
+            let html = '';
+            items.forEach((item, localIndex) => {
+                const actualIndex = pageItems.indexOf(item);
+                const isSelected = selectedElement?.type === 'item' && selectedElement?.index === actualIndex;
+
+                html += `
+                    <div class="form-field ${isSelected ? 'selected' : ''}" onclick="selectElement({type: 'item', index: ${actualIndex}}); event.stopPropagation();">
+                        <label class="field-label">
+                            ${item.label || item.name}
+                            ${item.required ? '<span class="field-required">*</span>' : ''}
+                        </label>
+                        ${renderFormInput(item)}
+                        <div class="field-actions">
+                            <button class="region-action-btn" onclick="deleteItem(${actualIndex}); event.stopPropagation();">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        function renderFormInput(item) {
+            const value = item.defaultValue || '';
+            const placeholder = item.placeholder || `Enter ${item.label || 'value'}...`;
+
+            switch(item.type) {
+                case 'textarea':
+                    return `<textarea class="field-input" placeholder="${placeholder}" style="min-height: 100px;">${value}</textarea>`;
+                case 'select':
+                    return `
+                        <select class="field-input">
+                            <option value="">-- Select --</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    `;
+                case 'checkbox':
+                    return `<input type="checkbox" style="width: auto; margin-top: 8px;" ${value ? 'checked' : ''}>`;
+                case 'date':
+                    return `<input type="date" class="field-input" value="${value}">`;
+                case 'number':
+                    return `<input type="number" class="field-input" placeholder="${placeholder}" value="${value}">`;
+                default:
+                    return `<input type="text" class="field-input" placeholder="${placeholder}" value="${value}">`;
+            }
+        }
+
+        function renderTabRegion(regionIndex, items) {
+            return `
+                <div class="tab-container">
+                    <div class="tab-header">
+                        <button class="tab-button active">Header</button>
+                        <button class="tab-button">Details</button>
+                    </div>
+                    <div class="tab-content active">
+                        <div style="color: #94a3b8; text-align: center; padding: 20px;">Header tab content</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderReportRegion(regionIndex, items) {
+            if (items.length === 0) {
+                return `<div style="color: #94a3b8; text-align: center; padding: 20px;">No columns defined</div>`;
+            }
+
+            let html = `
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa; border-bottom: 2px solid #e2e8f0;">
+                            ${items.map(item => `<th style="padding: 12px; text-align: left; font-weight: 600; font-size: 13px;">${item.label || item.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            ${items.map(() => `<td style="padding: 12px; color: #94a3b8; font-size: 13px;">Sample data</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            return html;
+        }
+
+        function renderPropertiesPanel() {
+            const panel = document.getElementById('propertiesPanel');
+
+            if (!selectedElement) {
+                panel.innerHTML = `
+                    <div class="property-group">
+                        <div class="property-group-header">Page Information</div>
+                        <div class="property-field">
+                            <label class="property-label">Page Name</label>
+                            <input type="text" class="property-input" value="${pageDefinition.pageName}" onchange="updatePageName(this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Page ID</label>
+                            <input type="text" class="property-input" value="${pageDefinition.pageId}" readonly>
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Module</label>
+                            <input type="text" class="property-input" value="${pageDefinition.module}" readonly>
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Base Table</label>
+                            <input type="text" class="property-input" value="${pageDefinition.baseTable?.tableName || 'Not set'}" readonly>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (selectedElement.type === 'region') {
+                const region = regions[selectedElement.index];
+                panel.innerHTML = `
+                    <div class="property-group">
+                        <div class="property-group-header">Region Properties</div>
+                        <div class="property-field">
+                            <label class="property-label">Region Title</label>
+                            <input type="text" class="property-input" value="${region.title}"
+                                   onchange="updateRegionProperty(${selectedElement.index}, 'title', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Region Type</label>
+                            <select class="property-select" onchange="updateRegionProperty(${selectedElement.index}, 'type', this.value)">
+                                <option value="form" ${region.type === 'form' ? 'selected' : ''}>Form</option>
+                                <option value="report" ${region.type === 'report' ? 'selected' : ''}>Report / List</option>
+                                <option value="tabs" ${region.type === 'tabs' ? 'selected' : ''}>Tabs</option>
+                                <option value="static" ${region.type === 'static' ? 'selected' : ''}>Static Content</option>
+                            </select>
+                        </div>
+                        <div class="property-field">
+                            <button class="btn btn-danger" onclick="deleteRegion(${selectedElement.index})">Delete Region</button>
+                        </div>
+                    </div>
+                `;
+            } else if (selectedElement.type === 'item') {
+                const item = pageItems[selectedElement.index];
+                panel.innerHTML = `
+                    <div class="property-group">
+                        <div class="property-group-header">Item Properties</div>
+                        <div class="property-field">
+                            <label class="property-label">Item Name</label>
+                            <input type="text" class="property-input" value="${item.name}"
+                                   onchange="updateItemProperty(${selectedElement.index}, 'name', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Label</label>
+                            <input type="text" class="property-input" value="${item.label || ''}"
+                                   onchange="updateItemProperty(${selectedElement.index}, 'label', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Type</label>
+                            <select class="property-select" onchange="updateItemProperty(${selectedElement.index}, 'type', this.value)">
+                                <option value="text" ${item.type === 'text' ? 'selected' : ''}>Text Field</option>
+                                <option value="number" ${item.type === 'number' ? 'selected' : ''}>Number Field</option>
+                                <option value="date" ${item.type === 'date' ? 'selected' : ''}>Date Picker</option>
+                                <option value="textarea" ${item.type === 'textarea' ? 'selected' : ''}>Text Area</option>
+                                <option value="select" ${item.type === 'select' ? 'selected' : ''}>Select List</option>
+                                <option value="checkbox" ${item.type === 'checkbox' ? 'selected' : ''}>Checkbox</option>
+                            </select>
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Database Column</label>
+                            <input type="text" class="property-input" value="${item.column || ''}"
+                                   onchange="updateItemProperty(${selectedElement.index}, 'column', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Default Value</label>
+                            <input type="text" class="property-input" value="${item.defaultValue || ''}"
+                                   onchange="updateItemProperty(${selectedElement.index}, 'defaultValue', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label>
+                                <input type="checkbox" class="property-checkbox" ${item.required ? 'checked' : ''}
+                                       onchange="updateItemProperty(${selectedElement.index}, 'required', this.checked)">
+                                Required
+                            </label>
+                        </div>
+                        <div class="property-field">
+                            <button class="btn btn-danger" onclick="deleteItem(${selectedElement.index})">Delete Item</button>
+                        </div>
+                    </div>
+                `;
+            } else if (selectedElement.type === 'button') {
+                const button = pageButtons[selectedElement.index];
+                panel.innerHTML = `
+                    <div class="property-group">
+                        <div class="property-group-header">Button Properties</div>
+                        <div class="property-field">
+                            <label class="property-label">Button Label</label>
+                            <input type="text" class="property-input" value="${button.label}"
+                                   onchange="updateButtonProperty(${selectedElement.index}, 'label', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Action</label>
+                            <select class="property-select" onchange="updateButtonProperty(${selectedElement.index}, 'action', this.value)">
+                                <option value="submit" ${button.action === 'submit' ? 'selected' : ''}>Submit Page</option>
+                                <option value="cancel" ${button.action === 'cancel' ? 'selected' : ''}>Cancel</option>
+                                <option value="delete" ${button.action === 'delete' ? 'selected' : ''}>Delete</option>
+                                <option value="custom" ${button.action === 'custom' ? 'selected' : ''}>Custom Action</option>
+                            </select>
+                        </div>
+                        <div class="property-field">
+                            <label class="property-label">Style</label>
+                            <select class="property-select" onchange="updateButtonProperty(${selectedElement.index}, 'style', this.value)">
+                                <option value="primary" ${button.style === 'primary' ? 'selected' : ''}>Primary</option>
+                                <option value="secondary" ${button.style === 'secondary' ? 'selected' : ''}>Secondary</option>
+                                <option value="danger" ${button.style === 'danger' ? 'selected' : ''}>Danger</option>
+                            </select>
+                        </div>
+                        <div class="property-field">
+                            <button class="btn btn-danger" onclick="deleteButton(${selectedElement.index})">Delete Button</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function selectElement(element) {
+            selectedElement = element;
+            renderTreeView();
+            renderCanvas();
+            renderPropertiesPanel();
+        }
+
+        // Modal Functions
+        function showAddRegionModal() {
+            document.getElementById('regionType').value = 'form';
+            document.getElementById('regionTitle').value = '';
+            document.getElementById('addRegionModal').classList.add('show');
+        }
+
+        function showAddItemModal(regionIndex) {
+            selectedElement = { type: 'region', index: regionIndex };
+
+            // IMPORTANT: Retry loading columns here in case CSHARP_DATA wasn't ready during page load
+            if (tableColumns.length === 0 && pageDefinition.baseTable) {
+                addDebugLog('🔄 Retrying column load (CSHARP_DATA may have loaded after page init)', 'info');
+                loadTableColumns(pageDefinition.baseTable.tableName);
+            }
+
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemLabel').value = '';
+            document.getElementById('itemType').value = 'text';
+            document.getElementById('itemRequired').checked = false;
+
+            // Show table info banner if base table exists
+            const tableInfoBanner = document.getElementById('tableInfoBanner');
+            const tableInfoText = document.getElementById('tableInfoText');
+
+            if (pageDefinition.baseTable && pageDefinition.baseTable.tableName) {
+                tableInfoBanner.style.display = 'block';
+                tableInfoText.textContent = `${pageDefinition.baseTable.tableName} (${tableColumns.length} columns available)`;
+            } else {
+                tableInfoBanner.style.display = 'none';
+            }
+
+            // Populate column dropdown - ONLY from selected base table
+            const columnSelect = document.getElementById('itemColumn');
+            columnSelect.innerHTML = '<option value="">-- Select Column from Table --</option>';
+
+            if (tableColumns.length === 0) {
+                columnSelect.innerHTML += '<option value="" disabled>⚠️ No base table selected or no columns found</option>';
+            } else {
+                tableColumns.forEach(col => {
+                    const dataType = col.type || col.data_type || 'VARCHAR2';
+                    columnSelect.innerHTML += `<option value="${col.name}">${col.name} (${dataType})</option>`;
+                });
+            }
+
+            document.getElementById('addItemModal').classList.add('show');
+        }
+
+        // Auto-fill item properties from selected column
+        function autoFillFromColumn() {
+            const columnSelect = document.getElementById('itemColumn');
+            const selectedColumn = columnSelect.value;
+
+            if (!selectedColumn) return;
+
+            // Find the column object
+            const column = tableColumns.find(c => c.name === selectedColumn);
+            if (!column) return;
+
+            // Auto-fill Item Name: P1_COLUMN_NAME
+            const itemName = 'P1_' + selectedColumn;
+            document.getElementById('itemName').value = itemName;
+
+            // Auto-fill Label: Convert CUSTOMER_NAME to "Customer Name"
+            const label = selectedColumn
+                .split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+            document.getElementById('itemLabel').value = label;
+
+            // Auto-select item type based on data type
+            const dataType = (column.type || column.data_type || '').toUpperCase();
+            let itemType = 'text'; // default
+
+            if (dataType.includes('NUMBER') || dataType.includes('INT')) {
+                itemType = 'number';
+            } else if (dataType.includes('DATE') || dataType.includes('TIMESTAMP')) {
+                itemType = 'date';
+            } else if (dataType.includes('CLOB') || dataType.includes('TEXT')) {
+                itemType = 'textarea';
+            }
+
+            document.getElementById('itemType').value = itemType;
+
+            console.log('Auto-filled from column:', selectedColumn, '-> Item:', itemName, 'Label:', label, 'Type:', itemType);
+        }
+
+        function showAddButtonModal() {
+            document.getElementById('buttonLabel').value = '';
+            document.getElementById('buttonAction').value = 'submit';
+            document.getElementById('buttonStyle').value = 'primary';
+            document.getElementById('addButtonModal').classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Add Functions
+        function addRegion() {
+            const type = document.getElementById('regionType').value;
+            const title = document.getElementById('regionTitle').value || 'New Region';
+
+            regions.push({
+                type: type,
+                title: title
+            });
+
+            closeModal('addRegionModal');
+            updatePageUI();
+            console.log('Region added:', type, title);
+        }
+
+        function addItem() {
+            if (!selectedElement || selectedElement.type !== 'region') {
+                alert('Please select a region first');
+                return;
+            }
+
+            const name = document.getElementById('itemName').value || 'P1_ITEM_' + (pageItems.length + 1);
+            const label = document.getElementById('itemLabel').value || name;
+            const type = document.getElementById('itemType').value;
+            const column = document.getElementById('itemColumn').value;
+            const required = document.getElementById('itemRequired').checked;
+
+            pageItems.push({
+                regionIndex: selectedElement.index,
+                name: name,
+                label: label,
+                type: type,
+                column: column,
+                required: required,
+                defaultValue: ''
+            });
+
+            closeModal('addItemModal');
+            updatePageUI();
+            console.log('Item added:', name, 'to region', selectedElement.index);
+        }
+
+        function addButton() {
+            const label = document.getElementById('buttonLabel').value || 'Button';
+            const action = document.getElementById('buttonAction').value;
+            const style = document.getElementById('buttonStyle').value;
+
+            pageButtons.push({
+                label: label,
+                action: action,
+                style: style
+            });
+
+            closeModal('addButtonModal');
+            updatePageUI();
+            console.log('Button added:', label);
+        }
+
+        // Update Functions
+        function updatePageName(value) {
+            pageDefinition.pageName = value;
+            updatePageUI();
+        }
+
+        function updateRegionProperty(index, property, value) {
+            regions[index][property] = value;
+            updatePageUI();
+        }
+
+        function updateItemProperty(index, property, value) {
+            pageItems[index][property] = value;
+            updatePageUI();
+        }
+
+        function updateButtonProperty(index, property, value) {
+            pageButtons[index][property] = value;
+            updatePageUI();
+        }
+
+        // Delete Functions
+        function deleteRegion(index) {
+            if (confirm('Delete this region and all its items?')) {
+                // Delete items in this region
+                pageItems = pageItems.filter(item => item.regionIndex !== index);
+                // Adjust region indices for remaining items
+                pageItems.forEach(item => {
+                    if (item.regionIndex > index) {
+                        item.regionIndex--;
+                    }
+                });
+                regions.splice(index, 1);
+                selectedElement = null;
+                updatePageUI();
+            }
+        }
+
+        function deleteItem(index) {
+            if (confirm('Delete this item?')) {
+                pageItems.splice(index, 1);
+                selectedElement = null;
+                updatePageUI();
+            }
+        }
+
+        function deleteButton(index) {
+            if (confirm('Delete this button?')) {
+                pageButtons.splice(index, 1);
+                selectedElement = null;
+                updatePageUI();
+            }
+        }
+
+        // Save and Export Functions
+        function savePage() {
+            // Update page definition
+            pageDefinition.definition.regions = regions;
+            pageDefinition.definition.items = pageItems;
+            pageDefinition.definition.buttons = pageButtons;
+
+            // Save to localStorage
+            const stored = localStorage.getItem('composerPages');
+            if (stored) {
+                const pages = JSON.parse(stored);
+                const pageIndex = pages.findIndex(p => p.id === pageDefinition.pageId);
+
+                if (pageIndex >= 0) {
+                    pages[pageIndex].name = pageDefinition.pageName;
+                    pages[pageIndex].definition = pageDefinition.definition;
+                    localStorage.setItem('composerPages', JSON.stringify(pages));
+
+                    alert('✅ Page saved successfully!\n\nPage: ' + pageDefinition.pageName + '\nRegions: ' + regions.length + '\nItems: ' + pageItems.length + '\nButtons: ' + pageButtons.length);
+                    console.log('Page saved:', pageDefinition);
+                } else {
+                    alert('❌ Error: Page not found in localStorage');
+                }
+            }
+        }
+
+        function runPage() {
+            // Save first
+            savePage();
+
+            // Open preview in new window
+            const previewWindow = window.open('', '_blank', 'width=1200,height=800');
+            previewWindow.document.write('<html><head><title>Preview: ' + pageDefinition.pageName + '</title>');
+            previewWindow.document.write('<link rel="stylesheet" href="css/main.css">');
+            previewWindow.document.write('</head><body style="padding: 40px;">');
+            previewWindow.document.write(document.getElementById('canvasContent').innerHTML);
+            previewWindow.document.write('</body></html>');
+            previewWindow.document.close();
+        }
+
+        function goBack() {
+            if (confirm('Any unsaved changes will be lost. Continue?')) {
+                window.location.href = 'page-composer.html';
+            }
+        }
+    </script>
+</body>
+</html>

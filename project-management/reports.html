@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="features.html" class="nav-item"><span class="nav-icon">⚙️</span><span class="nav-text">Features</span></a>
+                <a href="feature-validations.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Validations</span></a>
+                <a href="database-tables.html" class="nav-item"><span class="nav-icon">🗄️</span><span class="nav-text">Database</span></a>
+                <a href="pages.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-text">Pages</span></a>
+                <a href="modules.html" class="nav-item"><span class="nav-icon">📦</span><span class="nav-text">Modules</span></a>
+                <a href="reports.html" class="nav-item active"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tracking
+                    </p>
+                </div>
+
+                <a href="development-readiness.html" class="nav-item">
+                    <span class="nav-icon">🚦</span>
+                    <span class="nav-text">Readiness</span>
+                </a>
+                <a href="phased-approach.html" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Phased Approach</span>
+                </a>
+                <a href="tech-decisions.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">Tech Decisions</span>
+                </a>
+                <a href="dev-activity-log.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Activity Log</span>
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>Reports & Analytics</h2>
+                    <p class="subtitle">Project insights and progress analytics</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
+            </header>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #2196F3;">⚙️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-features-report">0</h3>
+                        <p class="kpi-label">Total Features</p>
+                    </div>
+                </div>
+                <div class="kpi-card highlight">
+                    <div class="kpi-icon" style="background: #10B981;">🎯</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="completion-rate-report">0%</h3>
+                        <p class="kpi-label">Completion Rate</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #F44336;">🔥</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="priority-critical">0</h3>
+                        <p class="kpi-label">Critical Priority</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FF9800;">⚡</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="priority-high">0</h3>
+                        <p class="kpi-label">High Priority</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Module Feature Count (Top 10)</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="moduleComparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Development Status Distribution</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="statusDistributionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Summary Section -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>📊 Project Summary</h3>
+                    </div>
+                    <div style="padding: 24px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                            <div style="padding: 16px; background: var(--card-bg); border-radius: 8px; border-left: 4px solid #2196F3;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">Development Phase</h4>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">
+                                    Requirements documentation complete across 16 modules. Ready for implementation phase with 2,118 defined features.
+                                </p>
+                            </div>
+                            <div style="padding: 16px; background: var(--card-bg); border-radius: 8px; border-left: 4px solid #10B981;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">Database Design</h4>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">
+                                    238 database tables mapped across all modules with comprehensive column definitions and relationships.
+                                </p>
+                            </div>
+                            <div style="padding: 16px; background: var(--card-bg); border-radius: 8px; border-left: 4px solid #FF9800;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">UI/UX Design</h4>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">
+                                    254 application pages designed covering all user workflows including list pages, detail forms, and dashboards.
+                                </p>
+                            </div>
+                            <div style="padding: 16px; background: var(--card-bg); border-radius: 8px; border-left: 4px solid #F44336;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">Next Steps</h4>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">
+                                    Begin development of core modules (GL, UR, AP) with priority on critical and high-priority features.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>
