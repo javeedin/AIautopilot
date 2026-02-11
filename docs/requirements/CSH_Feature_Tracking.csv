@@ -1,0 +1,123 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+CSH-001,Cash Management,Bank Setup,Bank Master,Maintain master data for banks,Critical,Medium,Not Started,None,5,,,Yes,,Create bank records with routing and SWIFT codes
+CSH-002,Cash Management,Bank Setup,Bank Accounts,Set up and maintain bank accounts,Critical,High,Not Started,CSH-001,8,,,Yes,,Define accounts with GL mapping and controls
+CSH-003,Cash Management,Bank Setup,Account Security,Security controls for bank accounts,Critical,High,Not Started,UR-001,7,,,Yes,,Role-based access with maker-checker workflow
+CSH-010,Cash Management,Cash Receipts,Receipt Entry,Record cash receipts from customers,Critical,High,Not Started,AR-001,9,,,Yes,,Capture receipts and link to AR invoices
+CSH-011,Cash Management,Cash Receipts,Lockbox Processing,Process electronic lockbox files,High,High,Not Started,CSH-010,10,,,Yes,,Import and auto-match lockbox transactions
+CSH-012,Cash Management,Cash Receipts,Credit Card Processing,Process credit card receipts,High,High,Not Started,CSH-010,11,,,Yes,,Integrate with payment gateways PCI compliant
+CSH-020,Cash Management,Disbursements,Payment Processing,Process payments to suppliers,Critical,High,Not Started,AP-001,10,,,Yes,,Create payment batches and execute by method
+CSH-021,Cash Management,Disbursements,Check Management,Print and track checks,High,Medium,Not Started,CSH-020,7,,,Yes,,Print checks assign numbers and track status
+CSH-022,Cash Management,Disbursements,Electronic Payments,Generate ACH and wire payment files,Critical,High,Not Started,CSH-020,10,,,Yes,,Create NACHA and ISO 20022 payment files
+CSH-030,Cash Management,Reconciliation,Statement Import,Import electronic bank statements,Critical,High,Not Started,CSH-002,9,,,Yes,,Import BAI2 MT940 and other formats
+CSH-031,Cash Management,Reconciliation,Auto Reconciliation,Automatically match transactions,Critical,High,Not Started,CSH-030,12,,,Yes,,Match statement to system transactions
+CSH-032,Cash Management,Reconciliation,Manual Reconciliation,Manually reconcile unmatched items,Critical,Medium,Not Started,CSH-031,7,,,Yes,,Resolve exceptions and create adjustments
+CSH-040,Cash Management,Cash Position,Position Reporting,Real-time cash position visibility,Critical,High,Not Started,CSH-002,8,,,Yes,,Display balances by account bank currency
+CSH-041,Cash Management,Cash Position,Cash Concentration,Concentrate cash to central accounts,High,High,Not Started,CSH-040,9,,,Yes,,Automate sweeps with target balances
+CSH-042,Cash Management,Cash Position,Investment Management,Manage short-term investments,Medium,High,Not Started,CSH-041,10,,,No,,Track investments and performance
+CSH-050,Cash Management,Forecasting,Cash Flow Forecast,Forecast cash inflows and outflows,High,High,Not Started,AR-001,11,,,No,,Generate forecasts from AR AP payroll
+CSH-051,Cash Management,Forecasting,Liquidity Analysis,Analyze liquidity and working capital,High,Medium,Not Started,CSH-050,8,,,No,,Calculate ratios and identify gaps
+CSH-060,Cash Management,Bank Fees,Fee Capture,Capture and track bank fees,High,Medium,Not Started,CSH-030,6,,,Yes,,Import fees and post to GL by category
+CSH-061,Cash Management,Bank Fees,Fee Analysis,Analyze and optimize bank fees,Medium,Medium,Not Started,CSH-060,6,,,Yes,,Compare fees and identify savings
+CSH-070,Cash Management,Intercompany,Intercompany Transfers,Process intercompany cash transfers,High,High,Not Started,GL-140,9,,,Yes,,Transfer between entities with proper GL entries
+CSH-071,Cash Management,Intercompany,Intercompany Netting,Net intercompany balances,Medium,High,Not Started,CSH-070,10,,,Yes,,Calculate net positions and settle
+CSH-080,Cash Management,Fraud Prevention,Positive Pay,Generate positive pay files,High,Medium,Not Started,CSH-021,7,,,Yes,,Issue files and process exceptions
+CSH-081,Cash Management,Fraud Prevention,Fraud Detection,Monitor for fraudulent activity,High,High,Not Started,CSH-010,9,,,No,,Flag suspicious transactions with rules
+CSH-090,Cash Management,Multi-Currency,Foreign Currency Accounts,Manage multi-currency accounts,High,High,Not Started,GL-060,9,,,Yes,,Track balances and revalue monthly
+CSH-091,Cash Management,Multi-Currency,FX Transactions,Process foreign exchange transactions,Medium,High,Not Started,CSH-090,10,,,Yes,,Execute FX spot and forward contracts
+CSH-100,Cash Management,Treasury,Debt Management,Manage debt obligations,Medium,High,Not Started,CSH-002,10,,,Yes,,Track debt schedule payments monitor covenants
+CSH-101,Cash Management,Treasury,Letter of Credit,Manage letters of credit,Medium,High,Not Started,CSH-002,9,,,Yes,,Request track and process LCs
+CSH-110,Cash Management,Integration,AR Integration,Integrate with Accounts Receivable,Critical,High,Not Started,AR-001,10,,,Yes,,Import receipts and apply to invoices
+CSH-111,Cash Management,Integration,AP Integration,Integrate with Accounts Payable,Critical,High,Not Started,AP-001,10,,,Yes,,Select invoices for payment and update balances
+CSH-112,Cash Management,Integration,GL Integration,Post cash transactions to GL,Critical,High,Not Started,GL-001,10,,,Yes,,Post receipts disbursements and adjustments
+CSH-113,Cash Management,Integration,Bank Integration,Electronic integration with banks,Critical,High,Not Started,CSH-030,12,,,Yes,,Download statements upload payments retrieve balances
+CSH-120,Cash Management,Reporting,Cash Reports,Comprehensive cash reporting,Critical,Medium,Not Started,CSH-040,7,,,Yes,,Generate position reconciliation and forecast reports
+CSH-121,Cash Management,Reporting,Treasury Dashboard,Real-time treasury dashboard,High,Medium,Not Started,CSH-120,8,,,No,,Display key metrics and cash positions
+CSH-130,Cash Management,Security,Cash Security,Security controls for cash management,Critical,Medium,Not Started,UR-001,6,,,Yes,,Role-based access with transaction limits
+CSH-131,Cash Management,Security,Audit Compliance,Audit trail and compliance,Critical,Medium,Not Started,CSH-130,5,,,Yes,,Log all transactions and support audits
+CSH-004,Cash Management,Bank Setup,Bank Contacts,Manage bank contact information,Medium,Low,Not Started,CSH-001,3,,,Yes,,Track relationship managers and contacts
+CSH-013,Cash Management,Cash Receipts,Receipt Reversal,Reverse cash receipts,High,Medium,Not Started,CSH-010,5,,,Yes,,Void receipts and reverse GL entries
+CSH-023,Cash Management,Disbursements,Payment Reversal,Void and reissue payments,High,Medium,Not Started,CSH-020,6,,,Yes,,Handle payment errors and voids
+CSH-033,Cash Management,Reconciliation,Reconciliation Approval,Approve bank reconciliations,High,Medium,Not Started,CSH-032,4,,,Yes,,Workflow to review and approve reconciliations
+CSH-043,Cash Management,Cash Position,Zero Balance Accounts,Zero-balance account management,Medium,Medium,Not Started,CSH-041,6,,,Yes,,Automatically fund to zero daily
+CSH-052,Cash Management,Forecasting,Scenario Analysis,Model cash flow scenarios,Medium,High,Not Started,CSH-050,8,,,No,,What-if analysis for forecasting
+CSH-062,Cash Management,Bank Fees,Fee Allocation,Allocate bank fees to cost centers,Medium,Medium,Not Started,CSH-060,5,,,Yes,,Distribute fees based on usage
+CSH-072,Cash Management,Intercompany,Intercompany Interest,Calculate interest on intercompany balances,Low,Medium,Not Started,CSH-070,6,,,Yes,,Charge interest per policy rates
+CSH-082,Cash Management,Fraud Prevention,ACH Positive Pay,Positive pay for ACH transactions,Medium,Medium,Not Started,CSH-080,6,,,Yes,,Validate ACH debits before posting
+CSH-092,Cash Management,Multi-Currency,Currency Hedging,Support currency hedging,Low,High,Not Started,CSH-091,9,,,No,,Track hedges and hedge accounting
+CSH-102,Cash Management,Treasury,Credit Facilities,Manage credit facilities and lines,Medium,Medium,Not Started,CSH-100,7,,,Yes,,Track availability and borrowings
+CSH-114,Cash Management,Integration,Payroll Integration,Integrate with Payroll for funding,High,High,Not Started,CSH-020,8,,,Yes,,Fund payroll accounts and reconcile
+CSH-122,Cash Management,Reporting,Cash Flow Statement,Generate cash flow statement,High,Medium,Not Started,CSH-050,7,,,Yes,,Operating investing financing activities
+CSH-005,Cash Management,Bank Setup,Bank Agreements,Store bank agreements and documents,Low,Low,Not Started,CSH-001,3,,,Yes,,Attach and manage bank documents
+CSH-014,Cash Management,Cash Receipts,Unapplied Cash,Manage unapplied cash receipts,High,Medium,Not Started,CSH-010,5,,,Yes,,Track and apply unapplied receipts
+CSH-024,Cash Management,Disbursements,Payment Status Tracking,Track payment status lifecycle,High,Medium,Not Started,CSH-020,5,,,Yes,,Monitor from creation to clearing
+CSH-034,Cash Management,Reconciliation,Reconciliation History,Maintain reconciliation history,Medium,Low,Not Started,CSH-032,3,,,Yes,,Archive reconciliations for audit
+CSH-044,Cash Management,Cash Position,Intraday Positions,Monitor intraday cash positions,Medium,Medium,Not Started,CSH-040,6,,,Yes,,Real-time balance updates
+CSH-053,Cash Management,Forecasting,Forecast Accuracy,Measure forecast accuracy,Medium,Medium,Not Started,CSH-050,5,,,No,,Compare forecast to actual and analyze variance
+CSH-063,Cash Management,Bank Fees,Compensating Balances,Track compensating balance requirements,Low,Medium,Not Started,CSH-002,4,,,Yes,,Monitor balances for fee offsets
+CSH-073,Cash Management,Intercompany,Intercompany Reconciliation,Reconcile intercompany cash accounts,High,Medium,Not Started,CSH-070,6,,,Yes,,Match receivables and payables
+CSH-083,Cash Management,Fraud Prevention,Reverse Positive Pay,Reverse positive pay processing,Medium,Medium,Not Started,CSH-080,6,,,Yes,,Bank sends checks for approval
+CSH-093,Cash Management,Multi-Currency,Revaluation,Revalue foreign currency accounts,High,High,Not Started,CSH-090,8,,,Yes,,Monthly revaluation with gains/losses
+CSH-103,Cash Management,Treasury,Debt Covenants,Monitor debt covenant compliance,Medium,Medium,Not Started,CSH-100,5,,,Yes,,Track ratios and alert on violations
+CSH-115,Cash Management,Integration,SWIFT Integration,SWIFT network integration,Low,High,Not Started,CSH-113,10,,,Yes,,Send receive SWIFT messages
+CSH-123,Cash Management,Reporting,Liquidity Reports,Generate liquidity analysis reports,High,Medium,Not Started,CSH-051,6,,,Yes,,Days cash working capital ratios
+CSH-006,Cash Management,Bank Setup,Bank Holidays,Define bank holiday calendars,Medium,Low,Not Started,CSH-001,3,,,Yes,,Prevent transactions on bank holidays
+CSH-015,Cash Management,Cash Receipts,On-Account Receipts,Process on-account customer receipts,High,Medium,Not Started,CSH-010,5,,,Yes,,Receipts without invoice application
+CSH-025,Cash Management,Disbursements,Payment Approval Workflow,Multi-level payment approvals,Critical,Medium,Not Started,UR-060,6,,,Yes,,Route for approval based on amount
+CSH-035,Cash Management,Reconciliation,Outstanding Items Report,Report on outstanding reconciliation items,Medium,Low,Not Started,CSH-032,3,,,Yes,,List uncleared checks and deposits
+CSH-045,Cash Management,Cash Position,Cash Pooling,Notional or physical cash pooling,Low,High,Not Started,CSH-041,10,,,No,,Pool balances across accounts
+CSH-054,Cash Management,Forecasting,Rolling Forecast,Maintain rolling cash forecasts,Medium,Medium,Not Started,CSH-050,6,,,No,,Continuous forward-looking forecast
+CSH-064,Cash Management,Bank Fees,Fee Validation,Validate fees against agreements,High,Medium,Not Started,CSH-060,5,,,Yes,,Compare actual to contracted rates
+CSH-074,Cash Management,Intercompany,Multilateral Netting,Support multilateral netting,Low,High,Not Started,CSH-071,9,,,Yes,,Net balances across multiple entities
+CSH-084,Cash Management,Fraud Prevention,Payee Positive Pay,Validate payee names on checks,Medium,Medium,Not Started,CSH-080,5,,,Yes,,Match check payees to approved list
+CSH-094,Cash Management,Multi-Currency,Currency Exposure,Report currency exposure,Medium,Medium,Not Started,CSH-090,6,,,Yes,,Identify and quantify FX risk
+CSH-104,Cash Management,Treasury,Commercial Paper,Manage commercial paper programs,Low,High,Not Started,CSH-100,8,,,No,,Issue track and repay commercial paper
+CSH-116,Cash Management,Integration,ERP Integration,Integrate with other ERP modules,Critical,High,Not Started,GL-001,10,,,Yes,,Seamless data flow across modules
+CSH-124,Cash Management,Reporting,Bank Account Summary,Summary report of all bank accounts,Medium,Low,Not Started,CSH-002,3,,,Yes,,List accounts with balances and status
+CSH-007,Cash Management,Bank Setup,Signatory Management,Manage authorized signatories,High,Medium,Not Started,CSH-003,5,,,Yes,,Define signers and approval limits
+CSH-016,Cash Management,Cash Receipts,NSF Processing,Handle non-sufficient funds returns,High,Medium,Not Started,CSH-010,5,,,Yes,,Reverse receipts for returned items
+CSH-026,Cash Management,Disbursements,Escheatment,Manage escheatment of unclaimed funds,Medium,High,Not Started,CSH-021,7,,,Yes,,Identify and remit abandoned property
+CSH-036,Cash Management,Reconciliation,Multi-Currency Reconciliation,Reconcile foreign currency accounts,High,High,Not Started,CSH-030,8,,,Yes,,Handle FX differences in reconciliation
+CSH-046,Cash Management,Cash Position,Target Balances,Set and maintain target account balances,Medium,Medium,Not Started,CSH-041,4,,,Yes,,Define min/max targets per account
+CSH-055,Cash Management,Forecasting,Cash Budget,Create and monitor cash budgets,Medium,High,Not Started,GL-180,8,,,Yes,,Compare actual to budgeted cash
+CSH-065,Cash Management,Bank Fees,Fee Reporting,Comprehensive fee reporting,Medium,Low,Not Started,CSH-060,4,,,Yes,,Analyze fees by category and bank
+CSH-075,Cash Management,Intercompany,Transfer Pricing,Intercompany transfer pricing,Low,High,Not Started,CSH-070,7,,,No,,Price transfers per tax requirements
+CSH-085,Cash Management,Fraud Prevention,Transaction Monitoring,Real-time transaction monitoring,High,High,Not Started,CSH-081,9,,,No,,Alert on suspicious patterns
+CSH-095,Cash Management,Multi-Currency,Cross-Currency Netting,Net positions across currencies,Low,High,Not Started,CSH-071,9,,,Yes,,Minimize FX transactions
+CSH-105,Cash Management,Treasury,Investment Portfolio,Manage investment portfolio,Medium,High,Not Started,CSH-042,9,,,No,,Track multiple investments and performance
+CSH-117,Cash Management,Integration,BI Integration,Integration with business intelligence,Medium,High,Not Started,CSH-121,8,,,No,,Feed data to analytics platforms
+CSH-125,Cash Management,Reporting,Forecast vs Actual,Compare forecast to actual cash,High,Medium,Not Started,CSH-050,5,,,Yes,,Variance analysis and trends
+CSH-008,Cash Management,Bank Setup,Electronic Banking Setup,Configure electronic banking connections,High,High,Not Started,CSH-002,8,,,Yes,,Set up SFTP API and SWIFT connections
+CSH-017,Cash Management,Cash Receipts,Batch Receipts,Process receipts in batches,High,Medium,Not Started,CSH-010,6,,,Yes,,Group receipts for efficiency
+CSH-027,Cash Management,Disbursements,Procurement Card Payments,Manage P-Card settlements,Medium,Medium,Not Started,PO-240,6,,,Yes,,Settle and allocate P-Card charges
+CSH-037,Cash Management,Reconciliation,Reconciliation Workflow,Workflow for reconciliation process,High,Medium,Not Started,CSH-032,6,,,Yes,,Route exceptions and require approvals
+CSH-047,Cash Management,Cash Position,Position Alerts,Alert on cash position thresholds,High,Medium,Not Started,CSH-040,5,,,Yes,,Notify when balances exceed limits
+CSH-056,Cash Management,Forecasting,Automated Forecasting,Automate forecast generation,Medium,High,Not Started,CSH-050,9,,,No,,Machine learning based forecasts
+CSH-066,Cash Management,Bank Fees,Fee Accruals,Accrue estimated bank fees,Medium,Medium,Not Started,CSH-060,5,,,Yes,,Estimate and accrue monthly fees
+CSH-076,Cash Management,Intercompany,Intercompany Statements,Generate intercompany cash statements,Medium,Low,Not Started,CSH-070,4,,,Yes,,Statement of intercompany transactions
+CSH-086,Cash Management,Fraud Prevention,Check Stock Management,Secure check stock inventory,Medium,Medium,Not Started,CSH-021,4,,,Yes,,Track and secure blank check stock
+CSH-096,Cash Management,Multi-Currency,Currency Forecasting,Forecast currency cash flows,Low,High,Not Started,CSH-050,8,,,No,,Forecast by currency for FX planning
+CSH-106,Cash Management,Treasury,Repo Transactions,Manage repurchase agreements,Low,High,Not Started,CSH-042,8,,,No,,Track repos and reverse repos
+CSH-118,Cash Management,Integration,Tax Integration,Integrate with tax systems,Medium,Medium,Not Started,AP-200,6,,,Yes,,Share data for tax payments and planning
+CSH-126,Cash Management,Reporting,Cash Conversion Cycle,Calculate cash conversion cycle,Medium,Medium,Not Started,CSH-051,5,,,Yes,,Measure days from cash out to cash in
+CSH-009,Cash Management,Bank Setup,Account Limits,Set transaction limits per account,High,Medium,Not Started,CSH-002,4,,,Yes,,Define daily and per-transaction limits
+CSH-018,Cash Management,Cash Receipts,Receipt Allocation,Allocate receipts across invoices,High,High,Not Started,CSH-010,7,,,Yes,,Apply partial payments to multiple invoices
+CSH-028,Cash Management,Disbursements,Payment Scheduling,Schedule future dated payments,High,Medium,Not Started,CSH-020,5,,,Yes,,Queue payments for future execution
+CSH-038,Cash Management,Reconciliation,Book-to-Bank Reconciliation,Reconcile book to bank balances,Critical,Medium,Not Started,CSH-031,6,,,Yes,,Ensure GL matches bank balances
+CSH-048,Cash Management,Cash Position,Consolidated Cash Position,Consolidate cash across entities,High,High,Not Started,CSH-040,8,,,Yes,,Enterprise-wide cash visibility
+CSH-057,Cash Management,Forecasting,Forecast Templates,Create forecast templates,Medium,Medium,Not Started,CSH-050,4,,,Yes,,Reusable forecast scenarios
+CSH-067,Cash Management,Bank Fees,Analysis Charges,Process bank analysis charges,Low,Medium,Not Started,CSH-060,5,,,Yes,,Handle monthly analysis statements
+CSH-077,Cash Management,Intercompany,Loan Management,Manage intercompany loans,Low,High,Not Started,CSH-070,8,,,Yes,,Track intercompany lending and interest
+CSH-087,Cash Management,Fraud Prevention,Dual Control,Dual control for high-value transactions,Critical,Medium,Not Started,CSH-003,5,,,Yes,,Require two approvals for large amounts
+CSH-097,Cash Management,Multi-Currency,Translation Reports,Currency translation reports,Medium,Medium,Not Started,CSH-090,5,,,Yes,,Report gains/losses from translation
+CSH-107,Cash Management,Treasury,Warrant Management,Manage payment warrants,Low,Medium,Not Started,CSH-021,6,,,Yes,,Government warrant processing
+CSH-119,Cash Management,Integration,Bank API Integration,Real-time bank API connections,High,High,Not Started,CSH-113,11,,,Yes,,Modern API based bank connectivity
+CSH-127,Cash Management,Reporting,SOX Compliance,SOX compliance for cash,Critical,Medium,Not Started,GL-280,5,,,Yes,,Controls and audit for cash processes
+CSH-019,Cash Management,Cash Receipts,Overpayment Handling,Process customer overpayments,Medium,Medium,Not Started,CSH-010,5,,,Yes,,Hold or refund overpayments
+CSH-029,Cash Management,Disbursements,Stop Payment Processing,Process stop payment requests,High,Medium,Not Started,CSH-021,5,,,Yes,,Request stop pays from bank
+CSH-039,Cash Management,Reconciliation,Automated Adjustments,Auto-create reconciliation adjustments,Medium,High,Not Started,CSH-031,7,,,Yes,,Generate entries for common reconciling items
+CSH-049,Cash Management,Cash Position,Days Cash on Hand,Calculate days cash on hand,Medium,Low,Not Started,CSH-040,3,,,Yes,,Key liquidity metric
+CSH-068,Cash Management,Bank Fees,Fee Benchmarking,Benchmark fees to market,Low,Medium,Not Started,CSH-061,5,,,No,,Compare fees to industry standards
+CSH-088,Cash Management,Fraud Prevention,Transaction Limits,Enforce transaction limits,Critical,Medium,Not Started,CSH-003,5,,,Yes,,Block transactions exceeding limits
+CSH-098,Cash Management,Multi-Currency,Hedge Effectiveness,Test hedge effectiveness,Low,High,Not Started,CSH-092,7,,,No,,ASC 815 IFRS 9 hedge testing
+CSH-108,Cash Management,Treasury,Bank Guarantees,Manage bank guarantees,Low,Medium,Not Started,CSH-101,6,,,Yes,,Track guarantees and claims
+CSH-128,Cash Management,Reporting,Cash Metrics Dashboard,Key cash performance metrics,Medium,Low,Not Started,CSH-121,4,,,Yes,,Turnover coverage and efficiency ratios

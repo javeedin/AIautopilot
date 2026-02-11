@@ -1,0 +1,126 @@
+Feature ID,Module,Main Feature,Sub Feature,Description,Priority,Complexity,Status,Dependencies,Estimated Effort (Days),Assigned To,Development Status,Testing Status,AI Test Ready,Notes,Acceptance Criteria
+OM-001,Order Management,Customer Setup,Customer Integration,Integrate customer master from AR,Critical,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Customer data,Customer sync works
+OM-002,Order Management,Customer Setup,Ship-To Addresses,Maintain ship-to addresses,High,Low,Not Started,AR-010,3,,Not Started,Not Started,Yes,Delivery locations,Addresses maintained
+OM-003,Order Management,Customer Setup,Customer Pricing Groups,Assign customers to pricing groups,High,Medium,Not Started,AR-001,4,,Not Started,Not Started,Yes,Pricing segmentation,Groups assigned
+OM-004,Order Management,Customer Setup,Preferred Shipping Method,Default shipping method per customer,Medium,Low,Not Started,AR-001,3,,Not Started,Not Started,Yes,Shipping defaults,Method set
+OM-010,Order Management,Product Setup,Saleable Items,Designate items as saleable,Critical,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Product availability,Saleable flag set
+OM-011,Order Management,Product Setup,Product Bundles,Create product bundles and kits,Medium,High,Not Started,INV-001,8,,Not Started,Not Started,Yes,Bundle selling,Bundles work
+OM-012,Order Management,Product Setup,Substitute Items,Define substitute items,Medium,Medium,Not Started,INV-001,5,,Not Started,Not Started,Yes,Alternative products,Substitutes work
+OM-013,Order Management,Product Setup,Cross-Sell Items,Define cross-sell products,Low,Low,Not Started,INV-001,3,,Not Started,Not Started,Yes,Sales optimization,Cross-sell works
+OM-020,Order Management,Order Entry,Sales Order Creation,Create sales orders,Critical,High,Not Started,AR-001,9,,Not Started,Not Started,Yes,Core OM functionality,Orders created
+OM-021,Order Management,Order Entry,Order Header,Order number date customer delivery date,Critical,Medium,Not Started,OM-020,5,,Not Started,Not Started,Yes,Order identification,Header captured
+OM-022,Order Management,Order Entry,Order Lines,Multiple line items per order,Critical,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Line detail,Lines can be entered
+OM-023,Order Management,Order Entry,Order Types,Standard Rush Drop Ship Internal types,High,Medium,Not Started,OM-020,5,,Not Started,Not Started,Yes,Order categorization,Types supported
+OM-024,Order Management,Order Entry,Order Source,Web Phone EDI Manual source tracking,Medium,Low,Not Started,OM-020,3,,Not Started,Not Started,Yes,Channel tracking,Source captured
+OM-025,Order Management,Order Entry,Sales Channel,Direct Partner Online channel tracking,Medium,Low,Not Started,OM-020,3,,Not Started,Not Started,Yes,Channel analysis,Channel tracked
+OM-026,Order Management,Order Entry,Salesperson Assignment,Assign salesperson to orders,High,Low,Not Started,OM-020,3,,Not Started,Not Started,Yes,Sales tracking,Salesperson assigned
+OM-027,Order Management,Order Entry,Copy Order,Copy from previous orders,Medium,Low,Not Started,OM-020,4,,Not Started,Not Started,Yes,Efficiency,Copy functional
+OM-030,Order Management,Order Status,Order Status Management,Track order lifecycle status,Critical,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Order tracking,Status management works
+OM-031,Order Management,Order Status,Order Lifecycle,Draft Entered Booked Shipped Invoiced Closed,Critical,High,Not Started,OM-030,7,,Not Started,Not Started,Yes,Status workflow,Lifecycle works
+OM-032,Order Management,Order Status,Status Updates,Automatic status updates on events,High,High,Not Started,OM-030,7,,Not Started,Not Started,Yes,Status automation,Updates work
+OM-033,Order Management,Order Status,Order Inquiry,Real-time order status inquiry,High,Medium,Not Started,OM-030,6,,Not Started,Not Started,Yes,Order visibility,Inquiry works
+OM-040,Order Management,Order Holds,Credit Hold,Hold orders for credit limit breach,Critical,High,Not Started,AR-140,7,,Not Started,Not Started,Yes,Credit control,Credit holds work
+OM-041,Order Management,Order Holds,Manual Hold,User-placed holds on orders,High,Medium,Not Started,OM-020,5,,Not Started,Not Started,Yes,Order control,Manual holds work
+OM-042,Order Management,Order Holds,Shipping Hold,Hold for shipping requirements,Medium,Low,Not Started,OM-020,4,,Not Started,Not Started,Yes,Shipping control,Shipping holds work
+OM-043,Order Management,Order Holds,Hold Release,Release holds when conditions met,High,Medium,Not Started,OM-040,6,,Not Started,Not Started,Yes,Order processing,Release functional
+OM-044,Order Management,Order Holds,Hold Workflow,Approval workflow for hold release,Medium,High,Not Started,OM-043 UR-170,7,,Not Started,Not Started,Yes,Controlled release,Workflow works
+OM-050,Order Management,ATP,Real-Time ATP,Available to promise inventory check,Critical,High,Not Started,INV-001,9,,Not Started,Not Started,Yes,Inventory visibility,ATP works
+OM-051,Order Management,ATP,Multi-Warehouse ATP,ATP across multiple warehouses,High,High,Not Started,OM-050,8,,Not Started,Not Started,Yes,Multi-location ATP,Multi-warehouse works
+OM-052,Order Management,ATP,ATP by Date,ATP check for specific dates,High,Medium,Not Started,OM-050,6,,Not Started,Not Started,Yes,Future availability,Date ATP works
+OM-053,Order Management,ATP,Substitute Suggestion,Suggest substitute items if out of stock,Medium,High,Not Started,OM-050 OM-012,7,,Not Started,Not Started,Yes,Alternative fulfillment,Substitutes suggested
+OM-060,Order Management,Reservation,Inventory Reservation,Reserve inventory for orders,Critical,High,Not Started,OM-050,8,,Not Started,Not Started,Yes,Inventory commitment,Reservation works
+OM-061,Order Management,Reservation,Hard Reservation,Committed inventory reservation,High,Medium,Not Started,OM-060,6,,Not Started,Not Started,Yes,Firm commitment,Hard reservation works
+OM-062,Order Management,Reservation,Soft Reservation,Planned inventory reservation,Medium,Medium,Not Started,OM-060,5,,Not Started,Not Started,Yes,Planning reservation,Soft reservation works
+OM-063,Order Management,Reservation,Reservation Expiration,Time-bound reservations,Medium,Medium,Not Started,OM-060,5,,Not Started,Not Started,Yes,Auto-release,Expiration works
+OM-064,Order Management,Reservation,Reservation Release,Release unused reservations,High,Low,Not Started,OM-060,4,,Not Started,Not Started,Yes,Inventory availability,Release works
+OM-070,Order Management,Pricing,Price List Management,Maintain customer price lists,Critical,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Pricing foundation,Price lists work
+OM-071,Order Management,Pricing,Customer Pricing,Customer-specific pricing,High,Medium,Not Started,OM-070,6,,Not Started,Not Started,Yes,Custom pricing,Customer prices work
+OM-072,Order Management,Pricing,Contract Pricing,Agreement-based pricing,Medium,Medium,Not Started,OM-070,6,,Not Started,Not Started,Yes,Contract management,Contract prices work
+OM-073,Order Management,Pricing,Promotional Pricing,Limited-time promotional pricing,Medium,Medium,Not Started,OM-070,6,,Not Started,Not Started,Yes,Promotions,Promotional pricing works
+OM-074,Order Management,Pricing,Tiered Pricing,Quantity-based tiered pricing,Medium,High,Not Started,OM-070,7,,Not Started,Not Started,Yes,Volume incentives,Tiered pricing works
+OM-075,Order Management,Pricing,Price Override,Allow price override with authority,High,Medium,Not Started,OM-070,5,,Not Started,Not Started,Yes,Pricing flexibility,Override works
+OM-080,Order Management,Discounts,Line Discounts,Apply discounts to order lines,High,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Line-level pricing,Line discounts work
+OM-081,Order Management,Discounts,Order Discounts,Apply discounts to entire order,High,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Order-level pricing,Order discounts work
+OM-082,Order Management,Discounts,Customer Discounts,Customer-specific discount agreements,Medium,Medium,Not Started,AR-001,5,,Not Started,Not Started,Yes,Customer pricing,Customer discounts work
+OM-083,Order Management,Discounts,Volume Discounts,Quantity-based discounts,Medium,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Volume incentives,Volume discounts work
+OM-084,Order Management,Discounts,Discount Approval,Approval workflow for large discounts,High,High,Not Started,OM-080 UR-170,7,,Not Started,Not Started,Yes,Discount control,Approval works
+OM-090,Order Management,Fulfillment,Pick Wave Creation,Create pick waves for orders,High,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Picking efficiency,Wave creation works
+OM-091,Order Management,Fulfillment,Pick List Generation,Generate pick lists,Critical,Medium,Not Started,OM-090,6,,Not Started,Not Started,Yes,Warehouse operations,Pick lists generated
+OM-092,Order Management,Fulfillment,Batch Picking,Support batch picking strategy,Medium,High,Not Started,OM-090,7,,Not Started,Not Started,Yes,Picking optimization,Batch picking works
+OM-093,Order Management,Fulfillment,Mobile Picking,Mobile app for pick confirmation,Medium,High,Not Started,OM-091,8,,Not Started,Not Started,Yes,Warehouse mobility,Mobile picking works
+OM-094,Order Management,Fulfillment,Pick Confirmation,Confirm picked quantities,Critical,Medium,Not Started,OM-091,6,,Not Started,Not Started,Yes,Accuracy verification,Confirmation works
+OM-100,Order Management,Packing,Packing Slip Generation,Generate packing slips,Critical,Low,Not Started,OM-094,4,,Not Started,Not Started,Yes,Shipping documentation,Packing slips generated
+OM-101,Order Management,Packing,Package Configuration,Define package dimensions and weight,Medium,Medium,Not Started,OM-100,5,,Not Started,Not Started,Yes,Shipping calculation,Package config works
+OM-102,Order Management,Packing,Package Labeling,Generate package labels,High,Medium,Not Started,OM-100,5,,Not Started,Not Started,Yes,Package identification,Labels generated
+OM-103,Order Management,Packing,Pack Confirmation,Confirm packed quantities,High,Medium,Not Started,OM-100,5,,Not Started,Not Started,Yes,Shipping readiness,Confirmation works
+OM-110,Order Management,Allocation,Allocation Rules,Define inventory allocation rules,High,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Inventory distribution,Rules functional
+OM-111,Order Management,Allocation,Priority Allocation,Allocate by priority (customer order),High,High,Not Started,OM-110,7,,Not Started,Not Started,Yes,Priority fulfillment,Priority works
+OM-112,Order Management,Allocation,FIFO Allocation,First in first out allocation,Medium,Medium,Not Started,OM-110,5,,Not Started,Not Started,Yes,Fair allocation,FIFO works
+OM-113,Order Management,Allocation,Partial Allocation,Allow partial order allocation,High,Medium,Not Started,OM-110,6,,Not Started,Not Started,Yes,Flexible fulfillment,Partial allocation works
+OM-120,Order Management,Shipping,Shipment Processing,Process order shipments,Critical,High,Not Started,OM-100,9,,Not Started,Not Started,Yes,Order completion,Shipment processing works
+OM-121,Order Management,Shipping,Carrier Selection,Select shipping carrier,High,Medium,Not Started,OM-120,6,,Not Started,Not Started,Yes,Carrier management,Selection works
+OM-122,Order Management,Shipping,Rate Shopping,Compare carrier rates,Medium,High,Not Started,OM-121,8,,Not Started,Not Started,Yes,Cost optimization,Rate shopping works
+OM-123,Order Management,Shipping,Shipping Labels,Generate shipping labels,Critical,High,Not Started,OM-120,7,,Not Started,Not Started,Yes,Shipping documentation,Labels generated
+OM-124,Order Management,Shipping,Tracking Numbers,Capture carrier tracking numbers,High,Low,Not Started,OM-120,4,,Not Started,Not Started,Yes,Shipment tracking,Tracking captured
+OM-125,Order Management,Shipping,Ship Confirmation,Confirm order shipment,Critical,Medium,Not Started,OM-120,6,,Not Started,Not Started,Yes,Inventory reduction,Confirmation works
+OM-126,Order Management,Shipping,Delivery Confirmation,Track delivery confirmation,Medium,Medium,Not Started,OM-125,5,,Not Started,Not Started,Yes,Proof of delivery,Confirmation tracked
+OM-130,Order Management,Freight,Freight Calculation,Calculate shipping freight charges,High,High,Not Started,OM-120,7,,Not Started,Not Started,Yes,Freight billing,Calculation works
+OM-131,Order Management,Freight,Freight by Weight,Weight-based freight calculation,High,Medium,Not Started,OM-130,5,,Not Started,Not Started,Yes,Weight pricing,Weight calc works
+OM-132,Order Management,Freight,Freight Zones,Zone-based freight pricing,Medium,Medium,Not Started,OM-130,5,,Not Started,Not Started,Yes,Geographic pricing,Zones work
+OM-133,Order Management,Freight,Free Freight Threshold,Free freight above threshold,Medium,Low,Not Started,OM-130,4,,Not Started,Not Started,Yes,Freight promotion,Threshold works
+OM-134,Order Management,Freight,Freight Billing Options,Prepaid Collect Third Party options,High,Medium,Not Started,OM-130,5,,Not Started,Not Started,Yes,Billing flexibility,Options work
+OM-140,Order Management,Returns RMA,RMA Creation,Create return merchandise authorizations,High,High,Not Started,AR-001,8,,Not Started,Not Started,Yes,Return processing,RMAs created
+OM-141,Order Management,Returns RMA,Return Reasons,Categorize return reasons,Medium,Low,Not Started,OM-140,3,,Not Started,Not Started,Yes,Return tracking,Reasons captured
+OM-142,Order Management,Returns RMA,RMA Approval,Approval workflow for returns,High,High,Not Started,OM-140 UR-170,7,,Not Started,Not Started,Yes,Return authorization,Approval works
+OM-143,Order Management,Returns RMA,Return Receipt,Receive returned goods,High,High,Not Started,OM-140,7,,Not Started,Not Started,Yes,Return processing,Receipt works
+OM-144,Order Management,Returns RMA,Return Disposition,Restock Scrap Return to Vendor,High,Medium,Not Started,OM-143,6,,Not Started,Not Started,Yes,Return handling,Disposition works
+OM-145,Order Management,Returns RMA,Credit Memo Creation,Create credit memo for returns,Critical,High,Not Started,OM-140 AR-180,8,,Not Started,Not Started,Yes,Return credit,Credit memos created
+OM-146,Order Management,Returns RMA,Replacement Order,Create replacement orders,Medium,Medium,Not Started,OM-140,6,,Not Started,Not Started,Yes,Return exchange,Replacement works
+OM-147,Order Management,Returns RMA,Restocking Fee,Apply restocking fees to returns,Medium,Medium,Not Started,OM-140,5,,Not Started,Not Started,Yes,Return costs,Fee application works
+OM-150,Order Management,Invoicing,Auto-Invoice on Ship,Automatic invoice on shipment,Critical,High,Not Started,OM-125,8,,Not Started,Not Started,Yes,Billing automation,Auto-invoice works
+OM-151,Order Management,Invoicing,Invoice Consolidation,Consolidate multiple orders to one invoice,High,High,Not Started,OM-150,7,,Not Started,Not Started,Yes,Billing efficiency,Consolidation works
+OM-152,Order Management,Invoicing,Partial Invoicing,Invoice partial shipments,High,Medium,Not Started,OM-150,6,,Not Started,Not Started,Yes,Flexible billing,Partial invoicing works
+OM-153,Order Management,Invoicing,Milestone Invoicing,Invoice by project milestones,Medium,High,Not Started,OM-150,8,,Not Started,Not Started,Yes,Progress billing,Milestone invoicing works
+OM-154,Order Management,Invoicing,Invoice to AR Transfer,Transfer invoices to AR module,Critical,High,Not Started,OM-150 AR-320,9,,Not Started,Not Started,Yes,AR integration,Transfer works
+OM-160,Order Management,Back Orders,Back Order Creation,Automatically create back orders,High,High,Not Started,OM-020,7,,Not Started,Not Started,Yes,Partial fulfillment,Back orders created
+OM-161,Order Management,Back Orders,Back Order Notification,Notify customers of back orders,Medium,Medium,Not Started,OM-160,5,,Not Started,Not Started,Yes,Customer communication,Notifications sent
+OM-162,Order Management,Back Orders,Back Order Fulfillment,Fulfill back orders when stock available,High,High,Not Started,OM-160,8,,Not Started,Not Started,Yes,Order completion,Fulfillment works
+OM-163,Order Management,Back Orders,Partial vs Complete Ship,Configure partial or complete shipment,High,Medium,Not Started,OM-160,5,,Not Started,Not Started,Yes,Shipping strategy,Configuration works
+OM-164,Order Management,Back Orders,Back Order Cancellation,Cancel back orders by customer request,Medium,Low,Not Started,OM-160,4,,Not Started,Not Started,Yes,Order management,Cancellation works
+OM-170,Order Management,Commissions,Commission Plans,Define sales commission plans,Medium,High,Not Started,,7,,Not Started,Not Started,Yes,Sales compensation,Plans configured
+OM-171,Order Management,Commissions,Commission Rates,Set commission rates and tiers,Medium,Medium,Not Started,OM-170,5,,Not Started,Not Started,Yes,Compensation structure,Rates set
+OM-172,Order Management,Commissions,Commission Calculation,Calculate sales commissions,Medium,High,Not Started,OM-170,8,,Not Started,Not Started,Yes,Compensation processing,Calculation works
+OM-173,Order Management,Commissions,Split Commissions,Split commissions among multiple reps,Medium,Medium,Not Started,OM-170,6,,Not Started,Not Started,Yes,Team selling,Split works
+OM-174,Order Management,Commissions,Commission Reporting,Commission reports for salespeople,Medium,Medium,Not Started,OM-172,6,,Not Started,Not Started,Yes,Compensation visibility,Reports functional
+OM-180,Order Management,Period Close,OM Period Close,Month-end close for order management,Critical,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Financial close,Close process works
+OM-181,Order Management,Period Close,Order Entry Cutoff,Enforce order entry cutoff dates,Critical,Medium,Not Started,OM-180,6,,Not Started,Not Started,Yes,Period control,Cutoff enforced
+OM-182,Order Management,Period Close,Shipment Cutoff,Enforce shipment cutoff dates,Critical,Medium,Not Started,OM-180,6,,Not Started,Not Started,Yes,Revenue cutoff,Cutoff enforced
+OM-183,Order Management,Period Close,Revenue Recognition,Recognize revenue per policy,Critical,High,Not Started,OM-180,9,,Not Started,Not Started,Yes,Revenue accounting,Recognition works
+OM-184,Order Management,Period Close,Unbilled Shipments,Track unbilled shipped orders,High,Medium,Not Started,OM-180,6,,Not Started,Not Started,Yes,Accrual tracking,Unbilled tracked
+OM-185,Order Management,Period Close,Unshipped Orders,Review unshipped order backlog,High,Medium,Not Started,OM-180,5,,Not Started,Not Started,Yes,Backlog analysis,Review works
+OM-190,Order Management,Reporting,Open Orders Report,Report open sales orders,High,Low,Not Started,OM-020,4,,Not Started,Not Started,Yes,Order visibility,Report works
+OM-191,Order Management,Reporting,Order Status Report,Detailed order status report,High,Low,Not Started,OM-030,4,,Not Started,Not Started,Yes,Status tracking,Report works
+OM-192,Order Management,Reporting,Backlog Report,Order backlog analysis,High,Medium,Not Started,OM-020,5,,Not Started,Not Started,Yes,Backlog visibility,Report works
+OM-193,Order Management,Reporting,Shipment Register,Detailed shipment listing,High,Low,Not Started,OM-120,4,,Not Started,Not Started,Yes,Shipment tracking,Report works
+OM-194,Order Management,Reporting,Sales Analysis,Sales by customer product region,High,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Sales intelligence,Analysis works
+OM-195,Order Management,Reporting,On-Time Delivery,On-time delivery performance,Medium,Medium,Not Started,OM-120,6,,Not Started,Not Started,Yes,Performance metrics,Metrics calculated
+OM-196,Order Management,Reporting,Order Fill Rate,Order fill rate metrics,Medium,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Fulfillment metrics,Fill rate calculated
+OM-200,Order Management,Analytics,Sales Analytics,Analyze sales trends and patterns,Medium,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Business intelligence,Analytics work
+OM-201,Order Management,Analytics,Order Cycle Time,Calculate order cycle time metrics,Medium,Medium,Not Started,OM-020,6,,Not Started,Not Started,Yes,Performance tracking,Metrics calculated
+OM-202,Order Management,Analytics,Perfect Order Rate,Calculate perfect order percentage,Medium,High,Not Started,OM-020,7,,Not Started,Not Started,Yes,Quality metrics,Calculation works
+OM-203,Order Management,Analytics,Product Performance,Analyze product sales performance,Medium,High,Not Started,OM-020,7,,Not Started,Not Started,Yes,Product analysis,Analysis works
+OM-210,Order Management,Integration,AR Integration,Integrate with Accounts Receivable,Critical,High,Not Started,AR-320,9,,Not Started,Not Started,Yes,Order to cash,AR integration works
+OM-211,Order Management,Integration,Inventory Integration,Integrate with Inventory Management,Critical,High,Not Started,INV-190,9,,Not Started,Not Started,Yes,Stock management,Inventory integration works
+OM-212,Order Management,Integration,GL Integration,Post revenue and COGS to GL,Critical,High,Not Started,GL-200,9,,Not Started,Not Started,Yes,Financial integration,GL posting works
+OM-213,Order Management,Integration,CRM Integration,Integrate with CRM system,Medium,High,Not Started,OM-020,8,,Not Started,Not Started,Yes,Sales process,CRM integration works
+OM-220,Order Management,Security,OM Roles,Predefined OM roles (Manager Sales Rep),Critical,Medium,Not Started,UR-025,5,,Not Started,Not Started,Yes,Access control,Roles configured
+OM-221,Order Management,Security,Order Entry Privileges,Control order entry access,High,Medium,Not Started,UR-060,5,,Not Started,Not Started,Yes,Function control,Privileges enforced
+OM-222,Order Management,Security,Price Override Authority,Approval limits for price overrides,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Pricing control,Authority enforced
+OM-223,Order Management,Security,Discount Approval Authority,Approval limits for discounts,High,Medium,Not Started,UR-534,5,,Not Started,Not Started,Yes,Discount control,Authority enforced
+OM-224,Order Management,Security,Data Security,Customer and order data access,High,High,Not Started,UR-040,7,,Not Started,Not Started,Yes,Data isolation,Security enforced
+OM-225,Order Management,Security,Audit Trail,Complete OM activity audit trail,Critical,Medium,Not Started,UR-140,6,,Not Started,Not Started,Yes,Compliance,Audit trail complete
+OM-230,Order Management,Technical,Performance,Support high-volume order processing,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Scalability,Performance requirements met
+OM-231,Order Management,Technical,Real-Time Processing,Real-time order and inventory updates,Critical,High,Not Started,,8,,Not Started,Not Started,Yes,Current data,Real-time works
+OM-232,Order Management,Technical,API Integration,REST APIs for OM operations,High,High,Not Started,,9,,Not Started,Not Started,Yes,System integration,APIs functional
+OM-240,Order Management,Compliance,Revenue Recognition Compliance,ASC 606 IFRS 15 compliance,High,High,Not Started,AR-360,8,,Not Started,Not Started,Yes,Revenue standards,Compliance met
+OM-241,Order Management,Compliance,SOX Compliance,SOX controls for order management,High,High,Not Started,UR-271,7,,Not Started,Not Started,Yes,Regulatory compliance,SOX compliant

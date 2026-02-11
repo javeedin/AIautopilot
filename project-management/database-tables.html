@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Tables - ERP Project Management</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">ERP PM</h1>
+                <p class="logo-subtitle">Project Manager</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="features.html" class="nav-item"><span class="nav-icon">⚙️</span><span class="nav-text">Features</span></a>
+                <a href="feature-validations.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Validations</span></a>
+                <a href="database-tables.html" class="nav-item active"><span class="nav-icon">🗄️</span><span class="nav-text">Database</span></a>
+                <a href="pages.html" class="nav-item"><span class="nav-icon">📄</span><span class="nav-text">Pages</span></a>
+                <a href="modules.html" class="nav-item"><span class="nav-icon">📦</span><span class="nav-text">Modules</span></a>
+                <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+
+                <div style="margin: 20px 16px 8px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                    <p style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Development Tracking
+                    </p>
+                </div>
+
+                <a href="development-readiness.html" class="nav-item">
+                    <span class="nav-icon">🚦</span>
+                    <span class="nav-text">Readiness</span>
+                </a>
+                <a href="phased-approach.html" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Phased Approach</span>
+                </a>
+                <a href="tech-decisions.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">Tech Decisions</span>
+                </a>
+                <a href="dev-activity-log.html" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Activity Log</span>
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2>Database Tables</h2>
+                    <p class="subtitle">Complete database schema browser</p>
+                </div>
+                <div class="top-bar-actions">
+                    <button class="btn-refresh" onclick="refreshData()">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
+            </header>
+
+            <!-- Summary Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9C27B0;">🗄️</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-tables">0</h3>
+                        <p class="kpi-label">Total Tables</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📦</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="total-modules">0</h3>
+                        <p class="kpi-label">Modules</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #4CAF50;">📋</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="transactional-tables">0</h3>
+                        <p class="kpi-label">Tables with Column Details</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #9E9E9E;">📄</div>
+                    <div class="kpi-content">
+                        <h3 class="kpi-value" id="master-tables">0</h3>
+                        <p class="kpi-label">Tables (Summary Only)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables Listing -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Database Tables</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <select id="module-filter" class="search-input" style="width: 200px;">
+                                <option value="all">All Modules</option>
+                                <option value="GL">General Ledger (GL)</option>
+                                <option value="UR">User Management (UR)</option>
+                                <option value="AP">Accounts Payable (AP)</option>
+                                <option value="AR">Accounts Receivable (AR)</option>
+                                <option value="PO">Purchasing (PO)</option>
+                                <option value="INV">Inventory (INV)</option>
+                                <option value="OM">Order Management (OM)</option>
+                                <option value="CM">Cost Management (CM)</option>
+                                <option value="LCM">Landed Cost (LCM)</option>
+                                <option value="PDM">Product Management (PDM)</option>
+                                <option value="CSH">Cash Management (CSH)</option>
+                                <option value="FA">Fixed Assets (FA)</option>
+                                <option value="HCM">Human Capital (HCM)</option>
+                                <option value="PAY">Payroll (PAY)</option>
+                                <option value="ABS">Absence (ABS)</option>
+                                <option value="REC">Recruitment (REC)</option>
+                            </select>
+                            <input type="text" id="table-search" class="search-input" placeholder="Search tables...">
+                        </div>
+                    </div>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Table Name</th>
+                                    <th>Description</th>
+                                    <th>Primary Key</th>
+                                    <th>Columns / Est. Rows</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tables-table-body">
+                                <tr><td colspan="5" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Table Details Modal -->
+    <div id="tableDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 1200px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h2 id="modalTableName">Table Details</h2>
+                <span class="modal-close" onclick="closeTableModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Columns Section -->
+                <div class="modal-section">
+                    <h3>Table Columns</h3>
+                    <div class="table-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Column Name</th>
+                                    <th>Data Type</th>
+                                    <th>Nullable</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalColumnsBody">
+                                <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DDL Section -->
+                <div class="modal-section" style="margin-top: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3>Oracle DDL Script</h3>
+                        <button class="btn-refresh" onclick="copyDDL()" style="background: #10B981;">
+                            <span>📋</span> Copy DDL
+                        </button>
+                    </div>
+                    <pre id="modalDDLText" style="background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6;">Loading...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Modal Content Box */
+        .modal-content {
+            background-color: #ffffff;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 85%;
+            max-width: 1100px;
+            max-height: 85vh;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 24px 32px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: none;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-header h2::before {
+            content: '📋';
+            font-size: 24px;
+        }
+
+        .modal-close {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: 32px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+        }
+
+        .modal-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section h3 {
+            margin: 0 0 20px 0;
+            color: #0f172a;
+            font-size: 18px;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* DDL Section Specific */
+        .modal-section pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 16px 0 0 0;
+            border: 1px solid #334155;
+        }
+
+        .modal-section button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+
+        .modal-section button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .modal-section button:active {
+            transform: translateY(0);
+        }
+
+        /* Table inside modal */
+        .modal-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .modal-section table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 600;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 13px;
+        }
+
+        .modal-section table td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .modal-section table tr:hover {
+            background: #f8fafc;
+        }
+    </style>
+
+    <script src="js/main.js"></script>
+    <script src="js/database-tables.js"></script>
+</body>
+</html>

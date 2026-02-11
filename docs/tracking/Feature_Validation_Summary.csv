@@ -1,0 +1,18 @@
+Module_ID,Module_Name,Total_Features,Coding_Not_Started,Coding_In_Progress,Coding_Complete,Implementation_Not_Started,Implementation_Production,Unit_Testing_Passed,Integration_Testing_Passed,UAT_Passed,All_OK_Yes,All_OK_No,Blocked,Priority_Critical,Priority_High,Priority_Medium,Priority_Low,Completion_Percentage
+GL,General Ledger,275,275,0,0,275,0,0,0,0,0,275,0,63,125,87,0,0.0%
+UR,User Management,165,165,0,0,165,0,0,0,0,0,165,0,23,83,59,0,0.0%
+AP,Accounts Payable,177,177,0,0,177,0,0,0,0,0,177,0,29,85,63,0,0.0%
+AR,Accounts Receivable,147,147,0,0,147,0,0,0,0,0,147,0,29,72,46,0,0.0%
+PO,Purchasing,151,151,0,0,151,0,0,0,0,0,151,0,0,0,151,0,0.0%
+INV,Inventory,125,125,0,0,125,0,0,0,0,0,125,0,0,0,125,0,0.0%
+OM,Order Management,125,125,0,0,125,0,0,0,0,0,125,0,0,0,125,0,0.0%
+CM,Cost Management,104,104,0,0,104,0,0,0,0,0,104,0,0,0,104,0,0.0%
+LCM,Landed Cost,104,104,0,0,104,0,0,0,0,0,104,0,0,0,104,0,0.0%
+PDM,Product Management,129,129,0,0,129,0,0,0,0,0,129,0,0,0,129,0,0.0%
+CSH,Cash Management,122,122,0,0,122,0,0,0,0,0,122,0,0,0,122,0,0.0%
+FA,Fixed Assets,125,125,0,0,125,0,0,0,0,0,125,0,0,0,125,0,0.0%
+HCM,Human Capital,127,127,0,0,127,0,0,0,0,0,127,0,31,45,51,0,0.0%
+PAY,Payroll,103,103,0,0,103,0,0,0,0,0,103,0,34,39,30,0,0.0%
+ABS,Absence,56,56,0,0,56,0,0,0,0,0,56,0,15,24,17,0,0.0%
+REC,Recruitment,83,83,0,0,83,0,0,0,0,0,83,0,21,27,35,0,0.0%
+TOTAL,All Modules,2118,2118,0,0,2118,0,0,0,0,0,2118,0,245,500,1373,0,0.0%
